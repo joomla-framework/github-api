@@ -68,9 +68,7 @@ class Contents extends AbstractPackage
 	public function get($owner, $repo, $path, $ref = '')
 	{
 		// Build the request path.
-		$rPath = '/repos/' . $owner . '/' . $repo . '/contents';
-
-		$rPath .= '?path=' . $path;
+		$rPath = '/repos/' . $owner . '/' . $repo . '/contents/' . $path;
 
 		if ($ref)
 		{
