@@ -72,7 +72,7 @@ class Contents extends AbstractPackage
 
 		if ($ref)
 		{
-			$rPath .= '&ref=' . $ref;
+			$rPath .= '?ref=' . $ref;
 		}
 
 		// Send the request.
