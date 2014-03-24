@@ -62,6 +62,11 @@ class Github
 		{
 			$this->setOption('api.url', 'https://api.github.com');
 		}
+
+		if ($this->getOption('api.password') && $this->getOption('api.username')) 
+		{
+			$this->client->setOption('headers.Authorization','Basic '.base64_encode($this->getOption('api.username').':'.$this->getOption('api.password')));
+		}
 	}
 
 	/**
