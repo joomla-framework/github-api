@@ -3,5 +3,4 @@
 .travis.yml export-ignore
 Tests/ export-ignore
 phpunit.xml.dist export-ignore
-LICENSE export-ignore
 README.md export-ignore
