@@ -764,12 +764,12 @@ The following resources contain more information:  [Joomla! API Reference](http:
 
 ## Installation via Composer
 
-Add `"joomla/github": "~1.0"` to the require block in your composer.json and then run `composer install`.
+Add `"joomla/github": "2.0.*@dev"` to the require block in your composer.json and then run `composer install`.
 
 ```json
 {
 	"require": {
-		"joomla/github": "~1.0"
+		"joomla/github": "2.0.*@dev"
 	}
 }
 ```
@@ -777,5 +777,5 @@ Add `"joomla/github": "~1.0"` to the require block in your composer.json and the
 Alternatively, you can simply run the following from the command line:
 
 ```sh
-composer require joomla/github "~1.0"
+composer require joomla/github "2.0.*@dev"
 ```
