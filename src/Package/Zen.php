@@ -15,7 +15,7 @@ use Joomla\Github\AbstractPackage;
  *
  * @since  1.0
  *
- * @documentation  http://developer.github.com/guides/getting-started/
+ * @documentation  http://developer.github.com/guides/getting-started/#hello-world
  */
 class Zen extends AbstractPackage
 {
