@@ -9,7 +9,7 @@
         "php": ">=5.3.10",
         "joomla/date": "~1.0",
         "joomla/http": "~1.0",
-        "joomla/registry": "~2.0@dev",
+        "joomla/registry": "2.0.*@dev",
         "joomla/uri": "~1.0"
     },
     "require-dev": {
