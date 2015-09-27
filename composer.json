@@ -6,9 +6,9 @@
     "homepage": "https://github.com/joomla-framework/github-api",
     "license": "GPL-2.0+",
     "require": {
-        "php": ">=5.3.10",
+        "php": ">=5.4",
         "joomla/date": "~1.0",
-        "joomla/http": "~1.0",
+        "joomla/http": "2.0.*@dev",
         "joomla/registry": "2.0.*@dev",
         "joomla/uri": "~1.0"
     },

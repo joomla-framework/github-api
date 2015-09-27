@@ -8,6 +8,7 @@
 
 namespace Joomla\Github;
 
+use Joomla\Http\Exception\UnexpectedResponseException;
 use Joomla\Http\Response;
 use Joomla\Uri\Uri;
 use Joomla\Registry\Registry;
@@ -115,7 +116,7 @@ abstract class AbstractGithubObject
 	 * @return  mixed
 	 *
 	 * @since   1.0
-	 * @throws  \DomainException
+	 * @throws  UnexpectedResponseException
 	 */
 	protected function processResponse(Response $response, $expectedCode = 200)
 	{
@@ -124,10 +125,13 @@ abstract class AbstractGithubObject
 		{
 			// Decode the error response and throw an exception.
 			$error = json_decode($response->body);
+
+			// Check if the error message is set; send a generic one if not
 			$message = isset($error->message) ? $error->message : 'Invalid response received from GitHub.';
-			throw new \DomainException($message, $response->code);
+
+			throw new UnexpectedResponseException($response, $message, $response->code);
 		}
 
-		return json_decode($response->body);
+		return $response;
 	}
 }
