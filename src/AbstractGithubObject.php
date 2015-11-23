@@ -113,7 +113,7 @@ abstract class AbstractGithubObject
 	 * @param   Response  $response      The response.
 	 * @param   integer   $expectedCode  The expected "good" code.
 	 *
-	 * @return  mixed
+	 * @return  Response
 	 *
 	 * @since   1.0
 	 * @throws  UnexpectedResponseException
@@ -129,7 +129,7 @@ abstract class AbstractGithubObject
 			// Check if the error message is set; send a generic one if not
 			$message = isset($error->message) ? $error->message : 'Invalid response received from GitHub.';
 
-			throw new UnexpectedResponseException($response, $message, $response->code);
+			throw new UnexpectedResponseException($response, $message, $response->getStatusCode());
 		}
 
 		return $response;
