@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -26,10 +26,7 @@ class Releases extends AbstractPackage
 	 * @param   string   $repo             The name of the GitHub repository.
 	 * @param   string   $tagName          The name of the tag.
 	 * @param   string   $targetCommitish  The commitish value that determines where the Git tag is created from.
-	 * @param   string   $name             The branch (or git ref) you want your changes pulled into. This
-	 *                                     should be an existing branch on the current repository. You cannot
-	 *                                     submit a pull request to one repo that requests a merge to a base
-	 *                                     of another repo.
+	 * @param   string   $name             The name of the release.
 	 * @param   string   $body             Text describing the contents of the tag.
 	 * @param   boolean  $draft            True to create a draft (unpublished) release, false to create a published one.
 	 * @param   boolean  $preRelease       True to identify the release as a prerelease. false to identify the release as a full release.
@@ -130,7 +127,7 @@ class Releases extends AbstractPackage
 	 *
 	 * @param   string  $user  The name of the owner of the GitHub repository.
 	 * @param   string  $repo  The name of the GitHub repository.
-	 * @param   string  $ref   The reference to get.
+	 * @param   string  $ref   Valid values are: 'latest', 'tags/2.0.24' or Release Id, for example: '1643513'
 	 *
 	 * @return  object
 	 *
