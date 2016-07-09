@@ -9,6 +9,7 @@
 namespace Joomla\Github\Package\Issues;
 
 use Joomla\Github\AbstractPackage;
+use Joomla\Http\Exception\UnexpectedResponseException;
 
 /**
  * GitHub API Assignees class for the Joomla Framework.
@@ -27,7 +28,9 @@ class Assignees extends AbstractPackage
 	 * @param   string  $owner  The name of the owner of the GitHub repository.
 	 * @param   string  $repo   The name of the GitHub repository.
 	 *
-	 * @return object
+	 * @return  object
+	 *
+	 * @since   1.0
 	 */
 	public function getList($owner, $repo)
 	{
@@ -51,8 +54,10 @@ class Assignees extends AbstractPackage
 	 * @param   string  $repo      The name of the GitHub repository.
 	 * @param   string  $assignee  The assignees login name.
 	 *
-	 * @throws \DomainException|\Exception
-	 * @return boolean
+	 * @return  boolean
+	 *
+	 * @since   1.0
+	 * @throws  \DomainException
 	 */
 	public function check($owner, $repo, $assignee)
 	{
@@ -68,7 +73,7 @@ class Assignees extends AbstractPackage
 				return true;
 			}
 
-			throw new \DomainException('Invalid response: ' . $response->code);
+			throw new UnexpectedResponseException($response, 'Invalid response: ' . $response->code);
 		}
 		catch (\DomainException $e)
 		{

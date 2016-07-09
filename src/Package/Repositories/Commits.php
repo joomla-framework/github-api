@@ -10,6 +10,7 @@ namespace Joomla\Github\Package\Repositories;
 
 use Joomla\Github\AbstractPackage;
 use Joomla\Date\Date;
+use Joomla\Http\Exception\UnexpectedResponseException;
 
 /**
  * GitHub API Repositories Commits class for the Joomla Framework.
@@ -36,10 +37,10 @@ class Commits extends AbstractPackage
 	 * @param   Date    $since   ISO 8601 Date - Only commits after this date will be returned.
 	 * @param   Date    $until   ISO 8601 Date - Only commits before this date will be returned.
 	 *
-	 * @throws \DomainException
-	 * @since    1.0
+	 * @return  object
 	 *
-	 * @return  array
+	 * @since   1.0
+	 * @throws  \DomainException
 	 */
 	public function getList($user, $repo, $sha = '', $path = '', $author = '', Date $since = null, Date $until = null)
 	{
@@ -53,17 +54,7 @@ class Commits extends AbstractPackage
 		$rPath .= ($until) ? '&until=' . $until->toISO8601() : '';
 
 		// Send the request.
-		$response = $this->client->get($this->fetchUrl($rPath));
-
-		// Validate the response code.
-		if ($response->code != 200)
-		{
-			// Decode the error response and throw an exception.
-			$error = json_decode($response->body);
-			throw new \DomainException($error->message, $response->code);
-		}
-
-		return json_decode($response->body);
+		return $this->processResponse($this->client->get($this->fetchUrl($rPath)));
 	}
 
 	/**
@@ -73,10 +64,10 @@ class Commits extends AbstractPackage
 	 * @param   string  $repo  The name of the GitHub repository.
 	 * @param   string  $sha   The SHA of the commit to retrieve.
 	 *
-	 * @throws \DomainException
-	 * @since   1.0
+	 * @return  object
 	 *
-	 * @return  array
+	 * @since   1.0
+	 * @throws  \DomainException
 	 */
 	public function get($user, $repo, $sha)
 	{
@@ -84,17 +75,7 @@ class Commits extends AbstractPackage
 		$path = '/repos/' . $user . '/' . $repo . '/commits/' . $sha;
 
 		// Send the request.
-		$response = $this->client->get($this->fetchUrl($path));
-
-		// Validate the response code.
-		if ($response->code != 200)
-		{
-			// Decode the error response and throw an exception.
-			$error = json_decode($response->body);
-			throw new \DomainException($error->message, $response->code);
-		}
-
-		return json_decode($response->body);
+		return $this->processResponse($this->client->get($this->fetchUrl($path)));
 	}
 
 	/**
@@ -104,10 +85,10 @@ class Commits extends AbstractPackage
 	 * @param   string  $repo  The name of the GitHub repository.
 	 * @param   string  $ref   The commit reference
 	 *
-	 * @return  array
+	 * @return  string
 	 *
 	 * @since   __DEPLOY_VERSION__
-	 * @throws  \DomainException
+	 * @throws  UnexpectedResponseException
 	 */
 	public function getSha($user, $repo, $ref)
 	{
@@ -122,7 +103,8 @@ class Commits extends AbstractPackage
 		{
 			// Decode the error response and throw an exception.
 			$error = json_decode($response->body);
-			throw new \DomainException($error->message, $response->code);
+			$message = isset($error->message) ? $error->message : 'Invalid response received from GitHub.';
+			throw new UnexpectedResponseException($response, $message, $response->code);
 		}
 
 		return $response->body;
@@ -136,7 +118,7 @@ class Commits extends AbstractPackage
 	 * @param   string  $base  The base of the diff, either a commit SHA or branch.
 	 * @param   string  $head  The head of the diff, either a commit SHA or branch.
 	 *
-	 * @return  array
+	 * @return  object
 	 *
 	 * @since   1.0
 	 */
