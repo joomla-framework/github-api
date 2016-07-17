@@ -9,7 +9,6 @@
 namespace Joomla\Github\Package;
 
 use Joomla\Github\AbstractPackage;
-use Joomla\Date\Date;
 use Joomla\Uri\Uri;
 
 /**
@@ -30,20 +29,21 @@ class Issues extends AbstractPackage
 	/**
 	 * Create an issue.
 	 *
-	 * @param   string   $user       The name of the owner of the GitHub repository.
-	 * @param   string   $repo       The name of the GitHub repository.
-	 * @param   string   $title      The title of the new issue.
-	 * @param   string   $body       The body text for the new issue.
-	 * @param   string   $assignee   The login for the GitHub user that this issue should be assigned to.
-	 * @param   integer  $milestone  The milestone to associate this issue with.
-	 * @param   array    $labels     The labels to associate with this issue.
+	 * @param   string    $user       The name of the owner of the GitHub repository.
+	 * @param   string    $repo       The name of the GitHub repository.
+	 * @param   string    $title      The title of the new issue.
+	 * @param   string    $body       The body text for the new issue.
+	 * @param   string    $assignee   The login for the GitHub user that this issue should be assigned to.
+	 * @param   integer   $milestone  The milestone to associate this issue with.
+	 * @param   string[]  $labels     The labels to associate with this issue.
+	 * @param   string[]  $assignees  The logins for GitHub users to assign to this issue.
 	 *
 	 * @return  object
 	 *
 	 * @since   1.0
 	 * @throws  \DomainException
 	 */
-	public function create($user, $repo, $title, $body = null, $assignee = null, $milestone = null, array $labels = array())
+	public function create($user, $repo, $title, $body = null, $assignee = null, $milestone = null, array $labels = array(), array $assignees = array())
 	{
 		// Build the request path.
 		$path = '/repos/' . $user . '/' . $repo . '/issues';
@@ -61,7 +61,8 @@ class Issues extends AbstractPackage
 				'assignee'  => $assignee,
 				'milestone' => $milestone,
 				'labels'    => $labels,
-				'body'      => $body
+				'body'      => $body,
+				'assignees' => $assignees,
 			)
 		);
 
@@ -168,14 +169,14 @@ class Issues extends AbstractPackage
 	/**
 	 * List issues.
 	 *
-	 * @param   string   $filter     The filter type: assigned, created, mentioned, subscribed.
-	 * @param   string   $state      The optional state to filter requests by. [open, closed]
-	 * @param   string   $labels     The list of comma separated Label names. Example: bug,ui,@high.
-	 * @param   string   $sort       The sort order: created, updated, comments, default: created.
-	 * @param   string   $direction  The list direction: asc or desc, default: desc.
-	 * @param   Date     $since      The date/time since when issues should be returned.
-	 * @param   integer  $page       The page number from which to get items.
-	 * @param   integer  $limit      The number of items on a page.
+	 * @param   string     $filter     The filter type: assigned, created, mentioned, subscribed.
+	 * @param   string     $state      The optional state to filter requests by. [open, closed]
+	 * @param   string     $labels     The list of comma separated Label names. Example: bug,ui,@high.
+	 * @param   string     $sort       The sort order: created, updated, comments, default: created.
+	 * @param   string     $direction  The list direction: asc or desc, default: desc.
+	 * @param   \DateTime  $since      The date/time since when issues should be returned.
+	 * @param   integer    $page       The page number from which to get items.
+	 * @param   integer    $limit      The number of items on a page.
 	 *
 	 * @return  object
 	 *
@@ -183,7 +184,7 @@ class Issues extends AbstractPackage
 	 * @throws  \DomainException
 	 */
 	public function getList($filter = null, $state = null, $labels = null, $sort = null,
-		$direction = null, Date $since = null, $page = 0, $limit = 0)
+		$direction = null, \DateTime $since = null, $page = 0, $limit = 0)
 	{
 		// Build the request path.
 		$path = '/issues';
@@ -227,18 +228,18 @@ class Issues extends AbstractPackage
 	/**
 	 * List issues for a repository.
 	 *
-	 * @param   string   $user       The name of the owner of the GitHub repository.
-	 * @param   string   $repo       The name of the GitHub repository.
-	 * @param   string   $milestone  The milestone number, 'none', or *.
-	 * @param   string   $state      The optional state to filter requests by. [open, closed]
-	 * @param   string   $assignee   The assignee name, 'none', or *.
-	 * @param   string   $mentioned  The GitHub user name.
-	 * @param   string   $labels     The list of comma separated Label names. Example: bug,ui,@high.
-	 * @param   string   $sort       The sort order: created, updated, comments, default: created.
-	 * @param   string   $direction  The list direction: asc or desc, default: desc.
-	 * @param   Date     $since      The date/time since when issues should be returned.
-	 * @param   integer  $page       The page number from which to get items.
-	 * @param   integer  $limit      The number of items on a page.
+	 * @param   string     $user       The name of the owner of the GitHub repository.
+	 * @param   string     $repo       The name of the GitHub repository.
+	 * @param   string     $milestone  The milestone number, 'none', or *.
+	 * @param   string     $state      The optional state to filter requests by. [open, closed]
+	 * @param   string     $assignee   The assignee name, 'none', or *.
+	 * @param   string     $mentioned  The GitHub user name.
+	 * @param   string     $labels     The list of comma separated Label names. Example: bug,ui,@high.
+	 * @param   string     $sort       The sort order: created, updated, comments, default: created.
+	 * @param   string     $direction  The list direction: asc or desc, default: desc.
+	 * @param   \DateTime  $since      The date/time since when issues should be returned.
+	 * @param   integer    $page       The page number from which to get items.
+	 * @param   integer    $limit      The number of items on a page.
 	 *
 	 * @return  object
 	 *
@@ -246,7 +247,7 @@ class Issues extends AbstractPackage
 	 * @throws  \DomainException
 	 */
 	public function getListByRepository($user, $repo, $milestone = null, $state = null, $assignee = null, $mentioned = null, $labels = null,
-		$sort = null, $direction = null, Date $since = null, $page = 0, $limit = 0)
+		$sort = null, $direction = null, \DateTime $since = null, $page = 0, $limit = 0)
 	{
 		// Build the request path.
 		$path = '/repos/' . $user . '/' . $repo . '/issues';
@@ -290,7 +291,7 @@ class Issues extends AbstractPackage
 
 		if ($since)
 		{
-			$uri->setVar('since', $since->toISO8601());
+			$uri->setVar('since', $since->format(\DateTime::RFC3339));
 		}
 
 		// Send the request.

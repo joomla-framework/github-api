@@ -9,7 +9,6 @@
 namespace Joomla\Github\Package\Repositories;
 
 use Joomla\Github\AbstractPackage;
-use Joomla\Date\Date;
 use Joomla\Http\Exception\UnexpectedResponseException;
 
 /**
@@ -29,20 +28,20 @@ class Commits extends AbstractPackage
 	 * Please follow the link headers as outlined in the pagination overview instead of constructing
 	 * page links yourself.
 	 *
-	 * @param   string  $user    The name of the owner of the GitHub repository.
-	 * @param   string  $repo    The name of the GitHub repository.
-	 * @param   string  $sha     Sha or branch to start listing commits from.
-	 * @param   string  $path    Only commits containing this file path will be returned.
-	 * @param   string  $author  GitHub login, name, or email by which to filter by commit author.
-	 * @param   Date    $since   ISO 8601 Date - Only commits after this date will be returned.
-	 * @param   Date    $until   ISO 8601 Date - Only commits before this date will be returned.
+	 * @param   string     $user    The name of the owner of the GitHub repository.
+	 * @param   string     $repo    The name of the GitHub repository.
+	 * @param   string     $sha     Sha or branch to start listing commits from.
+	 * @param   string     $path    Only commits containing this file path will be returned.
+	 * @param   string     $author  GitHub login, name, or email by which to filter by commit author.
+	 * @param   \DateTime  $since   ISO 8601 Date - Only commits after this date will be returned.
+	 * @param   \DateTime  $until   ISO 8601 Date - Only commits before this date will be returned.
 	 *
 	 * @return  object
 	 *
 	 * @since   1.0
 	 * @throws  \DomainException
 	 */
-	public function getList($user, $repo, $sha = '', $path = '', $author = '', Date $since = null, Date $until = null)
+	public function getList($user, $repo, $sha = '', $path = '', $author = '', \DateTime $since = null, \DateTime $until = null)
 	{
 		// Build the request path.
 		$rPath = '/repos/' . $user . '/' . $repo . '/commits?';
@@ -50,8 +49,8 @@ class Commits extends AbstractPackage
 		$rPath .= ($sha) ? '&sha=' . $sha : '';
 		$rPath .= ($path) ? '&path=' . $path : '';
 		$rPath .= ($author) ? '&author=' . $author : '';
-		$rPath .= ($since) ? '&since=' . $since->toISO8601() : '';
-		$rPath .= ($until) ? '&until=' . $until->toISO8601() : '';
+		$rPath .= ($since) ? '&since=' . $since->format(\DateTime::RFC3339) : '';
+		$rPath .= ($until) ? '&until=' . $until->format(\DateTime::RFC3339) : '';
 
 		// Send the request.
 		return $this->processResponse($this->client->get($this->fetchUrl($rPath)));
