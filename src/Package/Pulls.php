@@ -9,6 +9,7 @@
 namespace Joomla\Github\Package;
 
 use Joomla\Github\AbstractPackage;
+use Joomla\Http\Exception\UnexpectedResponseException;
 
 /**
  * GitHub API Pull Requests class for the Joomla Framework.
@@ -16,11 +17,13 @@ use Joomla\Github\AbstractPackage;
  * @documentation http://developer.github.com/v3/pulls
  *
  * @since  1.0
+ *
+ * @property-read  Pulls\Comments  $comments  GitHub API object for comments.
  */
 class Pulls extends AbstractPackage
 {
 	/**
-	 * Method to create a pull request.
+	 * Create a pull request.
 	 *
 	 * @param   string  $user   The name of the owner of the GitHub repository.
 	 * @param   string  $repo   The name of the GitHub repository.
@@ -53,17 +56,7 @@ class Pulls extends AbstractPackage
 		);
 
 		// Send the request.
-		$response = $this->client->post($this->fetchUrl($path), $data);
-
-		// Validate the response code.
-		if ($response->code != 201)
-		{
-			// Decode the error response and throw an exception.
-			$error = json_decode($response->body);
-			throw new \DomainException($error->message, $response->code);
-		}
-
-		return json_decode($response->body);
+		return $this->processResponse($this->client->post($this->fetchUrl($path), $data), 201);
 	}
 
 	/**
@@ -98,21 +91,11 @@ class Pulls extends AbstractPackage
 		);
 
 		// Send the request.
-		$response = $this->client->post($this->fetchUrl($path), $data);
-
-		// Validate the response code.
-		if ($response->code != 201)
-		{
-			// Decode the error response and throw an exception.
-			$error = json_decode($response->body);
-			throw new \DomainException($error->message, $response->code);
-		}
-
-		return json_decode($response->body);
+		return $this->processResponse($this->client->post($this->fetchUrl($path), $data), 201);
 	}
 
 	/**
-	 * Method to update a pull request.
+	 * Update a pull request.
 	 *
 	 * @param   string   $user    The name of the owner of the GitHub repository.
 	 * @param   string   $repo    The name of the GitHub repository.
@@ -131,7 +114,7 @@ class Pulls extends AbstractPackage
 		// Build the request path.
 		$path = '/repos/' . $user . '/' . $repo . '/pulls/' . (int) $pullId;
 
-		// Craete the data object.
+		// Create the data object.
 		$data = new \stdClass;
 
 		// If a title is set add it to the data object.
@@ -156,21 +139,11 @@ class Pulls extends AbstractPackage
 		$data = json_encode($data);
 
 		// Send the request.
-		$response = $this->client->patch($this->fetchUrl($path), $data);
-
-		// Validate the response code.
-		if ($response->code != 200)
-		{
-			// Decode the error response and throw an exception.
-			$error = json_decode($response->body);
-			throw new \DomainException($error->message, $response->code);
-		}
-
-		return json_decode($response->body);
+		return $this->processResponse($this->client->patch($this->fetchUrl($path), $data));
 	}
 
 	/**
-	 * Method to get a single pull request.
+	 * Get a single pull request.
 	 *
 	 * @param   string   $user    The name of the owner of the GitHub repository.
 	 * @param   string   $repo    The name of the GitHub repository.
@@ -187,21 +160,11 @@ class Pulls extends AbstractPackage
 		$path = '/repos/' . $user . '/' . $repo . '/pulls/' . (int) $pullId;
 
 		// Send the request.
-		$response = $this->client->get($this->fetchUrl($path));
-
-		// Validate the response code.
-		if ($response->code != 200)
-		{
-			// Decode the error response and throw an exception.
-			$error = json_decode($response->body);
-			throw new \DomainException($error->message, $response->code);
-		}
-
-		return json_decode($response->body);
+		return $this->processResponse($this->client->get($this->fetchUrl($path)));
 	}
 
 	/**
-	 * Method to get a list of commits for a pull request.
+	 * List commits on a pull request.
 	 *
 	 * @param   string   $user    The name of the owner of the GitHub repository.
 	 * @param   string   $repo    The name of the GitHub repository.
@@ -209,7 +172,7 @@ class Pulls extends AbstractPackage
 	 * @param   integer  $page    The page number from which to get items.
 	 * @param   integer  $limit   The number of items on a page.
 	 *
-	 * @return  array
+	 * @return  object
 	 *
 	 * @since   1.0
 	 * @throws  \DomainException
@@ -220,21 +183,11 @@ class Pulls extends AbstractPackage
 		$path = '/repos/' . $user . '/' . $repo . '/pulls/' . (int) $pullId . '/commits';
 
 		// Send the request.
-		$response = $this->client->get($this->fetchUrl($path, $page, $limit));
-
-		// Validate the response code.
-		if ($response->code != 200)
-		{
-			// Decode the error response and throw an exception.
-			$error = json_decode($response->body);
-			throw new \DomainException($error->message, $response->code);
-		}
-
-		return json_decode($response->body);
+		return $this->processResponse($this->client->get($this->fetchUrl($path, $page, $limit)));
 	}
 
 	/**
-	 * Method to get a list of files for a pull request.
+	 * List pull requests files.
 	 *
 	 * @param   string   $user    The name of the owner of the GitHub repository.
 	 * @param   string   $repo    The name of the GitHub repository.
@@ -242,7 +195,7 @@ class Pulls extends AbstractPackage
 	 * @param   integer  $page    The page number from which to get items.
 	 * @param   integer  $limit   The number of items on a page.
 	 *
-	 * @return  array
+	 * @return  object
 	 *
 	 * @since   1.0
 	 * @throws  \DomainException
@@ -253,21 +206,11 @@ class Pulls extends AbstractPackage
 		$path = '/repos/' . $user . '/' . $repo . '/pulls/' . (int) $pullId . '/files';
 
 		// Send the request.
-		$response = $this->client->get($this->fetchUrl($path, $page, $limit));
-
-		// Validate the response code.
-		if ($response->code != 200)
-		{
-			// Decode the error response and throw an exception.
-			$error = json_decode($response->body);
-			throw new \DomainException($error->message, $response->code);
-		}
-
-		return json_decode($response->body);
+		return $this->processResponse($this->client->get($this->fetchUrl($path, $page, $limit)));
 	}
 
 	/**
-	 * Method to list pull requests.
+	 * List pull requests.
 	 *
 	 * @param   string   $user   The name of the owner of the GitHub repository.
 	 * @param   string   $repo   The name of the GitHub repository.
@@ -292,21 +235,11 @@ class Pulls extends AbstractPackage
 		}
 
 		// Send the request.
-		$response = $this->client->get($this->fetchUrl($path, $page, $limit));
-
-		// Validate the response code.
-		if ($response->code != 200)
-		{
-			// Decode the error response and throw an exception.
-			$error = json_decode($response->body);
-			throw new \DomainException($error->message, $response->code);
-		}
-
-		return json_decode($response->body);
+		return $this->processResponse($this->client->get($this->fetchUrl($path, $page, $limit)));
 	}
 
 	/**
-	 * Method to check if a pull request has been merged.
+	 * Get if a pull request has been merged.
 	 *
 	 * @param   string   $user    The name of the owner of the GitHub repository.
 	 * @param   string   $repo    The name of the GitHub repository.
@@ -315,7 +248,7 @@ class Pulls extends AbstractPackage
 	 * @return  boolean  True if the pull request has been merged
 	 *
 	 * @since   1.0
-	 * @throws  \DomainException
+	 * @throws  UnexpectedResponseException
 	 */
 	public function isMerged($user, $repo, $pullId)
 	{
@@ -330,20 +263,20 @@ class Pulls extends AbstractPackage
 		{
 			return true;
 		}
-		elseif ($response->code == 404)
+
+		if ($response->code == 404)
 		{
 			return false;
 		}
-		else
-		{
-			// Decode the error response and throw an exception.
-			$error = json_decode($response->body);
-			throw new \DomainException($error->message, $response->code);
-		}
+
+		// Decode the error response and throw an exception.
+		$error = json_decode($response->body);
+		$message = isset($error->message) ? $error->message : 'Invalid response received from GitHub.';
+		throw new UnexpectedResponseException($response, $message, $response->code);
 	}
 
 	/**
-	 * Method to merge a pull request.
+	 * Merge a pull request (Merge Button).
 	 *
 	 * @param   string   $user     The name of the owner of the GitHub repository.
 	 * @param   string   $repo     The name of the GitHub repository.
@@ -368,16 +301,6 @@ class Pulls extends AbstractPackage
 		);
 
 		// Send the request.
-		$response = $this->client->put($this->fetchUrl($path), $data);
-
-		// Validate the response code.
-		if ($response->code != 200)
-		{
-			// Decode the error response and throw an exception.
-			$error = json_decode($response->body);
-			throw new \DomainException($error->message, $response->code);
-		}
-
-		return json_decode($response->body);
+		return $this->processResponse($this->client->put($this->fetchUrl($path), $data));
 	}
 }

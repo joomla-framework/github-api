@@ -8,7 +8,6 @@ namespace Joomla\Github\Tests;
 
 use Joomla\Github\Package\Issues;
 use Joomla\Registry\Registry;
-use Joomla\Date\Date;
 
 /**
  * Test class for Issues.
@@ -88,6 +87,7 @@ class IssuesTest extends \PHPUnit_Framework_TestCase
 		$issue->milestone = '11.5';
 		$issue->labels = array('TestLabel');
 		$issue->body = 'These are my changes - please review them';
+		$issue->assignees = array('joomla');
 
 		$this->client->expects($this->once())
 			->method('post')
@@ -95,7 +95,7 @@ class IssuesTest extends \PHPUnit_Framework_TestCase
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
-			$this->object->create('joomla', 'joomla-platform', 'My issue', 'These are my changes - please review them', 'JoeUser', '11.5', array('TestLabel')),
+			$this->object->create('joomla', 'joomla-platform', 'My issue', 'These are my changes - please review them', 'JoeUser', '11.5', array('TestLabel'), array('joomla')),
 			$this->equalTo(json_decode($this->sampleString))
 		);
 	}
@@ -118,13 +118,14 @@ class IssuesTest extends \PHPUnit_Framework_TestCase
 		$issue->milestone = '11.5';
 		$issue->labels = array();
 		$issue->body = 'These are my changes - please review them';
+		$issue->assignees = array('joomla');
 
 		$this->client->expects($this->once())
 			->method('post')
 			->with('/repos/joomla/joomla-platform/issues', json_encode($issue))
 			->will($this->returnValue($this->response));
 
-		$this->object->create('joomla', 'joomla-platform', 'My issue', 'These are my changes - please review them', 'JoeUser', '11.5', array());
+		$this->object->create('joomla', 'joomla-platform', 'My issue', 'These are my changes - please review them', 'JoeUser', '11.5', array(), array('joomla'));
 	}
 
 	/**
@@ -743,7 +744,7 @@ class IssuesTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetListByRepositoryAll()
 	{
-		$date = new Date('January 1, 2012 12:12:12');
+		$date = new \DateTime('January 1, 2012 12:12:12', new \DateTimeZone('UTC'));
 		$this->response->code = 200;
 		$this->response->body = $this->sampleString;
 
@@ -790,5 +791,87 @@ class IssuesTest extends \PHPUnit_Framework_TestCase
 			->will($this->returnValue($this->response));
 
 		$this->object->getListByRepository('joomla', 'joomla-platform');
+	}
+
+	/**
+	 * Tests the lock method
+	 *
+	 * @return void
+	 */
+	public function testLock()
+	{
+		$this->response->code = 204;
+		$this->response->body = $this->sampleString;
+
+		$this->client->expects($this->once())
+			->method('put')
+			->with('/repos/joomla/joomla-platform/issues/523/lock')
+			->will($this->returnValue($this->response));
+
+		$this->assertThat(
+			$this->object->lock('joomla', 'joomla-platform', 523),
+			$this->equalTo(json_decode($this->sampleString))
+		);
+	}
+
+	/**
+	 * Tests the lock method - failure
+	 *
+	 * @expectedException  \DomainException
+	 *
+	 * @return void
+	 */
+	public function testLockFailure()
+	{
+		$this->response->code = 500;
+		$this->response->body = $this->errorString;
+
+		$this->client->expects($this->once())
+			->method('put')
+			->with('/repos/joomla/joomla-platform/issues/523/lock')
+			->will($this->returnValue($this->response));
+
+		$this->object->lock('joomla', 'joomla-platform', 523);
+	}
+
+	/**
+	 * Tests the unlock method
+	 *
+	 * @return void
+	 */
+	public function testUnlock()
+	{
+		$this->response->code = 204;
+		$this->response->body = $this->sampleString;
+
+		$this->client->expects($this->once())
+			->method('delete')
+			->with('/repos/joomla/joomla-platform/issues/523/lock')
+			->will($this->returnValue($this->response));
+
+		$this->assertThat(
+			$this->object->unlock('joomla', 'joomla-platform', 523),
+			$this->equalTo(json_decode($this->sampleString))
+		);
+	}
+
+	/**
+	 * Tests the unlock method - failure
+	 *
+	 * @expectedException  \DomainException
+	 *
+	 * @return void
+	 */
+	public function testUnlockFailure()
+	{
+		$this->response->code = 500;
+		$this->response->body = $this->errorString;
+
+		$this->client->expects($this->once())
+			->method('delete')
+			->with('/repos/joomla/joomla-platform/issues/523/lock')
+			->will($this->returnValue($this->response));
+
+		$this->object->unlock('joomla', 'joomla-platform', 523);
 	}
 }

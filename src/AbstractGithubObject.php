@@ -8,6 +8,7 @@
 
 namespace Joomla\Github;
 
+use Joomla\Http\Exception\UnexpectedResponseException;
 use Joomla\Http\Response;
 use Joomla\Uri\Uri;
 use Joomla\Registry\Registry;
@@ -36,6 +37,38 @@ abstract class AbstractGithubObject
 	 * @since  1.0
 	 */
 	protected $package = '';
+
+	/**
+	 * Array containing the allowed hook events
+	 *
+	 * @var    array
+	 * @since  1.4.0
+	 * @see    https://developer.github.com/webhooks/#events
+	 */
+	protected $events = array(
+		'*',
+		'commit_comment',
+		'create',
+		'delete',
+		'deployment',
+		'deployment_status',
+		'fork',
+		'gollum',
+		'issue_comment',
+		'issues',
+		'member',
+		'membership',
+		'page_build',
+		'public',
+		'pull_request_review_comment',
+		'pull_request',
+		'push',
+		'repository',
+		'release',
+		'status',
+		'team_add',
+		'watch',
+	);
 
 	/**
 	 * Constructor.
@@ -69,7 +102,7 @@ abstract class AbstractGithubObject
 	 */
 	protected function fetchUrl($path, $page = 0, $limit = 0)
 	{
-		// Get a new Uri object fousing the api url and given path.
+		// Get a new Uri object focusing the api url and given path.
 		$uri = new Uri($this->options->get('api.url') . $path);
 
 		if ($this->options->get('gh.token', false))
@@ -115,7 +148,7 @@ abstract class AbstractGithubObject
 	 * @return  mixed
 	 *
 	 * @since   1.0
-	 * @throws  \DomainException
+	 * @throws  UnexpectedResponseException
 	 */
 	protected function processResponse(Response $response, $expectedCode = 200)
 	{
@@ -125,7 +158,7 @@ abstract class AbstractGithubObject
 			// Decode the error response and throw an exception.
 			$error = json_decode($response->body);
 			$message = isset($error->message) ? $error->message : 'Invalid response received from GitHub.';
-			throw new \DomainException($message, $response->code);
+			throw new UnexpectedResponseException($response, $message, $response->code);
 		}
 
 		return json_decode($response->body);

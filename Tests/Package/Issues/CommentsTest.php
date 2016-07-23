@@ -8,7 +8,6 @@ namespace Joomla\Github\Tests\Issues;
 
 use Joomla\Github\Package\Issues\Comments;
 use Joomla\Registry\Registry;
-use Joomla\Date\Date;
 
 /**
  * Test class for the GitHub API package.
@@ -84,7 +83,7 @@ class CommentsTest extends \PHPUnit_Framework_TestCase
 
 		$this->client->expects($this->once())
 			->method('get')
-			->with('/repos/joomla/joomla-platform/issues/1/comments', 0, 0)
+			->with('/repos/joomla/joomla-platform/issues/1/comments', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -105,7 +104,7 @@ class CommentsTest extends \PHPUnit_Framework_TestCase
 
 		$this->client->expects($this->once())
 			->method('get')
-			->with('/repos/joomla/joomla-platform/issues/comments?sort=created&direction=asc', 0, 0)
+			->with('/repos/joomla/joomla-platform/issues/comments?sort=created&direction=asc', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -152,11 +151,11 @@ class CommentsTest extends \PHPUnit_Framework_TestCase
 		$this->response->code = 200;
 		$this->response->body = $this->sampleString;
 
-		$date = new Date('1966-09-15 12:34:56');
+		$date = new \DateTime('1966-09-15 12:34:56', new \DateTimeZone('UTC'));
 
 		$this->client->expects($this->once())
 			->method('get')
-			->with('/repos/joomla/joomla-platform/issues/comments?sort=created&direction=asc&since=1966-09-15T12:34:56+00:00', 0, 0)
+			->with('/repos/joomla/joomla-platform/issues/comments?sort=created&direction=asc&since=1966-09-15T12:34:56+00:00', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -177,7 +176,7 @@ class CommentsTest extends \PHPUnit_Framework_TestCase
 
 		$this->client->expects($this->once())
 			->method('get')
-			->with('/repos/joomla/joomla-platform/issues/comments/1', 0, 0)
+			->with('/repos/joomla/joomla-platform/issues/comments/1', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -198,7 +197,7 @@ class CommentsTest extends \PHPUnit_Framework_TestCase
 
 		$this->client->expects($this->once())
 			->method('patch')
-			->with('/repos/joomla/joomla-platform/issues/comments/1', '{"body":"Hello"}', 0, 0)
+			->with('/repos/joomla/joomla-platform/issues/comments/1', '{"body":"Hello"}', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -219,7 +218,7 @@ class CommentsTest extends \PHPUnit_Framework_TestCase
 
 		$this->client->expects($this->once())
 			->method('post')
-			->with('/repos/joomla/joomla-platform/issues/1/comments', '{"body":"Hello"}', 0, 0)
+			->with('/repos/joomla/joomla-platform/issues/1/comments', '{"body":"Hello"}', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -240,7 +239,7 @@ class CommentsTest extends \PHPUnit_Framework_TestCase
 
 		$this->client->expects($this->once())
 			->method('delete')
-			->with('/repos/joomla/joomla-platform/issues/comments/1', 0, 0)
+			->with('/repos/joomla/joomla-platform/issues/comments/1', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
