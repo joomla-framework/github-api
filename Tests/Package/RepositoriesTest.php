@@ -423,27 +423,6 @@ class RepositoriesTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the GetListBranches method.
-	 *
-	 * @return void
-	 */
-	public function testGetListBranches()
-	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/repos/joomla/joomla-cms/branches', array(), 0)
-			->will($this->returnValue($this->response));
-
-		$this->assertThat(
-			$this->object->getListBranches('joomla', 'joomla-cms'),
-			$this->equalTo(json_decode($this->response->body))
-		);
-	}
-
-	/**
 	 * Tests the GetBranch method.
 	 *
 	 * @return void
