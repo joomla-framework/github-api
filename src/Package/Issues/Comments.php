@@ -50,11 +50,11 @@ class Comments extends AbstractPackage
 	/**
 	 * List comments in a repository.
 	 *
-	 * @param   string     $owner      The name of the owner of the GitHub repository.
-	 * @param   string     $repo       The name of the GitHub repository.
-	 * @param   string     $sort       The sort field - created or updated.
-	 * @param   string     $direction  The sort order- asc or desc. Ignored without sort parameter.
-	 * @param   \DateTime  $since      A timestamp in ISO 8601 format.
+	 * @param   string              $owner      The name of the owner of the GitHub repository.
+	 * @param   string              $repo       The name of the GitHub repository.
+	 * @param   string              $sort       The sort field - created or updated.
+	 * @param   string              $direction  The sort order- asc or desc. Ignored without sort parameter.
+	 * @param   \DateTimeInterface  $since      A timestamp in ISO 8601 format.
 	 *
 	 * @return  object
 	 *
@@ -62,7 +62,7 @@ class Comments extends AbstractPackage
 	 * @throws  \UnexpectedValueException
 	 * @throws  \DomainException
 	 */
-	public function getRepositoryList($owner, $repo, $sort = 'created', $direction = 'asc', \DateTime $since = null)
+	public function getRepositoryList($owner, $repo, $sort = 'created', $direction = 'asc', \DateTimeInterface $since = null)
 	{
 		// Build the request path.
 		$path = '/repos/' . $owner . '/' . $repo . '/issues/comments';

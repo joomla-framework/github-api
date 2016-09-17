@@ -169,14 +169,14 @@ class Issues extends AbstractPackage
 	/**
 	 * List issues.
 	 *
-	 * @param   string     $filter     The filter type: assigned, created, mentioned, subscribed.
-	 * @param   string     $state      The optional state to filter requests by. [open, closed]
-	 * @param   string     $labels     The list of comma separated Label names. Example: bug,ui,@high.
-	 * @param   string     $sort       The sort order: created, updated, comments, default: created.
-	 * @param   string     $direction  The list direction: asc or desc, default: desc.
-	 * @param   \DateTime  $since      The date/time since when issues should be returned.
-	 * @param   integer    $page       The page number from which to get items.
-	 * @param   integer    $limit      The number of items on a page.
+	 * @param   string              $filter     The filter type: assigned, created, mentioned, subscribed.
+	 * @param   string              $state      The optional state to filter requests by. [open, closed]
+	 * @param   string              $labels     The list of comma separated Label names. Example: bug,ui,@high.
+	 * @param   string              $sort       The sort order: created, updated, comments, default: created.
+	 * @param   string              $direction  The list direction: asc or desc, default: desc.
+	 * @param   \DateTimeInterface  $since      The date/time since when issues should be returned.
+	 * @param   integer             $page       The page number from which to get items.
+	 * @param   integer             $limit      The number of items on a page.
 	 *
 	 * @return  object
 	 *
@@ -184,7 +184,7 @@ class Issues extends AbstractPackage
 	 * @throws  \DomainException
 	 */
 	public function getList($filter = null, $state = null, $labels = null, $sort = null,
-		$direction = null, \DateTime $since = null, $page = 0, $limit = 0)
+		$direction = null, \DateTimeInterface $since = null, $page = 0, $limit = 0)
 	{
 		// Build the request path.
 		$path = '/issues';
