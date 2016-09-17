@@ -7,49 +7,19 @@
 namespace Joomla\Github\Tests;
 
 use Joomla\Github\Package\Pulls;
-use Joomla\Registry\Registry;
+use Joomla\Github\Tests\Stub\GitHubTestCase;
 
 /**
  * Test class for Pulls.
  *
  * @since  1.0
  */
-class JGithubPackagePullsTest extends \PHPUnit_Framework_TestCase
+class JGithubPackagePullsTest extends GitHubTestCase
 {
-	/**
-	 * @var    Registry  Options for the GitHub object.
-	 * @since  1.0
-	 */
-	protected $options;
-
-	/**
-	 * @var    \PHPUnit_Framework_MockObject_MockObject  Mock client object.
-	 * @since  1.0
-	 */
-	protected $client;
-
-	/**
-	 * @var    \Joomla\Http\Response  Mock response object.
-	 * @since  1.0
-	 */
-	protected $response;
-
 	/**
 	 * @var Pulls
 	 */
 	protected $object;
-
-	/**
-	 * @var    string  Sample JSON string.
-	 * @since  11.4
-	 */
-	protected $sampleString = '{"a":1,"b":2,"c":3,"d":4,"e":5}';
-
-	/**
-	 * @var    string  Sample JSON error message.
-	 * @since  11.4
-	 */
-	protected $errorString = '{"message": "Generic Error"}';
 
 	/**
 	 * Sets up the fixture, for example, opens a network connection.
@@ -63,31 +33,7 @@ class JGithubPackagePullsTest extends \PHPUnit_Framework_TestCase
 	{
 		parent::setUp();
 
-		$this->options  = new Registry;
-
-		$this->client = $this->getMockBuilder('\\Joomla\\Github\\Http')
-			->setMethods(array('get', 'post', 'delete', 'patch', 'put'))
-			->getMock();
-
-		$this->response = $this->getMockBuilder('\\Joomla\\Http\\Response')->getMock();
-
 		$this->object = new Pulls($this->options, $this->client);
-	}
-
-	/**
-	 * Test...
-	 *
-	 * @param   string  $name  The method name.
-	 *
-	 * @return string
-	 */
-	protected function getMethod($name)
-	{
-		$class = new ReflectionClass('JGithubPulls');
-		$method = $class->getMethod($name);
-		$method->setAccessible(true);
-
-		return $method;
 	}
 
 	/**
@@ -356,6 +302,7 @@ class JGithubPackagePullsTest extends \PHPUnit_Framework_TestCase
 		$pull->title = 'My Pull Request';
 		$pull->body = 'These are my changes - please review them';
 		$pull->state = 'Closed';
+		$pull->base = 'new';
 
 		$this->client->expects($this->once())
 			->method('patch')
@@ -363,7 +310,7 @@ class JGithubPackagePullsTest extends \PHPUnit_Framework_TestCase
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
-			$this->object->edit('joomla', 'joomla-platform', 523, 'My Pull Request', 'These are my changes - please review them', 'Closed'),
+			$this->object->edit('joomla', 'joomla-platform', 523, 'My Pull Request', 'These are my changes - please review them', 'Closed', 'new'),
 			$this->equalTo(json_decode($this->sampleString))
 		);
 	}
