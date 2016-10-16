@@ -25,19 +25,19 @@ class Comments extends AbstractPackage
 	/**
 	 * List comments on an issue.
 	 *
-	 * @param   string     $owner    The name of the owner of the GitHub repository.
-	 * @param   string     $repo     The name of the GitHub repository.
-	 * @param   integer    $issueId  The issue number.
-	 * @param   integer    $page     The page number from which to get items.
-	 * @param   integer    $limit    The number of items on a page.
-	 * @param   \DateTime  $since    Only comments updated at or after this time are returned.
+	 * @param   string              $owner    The name of the owner of the GitHub repository.
+	 * @param   string              $repo     The name of the GitHub repository.
+	 * @param   integer             $issueId  The issue number.
+	 * @param   integer             $page     The page number from which to get items.
+	 * @param   integer             $limit    The number of items on a page.
+	 * @param   \DateTimeInterface  $since    Only comments updated at or after this time are returned.
 	 *
 	 * @return  object
 	 *
 	 * @since   1.0
 	 * @throws  \DomainException
 	 */
-	public function getList($owner, $repo, $issueId, $page = 0, $limit = 0, \DateTime $since = null)
+	public function getList($owner, $repo, $issueId, $page = 0, $limit = 0, \DateTimeInterface $since = null)
 	{
 		// Build the request path.
 		$path = '/repos/' . $owner . '/' . $repo . '/issues/' . (int) $issueId . '/comments';
