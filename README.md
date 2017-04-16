@@ -1,5 +1,23 @@
 # The Github Package [![Build Status](https://travis-ci.org/joomla-framework/github-api.png?branch=master)](https://travis-ci.org/joomla-framework/github-api)
 
+## Installation via Composer
+
+Add `"joomla/github": "~1.0"` to the require block in your composer.json and then run `composer install`.
+
+```json
+{
+	"require": {
+		"joomla/github": "~1.0"
+	}
+}
+```
+
+Alternatively, you can simply run the following from the command line:
+
+```sh
+composer require joomla/github "~1.0"
+```
+
 ## Using the Github Package
 
 The Github package is designed to be a straightforward interface for working with Github. It is based on version 3 of
@@ -77,6 +95,86 @@ the `->` object operator.
 
 Where a result is returned by a PHP method, the result is the PHP equivalent of the JSON response that can be found in
 the Github API documentation.
+
+### Activity
+ http://developer.github.com/v3/activity/
+* Events http://developer.github.com/v3/activity/events/
+* Notifications http://developer.github.com/v3/activity/notifications/
+* Starring http://developer.github.com/v3/activity/starring/
+* Watching http://developer.github.com/v3/activity/watching/
+
+### Authorization
+ http://developer.github.com/v3/oauth/
+
+### Data
+http://developer.github.com/v3/git/
+* Blobs http://developer.github.com/v3/git/blobs/
+* Commits http://developer.github.com/v3/git/commits/
+* Refs http://developer.github.com/v3/git/refs/
+* Tags http://developer.github.com/v3/git/tags/
+* Trees http://developer.github.com/v3/git/trees/
+
+### Emojis
+ http://developer.github.com/v3/emojis/
+
+### Gists
+http://developer.github.com/v3/gists
+* Comments http://developer.github.com/v3/gists/comments/
+
+### Gitignore
+ http://developer.github.com/v3/gitignore
+
+### Issues
+http://developer.github.com/v3/issues
+* Assignees http://developer.github.com/v3/issues/assignees/
+* Comments http://developer.github.com/v3/issues/comments/
+* Events http://developer.github.com/v3/issues/events/
+* Labels  http://developer.github.com/v3/issues/labels/
+* Milestones http://developer.github.com/v3/issues/milestones/
+
+### Markdown
+http://developer.github.com/v3/markdown
+
+### Meta
+https://developer.github.com/v3/meta
+
+### Orgs
+ http://developer.github.com/v3/orgs/
+* Members http://developer.github.com/v3/orgs/members/
+* Teams http://developer.github.com/v3/orgs/teams/
+
+### Pulls
+http://developer.github.com/v3/pulls
+* Comments http://developer.github.com/v3/pulls/comments/
+
+### Repositories
+ http://developer.github.com/v3/repos
+* Collaborators http://developer.github.com/v3/repos/collaborators
+* Comments http://developer.github.com/v3/repos/comments
+* Commits http://developer.github.com/v3/repos/commits
+* Contents http://developer.github.com/v3/repos/contents
+* Downloads http://developer.github.com/v3/repos/downloads
+* Forks http://developer.github.com/v3/repos/forks
+* Hooks http://developer.github.com/v3/repos/hooks
+* Keys http://developer.github.com/v3/repos/keys
+* Merging http://developer.github.com/v3/repos/merging
+* Releases http://developer.github.com/v3/repos/releases
+* Statistics http://developer.github.com/v3/repos/statistics
+* Statuses http://developer.github.com/v3/repos/statuses
+
+### Search
+http://developer.github.com/v3/search
+
+### Users
+http://developer.github.com/v3/repos/users
+* Emails http://developer.github.com/v3/repos/users/emails
+* Followers http://developer.github.com/v3/repos/users/followers
+* Keys http://developer.github.com/v3/repos/users/keys
+
+### Zen
+ http://developer.github.com/guides/getting-started/
+ 
+## Examples
 
 ### Activity
 
@@ -747,22 +845,3 @@ $github->pulls->comments->delete(':owner', ':repo', ':commentId');
 
 The following resources contain more information:  [Joomla! API Reference](http://api.joomla.org),
 [Github API Reference](http://developer.github.com).
-
-
-## Installation via Composer
-
-Add `"joomla/github": "~1.0"` to the require block in your composer.json and then run `composer install`.
-
-```json
-{
-	"require": {
-		"joomla/github": "~1.0"
-	}
-}
-```
-
-Alternatively, you can simply run the following from the command line:
-
-```sh
-composer require joomla/github "~1.0"
-```

@@ -13,6 +13,8 @@ use Joomla\Github\AbstractPackage;
 /**
  * GitHub API Meta class for the Joomla Framework.
  *
+ * @documentation https://developer.github.com/v3/meta
+ *
  * @since  1.0
  */
 class Meta extends AbstractPackage
