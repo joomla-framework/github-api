@@ -79,7 +79,8 @@ class GitignoreTest extends GitHubTestCase
 		$this->response->code = 200;
 		$this->response->body = '{
     "name": "C",
-    "source": "# Object files\n*.o\n\n# Libraries\n*.lib\n*.a\n\n# Shared objects (inc. Windows DLLs)\n*.dll\n*.so\n*.so.*\n*.dylib\n\n# Executables\n*.exe\n*.out\n*.app\n"
+    "source": "# Object files\n*.o\n\n# Libraries\n*.lib\n*.a\n\n# Shared objects (inc. Windows DLLs)\n'
+			. '*.dll\n*.so\n*.so.*\n*.dylib\n\n# Executables\n*.exe\n*.out\n*.app\n"
     }';
 
 		$this->client->expects($this->once())

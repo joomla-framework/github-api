@@ -10,7 +10,9 @@ use Joomla\Github\Package\Orgs\Teams;
 use Joomla\Github\Tests\Stub\GitHubTestCase;
 
 /**
- * Test class for Teams.
+ * Test method.
+ *
+ * @covers \Joomla\Github\Package\Orgs\Teams
  *
  * @since  1.0
  */
@@ -37,7 +39,9 @@ class TeamsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the getList method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Teams::getList()
 	 *
 	 * @return  void
 	 */
@@ -58,7 +62,9 @@ class TeamsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the get method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Teams::get()
 	 *
 	 * @return  void
 	 */
@@ -79,7 +85,9 @@ class TeamsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the create method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Teams::create()
 	 *
 	 * @return  void
 	 */
@@ -100,7 +108,9 @@ class TeamsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the createWrongPermission method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Teams::create()
 	 *
 	 * @return  void
 	 *
@@ -115,7 +125,9 @@ class TeamsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the edit method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Teams::edit()
 	 *
 	 * @return  void
 	 */
@@ -136,7 +148,9 @@ class TeamsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the editWrongPermission method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Teams::edit()
 	 *
 	 * @return  void
 	 *
@@ -151,7 +165,9 @@ class TeamsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the delete method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Teams::delete()
 	 *
 	 * @return  void
 	 */
@@ -172,7 +188,9 @@ class TeamsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the getListMembers method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Teams::getListMembers()
 	 *
 	 * @return  void
 	 */
@@ -193,7 +211,11 @@ class TeamsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the isMember method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Teams::isMember()
+	 *
+	 * @deprecated
 	 *
 	 * @return  void
 	 */
@@ -214,7 +236,11 @@ class TeamsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the isMemberNo method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Teams::isMember()
+	 *
+	 * @deprecated
 	 *
 	 * @return  void
 	 */
@@ -235,7 +261,11 @@ class TeamsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the isMemberUnexpected method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Teams::isMember()
+	 *
+	 * @deprecated
 	 *
 	 * @return  void
 	 *
@@ -258,7 +288,11 @@ class TeamsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the addMember method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Teams::addMember()
+	 *
+	 * @deprecated
 	 *
 	 * @return  void
 	 */
@@ -279,7 +313,11 @@ class TeamsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the removeMember method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Teams::removeMember()
+	 *
+	 * @deprecated
 	 *
 	 * @return  void
 	 */
@@ -300,7 +338,9 @@ class TeamsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the getListRepos method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Teams::getListRepos()
 	 *
 	 * @return  void
 	 */
@@ -321,7 +361,9 @@ class TeamsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the checkRepo method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Teams::checkRepo()
 	 *
 	 * @return  void
 	 */
@@ -342,7 +384,9 @@ class TeamsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the checkRepoNo method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Teams::checkRepo()
 	 *
 	 * @return  void
 	 */
@@ -363,7 +407,9 @@ class TeamsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the checkRepoUnexpected method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Teams::checkRepo()
 	 *
 	 * @return  void
 	 *
@@ -386,7 +432,9 @@ class TeamsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the addRepo method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Teams::addRepo()
 	 *
 	 * @return  void
 	 */
@@ -407,7 +455,9 @@ class TeamsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the removeRepo method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Teams::removeRepo()
 	 *
 	 * @return  void
 	 */
@@ -423,6 +473,168 @@ class TeamsTest extends GitHubTestCase
 
 		$this->assertThat(
 			$this->object->removeRepo(123, 'joomla', 'joomla-platform'),
+			$this->equalTo(json_decode($this->sampleString))
+		);
+	}
+
+	/**
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Teams::getTeamMembership()
+	 *
+	 * @return  void
+	 */
+	public function testGetTeamMemberships()
+	{
+		$this->response->code = 200;
+		$this->response->body = '{"state":"TEST"}';
+
+		$this->client->expects($this->once())
+			->method('get')
+			->with('/teams/123/memberships/{user}')
+			->will($this->returnValue($this->response));
+
+		$this->assertThat(
+			$this->object->getTeamMembership(123, '{user}'),
+			$this->equalTo('TEST')
+		);
+	}
+
+	/**
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Teams::getTeamMembership()
+	 *
+	 * Response if user is not a member
+	 *
+	 * @return  void
+	 */
+	public function testGetTeamMembershipsFailure1()
+	{
+		$this->response->code = 404;
+		$this->response->body = '{"state":"TEST"}';
+
+		$this->client->expects($this->once())
+			->method('get')
+			->with('/teams/123/memberships/{user}')
+			->will($this->returnValue($this->response));
+
+		$this->assertThat(
+			$this->object->getTeamMembership(123, '{user}'),
+			$this->equalTo(false)
+		);
+	}
+
+	/**
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Teams::getTeamMembership()
+	 *
+	 * Unexpected Response
+	 *
+	 * @return  void
+	 *
+	 * @expectedException \UnexpectedValueException
+	 * @expectedExceptionMessage Unexpected response code: 666
+	 */
+	public function testGetTeamMembershipsFailure2()
+	{
+		$this->response->code = 666;
+		$this->response->body = '{"state":"TEST"}';
+
+		$this->client->expects($this->once())
+			->method('get')
+			->with('/teams/123/memberships/{user}')
+			->will($this->returnValue($this->response));
+
+		$this->assertThat(
+			$this->object->getTeamMembership(123, '{user}'),
+			$this->equalTo('TEST')
+		);
+	}
+
+	/**
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Teams::addTeamMembership()
+	 *
+	 * @return  void
+	 */
+	public function testAddTeamMemberships()
+	{
+		$this->response->code = 200;
+		$this->response->body = $this->sampleString;
+
+		$this->client->expects($this->once())
+			->method('put')
+			->with('/teams/123/memberships/{user}')
+			->will($this->returnValue($this->response));
+
+		$this->assertThat(
+			$this->object->addTeamMembership(123, '{user}'),
+			$this->equalTo(json_decode($this->sampleString))
+		);
+	}
+
+	/**
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Teams::addTeamMembership()
+	 *
+	 * Invalid role
+	 *
+	 * @return  void
+	 *
+	 * @expectedException \UnexpectedValueException
+	 * @expectedExceptionMessage Roles must be either "member" or "maintainer".
+	 */
+	public function testAddTeamMembershipsFailure()
+	{
+		$this->object->addTeamMembership(123, '{user}', 'INVALID');
+	}
+
+	/**
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Teams::removeTeamMembership()
+	 *
+	 * @return  void
+	 */
+	public function testRemoveTeamMemberships()
+	{
+		$this->response->code = 204;
+		$this->response->body = $this->sampleString;
+
+		$this->client->expects($this->once())
+			->method('delete')
+			->with('/teams/123/memberships/{user}')
+			->will($this->returnValue($this->response));
+
+		$this->assertThat(
+			$this->object->removeTeamMembership(123, '{user}'),
+			$this->equalTo(json_decode($this->sampleString))
+		);
+	}
+
+	/**
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Teams::getUserTeams()
+	 *
+	 * @return  void
+	 */
+	public function testGetUserTeams()
+	{
+		$this->response->code = 200;
+		$this->response->body = $this->sampleString;
+
+		$this->client->expects($this->once())
+			->method('get')
+			->with('/user/teams')
+			->will($this->returnValue($this->response));
+
+		$this->assertThat(
+			$this->object->getUserTeams(),
 			$this->equalTo(json_decode($this->sampleString))
 		);
 	}

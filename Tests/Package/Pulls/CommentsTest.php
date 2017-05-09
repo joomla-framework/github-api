@@ -10,7 +10,9 @@ use Joomla\Github\Package\Pulls\Comments;
 use Joomla\Github\Tests\Stub\GitHubTestCase;
 
 /**
- * Test class for Comments.
+ * Test class.
+ *
+ * @covers \Joomla\Github\Package\Pulls\Comments
  *
  * @since  1.0
  */
@@ -37,7 +39,9 @@ class CommentsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the create method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Pulls\Comments::create()
 	 *
 	 * @return  void
 	 */
@@ -58,7 +62,9 @@ class CommentsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the createReply method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Pulls\Comments::createReply()
 	 *
 	 * @return  void
 	 */
@@ -79,7 +85,9 @@ class CommentsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the delete method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Pulls\Comments::delete()
 	 *
 	 * @return  void
 	 */
@@ -100,7 +108,9 @@ class CommentsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the edit method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Pulls\Comments::edit()
 	 *
 	 * @return  void
 	 */
@@ -121,7 +131,9 @@ class CommentsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the get method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Pulls\Comments::get()
 	 *
 	 * @return  void
 	 */
@@ -142,7 +154,9 @@ class CommentsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the getList method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Pulls\Comments::getList()
 	 *
 	 * @return  void
 	 */
@@ -158,6 +172,29 @@ class CommentsTest extends GitHubTestCase
 
 		$this->assertThat(
 			$this->object->getList('joomla', 'joomla-platform', 456),
+			$this->equalTo(json_decode($this->response->body))
+		);
+	}
+
+	/**
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Pulls\Comments::getListForRepo()
+	 *
+	 * @return  void
+	 */
+	public function testGetListForRepo()
+	{
+		$this->response->code = 200;
+		$this->response->body = $this->sampleString;
+
+		$this->client->expects($this->once())
+			->method('get')
+			->with('/repos/{user}/{repo}/pulls/comments', [], 0)
+			->will($this->returnValue($this->response));
+
+		$this->assertThat(
+			$this->object->getListForRepo('{user}', '{repo}'),
 			$this->equalTo(json_decode($this->response->body))
 		);
 	}

@@ -289,7 +289,8 @@ class RepositoriesTest extends GitHubTestCase
 			->method('patch')
 			->with(
 				'/repos/joomla/joomla-test',
-				'{"name":"joomla-test-1","description":"","homepage":"","private":false,"has_issues":false,"has_wiki":false,"has_downloads":false,"default_branch":""}',
+				'{"name":"joomla-test-1","description":"","homepage":"","private":'
+					. 'false,"has_issues":false,"has_wiki":false,"has_downloads":false,"default_branch":""}',
 				array()
 			)
 			->will($this->returnValue($this->response));
