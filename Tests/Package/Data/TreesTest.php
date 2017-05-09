@@ -44,9 +44,6 @@ class TreesTest extends GitHubTestCase
 	 */
 	public function testGet()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/git/trees/12345', array(), 0)
@@ -65,9 +62,6 @@ class TreesTest extends GitHubTestCase
 	 */
 	public function testGetRecursively()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/git/trees/12345?recursive=1', array(), 0)
@@ -87,7 +81,6 @@ class TreesTest extends GitHubTestCase
 	public function testCreate()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')

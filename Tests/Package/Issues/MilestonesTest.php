@@ -47,7 +47,6 @@ class MilestonesTest extends GitHubTestCase
 	public function testCreate()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$milestone = '{'
 			. '"title":"My Milestone","state":"open","description":"This milestone is impossible","due_on":"2012-12-25T20:09:31Z"'
@@ -99,9 +98,6 @@ class MilestonesTest extends GitHubTestCase
 	 */
 	public function testEdit()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$milestone = new \stdClass;
 		$milestone->state = 'closed';
 
@@ -125,9 +121,6 @@ class MilestonesTest extends GitHubTestCase
 	 */
 	public function testEditAllParameters()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$milestone = '{'
 			. '"title":"{title}","state":"closed","description":"{description}","due_on":"2012-12-25T20:09:31Z"'
 			. '}';
@@ -179,9 +172,6 @@ class MilestonesTest extends GitHubTestCase
 	 */
 	public function testGet()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/milestones/523')
@@ -224,9 +214,6 @@ class MilestonesTest extends GitHubTestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/milestones?state=open&sort=due_date&direction=desc')
@@ -270,7 +257,6 @@ class MilestonesTest extends GitHubTestCase
 	public function testDelete()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('delete')

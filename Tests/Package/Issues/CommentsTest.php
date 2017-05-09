@@ -44,9 +44,6 @@ class CommentsTest extends GitHubTestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/issues/1/comments', array(), 0)
@@ -65,9 +62,6 @@ class CommentsTest extends GitHubTestCase
 	 */
 	public function testGetRepositoryList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/issues/comments?sort=created&direction=asc', array(), 0)
@@ -87,9 +81,6 @@ class CommentsTest extends GitHubTestCase
 	 */
 	public function testGetRepositoryListInvalidSort()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->object->getRepositoryList('joomla', 'joomla-platform', 'invalid');
 	}
 
@@ -101,9 +92,6 @@ class CommentsTest extends GitHubTestCase
 	 */
 	public function testGetRepositoryListInvalidDirection()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->object->getRepositoryList('joomla', 'joomla-platform', 'created', 'invalid');
 	}
 
@@ -114,9 +102,6 @@ class CommentsTest extends GitHubTestCase
 	 */
 	public function testGetRepositoryListSince()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$date = new \DateTime('1966-09-15 12:34:56', new \DateTimeZone('UTC'));
 
 		$this->client->expects($this->once())
@@ -137,9 +122,6 @@ class CommentsTest extends GitHubTestCase
 	 */
 	public function testGet()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/issues/comments/1', array(), 0)
@@ -158,9 +140,6 @@ class CommentsTest extends GitHubTestCase
 	 */
 	public function testEdit()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('patch')
 			->with('/repos/joomla/joomla-platform/issues/comments/1', '{"body":"Hello"}', array(), 0)
@@ -180,7 +159,6 @@ class CommentsTest extends GitHubTestCase
 	public function testCreate()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')

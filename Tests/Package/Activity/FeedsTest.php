@@ -44,9 +44,6 @@ class FeedsTest extends GitHubTestCase
 	 */
 	public function testGetFeeds()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/feeds')

@@ -47,9 +47,6 @@ class HooksTest extends GitHubTestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/orgs/joomla/hooks')
@@ -70,9 +67,6 @@ class HooksTest extends GitHubTestCase
 	 */
 	public function testGet()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/orgs/joomla/hooks/123')
@@ -94,7 +88,6 @@ class HooksTest extends GitHubTestCase
 	public function testCreate()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')
@@ -147,7 +140,6 @@ class HooksTest extends GitHubTestCase
 	public function testEdit()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')
@@ -198,7 +190,6 @@ class HooksTest extends GitHubTestCase
 	public function testPing()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')
@@ -221,7 +212,6 @@ class HooksTest extends GitHubTestCase
 	public function testDelete()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('delete')

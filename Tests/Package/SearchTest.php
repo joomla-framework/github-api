@@ -43,9 +43,6 @@ class SearchTest extends GitHubTestCase
 	 */
 	public function testIssues()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/legacy/issues/search/joomla/joomla-platform/open/github')
@@ -66,9 +63,6 @@ class SearchTest extends GitHubTestCase
 	 */
 	public function testIssuesInvalidState()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->object->issues('joomla', 'joomla-platform', 'invalid', 'github');
 	}
 
@@ -79,9 +73,6 @@ class SearchTest extends GitHubTestCase
 	 */
 	public function testRepositories()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/legacy/repos/search/joomla')
@@ -100,9 +91,6 @@ class SearchTest extends GitHubTestCase
 	 */
 	public function testUsers()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/legacy/user/search/joomla')
@@ -121,9 +109,6 @@ class SearchTest extends GitHubTestCase
 	 */
 	public function testEmail()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/legacy/user/email/email@joomla')

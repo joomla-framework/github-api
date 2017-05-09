@@ -56,9 +56,6 @@ class EventsTest extends GitHubTestCase
 	 */
 	public function testGetPublic()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/events')
@@ -77,9 +74,6 @@ class EventsTest extends GitHubTestCase
 	 */
 	public function testGetRepository()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$path = '/repos/' . $this->owner . '/' . $this->repo . '/events';
 
 		$this->client->expects($this->once())
@@ -100,9 +94,6 @@ class EventsTest extends GitHubTestCase
 	 */
 	public function testGetIssue()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$path = '/repos/' . $this->owner . '/' . $this->repo . '/issues/events';
 
 		$this->client->expects($this->once())
@@ -123,9 +114,6 @@ class EventsTest extends GitHubTestCase
 	 */
 	public function testGetNetwork()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$path = '/networks/' . $this->owner . '/' . $this->repo . '/events';
 
 		$this->client->expects($this->once())
@@ -146,9 +134,6 @@ class EventsTest extends GitHubTestCase
 	 */
 	public function testGetOrg()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$path = '/orgs/' . $this->owner . '/events';
 
 		$this->client->expects($this->once())
@@ -169,9 +154,6 @@ class EventsTest extends GitHubTestCase
 	 */
 	public function testGetUser()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$path = '/users/' . $this->owner . '/received_events';
 
 		$this->client->expects($this->once())
@@ -192,9 +174,6 @@ class EventsTest extends GitHubTestCase
 	 */
 	public function testGetUserPublic()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$path = '/users/' . $this->owner . '/received_events/public';
 
 		$this->client->expects($this->once())
@@ -215,9 +194,6 @@ class EventsTest extends GitHubTestCase
 	 */
 	public function testGetByUser()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$path = '/users/' . $this->owner . '/events';
 
 		$this->client->expects($this->once())
@@ -238,9 +214,6 @@ class EventsTest extends GitHubTestCase
 	 */
 	public function testGetByUserPublic()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$path = '/users/' . $this->owner . '/events/public';
 
 		$this->client->expects($this->once())
@@ -261,9 +234,6 @@ class EventsTest extends GitHubTestCase
 	 */
 	public function testGetUserOrg()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$path = '/users/' . $this->owner . '/events/orgs/' . $this->repo;
 
 		$this->client->expects($this->once())

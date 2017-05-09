@@ -50,9 +50,6 @@ class CommitsTest extends GitHubTestCase
 	 */
 	public function testGet()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/commits/abc1234')
@@ -100,9 +97,6 @@ class CommitsTest extends GitHubTestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/commits')
@@ -150,9 +144,6 @@ class CommitsTest extends GitHubTestCase
 	 */
 	public function testCompare()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/compare/123abc...456def')
@@ -175,9 +166,6 @@ class CommitsTest extends GitHubTestCase
 	 */
 	public function testgetSha()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/{user}/{repo}/commits/{ref}')
@@ -204,7 +192,6 @@ class CommitsTest extends GitHubTestCase
 	public function testgetShaFailure()
 	{
 		$this->response->code = 666;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('get')

@@ -49,7 +49,6 @@ class IssuesTest extends GitHubTestCase
 	public function testCreate()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$issue = new \stdClass;
 		$issue->title = '{title}';
@@ -112,7 +111,6 @@ class IssuesTest extends GitHubTestCase
 	public function testCreateComment()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$issue = new \stdClass;
 		$issue->body = 'My Insightful Comment';
@@ -164,9 +162,6 @@ class IssuesTest extends GitHubTestCase
 	 */
 	public function testEdit()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$issue = new \stdClass;
 		$issue->title = 'My issue';
 		$issue->body = 'These are my changes - please review them';
@@ -226,9 +221,6 @@ class IssuesTest extends GitHubTestCase
 	 */
 	public function testGet()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/issues/523')
@@ -273,9 +265,6 @@ class IssuesTest extends GitHubTestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/issues')
@@ -296,8 +285,6 @@ class IssuesTest extends GitHubTestCase
 	 */
 	public function testGetListAll()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
 		$since = new \DateTime('January 1, 2012 12:12:12', new \DateTimeZone('UTC'));
 
 		$this->client->expects($this->once())
@@ -344,9 +331,6 @@ class IssuesTest extends GitHubTestCase
 	 */
 	public function testGetListByRepository()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/issues')
@@ -370,8 +354,6 @@ class IssuesTest extends GitHubTestCase
 	public function testGetListByRepositoryAll()
 	{
 		$date = new \DateTime('January 1, 2012 12:12:12', new \DateTimeZone('UTC'));
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('get')
@@ -432,7 +414,6 @@ class IssuesTest extends GitHubTestCase
 	public function testLock()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('put')
@@ -479,7 +460,6 @@ class IssuesTest extends GitHubTestCase
 	public function testUnlock()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('delete')

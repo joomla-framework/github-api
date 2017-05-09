@@ -44,7 +44,6 @@ class JGithubPackagePullsTest extends GitHubTestCase
 	public function testCreate()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$pull = new \stdClass;
 		$pull->title = 'My Pull Request';
@@ -101,7 +100,6 @@ class JGithubPackagePullsTest extends GitHubTestCase
 	public function testCreateFromIssue()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$pull = new \stdClass;
 		$pull->issue = 254;
@@ -151,9 +149,6 @@ class JGithubPackagePullsTest extends GitHubTestCase
 	 */
 	public function testEdit()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$pull = new \stdClass;
 		$pull->title = 'My Pull Request';
 		$pull->body = 'These are my changes - please review them';
@@ -202,9 +197,6 @@ class JGithubPackagePullsTest extends GitHubTestCase
 	 */
 	public function testGet()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/pulls/523')
@@ -243,9 +235,6 @@ class JGithubPackagePullsTest extends GitHubTestCase
 	 */
 	public function testGetCommits()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/pulls/523/commits')
@@ -284,9 +273,6 @@ class JGithubPackagePullsTest extends GitHubTestCase
 	 */
 	public function testGetFiles()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/pulls/523/files')
@@ -325,9 +311,6 @@ class JGithubPackagePullsTest extends GitHubTestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/pulls?state=closed')
@@ -367,7 +350,6 @@ class JGithubPackagePullsTest extends GitHubTestCase
 	public function testIsMergedTrue()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('get')
@@ -388,7 +370,6 @@ class JGithubPackagePullsTest extends GitHubTestCase
 	public function testIsMergedFalse()
 	{
 		$this->response->code = 404;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('get')
@@ -428,9 +409,6 @@ class JGithubPackagePullsTest extends GitHubTestCase
 	 */
 	public function testMerge()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('put')
 			->with('/repos/joomla/joomla-platform/pulls/523/merge')

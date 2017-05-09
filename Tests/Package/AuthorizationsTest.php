@@ -46,7 +46,6 @@ class AuthorizationsTest extends GitHubTestCase
 	public function testCreate()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$authorisation = '{'
 			. '"scopes":["public_repo"],'
@@ -117,7 +116,6 @@ class AuthorizationsTest extends GitHubTestCase
 	public function testDelete()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('delete')
@@ -176,7 +174,6 @@ class AuthorizationsTest extends GitHubTestCase
 	public function testDeleteGrant()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('delete')
@@ -234,9 +231,6 @@ class AuthorizationsTest extends GitHubTestCase
 	 */
 	public function testEditAddScopes()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$authorisation = '{'
 			. '"add_scopes":["public_repo","gist"],'
 			. '"note":"My test app",'
@@ -263,9 +257,6 @@ class AuthorizationsTest extends GitHubTestCase
 	 */
 	public function testEditRemoveScopes()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$authorisation = '{'
 			. '"remove_scopes":["public_repo","gist"],'
 			. '"note":"My test app",'
@@ -292,9 +283,6 @@ class AuthorizationsTest extends GitHubTestCase
 	 */
 	public function testEditScopes()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$authorisation = '{'
 			. '"scopes":["public_repo","gist"],'
 			. '"note":"My test app",'
@@ -377,9 +365,6 @@ class AuthorizationsTest extends GitHubTestCase
 	 */
 	public function testGet()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/authorizations/42')
@@ -422,9 +407,6 @@ class AuthorizationsTest extends GitHubTestCase
 	 */
 	public function testGetGrant()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/authorizations/grants/42')
@@ -467,9 +449,6 @@ class AuthorizationsTest extends GitHubTestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/authorizations')
@@ -512,9 +491,6 @@ class AuthorizationsTest extends GitHubTestCase
 	 */
 	public function testGetListGrants()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/authorizations/grants')
@@ -557,9 +533,6 @@ class AuthorizationsTest extends GitHubTestCase
 	 */
 	public function testGetRateLimit()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/rate_limit')
@@ -718,7 +691,6 @@ class AuthorizationsTest extends GitHubTestCase
 	public function testRevokeGrantForApplication()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('delete')

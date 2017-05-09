@@ -44,7 +44,6 @@ class GistsTest extends GitHubTestCase
 	public function testCreate()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		// Build the request data.
 		$data = json_encode(
@@ -82,7 +81,6 @@ class GistsTest extends GitHubTestCase
 	public function testCreateGistFromFile()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		// Build the request data.
 		$data = json_encode(
@@ -122,7 +120,6 @@ class GistsTest extends GitHubTestCase
 	public function testCreateGistFromFileNotFound()
 	{
 		$this->response->code = 501;
-		$this->response->body = $this->sampleString;
 
 		$this->object->create(
 			array(
@@ -180,7 +177,6 @@ class GistsTest extends GitHubTestCase
 	public function testCreateComment()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$gist = new \stdClass;
 		$gist->body = 'My Insightful Comment';
@@ -241,7 +237,6 @@ class GistsTest extends GitHubTestCase
 	public function testDelete()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('delete')
@@ -293,7 +288,6 @@ class GistsTest extends GitHubTestCase
 	public function testDeleteComment()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('delete')
@@ -344,9 +338,6 @@ class GistsTest extends GitHubTestCase
 	 */
 	public function testEdit()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		// Build the request data.
 		$data = json_encode(
 			array(
@@ -439,9 +430,6 @@ class GistsTest extends GitHubTestCase
 	 */
 	public function testEditComment()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$gist = new \stdClass;
 		$gist->body = 'This comment is now even more insightful';
 
@@ -501,7 +489,6 @@ class GistsTest extends GitHubTestCase
 	public function testFork()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')
@@ -555,9 +542,6 @@ class GistsTest extends GitHubTestCase
 	 */
 	public function testGet()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/gists/523')
@@ -610,9 +594,6 @@ class GistsTest extends GitHubTestCase
 	 */
 	public function testGetComment()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/gists/comments/523')
@@ -665,9 +646,6 @@ class GistsTest extends GitHubTestCase
 	 */
 	public function testGetComments()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/gists/523/comments')
@@ -720,9 +698,6 @@ class GistsTest extends GitHubTestCase
 	 */
 	public function testGetCommitList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/gists/523/commits')
@@ -775,9 +750,6 @@ class GistsTest extends GitHubTestCase
 	 */
 	public function testGetForkList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/gists/523/forks')
@@ -830,9 +802,6 @@ class GistsTest extends GitHubTestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/gists')
@@ -885,9 +854,6 @@ class GistsTest extends GitHubTestCase
 	 */
 	public function testGetListByUser()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/users/joomla/gists')
@@ -940,9 +906,6 @@ class GistsTest extends GitHubTestCase
 	 */
 	public function testGetListPublic()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/gists/public')
@@ -995,9 +958,6 @@ class GistsTest extends GitHubTestCase
 	 */
 	public function testGetListStarred()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/gists/starred')
@@ -1050,9 +1010,6 @@ class GistsTest extends GitHubTestCase
 	 */
 	public function testGetRevision()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/gists/523/a1b2c3')
@@ -1106,7 +1063,6 @@ class GistsTest extends GitHubTestCase
 	public function testIsStarredTrue()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('get')
@@ -1127,7 +1083,6 @@ class GistsTest extends GitHubTestCase
 	public function testIsStarredFalse()
 	{
 		$this->response->code = 404;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('get')
@@ -1182,7 +1137,6 @@ class GistsTest extends GitHubTestCase
 	public function testStar()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('put')
@@ -1234,7 +1188,6 @@ class GistsTest extends GitHubTestCase
 	public function testUnstar()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('delete')

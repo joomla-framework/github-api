@@ -49,7 +49,6 @@ class StatusesTest extends GitHubTestCase
 	public function testCreate()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		// Build the request data.
 		$data = json_encode(
@@ -139,9 +138,6 @@ class StatusesTest extends GitHubTestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/statuses/6dcb09b5b57875f334f61aebed695e2e4193db5e')
@@ -188,9 +184,6 @@ class StatusesTest extends GitHubTestCase
 	 */
 	public function testGetCombinedStatus()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/{user}/{repo}/commits/{sha}/status')

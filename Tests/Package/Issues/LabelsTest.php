@@ -44,9 +44,6 @@ class LabelsTest extends GitHubTestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/labels', array(), 0)
@@ -65,9 +62,6 @@ class LabelsTest extends GitHubTestCase
 	 */
 	public function testGet()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/labels/1', array(), 0)
@@ -87,7 +81,6 @@ class LabelsTest extends GitHubTestCase
 	public function testCreate()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')
@@ -129,9 +122,6 @@ class LabelsTest extends GitHubTestCase
 	 */
 	public function testUpdate()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('patch')
 			->with('/repos/joomla/joomla-platform/labels/foobar', '{"name":"boofaz","color":"red"}', array(), 0)
@@ -151,7 +141,6 @@ class LabelsTest extends GitHubTestCase
 	public function testDelete()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('delete')
@@ -171,9 +160,6 @@ class LabelsTest extends GitHubTestCase
 	 */
 	public function testGetListByIssue()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/issues/1/labels', array(), 0)
@@ -192,9 +178,6 @@ class LabelsTest extends GitHubTestCase
 	 */
 	public function testAdd()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('post')
 			->with('/repos/joomla/joomla-platform/issues/1/labels', '["A","B"]', array(), 0)
@@ -213,9 +196,6 @@ class LabelsTest extends GitHubTestCase
 	 */
 	public function testRemoveFromIssue()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('delete')
 			->with('/repos/joomla/joomla-platform/issues/1/labels/foobar', array(), 0)
@@ -234,9 +214,6 @@ class LabelsTest extends GitHubTestCase
 	 */
 	public function testReplace()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('put')
 			->with('/repos/joomla/joomla-platform/issues/1/labels', '["A","B"]', array(), 0)
@@ -256,7 +233,6 @@ class LabelsTest extends GitHubTestCase
 	public function testRemoveAllFromIssue()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('delete')
@@ -276,9 +252,6 @@ class LabelsTest extends GitHubTestCase
 	 */
 	public function testGetListByMilestone()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/milestones/1/labels', array(), 0)

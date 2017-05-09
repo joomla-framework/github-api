@@ -47,9 +47,6 @@ class TeamsTest extends GitHubTestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/orgs/joomla/teams')
@@ -70,9 +67,6 @@ class TeamsTest extends GitHubTestCase
 	 */
 	public function testGet()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/teams/123')
@@ -94,7 +88,6 @@ class TeamsTest extends GitHubTestCase
 	public function testCreate()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')
@@ -119,7 +112,6 @@ class TeamsTest extends GitHubTestCase
 	public function testCreateWrongPermission()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$this->object->create('joomla', 'TheTeam', array('joomla-platform'), 'invalid');
 	}
@@ -133,9 +125,6 @@ class TeamsTest extends GitHubTestCase
 	 */
 	public function testEdit()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('patch')
 			->with('/teams/123')
@@ -158,9 +147,6 @@ class TeamsTest extends GitHubTestCase
 	 */
 	public function testEditWrongPermission()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->object->edit(123, 'TheTeam', 'invalid');
 	}
 
@@ -174,7 +160,6 @@ class TeamsTest extends GitHubTestCase
 	public function testDelete()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('delete')
@@ -196,9 +181,6 @@ class TeamsTest extends GitHubTestCase
 	 */
 	public function testGetListMembers()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/teams/123/members')
@@ -222,7 +204,6 @@ class TeamsTest extends GitHubTestCase
 	public function testIsMember()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('get')
@@ -247,7 +228,6 @@ class TeamsTest extends GitHubTestCase
 	public function testIsMemberNo()
 	{
 		$this->response->code = 404;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('get')
@@ -274,7 +254,6 @@ class TeamsTest extends GitHubTestCase
 	public function testIsMemberUnexpected()
 	{
 		$this->response->code = 666;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('get')
@@ -299,7 +278,6 @@ class TeamsTest extends GitHubTestCase
 	public function testAddMember()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('put')
@@ -324,7 +302,6 @@ class TeamsTest extends GitHubTestCase
 	public function testRemoveMember()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('delete')
@@ -346,9 +323,6 @@ class TeamsTest extends GitHubTestCase
 	 */
 	public function testGetListRepos()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/teams/123/repos')
@@ -370,7 +344,6 @@ class TeamsTest extends GitHubTestCase
 	public function testCheckRepo()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('get')
@@ -393,7 +366,6 @@ class TeamsTest extends GitHubTestCase
 	public function testCheckRepoNo()
 	{
 		$this->response->code = 404;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('get')
@@ -418,7 +390,6 @@ class TeamsTest extends GitHubTestCase
 	public function testCheckRepoUnexpected()
 	{
 		$this->response->code = 666;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('get')
@@ -441,7 +412,6 @@ class TeamsTest extends GitHubTestCase
 	public function testAddRepo()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('put')
@@ -464,7 +434,6 @@ class TeamsTest extends GitHubTestCase
 	public function testRemoveRepo()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('delete')
@@ -562,9 +531,6 @@ class TeamsTest extends GitHubTestCase
 	 */
 	public function testAddTeamMemberships()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('put')
 			->with('/teams/123/memberships/{user}')
@@ -603,7 +569,6 @@ class TeamsTest extends GitHubTestCase
 	public function testRemoveTeamMemberships()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('delete')
@@ -625,9 +590,6 @@ class TeamsTest extends GitHubTestCase
 	 */
 	public function testGetUserTeams()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/user/teams')

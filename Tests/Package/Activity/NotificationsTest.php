@@ -48,9 +48,6 @@ class NotificationsTest extends GitHubTestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/notifications?all=1&participating=1&since=2005-08-17T00:00:00+00:00&before=2005-08-17T00:00:00+00:00', array(), 0)
@@ -71,8 +68,6 @@ class NotificationsTest extends GitHubTestCase
 	 */
 	public function testGetListRepository()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
 		$args = 'all=1&participating=1&since=2005-08-17T00:00:00+00:00&before=2005-08-17T00:00:00+00:00';
 
 		$this->client->expects($this->once())
@@ -195,9 +190,6 @@ class NotificationsTest extends GitHubTestCase
 	 */
 	public function testViewThread()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/notifications/threads/1', array(), 0)
@@ -219,7 +211,6 @@ class NotificationsTest extends GitHubTestCase
 	public function testMarkReadThread()
 	{
 		$this->response->code = 205;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('patch')
@@ -241,9 +232,6 @@ class NotificationsTest extends GitHubTestCase
 	 */
 	public function testGetThreadSubscription()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/notifications/threads/1/subscription', array(), 0)
@@ -264,9 +252,6 @@ class NotificationsTest extends GitHubTestCase
 	 */
 	public function testSetThreadSubscription()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('put')
 			->with('/notifications/threads/1/subscription', '{"subscribed":true,"ignored":false}', array(), 0)

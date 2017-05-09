@@ -44,9 +44,6 @@ class TagsTest extends GitHubTestCase
 	 */
 	public function testGet()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/git/tags/12345', array(), 0)
@@ -66,7 +63,6 @@ class TagsTest extends GitHubTestCase
 	public function testCreate()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$data = '{"tag":"0.1","message":"Message","object":"12345","type":"commit","tagger":'
 		. '{"name":"elkuku","email":"email@example.com","date":"123456789"}}';

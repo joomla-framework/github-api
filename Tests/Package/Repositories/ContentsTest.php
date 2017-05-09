@@ -43,9 +43,6 @@ class ContentsTest extends GitHubTestCase
 	 */
 	public function testGetReadme()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/readme')
@@ -64,9 +61,6 @@ class ContentsTest extends GitHubTestCase
 	 */
 	public function testGetReadmeRef()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/readme?ref=123abc')
@@ -85,9 +79,6 @@ class ContentsTest extends GitHubTestCase
 	 */
 	public function testGet()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/contents/path/to/file.php')
@@ -106,9 +97,6 @@ class ContentsTest extends GitHubTestCase
 	 */
 	public function testGetRef()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/contents/path/to/file.php?ref=123abc')
@@ -128,7 +116,6 @@ class ContentsTest extends GitHubTestCase
 	public function testGetArchiveLink()
 	{
 		$this->response->code = 302;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('get')
@@ -149,7 +136,6 @@ class ContentsTest extends GitHubTestCase
 	public function testGetArchiveLinkRef()
 	{
 		$this->response->code = 302;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('get')
@@ -172,7 +158,6 @@ class ContentsTest extends GitHubTestCase
 	public function testGetArchiveLinkInvalidFormat()
 	{
 		$this->response->code = 302;
-		$this->response->body = $this->sampleString;
 
 		$this->object->getArchiveLink('joomla', 'joomla-platform', 'invalid');
 	}
@@ -185,7 +170,6 @@ class ContentsTest extends GitHubTestCase
 	public function testCreate()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('put')
@@ -238,9 +222,6 @@ class ContentsTest extends GitHubTestCase
 	 */
 	public function testUpdate()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('put')
 			->with('/repos/joomla/joomla-platform/contents/src/foo')
@@ -292,9 +273,6 @@ class ContentsTest extends GitHubTestCase
 	 */
 	public function testDelete()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('delete')
 			->with('/repos/joomla/joomla-platform/contents/src/foo')

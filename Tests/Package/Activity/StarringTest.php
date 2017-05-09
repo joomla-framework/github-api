@@ -48,9 +48,6 @@ class StarringTest extends GitHubTestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/stargazers', array(), 0)
@@ -71,9 +68,6 @@ class StarringTest extends GitHubTestCase
 	 */
 	public function testGetRepositories()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/user/starred?sort=created&direction=desc', array(), 0)
@@ -94,9 +88,6 @@ class StarringTest extends GitHubTestCase
 	 */
 	public function testGetRepositoriesWithName()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/users/{user}/starred?sort=created&direction=desc', array(), 0)
@@ -220,7 +211,6 @@ class StarringTest extends GitHubTestCase
 	public function testStar()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('put')

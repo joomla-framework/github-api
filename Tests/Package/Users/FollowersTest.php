@@ -47,9 +47,6 @@ class FollowersTest extends GitHubTestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/user/followers')
@@ -70,9 +67,6 @@ class FollowersTest extends GitHubTestCase
 	 */
 	public function testGetListWithUser()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/users/joomla/followers')
@@ -93,9 +87,6 @@ class FollowersTest extends GitHubTestCase
 	 */
 	public function testGetListFollowedBy()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/user/following')
@@ -116,9 +107,6 @@ class FollowersTest extends GitHubTestCase
 	 */
 	public function testGetListFollowedByWithUser()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/users/joomla/following')

@@ -48,7 +48,6 @@ class CommentsTest extends GitHubTestCase
 	public function testCreate()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 		$data = '{"body":"The Body","commit_id":"123abc","path":"a\/b\/c","position":456}';
 
 		$this->client->expects($this->once())
@@ -72,7 +71,6 @@ class CommentsTest extends GitHubTestCase
 	public function testCreateReply()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')
@@ -140,9 +138,6 @@ class CommentsTest extends GitHubTestCase
 	 */
 	public function testGet()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/pulls/comments/456', array(), 0)
@@ -163,9 +158,6 @@ class CommentsTest extends GitHubTestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/pulls/456/comments', array(), 0)
@@ -186,9 +178,6 @@ class CommentsTest extends GitHubTestCase
 	 */
 	public function testGetListForRepo()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/{user}/{repo}/pulls/comments', [], 0)

@@ -45,7 +45,6 @@ class ForksTest extends GitHubTestCase
 	public function testCreate()
 	{
 		$this->response->code = 202;
-		$this->response->body = $this->sampleString;
 
 		// Build the request data.
 		$data = json_encode(
@@ -97,9 +96,6 @@ class ForksTest extends GitHubTestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/forks')
