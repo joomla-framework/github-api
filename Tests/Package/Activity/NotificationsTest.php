@@ -10,7 +10,9 @@ use Joomla\Github\Package\Activity\Notifications;
 use Joomla\Github\Tests\Stub\GitHubTestCase;
 
 /**
- * Test class for the GitHub API package.
+ * Test class.
+ *
+ * @covers \Joomla\Github\Package\Activity\Notifications
  *
  * @since  1.0
  */
@@ -38,7 +40,9 @@ class NotificationsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the getList method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Activity\Notifications::getList()
 	 *
 	 * @return  void
 	 */
@@ -49,17 +53,19 @@ class NotificationsTest extends GitHubTestCase
 
 		$this->client->expects($this->once())
 			->method('get')
-			->with('/notifications?all=1&participating=1', array(), 0)
+			->with('/notifications?all=1&participating=1&since=2005-08-17T00:00:00+00:00&before=2005-08-17T00:00:00+00:00', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
-			$this->object->getList(),
+			$this->object->getList(true, true, new \DateTime('2005-8-17'), new  \DateTime('2005-8-17')),
 			$this->equalTo(json_decode($this->response->body))
 		);
 	}
 
 	/**
-	 * Tests the getListRepository method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Activity\Notifications::getListRepository()
 	 *
 	 * @return  void
 	 */
@@ -70,17 +76,19 @@ class NotificationsTest extends GitHubTestCase
 
 		$this->client->expects($this->once())
 			->method('get')
-			->with('/repos/joomla/joomla-platform/notifications?all=1&participating=1', array(), 0)
+			->with('/repos/{owner}/{repo}/notifications?all=1&participating=1&since=2005-08-17T00:00:00+00:00&before=2005-08-17T00:00:00+00:00', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
-			$this->object->getListRepository('joomla', 'joomla-platform'),
+			$this->object->getListRepository('{owner}', '{repo}', true, true, new \DateTime('2005-8-17'), new  \DateTime('2005-8-17')),
 			$this->equalTo(json_decode($this->response->body))
 		);
 	}
 
 	/**
-	 * Tests the markRead method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Activity\Notifications::markRead()
 	 *
 	 * @return  void
 	 */
@@ -101,7 +109,9 @@ class NotificationsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the markReadLastRead method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Activity\Notifications::markRead()
 	 *
 	 * @return  void
 	 */
@@ -125,7 +135,9 @@ class NotificationsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the markReadRepository method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Activity\Notifications::markReadRepository()
 	 *
 	 * @return  void
 	 */
@@ -148,7 +160,9 @@ class NotificationsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the markReadRepositoryLastRead method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Activity\Notifications::markReadRepository()
 	 *
 	 * @return  void
 	 */
@@ -172,7 +186,9 @@ class NotificationsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the viewThread method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Activity\Notifications::viewThread()
 	 *
 	 * @return  void
 	 */
@@ -193,7 +209,9 @@ class NotificationsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the markReadThread method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Activity\Notifications::markReadThread()
 	 *
 	 * @return  void
 	 */
@@ -214,7 +232,9 @@ class NotificationsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the getThreadSubscription method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Activity\Notifications::getThreadSubscription()
 	 *
 	 * @return  void
 	 */
@@ -235,7 +255,9 @@ class NotificationsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the setThreadSubscription method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Activity\Notifications::setThreadSubscription()
 	 *
 	 * @return  void
 	 */
@@ -256,7 +278,9 @@ class NotificationsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the deleteThreadSubscription method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Activity\Notifications::deleteThreadSubscription()
 	 *
 	 * @return  void
 	 */
