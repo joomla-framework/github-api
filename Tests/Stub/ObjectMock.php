@@ -15,6 +15,7 @@ use Joomla\Github\AbstractGithubObject;
  */
 class ObjectMock extends AbstractGithubObject
 {
+	// @codingStandardsIgnoreStart
 	/**
 	 * Method to build and return a full request URL for the request.  This method will
 	 * add appropriate pagination details if necessary and also prepend the API url
@@ -32,4 +33,5 @@ class ObjectMock extends AbstractGithubObject
 	{
 		return parent::fetchUrl($path, $page, $limit);
 	}
+	// @codingStandardsIgnoreEnd
 }
