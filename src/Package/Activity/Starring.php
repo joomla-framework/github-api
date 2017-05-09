@@ -81,7 +81,7 @@ class Starring extends AbstractPackage
 
 		// Build the request path.
 		$path = ($user)
-			? '/users' . $user . '/starred'
+			? '/users/' . $user . '/starred'
 			: '/user/starred';
 
 		$path .= "?sort=$sort&direction=$direction";
