@@ -195,7 +195,8 @@ class ContentsTest extends GitHubTestCase
 		$this->assertThat(
 			$this->object->create(
 				'joomla', 'joomla-platform', 'src/foo', 'my Message', 'ABC123def', 'xxbranch',
-				'eddieajau', 'eddieajau@example.com', 'elkuku', 'elkuku@example.com'),
+				'eddieajau', 'eddieajau@example.com', 'elkuku', 'elkuku@example.com'
+			),
 			$this->equalTo(json_decode($this->sampleString))
 		);
 	}
@@ -211,7 +212,8 @@ class ContentsTest extends GitHubTestCase
 	{
 		$this->object->create(
 			'joomla', 'joomla-platform', 'src/foo', 'my Message', 'ABC123def', 'xxbranch',
-			'eddieajau', '', 'elkuku', 'elkuku@example.com');
+			'eddieajau', '', 'elkuku', 'elkuku@example.com'
+		);
 	}
 
 	/**
@@ -225,7 +227,8 @@ class ContentsTest extends GitHubTestCase
 	{
 		$this->object->create(
 			'joomla', 'joomla-platform', 'src/foo', 'my Message', 'ABC123def', 'xxbranch',
-			'eddieajau', 'eddieajau@example.com', 'elkuku', '');
+			'eddieajau', 'eddieajau@example.com', 'elkuku', ''
+		);
 	}
 
 	/**
@@ -246,7 +249,8 @@ class ContentsTest extends GitHubTestCase
 		$this->assertThat(
 			$this->object->update(
 				'joomla', 'joomla-platform', 'src/foo', 'my Message', 'ABC123def', 'abcd1234', 'xxbranch',
-				'eddieajau', 'eddieajau@example.com', 'elkuku', 'elkuku@example.com'),
+				'eddieajau', 'eddieajau@example.com', 'elkuku', 'elkuku@example.com'
+			),
 			$this->equalTo(json_decode($this->sampleString))
 		);
 	}
@@ -262,7 +266,8 @@ class ContentsTest extends GitHubTestCase
 	{
 		$this->object->update(
 			'joomla', 'joomla-platform', 'src/foo', 'my Message', 'ABC123def', 'abcd1234', 'xxbranch',
-			'eddieajau', '', 'elkuku', 'elkuku@example.com');
+			'eddieajau', '', 'elkuku', 'elkuku@example.com'
+		);
 	}
 
 	/**
@@ -276,7 +281,8 @@ class ContentsTest extends GitHubTestCase
 	{
 		$this->object->update(
 			'joomla', 'joomla-platform', 'src/foo', 'my Message', 'ABC123def', 'abcd1234', 'xxbranch',
-			'eddieajau', 'eddieajau@example.com', 'elkuku', '');
+			'eddieajau', 'eddieajau@example.com', 'elkuku', ''
+		);
 	}
 
 	/**
@@ -297,7 +303,8 @@ class ContentsTest extends GitHubTestCase
 		$this->assertThat(
 			$this->object->delete(
 				'joomla', 'joomla-platform', 'src/foo', 'my Message', 'ABC123def', 'xxbranch',
-				'eddieajau', 'eddieajau@example.com', 'elkuku', 'elkuku@example.com'),
+				'eddieajau', 'eddieajau@example.com', 'elkuku', 'elkuku@example.com'
+			),
 			$this->equalTo(json_decode($this->sampleString))
 		);
 	}
@@ -313,7 +320,8 @@ class ContentsTest extends GitHubTestCase
 	{
 		$this->object->delete(
 			'joomla', 'joomla-platform', 'src/foo', 'my Message', 'ABC123def', 'xxbranch',
-			'eddieajau', '', 'elkuku', 'elkuku@example.com');
+			'eddieajau', '', 'elkuku', 'elkuku@example.com'
+		);
 	}
 
 	/**
@@ -327,6 +335,7 @@ class ContentsTest extends GitHubTestCase
 	{
 		$this->object->delete(
 			'joomla', 'joomla-platform', 'src/foo', 'my Message', 'ABC123def', 'xxbranch',
-			'eddieajau', 'eddieajau@example.com', 'elkuku', '');
+			'eddieajau', 'eddieajau@example.com', 'elkuku', ''
+		);
 	}
 }

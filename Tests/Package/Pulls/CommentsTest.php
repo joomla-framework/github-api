@@ -49,10 +49,11 @@ class CommentsTest extends GitHubTestCase
 	{
 		$this->response->code = 201;
 		$this->response->body = $this->sampleString;
+		$data = '{"body":"The Body","commit_id":"123abc","path":"a\/b\/c","position":456}';
 
 		$this->client->expects($this->once())
 			->method('post')
-			->with('/repos/joomla/joomla-platform/pulls/1/comments', '{"body":"The Body","commit_id":"123abc","path":"a\/b\/c","position":456}', array(), 0)
+			->with('/repos/joomla/joomla-platform/pulls/1/comments', $data, array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(

@@ -52,7 +52,7 @@ class HttpTest extends GitHubTestCase
 	 *
 	 * @since   1.0
 	 */
-	public function test__Construct()
+	public function testConstruct()
 	{
 		// Verify the options are set in the object
 		$this->assertThat(

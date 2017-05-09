@@ -73,10 +73,11 @@ class NotificationsTest extends GitHubTestCase
 	{
 		$this->response->code = 200;
 		$this->response->body = $this->sampleString;
+		$args = 'all=1&participating=1&since=2005-08-17T00:00:00+00:00&before=2005-08-17T00:00:00+00:00';
 
 		$this->client->expects($this->once())
 			->method('get')
-			->with('/repos/{owner}/{repo}/notifications?all=1&participating=1&since=2005-08-17T00:00:00+00:00&before=2005-08-17T00:00:00+00:00', array(), 0)
+			->with('/repos/{owner}/{repo}/notifications?' . $args, array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(

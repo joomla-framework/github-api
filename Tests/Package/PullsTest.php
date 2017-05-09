@@ -59,7 +59,8 @@ class JGithubPackagePullsTest extends GitHubTestCase
 
 		$this->assertThat(
 			$this->object->create('joomla', 'joomla-platform', 'My Pull Request', 'staging', 'joomla-jenkins:mychanges',
-				'These are my changes - please review them'),
+				'These are my changes - please review them'
+			),
 			$this->equalTo(json_decode($this->sampleString))
 		);
 	}
@@ -88,7 +89,8 @@ class JGithubPackagePullsTest extends GitHubTestCase
 			->will($this->returnValue($this->response));
 
 		$this->object->create('joomla', 'joomla-platform', 'My Pull Request', 'staging', 'joomla-jenkins:mychanges',
-			'These are my changes - please review them');
+			'These are my changes - please review them'
+		);
 	}
 
 	/**

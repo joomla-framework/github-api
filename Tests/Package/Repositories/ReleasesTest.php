@@ -139,9 +139,9 @@ class ReleasesTest extends GitHubTestCase
 
 		$releases = array();
 
-		foreach (json_decode($this->response->body) as $release)
+		foreach (json_decode($this->response->body) as $i => $release)
 		{
-			$releases[$release->tag_name] = $release;
+			$releases[$i + 1] = $release;
 		}
 
 		$this->client->expects($this->once())

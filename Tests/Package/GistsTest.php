@@ -168,6 +168,7 @@ class GistsTest extends GitHubTestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -228,6 +229,7 @@ class GistsTest extends GitHubTestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -279,6 +281,7 @@ class GistsTest extends GitHubTestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -330,6 +333,7 @@ class GistsTest extends GitHubTestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -424,6 +428,7 @@ class GistsTest extends GitHubTestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -484,6 +489,7 @@ class GistsTest extends GitHubTestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -538,6 +544,7 @@ class GistsTest extends GitHubTestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -592,6 +599,7 @@ class GistsTest extends GitHubTestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -646,6 +654,7 @@ class GistsTest extends GitHubTestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -700,6 +709,7 @@ class GistsTest extends GitHubTestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -754,6 +764,7 @@ class GistsTest extends GitHubTestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -808,6 +819,7 @@ class GistsTest extends GitHubTestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -862,6 +874,7 @@ class GistsTest extends GitHubTestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -916,6 +929,7 @@ class GistsTest extends GitHubTestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -970,6 +984,7 @@ class GistsTest extends GitHubTestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -1024,6 +1039,7 @@ class GistsTest extends GitHubTestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -1078,6 +1094,7 @@ class GistsTest extends GitHubTestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -1153,6 +1170,7 @@ class GistsTest extends GitHubTestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -1204,6 +1222,7 @@ class GistsTest extends GitHubTestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -1255,6 +1274,7 @@ class GistsTest extends GitHubTestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 }
