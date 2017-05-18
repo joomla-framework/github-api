@@ -1,23 +1,25 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2017 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Github\Tests;
 
-use Joomla\Github\Package\Orgs;
+use Joomla\Github\Package\Repositories\Branches;
 use Joomla\Github\Tests\Stub\GitHubTestCase;
 
 /**
- * Test class for Orgs.
+ * Test class.
+ *
+ * @covers \Joomla\Github\Package\Repositories\Branches
  *
  * @since  1.0
  */
-class OrgsTest extends GitHubTestCase
+class BranchesTest extends GitHubTestCase
 {
 	/**
-	 * @var Orgs
+	 * @var Branches
 	 */
 	protected $object;
 
@@ -33,11 +35,13 @@ class OrgsTest extends GitHubTestCase
 	{
 		parent::setUp();
 
-		$this->object = new Orgs($this->options, $this->client);
+		$this->object = new Branches($this->options, $this->client);
 	}
 
 	/**
-	 * Tests the getList method
+	 * Tests the GetList method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Branches::getList()
 	 *
 	 * @return  void
 	 */
@@ -45,17 +49,19 @@ class OrgsTest extends GitHubTestCase
 	{
 		$this->client->expects($this->once())
 			->method('get')
-			->with('/users/joomla/orgs')
+			->with('/repos/{owner}/{repo}/branches')
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
-			$this->object->getList('joomla'),
+			$this->object->getList('{owner}', '{repo}'),
 			$this->equalTo(json_decode($this->sampleString))
 		);
 	}
 
 	/**
-	 * Tests the get method
+	 * Tests the Get method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Branches::get()
 	 *
 	 * @return  void
 	 */
@@ -63,29 +69,11 @@ class OrgsTest extends GitHubTestCase
 	{
 		$this->client->expects($this->once())
 			->method('get')
-			->with('/orgs/joomla')
+			->with('/repos/{owner}/{repo}/branches/{branch}')
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
-			$this->object->get('joomla'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
-
-	/**
-	 * Tests the edit method
-	 *
-	 * @return  void
-	 */
-	public function testEdit()
-	{
-		$this->client->expects($this->once())
-			->method('patch')
-			->with('/orgs/joomla')
-			->will($this->returnValue($this->response));
-
-		$this->assertThat(
-			$this->object->edit('joomla', 'email@example.com'),
+			$this->object->get('{owner}', '{repo}', '{branch}'),
 			$this->equalTo(json_decode($this->sampleString))
 		);
 	}

@@ -44,7 +44,7 @@ class GithubTest extends GitHubTestCase
 	 *
 	 * @since   1.0
 	 */
-	public function test__GetForks()
+	public function testGetForks()
 	{
 		$this->assertThat(
 			$this->object->repositories->forks,
@@ -59,7 +59,7 @@ class GithubTest extends GitHubTestCase
 	 *
 	 * @since   1.0
 	 */
-	public function test__GetCommits()
+	public function testGetCommits()
 	{
 		$this->assertThat(
 			$this->object->repositories->commits,
@@ -74,7 +74,7 @@ class GithubTest extends GitHubTestCase
 	 *
 	 * @since   1.0
 	 */
-	public function test__GetStatuses()
+	public function testGetStatuses()
 	{
 		$this->assertThat(
 			$this->object->repositories->statuses,
@@ -89,7 +89,7 @@ class GithubTest extends GitHubTestCase
 	 *
 	 * @since   1.0
 	 */
-	public function test__GetHooks()
+	public function testGetHooks()
 	{
 		$this->assertThat(
 			$this->object->repositories->hooks,
@@ -105,7 +105,7 @@ class GithubTest extends GitHubTestCase
 	 * @since              1.0
 	 * @expectedException  \InvalidArgumentException
 	 */
-	public function test__GetFailure()
+	public function testGetFailure()
 	{
 		$this->object->other;
 	}

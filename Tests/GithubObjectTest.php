@@ -50,7 +50,9 @@ class GithubObjectTest extends GitHubTestCase
 			'Standard github - no pagination data' => array('https://api.github.com', '/gists', 0, 0, 'https://api.github.com/gists'),
 			'Enterprise github - no pagination data' => array('https://mygithub.com', '/gists', 0, 0, 'https://mygithub.com/gists'),
 			'Standard github - page 3' => array('https://api.github.com', '/gists', 3, 0, 'https://api.github.com/gists?page=3'),
-			'Enterprise github - page 3, 50 per page' => array('https://mygithub.com', '/gists', 3, 50, 'https://mygithub.com/gists?page=3&per_page=50'),
+			'Enterprise github - page 3, 50 per page' => array(
+				'https://mygithub.com', '/gists', 3, 50, 'https://mygithub.com/gists?page=3&per_page=50'
+			),
 		);
 	}
 

@@ -44,7 +44,7 @@ class PackageTest extends GitHubTestCase
 	 *
 	 * @since   1.0
 	 */
-	public function test__Get()
+	public function testGet()
 	{
 		$this->assertThat(
 			$this->object->repositories->forks,
@@ -61,7 +61,7 @@ class PackageTest extends GitHubTestCase
 	 *
 	 * @expectedException \InvalidArgumentException
 	 */
-	public function test__GetInvalid()
+	public function testGetInvalid()
 	{
 		$this->object->repositories->INVALID;
 	}

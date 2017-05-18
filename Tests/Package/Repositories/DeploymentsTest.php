@@ -43,9 +43,6 @@ class DeploymentsTest extends GitHubTestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/{owner}/{repo}/deployments?sha={sha}&ref={ref}&task={task}&environment={environment}')
@@ -65,7 +62,6 @@ class DeploymentsTest extends GitHubTestCase
 	public function testCreate()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')
@@ -91,7 +87,6 @@ class DeploymentsTest extends GitHubTestCase
 	public function testCreateMergeConflict()
 	{
 		$this->response->code = 409;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')
@@ -114,7 +109,6 @@ class DeploymentsTest extends GitHubTestCase
 	public function testCreateFailure()
 	{
 		$this->response->code = 666;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')
@@ -134,9 +128,6 @@ class DeploymentsTest extends GitHubTestCase
 	 */
 	public function testGetDeploymentStatuses()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/{owner}/{repo}/deployments/123/statuses')
@@ -156,7 +147,6 @@ class DeploymentsTest extends GitHubTestCase
 	public function testCreateStatus()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')

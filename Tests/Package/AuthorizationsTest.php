@@ -46,16 +46,16 @@ class AuthorizationsTest extends GitHubTestCase
 	public function testCreate()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
-		$authorisation = new \stdClass;
-		$authorisation->scopes = array('public_repo');
-		$authorisation->note = 'My test app';
-		$authorisation->note_url = 'http://www.joomla.org';
+		$authorisation = '{'
+			. '"scopes":["public_repo"],'
+			. '"note":"My test app",'
+			. '"note_url":"http:\/\/www.joomla.org"'
+			. '}';
 
 		$this->client->expects($this->once())
 			->method('post')
-			->with('/authorizations', json_encode($authorisation))
+			->with('/authorizations', $authorisation)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -78,14 +78,15 @@ class AuthorizationsTest extends GitHubTestCase
 		$this->response->code = 500;
 		$this->response->body = $this->errorString;
 
-		$authorisation = new \stdClass;
-		$authorisation->scopes = array('public_repo');
-		$authorisation->note = 'My test app';
-		$authorisation->note_url = 'http://www.joomla.org';
+		$authorisation = '{'
+			. '"scopes":["public_repo"],'
+			. '"note":"My test app",'
+			. '"note_url":"http:\/\/www.joomla.org"'
+			. '}';
 
 		$this->client->expects($this->once())
 			->method('post')
-			->with('/authorizations', json_encode($authorisation))
+			->with('/authorizations', $authorisation)
 			->will($this->returnValue($this->response));
 
 		try
@@ -101,6 +102,7 @@ class AuthorizationsTest extends GitHubTestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -114,7 +116,6 @@ class AuthorizationsTest extends GitHubTestCase
 	public function testDelete()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('delete')
@@ -159,6 +160,7 @@ class AuthorizationsTest extends GitHubTestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -172,7 +174,6 @@ class AuthorizationsTest extends GitHubTestCase
 	public function testDeleteGrant()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('delete')
@@ -217,6 +218,7 @@ class AuthorizationsTest extends GitHubTestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -229,17 +231,15 @@ class AuthorizationsTest extends GitHubTestCase
 	 */
 	public function testEditAddScopes()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
-		$authorisation = new \stdClass;
-		$authorisation->add_scopes = array('public_repo', 'gist');
-		$authorisation->note = 'My test app';
-		$authorisation->note_url = 'http://www.joomla.org';
+		$authorisation = '{'
+			. '"add_scopes":["public_repo","gist"],'
+			. '"note":"My test app",'
+			. '"note_url":"http:\/\/www.joomla.org"'
+			. '}';
 
 		$this->client->expects($this->once())
 			->method('patch')
-			->with('/authorizations/42', json_encode($authorisation))
+			->with('/authorizations/42', $authorisation)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -257,17 +257,15 @@ class AuthorizationsTest extends GitHubTestCase
 	 */
 	public function testEditRemoveScopes()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
-		$authorisation = new \stdClass;
-		$authorisation->remove_scopes = array('public_repo', 'gist');
-		$authorisation->note = 'My test app';
-		$authorisation->note_url = 'http://www.joomla.org';
+		$authorisation = '{'
+			. '"remove_scopes":["public_repo","gist"],'
+			. '"note":"My test app",'
+			. '"note_url":"http:\/\/www.joomla.org"'
+			. '}';
 
 		$this->client->expects($this->once())
 			->method('patch')
-			->with('/authorizations/42', json_encode($authorisation))
+			->with('/authorizations/42', $authorisation)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -285,17 +283,15 @@ class AuthorizationsTest extends GitHubTestCase
 	 */
 	public function testEditScopes()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
-		$authorisation = new \stdClass;
-		$authorisation->scopes = array('public_repo', 'gist');
-		$authorisation->note = 'My test app';
-		$authorisation->note_url = 'http://www.joomla.org';
+		$authorisation = '{'
+			. '"scopes":["public_repo","gist"],'
+			. '"note":"My test app",'
+			. '"note_url":"http:\/\/www.joomla.org"'
+			. '}';
 
 		$this->client->expects($this->once())
 			->method('patch')
-			->with('/authorizations/42', json_encode($authorisation))
+			->with('/authorizations/42', $authorisation)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -318,14 +314,15 @@ class AuthorizationsTest extends GitHubTestCase
 		$this->response->code = 500;
 		$this->response->body = $this->errorString;
 
-		$authorisation = new \stdClass;
-		$authorisation->add_scopes = array('public_repo', 'gist');
-		$authorisation->note = 'My test app';
-		$authorisation->note_url = 'http://www.joomla.org';
+		$authorisation = '{'
+			. '"add_scopes":["public_repo","gist"],'
+			. '"note":"My test app",'
+			. '"note_url":"http:\/\/www.joomla.org"'
+			. '}';
 
 		$this->client->expects($this->once())
 			->method('patch')
-			->with('/authorizations/42', json_encode($authorisation))
+			->with('/authorizations/42', $authorisation)
 			->will($this->returnValue($this->response));
 
 		try
@@ -341,6 +338,7 @@ class AuthorizationsTest extends GitHubTestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -367,9 +365,6 @@ class AuthorizationsTest extends GitHubTestCase
 	 */
 	public function testGet()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/authorizations/42')
@@ -412,9 +407,6 @@ class AuthorizationsTest extends GitHubTestCase
 	 */
 	public function testGetGrant()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/authorizations/grants/42')
@@ -457,9 +449,6 @@ class AuthorizationsTest extends GitHubTestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/authorizations')
@@ -502,9 +491,6 @@ class AuthorizationsTest extends GitHubTestCase
 	 */
 	public function testGetListGrants()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/authorizations/grants')
@@ -547,9 +533,6 @@ class AuthorizationsTest extends GitHubTestCase
 	 */
 	public function testGetRateLimit()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/rate_limit')
@@ -568,7 +551,7 @@ class AuthorizationsTest extends GitHubTestCase
 	 *
 	 * @since   1.0
 	 */
-	public function testGetRateLimit_unlimited()
+	public function testGetRateLimitUnlimited()
 	{
 		$this->response->code = 404;
 		$this->response->body = '';
@@ -708,7 +691,6 @@ class AuthorizationsTest extends GitHubTestCase
 	public function testRevokeGrantForApplication()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('delete')

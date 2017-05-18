@@ -52,9 +52,6 @@ class MetaTest extends GitHubTestCase
 	 */
 	public function testGetMeta()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$decodedResponse = new \stdClass;
 		$decodedResponse->hooks = array('127.0.0.1/32', '192.168.1.1/32', '10.10.1.1/27');
 		$decodedResponse->git   = array('127.0.0.1/32');

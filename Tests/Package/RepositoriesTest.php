@@ -43,9 +43,6 @@ class RepositoriesTest extends GitHubTestCase
 	 */
 	public function testGetListOwn()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/user/repos?type=all&sort=full_name&direction=asc', array(), 0)
@@ -100,9 +97,6 @@ class RepositoriesTest extends GitHubTestCase
 	 */
 	public function testGetListUser()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/users/joomla/repos?type=all&sort=full_name&direction=asc', array(), 0)
@@ -157,9 +151,6 @@ class RepositoriesTest extends GitHubTestCase
 	 */
 	public function testGetListOrg()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/orgs/joomla/repos?type=all', array(), 0)
@@ -178,9 +169,6 @@ class RepositoriesTest extends GitHubTestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repositories', array(), 0)
@@ -200,7 +188,6 @@ class RepositoriesTest extends GitHubTestCase
 	public function testCreate()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')
@@ -225,7 +212,6 @@ class RepositoriesTest extends GitHubTestCase
 	public function testCreateWithOrg()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')
@@ -249,9 +235,6 @@ class RepositoriesTest extends GitHubTestCase
 	 */
 	public function testGet()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-cms', array(), 0)
@@ -282,14 +265,12 @@ class RepositoriesTest extends GitHubTestCase
 	 */
 	public function testEdit()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('patch')
 			->with(
 				'/repos/joomla/joomla-test',
-				'{"name":"joomla-test-1","description":"","homepage":"","private":false,"has_issues":false,"has_wiki":false,"has_downloads":false,"default_branch":""}',
+				'{"name":"joomla-test-1","description":"","homepage":"","private":'
+					. 'false,"has_issues":false,"has_wiki":false,"has_downloads":false,"default_branch":""}',
 				array()
 			)
 			->will($this->returnValue($this->response));
@@ -307,9 +288,6 @@ class RepositoriesTest extends GitHubTestCase
 	 */
 	public function testGetListContributors()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-cms/contributors', array(), 0)
@@ -328,9 +306,6 @@ class RepositoriesTest extends GitHubTestCase
 	 */
 	public function testGetListLanguages()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-cms/languages', array(), 0)
@@ -349,9 +324,6 @@ class RepositoriesTest extends GitHubTestCase
 	 */
 	public function testGetListTeams()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-cms/teams', array(), 0)
@@ -370,9 +342,6 @@ class RepositoriesTest extends GitHubTestCase
 	 */
 	public function testGetListTags()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-cms/tags', array(), 0)
@@ -391,9 +360,6 @@ class RepositoriesTest extends GitHubTestCase
 	 */
 	public function testDelete()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('delete')
 			->with('/repos/joomla/joomla-cms', array(), 0)

@@ -10,7 +10,9 @@ use Joomla\Github\Package\Activity\Starring;
 use Joomla\Github\Tests\Stub\GitHubTestCase;
 
 /**
- * Test class for the GitHub API package.
+ * Test class.
+ *
+ * @covers \Joomla\Github\Package\Activity\Starring
  *
  * @since  1.0
  */
@@ -38,15 +40,14 @@ class StarringTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the getList method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Activity\Starring::getList()
 	 *
 	 * @return  void
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/stargazers', array(), 0)
@@ -59,15 +60,14 @@ class StarringTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the getRepositories method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Activity\Starring::getRepositories()
 	 *
 	 * @return  void
 	 */
 	public function testGetRepositories()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/user/starred?sort=created&direction=desc', array(), 0)
@@ -80,7 +80,31 @@ class StarringTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the getRepositories method - invalid sort option
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Activity\Starring::getRepositories()
+	 *
+	 * @return  void
+	 */
+	public function testGetRepositoriesWithName()
+	{
+		$this->client->expects($this->once())
+			->method('get')
+			->with('/users/{user}/starred?sort=created&direction=desc', array(), 0)
+			->will($this->returnValue($this->response));
+
+		$this->assertThat(
+			$this->object->getRepositories('{user}'),
+			$this->equalTo(json_decode($this->response->body))
+		);
+	}
+
+	/**
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Activity\Starring::getRepositories()
+	 *
+	 * Invalid sort option
 	 *
 	 * @return  void
 	 *
@@ -92,7 +116,11 @@ class StarringTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the getRepositories method - invalid direction option
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Activity\Starring::getRepositories()
+	 *
+	 * Invalid direction option
 	 *
 	 * @return  void
 	 *
@@ -104,7 +132,9 @@ class StarringTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the check method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Activity\Starring::check()
 	 *
 	 * @return  void
 	 */
@@ -125,7 +155,9 @@ class StarringTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the checkFalse method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Activity\Starring::check()
 	 *
 	 * @return  void
 	 */
@@ -146,7 +178,9 @@ class StarringTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the checkUnexpected method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Activity\Starring::check()
 	 *
 	 * @expectedException \UnexpectedValueException
 	 * @return  void
@@ -168,14 +202,15 @@ class StarringTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the star method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Activity\Starring::star()
 	 *
 	 * @return  void
 	 */
 	public function testStar()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('put')
@@ -189,7 +224,9 @@ class StarringTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the unstar method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Activity\Starring::unstar()
 	 *
 	 * @return  void
 	 */

@@ -210,7 +210,7 @@ class AssigneesTest extends GitHubTestCase
 
 		$this->client->expects($this->once())
 			->method('delete')
-			->with('/repos/' . $this->owner . '/' . $this->repo . '/issues/123/assignees', array(), null, json_encode(array('assignees' => array('joomla'))))
+			->with('/repos/' . $this->owner . '/' . $this->repo . '/issues/123/assignees', [], null, json_encode(['assignees' => ['joomla']]))
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(

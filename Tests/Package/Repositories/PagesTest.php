@@ -43,9 +43,6 @@ class PagesTest extends GitHubTestCase
 	 */
 	public function testGetInfo()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/{owner}/{repo}/pages')
@@ -64,9 +61,6 @@ class PagesTest extends GitHubTestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/{owner}/{repo}/pages/builds')
@@ -85,9 +79,6 @@ class PagesTest extends GitHubTestCase
 	 */
 	public function testGetLatest()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/{owner}/{repo}/pages/builds/latest')

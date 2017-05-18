@@ -45,7 +45,6 @@ class MergingTest extends GitHubTestCase
 	public function testPerform()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')
@@ -68,7 +67,6 @@ class MergingTest extends GitHubTestCase
 	public function testPerformNoOp()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')
@@ -91,7 +89,6 @@ class MergingTest extends GitHubTestCase
 	public function testPerformMissing()
 	{
 		$this->response->code = 404;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')
@@ -114,7 +111,6 @@ class MergingTest extends GitHubTestCase
 	public function testPerformConflict()
 	{
 		$this->response->code = 409;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')
@@ -137,7 +133,6 @@ class MergingTest extends GitHubTestCase
 	public function testPerformUnexpected()
 	{
 		$this->response->code = 666;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')
