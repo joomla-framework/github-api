@@ -60,11 +60,40 @@ class IssuesTest extends GitHubTestCase
 
 		$this->client->expects($this->once())
 			->method('post')
-			->with('/repos/joomla/joomla-platform/issues', json_encode($issue))
+			->with('/repos/{user}/{repo}/issues', json_encode($issue))
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
-			$this->object->create('joomla', 'joomla-platform', '{title}', '{body}', 'JoeUser', '11.5', ['TestLabel'], ['joomla']),
+			$this->object->create('{user}', '{repo}', '{title}', '{body}', '{assignee}', '{milestone}', array('{label1}')),
+			$this->equalTo(json_decode($this->sampleString))
+		);
+	}
+
+	/**
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Issues::create()
+	 *
+	 * @return void
+	 */
+	public function testCreate2()
+	{
+		$this->response->code = 201;
+
+		$issue = new \stdClass;
+		$issue->title = '{title}';
+		$issue->milestone = '{milestone}';
+		$issue->labels = array('{label1}');
+		$issue->body = '{body}';
+		$issue->assignees = array('{assignee1}');
+
+		$this->client->expects($this->once())
+			->method('post')
+			->with('/repos/{user}/{repo}/issues', json_encode($issue))
+			->will($this->returnValue($this->response));
+
+		$this->assertThat(
+			$this->object->create('{user}', '{repo}', '{title}', '{body}', null, '{milestone}', array('{label1}'), array('{assignee1}')),
 			$this->equalTo(json_decode($this->sampleString))
 		);
 	}
@@ -86,19 +115,18 @@ class IssuesTest extends GitHubTestCase
 		$this->response->body = $this->errorString;
 
 		$issue = new \stdClass;
-		$issue->title = 'My issue';
-		$issue->assignee = 'JoeUser';
-		$issue->milestone = '11.5';
+		$issue->title = '{title}';
+		$issue->milestone = '{milestone}';
 		$issue->labels = array();
 		$issue->body = '{body}';
 		$issue->assignees = array('joomla');
 
 		$this->client->expects($this->once())
 			->method('post')
-			->with('/repos/joomla/joomla-platform/issues', json_encode($issue))
+			->with('/repos/{user}/{repo}/issues', json_encode($issue))
 			->will($this->returnValue($this->response));
 
-		$this->object->create('joomla', 'joomla-platform', 'My issue', '{body}', 'JoeUser', '11.5', array(), array('joomla'));
+		$this->object->create('{user}', '{repo}', '{title}', '{body}', '{assignee]', '{milestone}', array('{label1}'), array('{assignee1]'));
 	}
 
 	/**
