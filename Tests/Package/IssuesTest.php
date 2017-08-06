@@ -52,11 +52,10 @@ class IssuesTest extends GitHubTestCase
 
 		$issue = new \stdClass;
 		$issue->title = '{title}';
-		$issue->assignee = 'JoeUser';
-		$issue->milestone = '11.5';
-		$issue->labels = ['TestLabel'];
+		$issue->milestone = '{milestone}';
+		$issue->labels = ['{label1}'];
 		$issue->body = '{body}';
-		$issue->assignees = ['joomla'];
+		$issue->assignee = '{assignee}';
 
 		$this->client->expects($this->once())
 			->method('post')
@@ -117,16 +116,16 @@ class IssuesTest extends GitHubTestCase
 		$issue = new \stdClass;
 		$issue->title = '{title}';
 		$issue->milestone = '{milestone}';
-		$issue->labels = array();
+		$issue->labels = array('{label1}');
 		$issue->body = '{body}';
-		$issue->assignees = array('joomla');
+		$issue->assignee = '{assignee}';
 
 		$this->client->expects($this->once())
 			->method('post')
 			->with('/repos/{user}/{repo}/issues', json_encode($issue))
 			->will($this->returnValue($this->response));
 
-		$this->object->create('{user}', '{repo}', '{title}', '{body}', '{assignee]', '{milestone}', array('{label1}'), array('{assignee1]'));
+		$this->object->create('{user}', '{repo}', '{title}', '{body}', '{assignee}', '{milestone}', array('{label1}'));
 	}
 
 	/**

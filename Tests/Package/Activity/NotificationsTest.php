@@ -54,7 +54,7 @@ class NotificationsTest extends GitHubTestCase
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
-			$this->object->getList(true, true, new \DateTime('2005-8-17'), new  \DateTime('2005-8-17')),
+			$this->object->getList(true, true, new \DateTime('2005-8-17', new \DateTimeZone('UTC')), new  \DateTime('2005-8-17', new \DateTimeZone('UTC'))),
 			$this->equalTo(json_decode($this->response->body))
 		);
 	}
@@ -76,7 +76,7 @@ class NotificationsTest extends GitHubTestCase
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
-			$this->object->getListRepository('{owner}', '{repo}', true, true, new \DateTime('2005-8-17'), new  \DateTime('2005-8-17')),
+			$this->object->getListRepository('{owner}', '{repo}', true, true, new \DateTime('2005-8-17', new \DateTimeZone('UTC')), new  \DateTime('2005-8-17', new \DateTimeZone('UTC'))),
 			$this->equalTo(json_decode($this->response->body))
 		);
 	}
