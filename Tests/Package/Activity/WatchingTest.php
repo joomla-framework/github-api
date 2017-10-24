@@ -44,9 +44,6 @@ class WatchingTest extends GitHubTestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/subscribers', array(), 0)
@@ -65,9 +62,6 @@ class WatchingTest extends GitHubTestCase
 	 */
 	public function testGetRepositories()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/user/subscriptions', array(), 0)
@@ -86,9 +80,6 @@ class WatchingTest extends GitHubTestCase
 	 */
 	public function testGetRepositoriesUser()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/users/joomla/subscriptions', array(), 0)
@@ -107,9 +98,6 @@ class WatchingTest extends GitHubTestCase
 	 */
 	public function testGetSubscription()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/subscription', array(), 0)
@@ -128,9 +116,6 @@ class WatchingTest extends GitHubTestCase
 	 */
 	public function testSetSubscription()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('put')
 			->with('/repos/joomla/joomla-platform/subscription', '{"subscribed":true,"ignored":false}', array(), 0)

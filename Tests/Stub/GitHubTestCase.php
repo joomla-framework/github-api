@@ -66,5 +66,9 @@ abstract class GitHubTestCase extends TestCase
 
 		$this->response = $this->getMockBuilder('\\Joomla\\Http\\Response')
 			->getMock();
+
+		// Set a default response
+		$this->response->code = 200;
+		$this->response->body = $this->sampleString;
 	}
 }

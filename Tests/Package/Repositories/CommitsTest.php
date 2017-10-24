@@ -10,7 +10,9 @@ use Joomla\Github\Package\Repositories\Commits;
 use Joomla\Github\Tests\Stub\GitHubTestCase;
 
 /**
- * Test class for Commits.
+ * Test class.
+ *
+ * @covers \Joomla\Github\Package\Repositories\Commits
  *
  * @since  1.0
  */
@@ -38,17 +40,16 @@ class CommitsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the getCommit method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Commits::get()
 	 *
 	 * @return  void
 	 *
 	 * @since   1.0
 	 */
-	public function testGetCommit()
+	public function testGet()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/commits/abc1234')
@@ -61,15 +62,18 @@ class CommitsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the getCommit method - failure
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Commits::get()
 	 *
 	 * @return  void
 	 *
 	 * @since   1.0
 	 *
 	 * @expectedException  \DomainException
+	 * @expectedExceptionMessage Generic Error
 	 */
-	public function testGetCommitFailure()
+	public function testGetFailure()
 	{
 		$this->response->code = 500;
 		$this->response->body = $this->errorString;
@@ -83,7 +87,9 @@ class CommitsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the getList method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Commits::getList()
 	 *
 	 * @return  void
 	 *
@@ -91,9 +97,6 @@ class CommitsTest extends GitHubTestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/commits')
@@ -106,13 +109,16 @@ class CommitsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the getList method - failure
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Commits::getList()
 	 *
 	 * @return  void
 	 *
 	 * @since   1.0
 	 *
 	 * @expectedException  \DomainException
+	 * @expectedExceptionMessage Generic Error
 	 */
 	public function testGetListFailure()
 	{
@@ -128,7 +134,9 @@ class CommitsTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the Compare method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Commits::compare()
 	 *
 	 * @return  void
 	 *
@@ -136,9 +144,6 @@ class CommitsTest extends GitHubTestCase
 	 */
 	public function testCompare()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/compare/123abc...456def')
@@ -147,6 +152,55 @@ class CommitsTest extends GitHubTestCase
 		$this->assertThat(
 			$this->object->compare('joomla', 'joomla-platform', '123abc', '456def'),
 			$this->equalTo(json_decode($this->sampleString))
+		);
+	}
+
+	/**
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Commits::getSha()
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 */
+	public function testgetSha()
+	{
+		$this->client->expects($this->once())
+			->method('get')
+			->with('/repos/{user}/{repo}/commits/{ref}')
+			->will($this->returnValue($this->response));
+
+		$this->assertThat(
+			$this->object->getSha('{user}', '{repo}', '{ref}'),
+			$this->equalTo($this->sampleString)
+		);
+	}
+
+	/**
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Commits::getSha()
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 *
+	 * @expectedException \Joomla\Http\Exception\UnexpectedResponseException
+	 * @expectedExceptionMessage Invalid response received from GitHub.
+	 */
+	public function testgetShaFailure()
+	{
+		$this->response->code = 666;
+
+		$this->client->expects($this->once())
+			->method('get')
+			->with('/repos/{user}/{repo}/commits/{ref}')
+			->will($this->returnValue($this->response));
+
+		$this->assertThat(
+			$this->object->getSha('{user}', '{repo}', '{ref}'),
+			$this->equalTo($this->sampleString)
 		);
 	}
 }

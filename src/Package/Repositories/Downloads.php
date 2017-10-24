@@ -81,7 +81,7 @@ class Downloads extends AbstractPackage
 	 * @param   string  $description   The description.
 	 * @param   string  $content_type  The content type.
 	 *
-	 * @return  boolean
+	 * @return  void
 	 *
 	 * @note    This API endpoint no longer exists at GitHub
 	 * @since   1.0
@@ -131,7 +131,7 @@ class Downloads extends AbstractPackage
 	 * @param   string  $file                   Local file. Example assumes the file existing in the directory
 	 *                                          where you are running the curl command. Yes, the @ matters.
 	 *
-	 * @return  boolean
+	 * @return  void
 	 *
 	 * @note    This API endpoint no longer exists at GitHub
 	 * @since   1.0

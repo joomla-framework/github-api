@@ -25,16 +25,16 @@ class Notifications extends AbstractPackage
 	 *
 	 * List all notifications for the current user, grouped by repository.
 	 *
-	 * @param   boolean    $all            True to show notifications marked as read.
-	 * @param   boolean    $participating  True to show only notifications in which the user is directly participating or mentioned.
-	 * @param   \DateTime  $since          Only show notifications updated after the given time.
-	 * @param   \DateTime  $before         Only show notifications updated before the given time.
+	 * @param   boolean             $all            True to show notifications marked as read.
+	 * @param   boolean             $participating  True to show only notifications in which the user is directly participating or mentioned.
+	 * @param   \DateTimeInterface  $since          Only show notifications updated after the given time.
+	 * @param   \DateTimeInterface  $before         Only show notifications updated before the given time.
 	 *
 	 * @return  object
 	 *
 	 * @since   1.0
 	 */
-	public function getList($all = true, $participating = true, \DateTime $since = null, \DateTime $before = null)
+	public function getList($all = true, $participating = true, \DateTimeInterface $since = null, \DateTimeInterface $before = null)
 	{
 		// Build the request path.
 		$path = '/notifications?';
@@ -71,18 +71,19 @@ class Notifications extends AbstractPackage
 	 *
 	 * List all notifications for the current user.
 	 *
-	 * @param   string     $owner          Repository owner.
-	 * @param   string     $repo           Repository name.
-	 * @param   boolean    $all            True to show notifications marked as read.
-	 * @param   boolean    $participating  True to show only notifications in which the user is directly participating or mentioned.
-	 * @param   \DateTime  $since          Only show notifications updated after the given time.
-	 * @param   \DateTime  $before         Only show notifications updated before the given time.
+	 * @param   string              $owner          Repository owner.
+	 * @param   string              $repo           Repository name.
+	 * @param   boolean             $all            True to show notifications marked as read.
+	 * @param   boolean             $participating  True to show only notifications in which the user is directly participating or mentioned.
+	 * @param   \DateTimeInterface  $since          Only show notifications updated after the given time.
+	 * @param   \DateTimeInterface  $before         Only show notifications updated before the given time.
 	 *
 	 * @return  object
 	 *
 	 * @since   1.0
 	 */
-	public function getListRepository($owner, $repo, $all = true, $participating = true, \DateTime $since = null, \DateTime $before = null)
+	public function getListRepository($owner, $repo, $all = true, $participating = true, \DateTimeInterface $since = null,
+		\DateTimeInterface $before = null)
 	{
 		// Build the request path.
 		$path = '/repos/' . $owner . '/' . $repo . '/notifications?';
@@ -119,16 +120,16 @@ class Notifications extends AbstractPackage
 	 *
 	 * Marking a notification as “read” removes it from the default view on GitHub.com.
 	 *
-	 * @param   boolean    $unread      Changes the unread status of the threads.
-	 * @param   boolean    $read        Inverse of “unread”.
-	 * @param   \DateTime  $lastReadAt  Describes the last point that notifications were checked.
-	 *                                  Anything updated since this time will not be updated. Default: Now. Expected in ISO 8601 format.
+	 * @param   boolean             $unread      Changes the unread status of the threads.
+	 * @param   boolean             $read        Inverse of “unread”.
+	 * @param   \DateTimeInterface  $lastReadAt  Describes the last point that notifications were checked.
+	 *                                           Anything updated since this time will not be updated. Default: Now. Expected in ISO 8601 format.
 	 *
 	 * @return  object
 	 *
 	 * @since   1.0
 	 */
-	public function markRead($unread = true, $read = true, \DateTime $lastReadAt = null)
+	public function markRead($unread = true, $read = true, \DateTimeInterface $lastReadAt = null)
 	{
 		// Build the request path.
 		$path = '/notifications';
@@ -154,18 +155,18 @@ class Notifications extends AbstractPackage
 	 *
 	 * Marking all notifications in a repository as “read” removes them from the default view on GitHub.com.
 	 *
-	 * @param   string     $owner       Repository owner.
-	 * @param   string     $repo        Repository name.
-	 * @param   boolean    $unread      Changes the unread status of the threads.
-	 * @param   boolean    $read        Inverse of “unread”.
-	 * @param   \DateTime  $lastReadAt  Describes the last point that notifications were checked.
-	 *                                  Anything updated since this time will not be updated. Default: Now. Expected in ISO 8601 format.
+	 * @param   string              $owner       Repository owner.
+	 * @param   string              $repo        Repository name.
+	 * @param   boolean             $unread      Changes the unread status of the threads.
+	 * @param   boolean             $read        Inverse of “unread”.
+	 * @param   \DateTimeInterface  $lastReadAt  Describes the last point that notifications were checked.
+	 *                                           Anything updated since this time will not be updated. Default: Now. Expected in ISO 8601 format.
 	 *
 	 * @return  object
 	 *
 	 * @since   1.0
 	 */
-	public function markReadRepository($owner, $repo, $unread, $read, \DateTime $lastReadAt = null)
+	public function markReadRepository($owner, $repo, $unread, $read, \DateTimeInterface $lastReadAt = null)
 	{
 		// Build the request path.
 		$path = '/repos/' . $owner . '/' . $repo . '/notifications';

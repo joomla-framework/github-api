@@ -10,7 +10,9 @@ use Joomla\Github\Package\Orgs\Hooks;
 use Joomla\Github\Tests\Stub\GitHubTestCase;
 
 /**
- * Test class for Members.
+ * Test class.
+ *
+ * @covers \Joomla\Github\Package\Orgs\Hooks
  *
  * @since  1.0
  */
@@ -37,15 +39,14 @@ class HooksTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the getList method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Hooks::getList()
 	 *
 	 * @return  void
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/orgs/joomla/hooks')
@@ -58,15 +59,14 @@ class HooksTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the get method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Hooks::get()
 	 *
 	 * @return  void
 	 */
 	public function testGet()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/orgs/joomla/hooks/123')
@@ -79,14 +79,15 @@ class HooksTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the create method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Hooks::create()
 	 *
 	 * @return  void
 	 */
 	public function testCreate()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')
@@ -100,11 +101,14 @@ class HooksTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the create method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Hooks::create()
 	 *
 	 * @return  void
 	 *
 	 * @expectedException \UnexpectedValueException
+	 * @expectedExceptionMessage Content type must be either "form" or "json".
 	 */
 	public function testCreateFailure()
 	{
@@ -112,14 +116,30 @@ class HooksTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the edit method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Hooks::create()
+	 *
+	 * @return  void
+	 *
+	 * @expectedException \RuntimeException
+	 * @expectedExceptionMessage Your events array contains an unauthorized event.
+	 */
+	public function testCreateInvalidEvent()
+	{
+		$this->object->create('{org}', '{url}', 'form', null, false, ['{invalid}']);
+	}
+
+	/**
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Hooks::edit()
 	 *
 	 * @return  void
 	 */
 	public function testEdit()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')
@@ -133,7 +153,9 @@ class HooksTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the edit method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Hooks::edit()
 	 *
 	 * @return  void
 	 *
@@ -141,11 +163,13 @@ class HooksTest extends GitHubTestCase
 	 */
 	public function testEditFailure()
 	{
-		$this->object->edit('joomla', '{url}', '{invalid}');
+		$this->object->edit('{org}', '{url}', '{invalid}');
 	}
 
 	/**
-	 * Tests the edit method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Hooks::edit()
 	 *
 	 * @return  void
 	 *
@@ -157,35 +181,37 @@ class HooksTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the ping method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Hooks::ping()
 	 *
 	 * @return  void
 	 */
 	public function testPing()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')
-			->with('/orgs/joomla/hooks/123/pings')
+			->with('/orgs/{org}/hooks/123/pings')
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
-			$this->object->ping('joomla', 123),
+			$this->object->ping('{org}', 123),
 			$this->equalTo(json_decode($this->sampleString))
 		);
 	}
 
 	/**
-	 * Tests the delete method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Hooks::delete()
 	 *
 	 * @return  void
 	 */
 	public function testDelete()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('delete')

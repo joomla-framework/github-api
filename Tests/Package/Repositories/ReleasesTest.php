@@ -44,9 +44,6 @@ class ReleasesTest extends GitHubTestCase
 	 */
 	public function testGet()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/releases/12345', array(), 0)
@@ -66,7 +63,6 @@ class ReleasesTest extends GitHubTestCase
 	public function testCreate()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$data = '{"tag_name":"0.1","target_commitish":"targetCommitish","name":"master","body":"New release","draft":false,"prerelease":false}';
 		$this->client->expects($this->once())
@@ -88,7 +84,6 @@ class ReleasesTest extends GitHubTestCase
 	public function testCreateFailure()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$data = '{"tag_name":"0.1","target_commitish":"targetCommitish","name":"master","body":"New release","draft":false,"prerelease":false}';
 		$this->client->expects($this->once())
@@ -109,9 +104,6 @@ class ReleasesTest extends GitHubTestCase
 	 */
 	public function testEdit()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$releaseId = 123;
 
 		$data = '{"tag_name":"tagName","target_commitish":"targetCommitish","name":"name","body":"body","draft":"draft","prerelease":"preRelease"}';
@@ -139,9 +131,9 @@ class ReleasesTest extends GitHubTestCase
 
 		$releases = array();
 
-		foreach (json_decode($this->response->body) as $release)
+		foreach (json_decode($this->response->body) as $i => $release)
 		{
-			$releases[$release->tag_name] = $release;
+			$releases[$i + 1] = $release;
 		}
 
 		$this->client->expects($this->once())
@@ -163,7 +155,6 @@ class ReleasesTest extends GitHubTestCase
 	public function testDelete()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('delete')
@@ -206,9 +197,6 @@ class ReleasesTest extends GitHubTestCase
 	 */
 	public function testGetByTag()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/releases/tags/{tag}', array(), 0)
@@ -227,9 +215,6 @@ class ReleasesTest extends GitHubTestCase
 	 */
 	public function testGetListAssets()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/releases/123/assets', array(), 0)
@@ -248,9 +233,6 @@ class ReleasesTest extends GitHubTestCase
 	 */
 	public function testGetAsset()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/releases/assets/123', array(), 0)
@@ -269,9 +251,6 @@ class ReleasesTest extends GitHubTestCase
 	 */
 	public function testEditAsset()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$data = '{"name":"{name}","label":"{label}"}';
 
 		$this->client->expects($this->once())

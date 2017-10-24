@@ -10,7 +10,9 @@ use Joomla\Github\Package\Repositories\Statuses;
 use Joomla\Github\Tests\Stub\GitHubTestCase;
 
 /**
- * Test class for Statuses.
+ * Test class.
+ *
+ * @covers \Joomla\Github\Package\Repositories\Statuses
  *
  * @since  1.0
  */
@@ -38,14 +40,15 @@ class StatusesTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the create method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Statuses::create()
 	 *
 	 * @return void
 	 */
 	public function testCreate()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		// Build the request data.
 		$data = json_encode(
@@ -77,7 +80,11 @@ class StatusesTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the create method - failure
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Statuses::create()
+	 *
+	 * Failure
 	 *
 	 * @expectedException  \DomainException
 	 *
@@ -104,7 +111,11 @@ class StatusesTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the create method - failure
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Statuses::create()
+	 *
+	 * Failure
 	 *
 	 * @expectedException  \InvalidArgumentException
 	 *
@@ -119,15 +130,14 @@ class StatusesTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the getList method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Statuses::getList()
 	 *
 	 * @return void
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/statuses/6dcb09b5b57875f334f61aebed695e2e4193db5e')
@@ -140,7 +150,11 @@ class StatusesTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the getList method - failure
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Statuses::getList()
+	 *
+	 * Failure
 	 *
 	 * @expectedException  \DomainException
 	 *
@@ -157,5 +171,27 @@ class StatusesTest extends GitHubTestCase
 			->will($this->returnValue($this->response));
 
 		$this->object->getList('joomla', 'joomla-platform', '6dcb09b5b57875f334f61aebed695e2e4193db5e');
+	}
+
+	/**
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Statuses::getCombinedStatus()
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 */
+	public function testGetCombinedStatus()
+	{
+		$this->client->expects($this->once())
+			->method('get')
+			->with('/repos/{user}/{repo}/commits/{sha}/status')
+			->will($this->returnValue($this->response));
+
+		$this->assertThat(
+			$this->object->getCombinedStatus('{user}', '{repo}', '{sha}'),
+			$this->equalTo(json_decode($this->sampleString))
+		);
 	}
 }

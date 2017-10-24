@@ -53,7 +53,8 @@ class MarkdownTest extends GitHubTestCase
 		$mode    = 'gfm';
 		$context = 'github/gollum';
 
-		$data = str_replace('\\/', '/', json_encode(
+		$data = str_replace(
+			'\\/', '/', json_encode(
 				array(
 					'text'    => $text,
 					'mode'    => $mode,
@@ -104,7 +105,8 @@ class MarkdownTest extends GitHubTestCase
 		$mode    = 'gfm';
 		$context = 'github/gollum';
 
-		$data = str_replace('\\/', '/', json_encode(
+		$data = str_replace(
+			'\\/', '/', json_encode(
 				array(
 					'text'    => $text,
 					'mode'    => $mode,

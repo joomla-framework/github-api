@@ -389,39 +389,6 @@ class Repositories extends AbstractPackage
 	}
 
 	/**
-	 * List Branches.
-	 *
-	 * @param   string  $owner  Repository owner.
-	 * @param   string  $repo   Repository name.
-	 *
-	 * @return  object
-	 *
-	 * @since   1.0
-	 * @deprecated  2.0  Use Joomla\Github\Package\Repositories\Branches::getList() instead
-	 */
-	public function getListBranches($owner, $repo)
-	{
-		return $this->branches->getList($owner, $repo);
-	}
-
-	/**
-	 * Get a Branch.
-	 *
-	 * @param   string  $owner   Repository owner.
-	 * @param   string  $repo    Repository name.
-	 * @param   string  $branch  Branch name.
-	 *
-	 * @return  object
-	 *
-	 * @since   1.0
-	 * @deprecated  2.0  Use Joomla\Github\Package\Repositories\Branches::get() instead
-	 */
-	public function getBranch($owner, $repo, $branch)
-	{
-		return $this->branches->get($owner, $repo, $branch);
-	}
-
-	/**
 	 * Delete a Repository.
 	 *
 	 * Deleting a repository requires admin access. If OAuth is used, the delete_repo scope is required.

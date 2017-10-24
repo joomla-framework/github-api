@@ -48,12 +48,14 @@ class Markdown extends AbstractPackage
 		$path = '/markdown';
 
 		// Build the request data.
-		$data = str_replace('\\/', '/', json_encode(
-				array(
+		$data = str_replace(
+			'\\/', '/',
+			json_encode(
+				[
 					'text'    => $text,
 					'mode'    => $mode,
 					'context' => $context
-				)
+				]
 			)
 		);
 
