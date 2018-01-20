@@ -1,55 +1,25 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Github\Tests;
 
 use Joomla\Github\Package\Users\Emails;
-use Joomla\Registry\Registry;
+use Joomla\Github\Tests\Stub\GitHubTestCase;
 
 /**
  * Test class for Emails.
  *
  * @since  1.0
  */
-class EmailsTest extends \PHPUnit_Framework_TestCase
+class EmailsTest extends GitHubTestCase
 {
-	/**
-	 * @var    Registry  Options for the GitHub object.
-	 * @since  1.0
-	 */
-	protected $options;
-
-	/**
-	 * @var    \PHPUnit_Framework_MockObject_MockObject  Mock client object.
-	 * @since  1.0
-	 */
-	protected $client;
-
-	/**
-	 * @var    \Joomla\Http\Response  Mock response object.
-	 * @since  1.0
-	 */
-	protected $response;
-
 	/**
 	 * @var Emails
 	 */
 	protected $object;
-
-	/**
-	 * @var    string  Sample JSON string.
-	 * @since  12.3
-	 */
-	protected $sampleString = '{"a":1,"b":2,"c":3,"d":4,"e":5}';
-
-	/**
-	 * @var    string  Sample JSON error message.
-	 * @since  12.3
-	 */
-	protected $errorString = '{"message": "Generic Error"}';
 
 	/**
 	 * Sets up the fixture, for example, opens a network connection.
@@ -63,10 +33,6 @@ class EmailsTest extends \PHPUnit_Framework_TestCase
 	{
 		parent::setUp();
 
-		$this->options  = new Registry;
-		$this->client   = $this->getMock('\\Joomla\\Github\\Http', array('get', 'post', 'delete', 'patch', 'put'));
-		$this->response = $this->getMock('\\Joomla\\Http\\Response');
-
 		$this->object = new Emails($this->options, $this->client);
 	}
 
@@ -77,9 +43,6 @@ class EmailsTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/user/emails')
@@ -99,7 +62,6 @@ class EmailsTest extends \PHPUnit_Framework_TestCase
 	public function testAdd()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')
@@ -120,7 +82,6 @@ class EmailsTest extends \PHPUnit_Framework_TestCase
 	public function testDelete()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('delete')

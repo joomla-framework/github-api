@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -17,7 +17,7 @@ use Joomla\Http\Response;
  * The Repository Statistics API allows you to fetch the data that GitHub uses for
  * visualizing different types of repository activity.
  *
- * @documentation http://developer.github.com/v3/repos/statistics
+ * @link   https://developer.github.com/v3/repos/statistics
  *
  * @since  1.0
  */
@@ -39,9 +39,9 @@ class Statistics  extends AbstractPackage
 	 * @param   string  $owner  The owner of the repository.
 	 * @param   string  $repo   The repository name.
 	 *
-	 * @since   1.0
-	 *
 	 * @return  object
+	 *
+	 * @since   1.0
 	 */
 	public function getListContributors($owner, $repo)
 	{
@@ -61,9 +61,9 @@ class Statistics  extends AbstractPackage
 	 * @param   string  $owner  The owner of the repository.
 	 * @param   string  $repo   The repository name.
 	 *
-	 * @since   1.0
-	 *
 	 * @return  object
+	 *
+	 * @since   1.0
 	 */
 	public function getActivityData($owner, $repo)
 	{
@@ -82,9 +82,9 @@ class Statistics  extends AbstractPackage
 	 * @param   string  $owner  The owner of the repository.
 	 * @param   string  $repo   The repository name.
 	 *
-	 * @since   1.0
-	 *
 	 * @return  object
+	 *
+	 * @since   1.0
 	 */
 	public function getCodeFrequency($owner, $repo)
 	{
@@ -96,7 +96,7 @@ class Statistics  extends AbstractPackage
 	}
 
 	/**
-	 * Get the weekly commit count for the repo owner and everyone else.
+	 * Get the weekly commit count for the repository owner and everyone else.
 	 *
 	 * Returns the total commit counts for the "owner" and total commit counts in "all". "all" is everyone combined,
 	 * including the owner in the last 52 weeks.
@@ -107,9 +107,9 @@ class Statistics  extends AbstractPackage
 	 * @param   string  $owner  The owner of the repository.
 	 * @param   string  $repo   The repository name.
 	 *
-	 * @since   1.0
-	 *
 	 * @return  object
+	 *
+	 * @since   1.0
 	 */
 	public function getParticipation($owner, $repo)
 	{
@@ -136,9 +136,9 @@ class Statistics  extends AbstractPackage
 	 * @param   string  $owner  The owner of the repository.
 	 * @param   string  $repo   The repository name.
 	 *
-	 * @since   1.0
-	 *
 	 * @return  object
+	 *
+	 * @since   1.0
 	 */
 	public function getPunchCard($owner, $repo)
 	{

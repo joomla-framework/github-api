@@ -2,13 +2,14 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Github\Package;
 
 use Joomla\Github\AbstractPackage;
+use Joomla\Http\Exception\UnexpectedResponseException;
 
 /**
  * GitHub API Gitignore class for the Joomla Framework.
@@ -50,7 +51,7 @@ class Gitignore extends AbstractPackage
 	 * @return  mixed|string
 	 *
 	 * @since   1.0
-	 * @throws  \DomainException
+	 * @throws  UnexpectedResponseException
 	 */
 	public function get($name, $raw = false)
 	{
@@ -70,10 +71,9 @@ class Gitignore extends AbstractPackage
 		if ($response->code != 200)
 		{
 			// Decode the error response and throw an exception.
-			$error   = json_decode($response->body);
-			$message = (isset($error->message)) ? $error->message : 'Invalid response';
-
-			throw new \DomainException($message, $response->code);
+			$error = json_decode($response->body);
+			$message = isset($error->message) ? $error->message : 'Invalid response received from GitHub.';
+			throw new UnexpectedResponseException($response, $message, $response->code);
 		}
 
 		return ($raw) ? $response->body : json_decode($response->body);

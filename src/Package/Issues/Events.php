@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -17,7 +17,7 @@ use Joomla\Github\AbstractPackage;
  * This is useful both for display on issue/pull request information pages and also
  * to determine who should be notified of comments.
  *
- * @documentation http://developer.github.com/v3/issues/events/
+ * @link   https://developer.github.com/v3/issues/events/
  *
  * @since  1.0
  */

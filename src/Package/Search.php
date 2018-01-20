@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -13,7 +13,7 @@ use Joomla\Github\AbstractPackage;
 /**
  * GitHub API Search class for the Joomla Framework.
  *
- * @documentation http://developer.github.com/v3/search
+ * @link   https://developer.github.com/v3/search
  *
  * @since  1.0
  */
@@ -31,6 +31,7 @@ class Search extends AbstractPackage
 	 *
 	 * @since   1.0
 	 * @throws  \UnexpectedValueException
+	 * @deprecated  The legacy API is deprecated
 	 */
 	public function issues($owner, $repo, $state, $keyword)
 	{
@@ -63,6 +64,7 @@ class Search extends AbstractPackage
 	 * @return  object
 	 *
 	 * @since   1.0
+	 * @deprecated  The legacy API is deprecated
 	 */
 	public function repositories($keyword, $language = '', $start_page = 0)
 	{
@@ -89,6 +91,7 @@ class Search extends AbstractPackage
 	 * @return  object
 	 *
 	 * @since   1.0
+	 * @deprecated  The legacy API is deprecated
 	 */
 	public function users($keyword, $start_page = 0)
 	{
@@ -116,6 +119,7 @@ class Search extends AbstractPackage
 	 * @return  object
 	 *
 	 * @since   1.0
+	 * @deprecated  The legacy API is deprecated
 	 */
 	public function email($email)
 	{

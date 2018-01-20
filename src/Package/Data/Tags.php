@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -15,7 +15,7 @@ use Joomla\Github\AbstractPackage;
  *
  * This tags API only deals with tag objects - so only annotated tags, not lightweight tags.
  *
- * @documentation http://developer.github.com/v3/git/tags/
+ * @link   https://developer.github.com/v3/git/tags/
  *
  * @since  1.0
  */

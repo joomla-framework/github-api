@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -13,9 +13,13 @@ use Joomla\Github\AbstractPackage;
 /**
  * GitHub API References class for the Joomla Framework.
  *
- * @documentation http://developer.github.com/v3/repos/users
+ * @link   https://developer.github.com/v3/repos/users
  *
  * @since  1.0
+ *
+ * @property-read  Users\Emails     $emails     GitHub API object for emails.
+ * @property-read  Users\Followers  $followers  GitHub API object for followers.
+ * @property-read  Users\Keys       $keys       GitHub API object for keys.
  */
 class Users extends AbstractPackage
 {
@@ -41,7 +45,7 @@ class Users extends AbstractPackage
 	}
 
 	/**
-	 * Get the current authenticated user.
+	 * Get the authenticated user.
 	 *
 	 * @return  mixed
 	 *
@@ -60,14 +64,14 @@ class Users extends AbstractPackage
 	}
 
 	/**
-	 * Update a user.
+	 * Update the authenticated user.
 	 *
 	 * @param   string  $name      The full name
 	 * @param   string  $email     The email
 	 * @param   string  $blog      The blog
 	 * @param   string  $company   The company
 	 * @param   string  $location  The location
-	 * @param   string  $hireable  If he is unemplayed :P
+	 * @param   string  $hireable  If he is unemployed :P
 	 * @param   string  $bio       The biometrical DNA fingerprint (or smthng...)
 	 *
 	 * @return  mixed

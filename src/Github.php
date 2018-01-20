@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -19,10 +19,11 @@ use Joomla\Registry\Registry;
  * @property-read  Package\Emojis         $emojis         GitHub API object for the emojis package.
  * @property-read  Package\Gists          $gists          GitHub API object for the gists package.
  * @property-read  Package\Gitignore      $gitignore      GitHub API object for the gitignore package.
+ * @property-read  Package\Graphql        $graphql        GitHub API object for the GraphQL v4 API.
  * @property-read  Package\Issues         $issues         GitHub API object for the issues package.
- * @property-read  Package\Markdown       $markdown       GitHub API object for the the markdown package.
+ * @property-read  Package\Markdown       $markdown       GitHub API object for the markdown package.
  * @property-read  Package\Meta           $meta           GitHub API object for the meta package.
- * @property-read  Package\Orgs           $orgs           GitHub API object for the the orgs package.
+ * @property-read  Package\Orgs           $orgs           GitHub API object for the orgs package.
  * @property-read  Package\Pulls          $pulls          GitHub API object for the pulls package.
  * @property-read  Package\Repositories   $repositories   GitHub API object for the repositories package.
  * @property-read  Package\Search         $search         GitHub API object for the search package.

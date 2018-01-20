@@ -1,55 +1,25 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Github\Tests;
 
 use Joomla\Github\Package\Gists;
-use Joomla\Registry\Registry;
+use Joomla\Github\Tests\Stub\GitHubTestCase;
 
 /**
  * Test class for Gists.
  *
  * @since  1.0
  */
-class GistsTest extends \PHPUnit_Framework_TestCase
+class GistsTest extends GitHubTestCase
 {
-	/**
-	 * @var    Registry  Options for the GitHub object.
-	 * @since  1.0
-	 */
-	protected $options;
-
-	/**
-	 * @var    \PHPUnit_Framework_MockObject_MockObject  Mock client object.
-	 * @since  1.0
-	 */
-	protected $client;
-
-	/**
-	 * @var    \Joomla\Http\Response  Mock response object.
-	 * @since  1.0
-	 */
-	protected $response;
-
 	/**
 	 * @var Gists
 	 */
 	protected $object;
-
-	/**
-	 * @var    string  Sample JSON string.
-	 * @since  11.4
-	 */
-	protected $sampleString = '{"a":1,"b":2,"c":3,"d":4,"e":5}';
-
-	/**
-	 * @var    string  Sample JSON error message.
-	 * @since  11.4
-	 */
-	protected $errorString = '{"message": "Generic Error"}';
 
 	/**
 	 * Sets up the fixture, for example, opens a network connection.
@@ -63,10 +33,6 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 	{
 		parent::setUp();
 
-		$this->options  = new Registry;
-		$this->client = $this->getMock('\\Joomla\\Github\\Http', array('get', 'post', 'delete', 'patch', 'put'));
-		$this->response = $this->getMock('JHttpResponse');
-
 		$this->object = new Gists($this->options, $this->client);
 	}
 
@@ -78,7 +44,6 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 	public function testCreate()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		// Build the request data.
 		$data = json_encode(
@@ -116,7 +81,6 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 	public function testCreateGistFromFile()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		// Build the request data.
 		$data = json_encode(
@@ -156,7 +120,6 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 	public function testCreateGistFromFileNotFound()
 	{
 		$this->response->code = 501;
-		$this->response->body = $this->sampleString;
 
 		$this->object->create(
 			array(
@@ -202,6 +165,7 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -213,7 +177,6 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 	public function testCreateComment()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$gist = new \stdClass;
 		$gist->body = 'My Insightful Comment';
@@ -262,6 +225,7 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -273,7 +237,6 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 	public function testDelete()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('delete')
@@ -313,6 +276,7 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -324,7 +288,6 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 	public function testDeleteComment()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('delete')
@@ -364,6 +327,7 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -374,9 +338,6 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testEdit()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		// Build the request data.
 		$data = json_encode(
 			array(
@@ -458,6 +419,7 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -468,9 +430,6 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testEditComment()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$gist = new \stdClass;
 		$gist->body = 'This comment is now even more insightful';
 
@@ -518,6 +477,7 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -529,11 +489,10 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 	public function testFork()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')
-			->with('/gists/523/fork')
+			->with('/gists/523/forks')
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -556,7 +515,7 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 
 		$this->client->expects($this->once())
 			->method('post')
-			->with('/gists/523/fork')
+			->with('/gists/523/forks')
 			->will($this->returnValue($this->response));
 
 		try
@@ -572,6 +531,7 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -582,9 +542,6 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGet()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/gists/523')
@@ -626,6 +583,7 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -636,9 +594,6 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetComment()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/gists/comments/523')
@@ -680,6 +635,7 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -690,9 +646,6 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetComments()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/gists/523/comments')
@@ -734,6 +687,111 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
+		$this->assertTrue($exception);
+	}
+
+	/**
+	 * Tests the getCommitList method
+	 *
+	 * @return void
+	 */
+	public function testGetCommitList()
+	{
+		$this->client->expects($this->once())
+			->method('get')
+			->with('/gists/523/commits')
+			->will($this->returnValue($this->response));
+
+		$this->assertThat(
+			$this->object->getCommitList(523),
+			$this->equalTo(json_decode($this->sampleString))
+		);
+	}
+
+	/**
+	 * Tests the getCommitList method - simulated failure
+	 *
+	 * @return void
+	 */
+	public function testGetCommitListFailure()
+	{
+		$exception = false;
+
+		$this->response->code = 500;
+		$this->response->body = $this->errorString;
+
+		$this->client->expects($this->once())
+			->method('get')
+			->with('/gists/523/commits')
+			->will($this->returnValue($this->response));
+
+		try
+		{
+			$this->object->getCommitList(523);
+		}
+		catch (\DomainException $e)
+		{
+			$exception = true;
+
+			$this->assertThat(
+				$e->getMessage(),
+				$this->equalTo(json_decode($this->errorString)->message)
+			);
+		}
+
+		$this->assertTrue($exception);
+	}
+
+	/**
+	 * Tests the getForkList method
+	 *
+	 * @return void
+	 */
+	public function testGetForkList()
+	{
+		$this->client->expects($this->once())
+			->method('get')
+			->with('/gists/523/forks')
+			->will($this->returnValue($this->response));
+
+		$this->assertThat(
+			$this->object->getForkList(523),
+			$this->equalTo(json_decode($this->sampleString))
+		);
+	}
+
+	/**
+	 * Tests the getForkList method - simulated failure
+	 *
+	 * @return void
+	 */
+	public function testGetForkListFailure()
+	{
+		$exception = false;
+
+		$this->response->code = 500;
+		$this->response->body = $this->errorString;
+
+		$this->client->expects($this->once())
+			->method('get')
+			->with('/gists/523/forks')
+			->will($this->returnValue($this->response));
+
+		try
+		{
+			$this->object->getForkList(523);
+		}
+		catch (\DomainException $e)
+		{
+			$exception = true;
+
+			$this->assertThat(
+				$e->getMessage(),
+				$this->equalTo(json_decode($this->errorString)->message)
+			);
+		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -744,9 +802,6 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/gists')
@@ -788,6 +843,7 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -798,9 +854,6 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetListByUser()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/users/joomla/gists')
@@ -842,6 +895,7 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -852,9 +906,6 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetListPublic()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/gists/public')
@@ -896,6 +947,7 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -906,9 +958,6 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetListStarred()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/gists/starred')
@@ -950,6 +999,59 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
+		$this->assertTrue($exception);
+	}
+
+	/**
+	 * Tests the getRevision method
+	 *
+	 * @return void
+	 */
+	public function testGetRevision()
+	{
+		$this->client->expects($this->once())
+			->method('get')
+			->with('/gists/523/a1b2c3')
+			->will($this->returnValue($this->response));
+
+		$this->assertThat(
+			$this->object->getRevision(523, 'a1b2c3'),
+			$this->equalTo(json_decode($this->sampleString))
+		);
+	}
+
+	/**
+	 * Tests the getRevision method - simulated failure
+	 *
+	 * @return void
+	 */
+	public function testGetRevisionFailure()
+	{
+		$exception = false;
+
+		$this->response->code = 500;
+		$this->response->body = $this->errorString;
+
+		$this->client->expects($this->once())
+			->method('get')
+			->with('/gists/523/a1b2c3')
+			->will($this->returnValue($this->response));
+
+		try
+		{
+			$this->object->getRevision(523, 'a1b2c3');
+		}
+		catch (\DomainException $e)
+		{
+			$exception = true;
+
+			$this->assertThat(
+				$e->getMessage(),
+				$this->equalTo(json_decode($this->errorString)->message)
+			);
+		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -961,7 +1063,6 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 	public function testIsStarredTrue()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('get')
@@ -982,7 +1083,6 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 	public function testIsStarredFalse()
 	{
 		$this->response->code = 404;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('get')
@@ -1025,6 +1125,7 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -1036,7 +1137,6 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 	public function testStar()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('put')
@@ -1076,6 +1176,7 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -1087,7 +1188,6 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 	public function testUnstar()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('delete')
@@ -1127,6 +1227,7 @@ class GistsTest extends \PHPUnit_Framework_TestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 }

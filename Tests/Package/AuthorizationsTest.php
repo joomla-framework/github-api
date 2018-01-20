@@ -1,55 +1,25 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Github\Tests;
 
 use Joomla\Github\Package\Authorization;
-use Joomla\Registry\Registry;
+use Joomla\Github\Tests\Stub\GitHubTestCase;
 
 /**
  * Test class for Authorization.
  *
  * @since  1.0
  */
-class AuthorizationsTest extends \PHPUnit_Framework_TestCase
+class AuthorizationsTest extends GitHubTestCase
 {
-	/**
-	 * @var    Registry  Options for the GitHub object.
-	 * @since  1.0
-	 */
-	protected $options;
-
-	/**
-	 * @var    \PHPUnit_Framework_MockObject_MockObject  Mock client object.
-	 * @since  1.0
-	 */
-	protected $client;
-
-	/**
-	 * @var    \Joomla\Http\Response  Mock response object.
-	 * @since  1.0
-	 */
-	protected $response;
-
 	/**
 	 * @var Authorization
 	 */
 	protected $object;
-
-	/**
-	 * @var    string  Sample JSON string.
-	 * @since  12.3
-	 */
-	protected $sampleString = '{"a":1,"b":2,"c":3,"d":4,"e":5}';
-
-	/**
-	 * @var    string  Sample JSON error message.
-	 * @since  12.3
-	 */
-	protected $errorString = '{"message": "Generic Error"}';
 
 	/**
 	 * Sets up the fixture, for example, opens a network connection.
@@ -62,10 +32,6 @@ class AuthorizationsTest extends \PHPUnit_Framework_TestCase
 	protected function setUp()
 	{
 		parent::setUp();
-
-		$this->options  = new Registry;
-		$this->client = $this->getMock('\\Joomla\\Github\\Http', array('get', 'post', 'delete', 'patch', 'put'));
-		$this->response = $this->getMock('\\Joomla\\Http\\Response');
 
 		$this->object = new Authorization($this->options, $this->client);
 	}
@@ -80,16 +46,16 @@ class AuthorizationsTest extends \PHPUnit_Framework_TestCase
 	public function testCreate()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
-		$authorisation = new \stdClass;
-		$authorisation->scopes = array('public_repo');
-		$authorisation->note = 'My test app';
-		$authorisation->note_url = 'http://www.joomla.org';
+		$authorisation = '{'
+			. '"scopes":["public_repo"],'
+			. '"note":"My test app",'
+			. '"note_url":"http:\/\/www.joomla.org"'
+			. '}';
 
 		$this->client->expects($this->once())
 			->method('post')
-			->with('/authorizations', json_encode($authorisation))
+			->with('/authorizations', $authorisation)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -112,14 +78,15 @@ class AuthorizationsTest extends \PHPUnit_Framework_TestCase
 		$this->response->code = 500;
 		$this->response->body = $this->errorString;
 
-		$authorisation = new \stdClass;
-		$authorisation->scopes = array('public_repo');
-		$authorisation->note = 'My test app';
-		$authorisation->note_url = 'http://www.joomla.org';
+		$authorisation = '{'
+			. '"scopes":["public_repo"],'
+			. '"note":"My test app",'
+			. '"note_url":"http:\/\/www.joomla.org"'
+			. '}';
 
 		$this->client->expects($this->once())
 			->method('post')
-			->with('/authorizations', json_encode($authorisation))
+			->with('/authorizations', $authorisation)
 			->will($this->returnValue($this->response));
 
 		try
@@ -135,11 +102,12 @@ class AuthorizationsTest extends \PHPUnit_Framework_TestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
 	/**
-	 * Tests the deleteAuthorisation method
+	 * Tests the delete method
 	 *
 	 * @return  void
 	 *
@@ -148,7 +116,6 @@ class AuthorizationsTest extends \PHPUnit_Framework_TestCase
 	public function testDelete()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('delete')
@@ -162,7 +129,7 @@ class AuthorizationsTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the deleteAuthorisation method - simulated failure
+	 * Tests the delete method - simulated failure
 	 *
 	 * @return  void
 	 *
@@ -193,6 +160,65 @@ class AuthorizationsTest extends \PHPUnit_Framework_TestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
+		$this->assertTrue($exception);
+	}
+
+	/**
+	 * Tests the deleteGrant method
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 */
+	public function testDeleteGrant()
+	{
+		$this->response->code = 204;
+
+		$this->client->expects($this->once())
+			->method('delete')
+			->with('/authorizations/grants/42')
+			->will($this->returnValue($this->response));
+
+		$this->assertThat(
+			$this->object->deleteGrant(42),
+			$this->equalTo(json_decode($this->sampleString))
+		);
+	}
+
+	/**
+	 * Tests the deleteGrant method - simulated failure
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 */
+	public function testDeleteGrantFailure()
+	{
+		$exception = false;
+
+		$this->response->code = 500;
+		$this->response->body = $this->errorString;
+
+		$this->client->expects($this->once())
+			->method('delete')
+			->with('/authorizations/grants/42')
+			->will($this->returnValue($this->response));
+
+		try
+		{
+			$this->object->deleteGrant(42);
+		}
+		catch (\DomainException $e)
+		{
+			$exception = true;
+
+			$this->assertThat(
+				$e->getMessage(),
+				$this->equalTo(json_decode($this->errorString)->message)
+			);
+		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -205,17 +231,15 @@ class AuthorizationsTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testEditAddScopes()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
-		$authorisation = new \stdClass;
-		$authorisation->add_scopes = array('public_repo', 'gist');
-		$authorisation->note = 'My test app';
-		$authorisation->note_url = 'http://www.joomla.org';
+		$authorisation = '{'
+			. '"add_scopes":["public_repo","gist"],'
+			. '"note":"My test app",'
+			. '"note_url":"http:\/\/www.joomla.org"'
+			. '}';
 
 		$this->client->expects($this->once())
 			->method('patch')
-			->with('/authorizations/42', json_encode($authorisation))
+			->with('/authorizations/42', $authorisation)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -233,17 +257,15 @@ class AuthorizationsTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testEditRemoveScopes()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
-		$authorisation = new \stdClass;
-		$authorisation->remove_scopes = array('public_repo', 'gist');
-		$authorisation->note = 'My test app';
-		$authorisation->note_url = 'http://www.joomla.org';
+		$authorisation = '{'
+			. '"remove_scopes":["public_repo","gist"],'
+			. '"note":"My test app",'
+			. '"note_url":"http:\/\/www.joomla.org"'
+			. '}';
 
 		$this->client->expects($this->once())
 			->method('patch')
-			->with('/authorizations/42', json_encode($authorisation))
+			->with('/authorizations/42', $authorisation)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -261,17 +283,15 @@ class AuthorizationsTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testEditScopes()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
-		$authorisation = new \stdClass;
-		$authorisation->scopes = array('public_repo', 'gist');
-		$authorisation->note = 'My test app';
-		$authorisation->note_url = 'http://www.joomla.org';
+		$authorisation = '{'
+			. '"scopes":["public_repo","gist"],'
+			. '"note":"My test app",'
+			. '"note_url":"http:\/\/www.joomla.org"'
+			. '}';
 
 		$this->client->expects($this->once())
 			->method('patch')
-			->with('/authorizations/42', json_encode($authorisation))
+			->with('/authorizations/42', $authorisation)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -294,14 +314,15 @@ class AuthorizationsTest extends \PHPUnit_Framework_TestCase
 		$this->response->code = 500;
 		$this->response->body = $this->errorString;
 
-		$authorisation = new \stdClass;
-		$authorisation->add_scopes = array('public_repo', 'gist');
-		$authorisation->note = 'My test app';
-		$authorisation->note_url = 'http://www.joomla.org';
+		$authorisation = '{'
+			. '"add_scopes":["public_repo","gist"],'
+			. '"note":"My test app",'
+			. '"note_url":"http:\/\/www.joomla.org"'
+			. '}';
 
 		$this->client->expects($this->once())
 			->method('patch')
-			->with('/authorizations/42', json_encode($authorisation))
+			->with('/authorizations/42', $authorisation)
 			->will($this->returnValue($this->response));
 
 		try
@@ -317,6 +338,7 @@ class AuthorizationsTest extends \PHPUnit_Framework_TestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
@@ -335,7 +357,7 @@ class AuthorizationsTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the getAuthorisation method
+	 * Tests the get method
 	 *
 	 * @return  void
 	 *
@@ -343,9 +365,6 @@ class AuthorizationsTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGet()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/authorizations/42')
@@ -358,7 +377,7 @@ class AuthorizationsTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the getAuthorisation method - failure
+	 * Tests the get method - failure
 	 *
 	 * @return  void
 	 *
@@ -380,7 +399,49 @@ class AuthorizationsTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the getAuthorisations method
+	 * Tests the getGrant method
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 */
+	public function testGetGrant()
+	{
+		$this->client->expects($this->once())
+			->method('get')
+			->with('/authorizations/grants/42')
+			->will($this->returnValue($this->response));
+
+		$this->assertThat(
+			$this->object->getGrant(42),
+			$this->equalTo(json_decode($this->sampleString))
+		);
+	}
+
+	/**
+	 * Tests the getGrant method - failure
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 *
+	 * @expectedException  \DomainException
+	 */
+	public function testGetGrantFailure()
+	{
+		$this->response->code = 500;
+		$this->response->body = $this->errorString;
+
+		$this->client->expects($this->once())
+			->method('get')
+			->with('/authorizations/grants/42')
+			->will($this->returnValue($this->response));
+
+		$this->object->getGrant(42);
+	}
+
+	/**
+	 * Tests the getList method
 	 *
 	 * @return  void
 	 *
@@ -388,9 +449,6 @@ class AuthorizationsTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/authorizations')
@@ -403,7 +461,7 @@ class AuthorizationsTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the getAuthorisations method - failure
+	 * Tests the getList method - failure
 	 *
 	 * @return  void
 	 *
@@ -425,6 +483,48 @@ class AuthorizationsTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
+	 * Tests the getListGrants method
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 */
+	public function testGetListGrants()
+	{
+		$this->client->expects($this->once())
+			->method('get')
+			->with('/authorizations/grants')
+			->will($this->returnValue($this->response));
+
+		$this->assertThat(
+			$this->object->getListGrants(),
+			$this->equalTo(json_decode($this->sampleString))
+		);
+	}
+
+	/**
+	 * Tests the getListGrants method - failure
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 *
+	 * @expectedException  \DomainException
+	 */
+	public function testGetListGrantsFailure()
+	{
+		$this->response->code = 500;
+		$this->response->body = $this->errorString;
+
+		$this->client->expects($this->once())
+			->method('get')
+			->with('/authorizations/grants')
+			->will($this->returnValue($this->response));
+
+		$this->object->getListGrants();
+	}
+
+	/**
 	 * Tests the getRateLimit method
 	 *
 	 * @return  void
@@ -433,9 +533,6 @@ class AuthorizationsTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetRateLimit()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/rate_limit')
@@ -454,15 +551,15 @@ class AuthorizationsTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @since   1.0
 	 */
-	public function testGetRateLimit_unlimited()
+	public function testGetRateLimitUnlimited()
 	{
 		$this->response->code = 404;
 		$this->response->body = '';
 
 		$this->client->expects($this->once())
-					 ->method('get')
-					 ->with('/rate_limit')
-					 ->will($this->returnValue($this->response));
+			->method('get')
+			->with('/rate_limit')
+			->will($this->returnValue($this->response));
 
 		$this->assertFalse($this->object->getRateLimit()->limit, 'The limit should be false for unlimited');
 	}
@@ -582,5 +679,49 @@ class AuthorizationsTest extends \PHPUnit_Framework_TestCase
 		$this->response->body = '';
 
 		$this->object->requestToken('12345', 'aaa', 'bbb', 'ccc', 'invalid');
+	}
+
+	/**
+	 * Tests the revokeGrantForApplication method
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 */
+	public function testRevokeGrantForApplication()
+	{
+		$this->response->code = 204;
+
+		$this->client->expects($this->once())
+			->method('delete')
+			->with('/applications/42/grants/1a2b3c')
+			->will($this->returnValue($this->response));
+
+		$this->assertThat(
+			$this->object->revokeGrantForApplication(42, '1a2b3c'),
+			$this->equalTo(json_decode($this->sampleString))
+		);
+	}
+
+	/**
+	 * Tests the revokeGrantForApplication method - failure
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 *
+	 * @expectedException  \DomainException
+	 */
+	public function testRevokeGrantForApplicationFailure()
+	{
+		$this->response->code = 500;
+		$this->response->body = $this->errorString;
+
+		$this->client->expects($this->once())
+			->method('delete')
+			->with('/applications/42/grants/1a2b3c')
+			->will($this->returnValue($this->response));
+
+		$this->object->revokeGrantForApplication(42, '1a2b3c');
 	}
 }

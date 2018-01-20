@@ -2,25 +2,26 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Github\Package;
 
 use Joomla\Github\AbstractPackage;
+use Joomla\Http\Exception\UnexpectedResponseException;
 
 /**
  * GitHub API Markdown class.
  *
- * @documentation http://developer.github.com/v3/markdown
+ * @link   https://developer.github.com/v3/markdown
  *
  * @since  1.0
  */
 class Markdown extends AbstractPackage
 {
 	/**
-	 * Method to render a markdown document.
+	 * Render an arbitrary Markdown document.
 	 *
 	 * @param   string  $text     The text object being parsed.
 	 * @param   string  $mode     The parsing mode; valid options are 'markdown' or 'gfm'.
@@ -29,7 +30,7 @@ class Markdown extends AbstractPackage
 	 * @return  string  Formatted HTML
 	 *
 	 * @since   1.0
-	 * @throws  \DomainException
+	 * @throws  UnexpectedResponseException
 	 * @throws  \InvalidArgumentException
 	 */
 	public function render($text, $mode = 'gfm', $context = null)
@@ -47,12 +48,14 @@ class Markdown extends AbstractPackage
 		$path = '/markdown';
 
 		// Build the request data.
-		$data = str_replace('\\/', '/', json_encode(
-				array(
+		$data = str_replace(
+			'\\/', '/',
+			json_encode(
+				[
 					'text'    => $text,
 					'mode'    => $mode,
 					'context' => $context
-				)
+				]
 			)
 		);
 
@@ -64,8 +67,8 @@ class Markdown extends AbstractPackage
 		{
 			// Decode the error response and throw an exception.
 			$error = json_decode($response->body);
-			$message = (isset($error->message)) ? $error->message : 'Error: ' . $response->code;
-			throw new \DomainException($message, $response->code);
+			$message = isset($error->message) ? $error->message : 'Invalid response received from GitHub.';
+			throw new UnexpectedResponseException($response, $message, $response->code);
 		}
 
 		return $response->body;

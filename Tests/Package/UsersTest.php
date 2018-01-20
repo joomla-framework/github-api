@@ -1,49 +1,25 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Github\Tests;
 
 use Joomla\Github\Package\Users;
-use Joomla\Registry\Registry;
+use Joomla\Github\Tests\Stub\GitHubTestCase;
 
 /**
  * Test class for Users.
  *
  * @since  1.0
  */
-class UsersTest extends \PHPUnit_Framework_TestCase
+class UsersTest extends GitHubTestCase
 {
-	/**
-	 * @var    Registry  Options for the GitHub object.
-	 * @since  1.0
-	 */
-	protected $options;
-
-	/**
-	 * @var    \PHPUnit_Framework_MockObject_MockObject  Mock client object.
-	 * @since  1.0
-	 */
-	protected $client;
-
-	/**
-	 * @var    \Joomla\Http\Response  Mock response object.
-	 * @since  1.0
-	 */
-	protected $response;
-
 	/**
 	 * @var Users
 	 */
 	protected $object;
-
-	/**
-	 * @var    string  Sample JSON error message.
-	 * @since  12.3
-	 */
-	protected $errorString = '{"message": "Generic Error"}';
 
 	/**
 	 * Sets up the fixture, for example, opens a network connection.
@@ -56,10 +32,6 @@ class UsersTest extends \PHPUnit_Framework_TestCase
 	protected function setUp()
 	{
 		parent::setUp();
-
-		$this->options  = new Registry;
-		$this->client = $this->getMock('\\Joomla\\Github\\Http', array('get', 'post', 'delete', 'patch', 'put'));
-		$this->response = $this->getMock('\\Joomla\\Http\\Response');
 
 		$this->object = new Users($this->options, $this->client);
 	}
@@ -96,7 +68,7 @@ class UsersTest extends \PHPUnit_Framework_TestCase
 
 		$this->client->expects($this->once())
 			->method('get')
-			->with('/users/joomla', 0, 0)
+			->with('/users/joomla', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -118,7 +90,7 @@ class UsersTest extends \PHPUnit_Framework_TestCase
 
 		$this->client->expects($this->once())
 			->method('get')
-			->with('/users/nonexistentuser', 0, 0)
+			->with('/users/nonexistentuser', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -170,11 +142,11 @@ class UsersTest extends \PHPUnit_Framework_TestCase
 
 		$this->client->expects($this->once())
 			->method('get')
-			->with('/user', 0, 0)
+			->with('/user', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
-			$this->object->getAuthenticatedUser('joomla'),
+			$this->object->getAuthenticatedUser(),
 			$this->equalTo(json_decode($this->response->body))
 		);
 	}
@@ -193,7 +165,7 @@ class UsersTest extends \PHPUnit_Framework_TestCase
 
 		$this->client->expects($this->once())
 			->method('get')
-			->with('/user', 0, 0)
+			->with('/user', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -230,7 +202,7 @@ class UsersTest extends \PHPUnit_Framework_TestCase
 
 		$this->client->expects($this->once())
 			->method('get')
-			->with('/users', 0, 0)
+			->with('/users', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -302,7 +274,7 @@ class UsersTest extends \PHPUnit_Framework_TestCase
 
 		$this->client->expects($this->once())
 			->method('patch')
-			->with('/user', $input, 0, 0)
+			->with('/user', $input, array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -345,7 +317,7 @@ class UsersTest extends \PHPUnit_Framework_TestCase
 
 		$this->client->expects($this->once())
 			->method('patch')
-			->with('/user', $input, 0, 0)
+			->with('/user', $input, array(), 0)
 			->will($this->returnValue($this->response));
 
 		// $this->object->edit($name, $email, $blog, $company, $location, $hireable, $bio);

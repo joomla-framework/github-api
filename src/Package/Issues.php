@@ -2,20 +2,19 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Github\Package;
 
 use Joomla\Github\AbstractPackage;
-use Joomla\Date\Date;
 use Joomla\Uri\Uri;
 
 /**
  * GitHub API Issues class for the Joomla Framework.
  *
- * @documentation http://developer.github.com/v3/issues
+ * @link   https://developer.github.com/v3/issues
  *
  * @since  1.0
  *
@@ -28,22 +27,23 @@ use Joomla\Uri\Uri;
 class Issues extends AbstractPackage
 {
 	/**
-	 * Method to create an issue.
+	 * Create an issue.
 	 *
-	 * @param   string   $user       The name of the owner of the GitHub repository.
-	 * @param   string   $repo       The name of the GitHub repository.
-	 * @param   string   $title      The title of the new issue.
-	 * @param   string   $body       The body text for the new issue.
-	 * @param   string   $assignee   The login for the GitHub user that this issue should be assigned to.
-	 * @param   integer  $milestone  The milestone to associate this issue with.
-	 * @param   array    $labels     The labels to associate with this issue.
+	 * @param   string    $user       The name of the owner of the GitHub repository.
+	 * @param   string    $repo       The name of the GitHub repository.
+	 * @param   string    $title      The title of the new issue.
+	 * @param   string    $body       The body text for the new issue.
+	 * @param   string    $assignee   The login for the GitHub user that this issue should be assigned to.
+	 * @param   integer   $milestone  The milestone to associate this issue with.
+	 * @param   string[]  $labels     The labels to associate with this issue.
+	 * @param   string[]  $assignees  The logins for GitHub users to assign to this issue.
 	 *
 	 * @return  object
 	 *
 	 * @since   1.0
 	 * @throws  \DomainException
 	 */
-	public function create($user, $repo, $title, $body = null, $assignee = null, $milestone = null, array $labels = array())
+	public function create($user, $repo, $title, $body = null, $assignee = null, $milestone = null, array $labels = [], array $assignees = [])
 	{
 		// Build the request path.
 		$path = '/repos/' . $user . '/' . $repo . '/issues';
@@ -55,32 +55,36 @@ class Issues extends AbstractPackage
 		}
 
 		// Build the request data.
-		$data = json_encode(
-			array(
-				'title'     => $title,
-				'assignee'  => $assignee,
-				'milestone' => $milestone,
-				'labels'    => $labels,
-				'body'      => $body
-			)
+		$data = array(
+			'title'     => $title,
+			'milestone' => $milestone,
+			'labels'    => $labels,
+			'body'      => $body
 		);
 
-		// Send the request.
-		$response = $this->client->post($this->fetchUrl($path), $data);
-
-		// Validate the response code.
-		if ($response->code != 201)
+		if (is_string($assignee) && !empty($assignees))
 		{
-			// Decode the error response and throw an exception.
-			$error = json_decode($response->body);
-			throw new \DomainException($error->message, $response->code);
+			throw new \UnexpectedValueException('You cannot pass both assignee and assignees. Only one may be provided.');
 		}
 
-		return json_decode($response->body);
+		if (!empty($assignees))
+		{
+			$data['assignees'] = array_values($assignees);
+		}
+		elseif (is_string($assignee))
+		{
+			$data['assignee'] = $assignee;
+		}
+
+		// Encode the request data.
+		$data = json_encode($data);
+
+		// Send the request.
+		return $this->processResponse($this->client->post($this->fetchUrl($path), $data), 201);
 	}
 
 	/**
-	 * Method to update an issue.
+	 * Edit an issue.
 	 *
 	 * @param   string   $user       The name of the owner of the GitHub repository.
 	 * @param   string   $repo       The name of the GitHub repository.
@@ -97,12 +101,13 @@ class Issues extends AbstractPackage
 	 * @since   1.0
 	 * @throws  \DomainException
 	 */
-	public function edit($user, $repo, $issueId, $state = null, $title = null, $body = null, $assignee = null, $milestone = null, array $labels = null)
+	public function edit($user, $repo, $issueId, $state = null, $title = null, $body = null, $assignee = null,
+		$milestone = null, array $labels = null)
 	{
 		// Build the request path.
 		$path = '/repos/' . $user . '/' . $repo . '/issues/' . (int) $issueId;
 
-		// Craete the data object.
+		// Create the data object.
 		$data = new \stdClass;
 
 		// If a title is set add it to the data object.
@@ -151,21 +156,11 @@ class Issues extends AbstractPackage
 		$data = json_encode($data);
 
 		// Send the request.
-		$response = $this->client->patch($this->fetchUrl($path), $data);
-
-		// Validate the response code.
-		if ($response->code != 200)
-		{
-			// Decode the error response and throw an exception.
-			$error = json_decode($response->body);
-			throw new \DomainException($error->message, $response->code);
-		}
-
-		return json_decode($response->body);
+		return $this->processResponse($this->client->patch($this->fetchUrl($path), $data));
 	}
 
 	/**
-	 * Method to get a single issue.
+	 * Get a single issue.
 	 *
 	 * @param   string   $user     The name of the owner of the GitHub repository.
 	 * @param   string   $repo     The name of the GitHub repository.
@@ -182,30 +177,20 @@ class Issues extends AbstractPackage
 		$path = '/repos/' . $user . '/' . $repo . '/issues/' . (int) $issueId;
 
 		// Send the request.
-		$response = $this->client->get($this->fetchUrl($path));
-
-		// Validate the response code.
-		if ($response->code != 200)
-		{
-			// Decode the error response and throw an exception.
-			$error = json_decode($response->body);
-			throw new \DomainException($error->message, $response->code);
-		}
-
-		return json_decode($response->body);
+		return $this->processResponse($this->client->get($this->fetchUrl($path)));
 	}
 
 	/**
-	 * Method to list an authenticated user's issues.
+	 * List issues.
 	 *
-	 * @param   string   $filter     The filter type: assigned, created, mentioned, subscribed.
-	 * @param   string   $state      The optional state to filter requests by. [open, closed]
-	 * @param   string   $labels     The list of comma separated Label names. Example: bug,ui,@high.
-	 * @param   string   $sort       The sort order: created, updated, comments, default: created.
-	 * @param   string   $direction  The list direction: asc or desc, default: desc.
-	 * @param   Date     $since      The date/time since when issues should be returned.
-	 * @param   integer  $page       The page number from which to get items.
-	 * @param   integer  $limit      The number of items on a page.
+	 * @param   string              $filter     The filter type: assigned, created, mentioned, subscribed.
+	 * @param   string              $state      The optional state to filter requests by. [open, closed]
+	 * @param   string              $labels     The list of comma separated Label names. Example: bug,ui,@high.
+	 * @param   string              $sort       The sort order: created, updated, comments, default: created.
+	 * @param   string              $direction  The list direction: asc or desc, default: desc.
+	 * @param   \DateTimeInterface  $since      Only issues updated at or after this time are returned.
+	 * @param   integer             $page       The page number from which to get items.
+	 * @param   integer             $limit      The number of items on a page.
 	 *
 	 * @return  object
 	 *
@@ -213,42 +198,62 @@ class Issues extends AbstractPackage
 	 * @throws  \DomainException
 	 */
 	public function getList($filter = null, $state = null, $labels = null, $sort = null,
-		$direction = null, Date $since = null, $page = 0, $limit = 0)
+		$direction = null, \DateTimeInterface $since = null, $page = 0, $limit = 0)
 	{
 		// Build the request path.
 		$path = '/issues';
 
-		// TODO Implement the filtering options.
+		$uri = new Uri($this->fetchUrl($path, $page, $limit));
 
-		// Send the request.
-		$response = $this->client->get($this->fetchUrl($path, $page, $limit));
-
-		// Validate the response code.
-		if ($response->code != 200)
+		if ($filter)
 		{
-			// Decode the error response and throw an exception.
-			$error = json_decode($response->body);
-			throw new \DomainException($error->message, $response->code);
+			$uri->setVar('filter', $filter);
 		}
 
-		return json_decode($response->body);
+		if ($state)
+		{
+			$uri->setVar('state', $state);
+		}
+
+		if ($labels)
+		{
+			$uri->setVar('labels', $labels);
+		}
+
+		if ($sort)
+		{
+			$uri->setVar('sort', $sort);
+		}
+
+		if ($direction)
+		{
+			$uri->setVar('direction', $direction);
+		}
+
+		if ($since)
+		{
+			$uri->setVar('since', $since->format(\DateTime::ISO8601));
+		}
+
+		// Send the request.
+		return $this->processResponse($this->client->get((string) $uri));
 	}
 
 	/**
-	 * Method to list issues.
+	 * List issues for a repository.
 	 *
-	 * @param   string   $user       The name of the owner of the GitHub repository.
-	 * @param   string   $repo       The name of the GitHub repository.
-	 * @param   string   $milestone  The milestone number, 'none', or *.
-	 * @param   string   $state      The optional state to filter requests by. [open, closed]
-	 * @param   string   $assignee   The assignee name, 'none', or *.
-	 * @param   string   $mentioned  The GitHub user name.
-	 * @param   string   $labels     The list of comma separated Label names. Example: bug,ui,@high.
-	 * @param   string   $sort       The sort order: created, updated, comments, default: created.
-	 * @param   string   $direction  The list direction: asc or desc, default: desc.
-	 * @param   Date     $since      The date/time since when issues should be returned.
-	 * @param   integer  $page       The page number from which to get items.
-	 * @param   integer  $limit      The number of items on a page.
+	 * @param   string     $user       The name of the owner of the GitHub repository.
+	 * @param   string     $repo       The name of the GitHub repository.
+	 * @param   string     $milestone  The milestone number, 'none', or *.
+	 * @param   string     $state      The optional state to filter requests by. [open, closed]
+	 * @param   string     $assignee   The assignee name, 'none', or *.
+	 * @param   string     $mentioned  The GitHub user name.
+	 * @param   string     $labels     The list of comma separated Label names. Example: bug,ui,@high.
+	 * @param   string     $sort       The sort order: created, updated, comments, default: created.
+	 * @param   string     $direction  The list direction: asc or desc, default: desc.
+	 * @param   \DateTime  $since      Only issues updated at or after this time are returned.
+	 * @param   integer    $page       The page number from which to get items.
+	 * @param   integer    $limit      The number of items on a page.
 	 *
 	 * @return  object
 	 *
@@ -256,7 +261,7 @@ class Issues extends AbstractPackage
 	 * @throws  \DomainException
 	 */
 	public function getListByRepository($user, $repo, $milestone = null, $state = null, $assignee = null, $mentioned = null, $labels = null,
-		$sort = null, $direction = null, Date $since = null, $page = 0, $limit = 0)
+		$sort = null, $direction = null, \DateTime $since = null, $page = 0, $limit = 0)
 	{
 		// Build the request path.
 		$path = '/repos/' . $user . '/' . $repo . '/issues';
@@ -300,20 +305,50 @@ class Issues extends AbstractPackage
 
 		if ($since)
 		{
-			$uri->setVar('since', $since->toISO8601());
+			$uri->setVar('since', $since->format(\DateTime::RFC3339));
 		}
 
 		// Send the request.
-		$response = $this->client->get((string) $uri);
+		return $this->processResponse($this->client->get((string) $uri));
+	}
 
-		// Validate the response code.
-		if ($response->code != 200)
-		{
-			// Decode the error response and throw an exception.
-			$error = json_decode($response->body);
-			throw new \DomainException($error->message, $response->code);
-		}
+	/**
+	 * Lock an issue.
+	 *
+	 * @param   string   $user     The name of the owner of the GitHub repository.
+	 * @param   string   $repo     The name of the GitHub repository.
+	 * @param   integer  $issueId  The issue number.
+	 *
+	 * @return  object
+	 *
+	 * @since   1.4.0
+	 * @throws  \DomainException
+	 */
+	public function lock($user, $repo, $issueId)
+	{
+		// Build the request path.
+		$path = "/repos/$user/$repo/issues/" . (int) $issueId . '/lock';
 
-		return json_decode($response->body);
+		return $this->processResponse($this->client->put($this->fetchUrl($path), array()), 204);
+	}
+
+	/**
+	 * Unlock an issue.
+	 *
+	 * @param   string   $user     The name of the owner of the GitHub repository.
+	 * @param   string   $repo     The name of the GitHub repository.
+	 * @param   integer  $issueId  The issue number.
+	 *
+	 * @return  object
+	 *
+	 * @since   1.4.0
+	 * @throws  \DomainException
+	 */
+	public function unlock($user, $repo, $issueId)
+	{
+		// Build the request path.
+		$path = "/repos/$user/$repo/issues/" . (int) $issueId . '/lock';
+
+		return $this->processResponse($this->client->delete($this->fetchUrl($path)), 204);
 	}
 }

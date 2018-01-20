@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework GitHub Package
  *
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -16,7 +16,7 @@ use Joomla\Github\AbstractPackage;
  * These API methods let you retrieve the contents of files within a repository as Base64 encoded content.
  * See media types for requesting raw or other formats.
  *
- * @documentation http://developer.github.com/v3/repos/contents
+ * @link   https://developer.github.com/v3/repos/contents
  *
  * @since  1.0
  */

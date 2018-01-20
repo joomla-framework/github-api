@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -13,7 +13,7 @@ use Joomla\Github\AbstractPackage;
 /**
  * GitHub API References class for the Joomla Framework.
  *
- * @documentation http://developer.github.com/v3/repos/users/keys
+ * @link   https://developer.github.com/v3/repos/users/keys
  *
  * @since  1.0
  */
@@ -26,9 +26,9 @@ class Keys extends AbstractPackage
 	 *
 	 * @param   string  $user  The name of the user.
 	 *
-	 * @since  1.0
+	 * @return  object
 	 *
-	 * @return object
+	 * @since   1.0
 	 */
 	public function getListUser($user)
 	{
@@ -47,9 +47,9 @@ class Keys extends AbstractPackage
 	 * Management of public keys via the API requires that you are authenticated
 	 * through basic auth, or OAuth with the ‘user’ scope.
 	 *
-	 * @since  1.0
+	 * @return  object
 	 *
-	 * @return object
+	 * @since   1.0
 	 */
 	public function getList()
 	{
@@ -66,9 +66,9 @@ class Keys extends AbstractPackage
 	 *
 	 * @param   integer  $id  The id of the key.
 	 *
-	 * @since  1.0
+	 * @return  object
 	 *
-	 * @return object
+	 * @since   1.0
 	 */
 	public function get($id)
 	{
@@ -86,9 +86,9 @@ class Keys extends AbstractPackage
 	 * @param   string  $title  The title of the key.
 	 * @param   string  $key    The key.
 	 *
-	 * @since  1.0
+	 * @return  object
 	 *
-	 * @return object
+	 * @since   1.0
 	 */
 	public function create($title, $key)
 	{
@@ -113,9 +113,9 @@ class Keys extends AbstractPackage
 	 * @param   string   $title  The title of the key.
 	 * @param   string   $key    The key.
 	 *
-	 * @since  1.0
+	 * @return  object
 	 *
-	 * @return object
+	 * @since   1.0
 	 */
 	public function edit($id, $title, $key)
 	{
@@ -137,9 +137,9 @@ class Keys extends AbstractPackage
 	 *
 	 * @param   integer  $id  The id of the key.
 	 *
-	 * @since  1.0
+	 * @return  object
 	 *
-	 * @return object
+	 * @since   1.0
 	 */
 	public function delete($id)
 	{

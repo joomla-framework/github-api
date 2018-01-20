@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -13,14 +13,14 @@ use Joomla\Github\AbstractPackage;
 /**
  * GitHub API Forks class for the Joomla Framework.
  *
- * @documentation http://developer.github.com/v3/repos/forks
+ * @link   https://developer.github.com/v3/repos/forks
  *
  * @since  1.0
  */
 class Forks extends AbstractPackage
 {
 	/**
-	 * Method to fork a repository.
+	 * Create a fork.
 	 *
 	 * @param   string  $owner  The name of the owner of the GitHub repository.
 	 * @param   string  $repo   The name of the GitHub repository.
@@ -52,7 +52,7 @@ class Forks extends AbstractPackage
 	}
 
 	/**
-	 * Method to list forks for a repository.
+	 * List forks.
 	 *
 	 * @param   string   $owner  The name of the owner of the GitHub repository.
 	 * @param   string   $repo   The name of the GitHub repository.

@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -13,14 +13,14 @@ use Joomla\Github\AbstractPackage;
 /**
  * GitHub API Data Commits class for the Joomla Framework.
  *
- * @documentation http://developer.github.com/v3/git/commits/
+ * @link   https://developer.github.com/v3/git/commits/
  *
  * @since  1.0
  */
 class Commits extends AbstractPackage
 {
 	/**
-	 * Get a single commit.
+	 * Get a Commit.
 	 *
 	 * @param   string  $owner  The name of the owner of the GitHub repository.
 	 * @param   string  $repo   The name of the GitHub repository.
@@ -39,7 +39,7 @@ class Commits extends AbstractPackage
 	}
 
 	/**
-	 * Method to create a commit.
+	 * Create a Commit.
 	 *
 	 * @param   string  $owner    The name of the owner of the GitHub repository.
 	 * @param   string  $repo     The name of the GitHub repository.

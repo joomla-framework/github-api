@@ -1,10 +1,10 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Joomla\Github\Tests;
+namespace Joomla\Github\Tests\Stub;
 
 use Joomla\Github\AbstractGithubObject;
 
@@ -15,6 +15,7 @@ use Joomla\Github\AbstractGithubObject;
  */
 class ObjectMock extends AbstractGithubObject
 {
+	// @codingStandardsIgnoreStart
 	/**
 	 * Method to build and return a full request URL for the request.  This method will
 	 * add appropriate pagination details if necessary and also prepend the API url
@@ -32,4 +33,5 @@ class ObjectMock extends AbstractGithubObject
 	{
 		return parent::fetchUrl($path, $page, $limit);
 	}
+	// @codingStandardsIgnoreEnd
 }

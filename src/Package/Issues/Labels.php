@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -20,7 +20,7 @@ use Joomla\Github\AbstractPackage;
 class Labels extends AbstractPackage
 {
 	/**
-	 * Method to get the list of labels on a repo.
+	 * List all labels for this repository.
 	 *
 	 * @param   string  $owner  The name of the owner of the GitHub repository.
 	 * @param   string  $repo   The name of the GitHub repository.
@@ -41,7 +41,7 @@ class Labels extends AbstractPackage
 	}
 
 	/**
-	 * Method to get a specific label on a repo.
+	 * Get a single label.
 	 *
 	 * @param   string  $user  The name of the owner of the GitHub repository.
 	 * @param   string  $repo  The name of the GitHub repository.
@@ -54,7 +54,7 @@ class Labels extends AbstractPackage
 	public function get($user, $repo, $name)
 	{
 		// Build the request path.
-		$path = '/repos/' . $user . '/' . $repo . '/labels/' . $name;
+		$path = '/repos/' . $user . '/' . $repo . '/labels/' . rawurlencode($name);
 
 		// Send the request.
 		return $this->processResponse(
@@ -63,7 +63,7 @@ class Labels extends AbstractPackage
 	}
 
 	/**
-	 * Method to create a label on a repo.
+	 * Create a label.
 	 *
 	 * @param   string  $owner  The name of the owner of the GitHub repository.
 	 * @param   string  $repo   The name of the GitHub repository.
@@ -84,26 +84,16 @@ class Labels extends AbstractPackage
 		$data = json_encode(
 			array(
 				'name'  => $name,
-				'color' => $color
+				'color' => $color,
 			)
 		);
 
 		// Send the request.
-		$response = $this->client->post($this->fetchUrl($path), $data);
-
-		// Validate the response code.
-		if ($response->code != 201)
-		{
-			// Decode the error response and throw an exception.
-			$error = json_decode($response->body);
-			throw new \DomainException($error->message, $response->code);
-		}
-
-		return json_decode($response->body);
+		return $this->processResponse($this->client->post($this->fetchUrl($path), $data), 201);
 	}
 
 	/**
-	 * Method to delete a label on a repo.
+	 * Delete a label.
 	 *
 	 * @param   string  $owner  The name of the owner of the GitHub repository.
 	 * @param   string  $repo   The name of the GitHub repository.
@@ -116,7 +106,7 @@ class Labels extends AbstractPackage
 	public function delete($owner, $repo, $name)
 	{
 		// Build the request path.
-		$path = '/repos/' . $owner . '/' . $repo . '/labels/' . $name;
+		$path = '/repos/' . $owner . '/' . $repo . '/labels/' . rawurlencode($name);
 
 		// Send the request.
 		return $this->processResponse(
@@ -126,7 +116,7 @@ class Labels extends AbstractPackage
 	}
 
 	/**
-	 * Method to update a label on a repo.
+	 * Update a label.
 	 *
 	 * @param   string  $user   The name of the owner of the GitHub repository.
 	 * @param   string  $repo   The name of the GitHub repository.
@@ -147,7 +137,7 @@ class Labels extends AbstractPackage
 		$data = json_encode(
 			array(
 				'name'  => $name,
-				'color' => $color
+				'color' => $color,
 			)
 		);
 
@@ -217,7 +207,7 @@ class Labels extends AbstractPackage
 	public function removeFromIssue($owner, $repo, $number, $name)
 	{
 		// Build the request path.
-		$path = '/repos/' . $owner . '/' . $repo . '/issues/' . $number . '/labels/' . $name;
+		$path = '/repos/' . $owner . '/' . $repo . '/issues/' . $number . '/labels/' . rawurlencode($name);
 
 		// Send the request.
 		return $this->processResponse(

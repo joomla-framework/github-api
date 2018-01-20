@@ -1,34 +1,21 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Github\Tests;
 
 use Joomla\Github\Github;
-use Joomla\Github\Http;
-use Joomla\Registry\Registry;
+use Joomla\Github\Tests\Stub\GitHubTestCase;
 
 /**
  * Test class for Joomla\Github\Github.
  *
  * @since  1.0
  */
-class GithubTest extends \PHPUnit_Framework_TestCase
+class GithubTest extends GitHubTestCase
 {
-	/**
-	 * @var    Registry  Options for the GitHub object.
-	 * @since  1.0
-	 */
-	protected $options;
-
-	/**
-	 * @var    Http  Mock client object.
-	 * @since  1.0
-	 */
-	protected $client;
-
 	/**
 	 * @var    Github  Object under test.
 	 * @since  1.0
@@ -47,9 +34,6 @@ class GithubTest extends \PHPUnit_Framework_TestCase
 	{
 		parent::setUp();
 
-		$this->options = new Registry;
-		$this->client = $this->getMock('\\Joomla\\Github\\Http', array('get', 'post', 'delete', 'patch', 'put'));
-
 		$this->object = new Github($this->options, $this->client);
 	}
 
@@ -60,7 +44,7 @@ class GithubTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @since   1.0
 	 */
-	public function test__GetForks()
+	public function testGetForks()
 	{
 		$this->assertThat(
 			$this->object->repositories->forks,
@@ -75,7 +59,7 @@ class GithubTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @since   1.0
 	 */
-	public function test__GetCommits()
+	public function testGetCommits()
 	{
 		$this->assertThat(
 			$this->object->repositories->commits,
@@ -90,7 +74,7 @@ class GithubTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @since   1.0
 	 */
-	public function test__GetStatuses()
+	public function testGetStatuses()
 	{
 		$this->assertThat(
 			$this->object->repositories->statuses,
@@ -105,7 +89,7 @@ class GithubTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @since   1.0
 	 */
-	public function test__GetHooks()
+	public function testGetHooks()
 	{
 		$this->assertThat(
 			$this->object->repositories->hooks,
@@ -121,9 +105,9 @@ class GithubTest extends \PHPUnit_Framework_TestCase
 	 * @since              1.0
 	 * @expectedException  \InvalidArgumentException
 	 */
-	public function test__GetFailure()
+	public function testGetFailure()
 	{
-		$tmp = $this->object->other;
+		$this->object->other;
 	}
 
 	/**
@@ -155,7 +139,7 @@ class GithubTest extends \PHPUnit_Framework_TestCase
 		$this->options->set('api.url', 'https://example.com/gettest');
 
 		$this->assertThat(
-			$this->object->getOption('api.url', 'https://example.com/gettest'),
+			$this->object->getOption('api.url'),
 			$this->equalTo('https://example.com/gettest')
 		);
 	}

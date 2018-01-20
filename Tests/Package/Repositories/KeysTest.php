@@ -1,54 +1,25 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Github\Tests;
 
 use Joomla\Github\Package\Repositories\Keys;
-use Joomla\Registry\Registry;
+use Joomla\Github\Tests\Stub\GitHubTestCase;
+
 /**
  * Test class for Keys.
  *
  * @since  1.0
  */
-class KeysTest extends \PHPUnit_Framework_TestCase
+class KeysTest extends GitHubTestCase
 {
-	/**
-	 * @var    Registry  Options for the GitHub object.
-	 * @since  1.0
-	 */
-	protected $options;
-
-	/**
-	 * @var    \PHPUnit_Framework_MockObject_MockObject  Mock client object.
-	 * @since  1.0
-	 */
-	protected $client;
-
-	/**
-	 * @var    \Joomla\Http\Response  Mock response object.
-	 * @since  1.0
-	 */
-	protected $response;
-
 	/**
 	 * @var Keys
 	 */
 	protected $object;
-
-	/**
-	 * @var    string  Sample JSON string.
-	 * @since  12.3
-	 */
-	protected $sampleString = '{"a":1,"b":2,"c":3,"d":4,"e":5}';
-
-	/**
-	 * @var    string  Sample JSON error message.
-	 * @since  12.3
-	 */
-	protected $errorString = '{"message": "Generic Error"}';
 
 	/**
 	 * Sets up the fixture, for example, opens a network connection.
@@ -62,10 +33,6 @@ class KeysTest extends \PHPUnit_Framework_TestCase
 	{
 		parent::setUp();
 
-		$this->options  = new Registry;
-		$this->client = $this->getMock('\\Joomla\\Github\\Http', array('get', 'post', 'delete', 'patch', 'put'));
-		$this->response = $this->getMock('\\Joomla\\Http\\Response');
-
 		$this->object = new Keys($this->options, $this->client);
 	}
 
@@ -76,9 +43,6 @@ class KeysTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/keys')
@@ -97,9 +61,6 @@ class KeysTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGet()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/keys/1')
@@ -119,7 +80,6 @@ class KeysTest extends \PHPUnit_Framework_TestCase
 	public function testCreate()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')
@@ -139,9 +99,6 @@ class KeysTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testEdit()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('patch')
 			->with('/repos/joomla/joomla-platform/keys/1')

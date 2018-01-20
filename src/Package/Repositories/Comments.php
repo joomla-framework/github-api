@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework GitHub Package
  *
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -13,14 +13,14 @@ use Joomla\Github\AbstractPackage;
 /**
  * GitHub API Repositories Comments class for the Joomla Framework.
  *
- * @documentation http://developer.github.com/v3/repos/comments
+ * @link   https://developer.github.com/v3/repos/comments
  *
  * @since  1.0
  */
 class Comments extends AbstractPackage
 {
 	/**
-	 * Method to get a list of commit comments for a repository.
+	 * List commit comments for a repository.
 	 *
 	 * @param   string   $user   The name of the owner of the GitHub repository.
 	 * @param   string   $repo   The name of the GitHub repository.
@@ -43,7 +43,7 @@ class Comments extends AbstractPackage
 	}
 
 	/**
-	 * Method to get a list of comments for a single commit for a repository.
+	 * List comments for a single commit.
 	 *
 	 * @param   string   $user   The name of the owner of the GitHub repository.
 	 * @param   string   $repo   The name of the GitHub repository.
@@ -67,7 +67,7 @@ class Comments extends AbstractPackage
 	}
 
 	/**
-	 * Method to get a single comment on a commit.
+	 * Get a single commit comment.
 	 *
 	 * @param   string   $user  The name of the owner of the GitHub repository.
 	 * @param   string   $repo  The name of the GitHub repository.
@@ -89,7 +89,7 @@ class Comments extends AbstractPackage
 	}
 
 	/**
-	 * Method to edit a comment on a commit.
+	 * Update a commit comment.
 	 *
 	 * @param   string  $user     The name of the owner of the GitHub repository.
 	 * @param   string  $repo     The name of the GitHub repository.
@@ -118,7 +118,7 @@ class Comments extends AbstractPackage
 	}
 
 	/**
-	 * Method to delete a comment on a commit.
+	 * Delete a commit comment.
 	 *
 	 * @param   string  $user  The name of the owner of the GitHub repository.
 	 * @param   string  $repo  The name of the GitHub repository.
@@ -141,7 +141,7 @@ class Comments extends AbstractPackage
 	}
 
 	/**
-	 * Method to create a comment on a commit.
+	 * Create a commit comment.
 	 *
 	 * @param   string   $user      The name of the owner of the GitHub repository.
 	 * @param   string   $repo      The name of the GitHub repository.

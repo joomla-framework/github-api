@@ -1,56 +1,26 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Github\Tests;
 
 use Joomla\Github\Package\Activity\Watching;
-use Joomla\Registry\Registry;
+use Joomla\Github\Tests\Stub\GitHubTestCase;
 
 /**
  * Test class for the GitHub API package.
  *
  * @since  1.0
  */
-class WatchingTest extends \PHPUnit_Framework_TestCase
+class WatchingTest extends GitHubTestCase
 {
-	/**
-	 * @var    Registry  Options for the GitHub object.
-	 * @since  1.0
-	 */
-	protected $options;
-
-	/**
-	 * @var    \PHPUnit_Framework_MockObject_MockObject  Mock client object.
-	 * @since  1.0
-	 */
-	protected $client;
-
 	/**
 	 * @var    Watching  Object under test.
 	 * @since  1.0
 	 */
 	protected $object;
-
-	/**
-	 * @var    \Joomla\Http\Response  Mock response object.
-	 * @since  1.0
-	 */
-	protected $response;
-
-	/**
-	 * @var    string  Sample JSON string.
-	 * @since  12.3
-	 */
-	protected $sampleString = '{"a":1,"b":2,"c":3,"d":4,"e":5}';
-
-	/**
-	 * @var    string  Sample JSON error message.
-	 * @since  12.3
-	 */
-	protected $errorString = '{"message": "Generic Error"}';
 
 	/**
 	 * Sets up the fixture, for example, opens a network connection.
@@ -64,10 +34,6 @@ class WatchingTest extends \PHPUnit_Framework_TestCase
 	{
 		parent::setUp();
 
-		$this->options  = new Registry;
-		$this->client   = $this->getMock('\\Joomla\\Github\\Http', array('get', 'post', 'delete', 'patch', 'put'));
-		$this->response = $this->getMock('\\Joomla\\Http\\Response');
-
 		$this->object = new Watching($this->options, $this->client);
 	}
 
@@ -78,12 +44,9 @@ class WatchingTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
-			->with('/repos/joomla/joomla-platform/subscribers', 0, 0)
+			->with('/repos/joomla/joomla-platform/subscribers', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -99,12 +62,9 @@ class WatchingTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetRepositories()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
-			->with('/user/subscriptions', 0, 0)
+			->with('/user/subscriptions', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -120,12 +80,9 @@ class WatchingTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetRepositoriesUser()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
-			->with('/users/joomla/subscriptions', 0, 0)
+			->with('/users/joomla/subscriptions', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -141,12 +98,9 @@ class WatchingTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetSubscription()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
-			->with('/repos/joomla/joomla-platform/subscription', 0, 0)
+			->with('/repos/joomla/joomla-platform/subscription', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -162,12 +116,9 @@ class WatchingTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testSetSubscription()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('put')
-			->with('/repos/joomla/joomla-platform/subscription', '{"subscribed":true,"ignored":false}', 0, 0)
+			->with('/repos/joomla/joomla-platform/subscription', '{"subscribed":true,"ignored":false}', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -188,7 +139,7 @@ class WatchingTest extends \PHPUnit_Framework_TestCase
 
 		$this->client->expects($this->once())
 			->method('delete')
-			->with('/repos/joomla/joomla-platform/subscription', 0, 0)
+			->with('/repos/joomla/joomla-platform/subscription', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -209,7 +160,7 @@ class WatchingTest extends \PHPUnit_Framework_TestCase
 
 		$this->client->expects($this->once())
 			->method('get')
-			->with('/user/subscriptions/joomla/joomla-platform', 0, 0)
+			->with('/user/subscriptions/joomla/joomla-platform', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -230,7 +181,7 @@ class WatchingTest extends \PHPUnit_Framework_TestCase
 
 		$this->client->expects($this->once())
 			->method('get')
-			->with('/user/subscriptions/joomla/joomla-platform', 0, 0)
+			->with('/user/subscriptions/joomla/joomla-platform', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -242,7 +193,7 @@ class WatchingTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Tests the checkUnexpected method
 	 *
-	 * @expectedException UnexpectedValueException
+	 * @expectedException \UnexpectedValueException
 	 * @return  void
 	 */
 	public function testCheckUnexpected()
@@ -252,7 +203,7 @@ class WatchingTest extends \PHPUnit_Framework_TestCase
 
 		$this->client->expects($this->once())
 			->method('get')
-			->with('/user/subscriptions/joomla/joomla-platform', 0, 0)
+			->with('/user/subscriptions/joomla/joomla-platform', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->object->check('joomla', 'joomla-platform');
@@ -270,7 +221,7 @@ class WatchingTest extends \PHPUnit_Framework_TestCase
 
 		$this->client->expects($this->once())
 			->method('put')
-			->with('/user/subscriptions/joomla/joomla-platform', '', 0, 0)
+			->with('/user/subscriptions/joomla/joomla-platform', '', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -291,7 +242,7 @@ class WatchingTest extends \PHPUnit_Framework_TestCase
 
 		$this->client->expects($this->once())
 			->method('delete')
-			->with('/user/subscriptions/joomla/joomla-platform', 0, 0)
+			->with('/user/subscriptions/joomla/joomla-platform', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(

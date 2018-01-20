@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework GitHub Package
  *
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -13,7 +13,7 @@ use Joomla\Github\AbstractPackage;
 /**
  * GitHub API Repositories Merging class for the Joomla Framework.
  *
- * @documentation http://developer.github.com/v3/repos/merging
+ * @link   https://developer.github.com/v3/repos/merging
  *
  * @since  1.0
  */

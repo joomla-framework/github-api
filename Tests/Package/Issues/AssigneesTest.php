@@ -1,44 +1,26 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Joomla\Github\Tests;
+namespace Joomla\Github\Tests\Issues;
 
 use Joomla\Github\Package\Issues\Assignees;
-use Joomla\Registry\Registry;
+use Joomla\Github\Tests\Stub\GitHubTestCase;
 
 /**
  * Test class for the GitHub API package.
  *
  * @since  1.0
  */
-class AssigneesTest extends \PHPUnit_Framework_TestCase
+class AssigneesTest extends GitHubTestCase
 {
-	/**
-	 * @var    Registry  Options for the GitHub object.
-	 * @since  1.0
-	 */
-	protected $options;
-
-	/**
-	 * @var    \PHPUnit_Framework_MockObject_MockObject  Mock client object.
-	 * @since  1.0
-	 */
-	protected $client;
-
 	/**
 	 * @var    Assignees  Object under test.
 	 * @since  1.0
 	 */
 	protected $object;
-
-	/**
-	 * @var    \Joomla\Http\Response  Mock response object.
-	 * @since  1.0
-	 */
-	protected $response;
 
 	/**
 	 * @var string
@@ -53,18 +35,6 @@ class AssigneesTest extends \PHPUnit_Framework_TestCase
 	protected $repo = 'joomla-framework';
 
 	/**
-	 * @var    string  Sample JSON string.
-	 * @since  1.0
-	 */
-	protected $sampleString = '{"a":1,"b":2,"c":3,"d":4,"e":5}';
-
-	/**
-	 * @var    string  Sample JSON error message.
-	 * @since  1.0
-	 */
-	protected $errorString = '{"message": "Generic Error"}';
-
-	/**
 	 * Sets up the fixture, for example, opens a network connection.
 	 * This method is called before a test is executed.
 	 *
@@ -75,10 +45,6 @@ class AssigneesTest extends \PHPUnit_Framework_TestCase
 	protected function setUp()
 	{
 		parent::setUp();
-
-		$this->options  = new Registry;
-		$this->client   = $this->getMock('\\Joomla\\Github\\Http', array('get', 'post', 'delete', 'patch', 'put'));
-		$this->response = $this->getMock('\\Joomla\\Http\\Response');
 
 		$this->object = new Assignees($this->options, $this->client);
 	}
@@ -103,7 +69,7 @@ class AssigneesTest extends \PHPUnit_Framework_TestCase
 
 		$this->client->expects($this->once())
 			->method('get')
-			->with('/repos/' . $this->owner . '/' . $this->repo . '/assignees', 0, 0)
+			->with('/repos/' . $this->owner . '/' . $this->repo . '/assignees', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -130,7 +96,7 @@ class AssigneesTest extends \PHPUnit_Framework_TestCase
 
 		$this->client->expects($this->once())
 			->method('get')
-			->with('/repos/' . $this->owner . '/' . $this->repo . '/assignees/' . $assignee, 0, 0)
+			->with('/repos/' . $this->owner . '/' . $this->repo . '/assignees/' . $assignee, array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -157,7 +123,7 @@ class AssigneesTest extends \PHPUnit_Framework_TestCase
 
 		$this->client->expects($this->once())
 			->method('get')
-			->with('/repos/' . $this->owner . '/' . $this->repo . '/assignees/' . $assignee, 0, 0)
+			->with('/repos/' . $this->owner . '/' . $this->repo . '/assignees/' . $assignee, array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -186,12 +152,70 @@ class AssigneesTest extends \PHPUnit_Framework_TestCase
 
 		$this->client->expects($this->once())
 			->method('get')
-			->with('/repos/' . $this->owner . '/' . $this->repo . '/assignees/' . $assignee, 0, 0)
+			->with('/repos/' . $this->owner . '/' . $this->repo . '/assignees/' . $assignee, array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
 			$this->object->check($this->owner, $this->repo, $assignee),
 			$this->equalTo(false)
+		);
+	}
+
+	/**
+	 * Tests the add method
+	 *
+	 * @return void
+	 */
+	public function testAdd()
+	{
+		$this->response->code = 201;
+		$this->response->body = '[
+	{
+	"login": "octocat",
+	"id": 1,
+	"avatar_url": "https://github.com/images/error/octocat_happy.gif",
+	"gravatar_id": "somehexcode",
+	"url": "https://api.github.com/users/octocat"
+	}
+	]';
+
+		$this->client->expects($this->once())
+			->method('post')
+			->with('/repos/' . $this->owner . '/' . $this->repo . '/issues/123/assignees', json_encode(array('assignees' => array('joomla'))))
+			->will($this->returnValue($this->response));
+
+		$this->assertThat(
+			$this->object->add($this->owner, $this->repo, 123, array('joomla')),
+			$this->equalTo(json_decode($this->response->body))
+		);
+	}
+
+	/**
+	 * Tests the remove method
+	 *
+	 * @return void
+	 */
+	public function testRemove()
+	{
+		$this->response->code = 200;
+		$this->response->body = '[
+	{
+	"login": "octocat",
+	"id": 1,
+	"avatar_url": "https://github.com/images/error/octocat_happy.gif",
+	"gravatar_id": "somehexcode",
+	"url": "https://api.github.com/users/octocat"
+	}
+	]';
+
+		$this->client->expects($this->once())
+			->method('delete')
+			->with('/repos/' . $this->owner . '/' . $this->repo . '/issues/123/assignees', [], null, json_encode(['assignees' => ['joomla']]))
+			->will($this->returnValue($this->response));
+
+		$this->assertThat(
+			$this->object->remove($this->owner, $this->repo, 123, array('joomla')),
+			$this->equalTo(json_decode($this->response->body))
 		);
 	}
 }

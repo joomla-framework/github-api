@@ -2,20 +2,23 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Github\Package;
 
 use Joomla\Github\AbstractPackage;
+use Joomla\Http\Exception\UnexpectedResponseException;
 use Joomla\Uri\Uri;
 
 /**
  * GitHub API Authorization class for the Joomla Framework.
  *
  * @documentation  http://developer.github.com/v3/oauth/
+ * @documentation  http://developer.github.com/v3/oauth_authorizations/
  *
+ * @note   The methods in this class are only accessible with Basic Authentication
  * @since  1.0
  */
 class Authorization extends AbstractPackage
@@ -42,17 +45,7 @@ class Authorization extends AbstractPackage
 		);
 
 		// Send the request.
-		$response = $this->client->post($this->fetchUrl($path), $data);
-
-		// Validate the response code.
-		if ($response->code != 201)
-		{
-			// Decode the error response and throw an exception.
-			$error = json_decode($response->body);
-			throw new \DomainException($error->message, $response->code);
-		}
-
-		return json_decode($response->body);
+		return $this->processResponse($this->client->post($this->fetchUrl($path), $data), 201);
 	}
 
 	/**
@@ -71,17 +64,28 @@ class Authorization extends AbstractPackage
 		$path = '/authorizations/' . $id;
 
 		// Send the request.
-		$response = $this->client->delete($this->fetchUrl($path));
+		return $this->processResponse($this->client->delete($this->fetchUrl($path)), 204);
+	}
 
-		// Validate the response code.
-		if ($response->code != 204)
-		{
-			// Decode the error response and throw an exception.
-			$error = json_decode($response->body);
-			throw new \DomainException($error->message, $response->code);
-		}
+	/**
+	 * Delete a grant
+	 *
+	 * Deleting an OAuth application's grant will also delete all OAuth tokens associated with the application for your user.
+	 *
+	 * @param   integer  $id  ID of the authorization to delete
+	 *
+	 * @return  object
+	 *
+	 * @since   1.5.0
+	 * @throws  \DomainException
+	 */
+	public function deleteGrant($id)
+	{
+		// Build the request path.
+		$path = '/authorizations/grants/' . $id;
 
-		return json_decode($response->body);
+		// Send the request.
+		return $this->processResponse($this->client->delete($this->fetchUrl($path)), 204);
 	}
 
 	/**
@@ -146,17 +150,7 @@ class Authorization extends AbstractPackage
 		);
 
 		// Send the request.
-		$response = $this->client->patch($this->fetchUrl($path), $data);
-
-		// Validate the response code.
-		if ($response->code != 200)
-		{
-			// Decode the error response and throw an exception.
-			$error = json_decode($response->body);
-			throw new \DomainException($error->message, $response->code);
-		}
-
-		return json_decode($response->body);
+		return $this->processResponse($this->client->patch($this->fetchUrl($path), $data));
 	}
 
 	/**
@@ -166,7 +160,6 @@ class Authorization extends AbstractPackage
 	 *
 	 * @return  object
 	 *
-	 * @note    This method will only accept Basic Authentication
 	 * @since   1.0
 	 * @throws  \DomainException
 	 */
@@ -176,17 +169,26 @@ class Authorization extends AbstractPackage
 		$path = '/authorizations/' . $id;
 
 		// Send the request.
-		$response = $this->client->get($this->fetchUrl($path));
+		return $this->processResponse($this->client->get($this->fetchUrl($path)));
+	}
 
-		// Validate the response code.
-		if ($response->code != 200)
-		{
-			// Decode the error response and throw an exception.
-			$error = json_decode($response->body);
-			throw new \DomainException($error->message, $response->code);
-		}
+	/**
+	 * Get a single grant
+	 *
+	 * @param   integer  $id  ID of the authorization to retrieve
+	 *
+	 * @return  object
+	 *
+	 * @since   1.5.0
+	 * @throws  \DomainException
+	 */
+	public function getGrant($id)
+	{
+		// Build the request path.
+		$path = '/authorizations/grants/' . $id;
 
-		return json_decode($response->body);
+		// Send the request.
+		return $this->processResponse($this->client->get($this->fetchUrl($path)));
 	}
 
 	/**
@@ -194,7 +196,6 @@ class Authorization extends AbstractPackage
 	 *
 	 * @return  object
 	 *
-	 * @note    This method will only accept Basic Authentication
 	 * @since   1.0
 	 * @throws  \DomainException
 	 */
@@ -204,17 +205,26 @@ class Authorization extends AbstractPackage
 		$path = '/authorizations';
 
 		// Send the request.
-		$response = $this->client->get($this->fetchUrl($path));
+		return $this->processResponse($this->client->get($this->fetchUrl($path)));
+	}
 
-		// Validate the response code.
-		if ($response->code != 200)
-		{
-			// Decode the error response and throw an exception.
-			$error = json_decode($response->body);
-			throw new \DomainException($error->message, $response->code);
-		}
+	/**
+	 * List your grants.
+	 *
+	 * You can use this API to list the set of OAuth applications that have been granted access to your account.
+	 *
+	 * @return  object
+	 *
+	 * @since   1.5.0
+	 * @throws  \DomainException
+	 */
+	public function getListGrants()
+	{
+		// Build the request path.
+		$path = '/authorizations/grants';
 
-		return json_decode($response->body);
+		// Send the request.
+		return $this->processResponse($this->client->get($this->fetchUrl($path)));
 	}
 
 	/**
@@ -224,7 +234,7 @@ class Authorization extends AbstractPackage
 	 *                  `limit` property will be false.
 	 *
 	 * @since   1.0
-	 * @throws  \DomainException
+	 * @throws  UnexpectedResponseException
 	 */
 	public function getRateLimit()
 	{
@@ -245,7 +255,7 @@ class Authorization extends AbstractPackage
 
 			// Decode the error response and throw an exception.
 			$error = json_decode($response->body);
-			throw new \DomainException($error->message, $response->code);
+			throw new UnexpectedResponseException($response, $error->message, $response->code);
 		}
 
 		return json_decode($response->body);
@@ -338,7 +348,29 @@ class Authorization extends AbstractPackage
 		// Send the request.
 		return $this->processResponse(
 			$this->client->post($uri, $data, $headers),
-			200, false
+			200
 		);
+	}
+
+	/**
+	 * Revoke a grant for an application
+	 *
+	 * OAuth application owners can revoke a grant for their OAuth application and a specific user.
+	 *
+	 * @param   integer  $clientId     The application client ID
+	 * @param   integer  $accessToken  The access token to revoke
+	 *
+	 * @return  object
+	 *
+	 * @since   1.5.0
+	 * @throws  \DomainException
+	 */
+	public function revokeGrantForApplication($clientId, $accessToken)
+	{
+		// Build the request path.
+		$path = "/applications/$clientId/grants/$accessToken";
+
+		// Send the request.
+		return $this->processResponse($this->client->delete($this->fetchUrl($path)), 204);
 	}
 }

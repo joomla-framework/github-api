@@ -1,39 +1,21 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Github\Tests;
 
 use Joomla\Github\Package\Gitignore;
-use Joomla\Registry\Registry;
+use Joomla\Github\Tests\Stub\GitHubTestCase;
 
 /**
  * Test class for Gitignore.
  *
  * @since  1.0
  */
-class GitignoreTest extends \PHPUnit_Framework_TestCase
+class GitignoreTest extends GitHubTestCase
 {
-	/**
-	 * @var    Registry  Options for the GitHub object.
-	 * @since  1.0
-	 */
-	protected $options;
-
-	/**
-	 * @var    \PHPUnit_Framework_MockObject_MockObject  Mock client object.
-	 * @since  1.0
-	 */
-	protected $client;
-
-	/**
-	 * @var    \Joomla\Http\Response  Mock response object.
-	 * @since  1.0
-	 */
-	protected $response;
-
 	/**
 	 * @var Gitignore
 	 */
@@ -50,10 +32,6 @@ class GitignoreTest extends \PHPUnit_Framework_TestCase
 	protected function setUp()
 	{
 		parent::setUp();
-
-		$this->options  = new Registry;
-		$this->client = $this->getMock('\\Joomla\\Github\\Http', array('get', 'post', 'delete', 'patch', 'put'));
-		$this->response = $this->getMock('\\Joomla\\Http\\Response');
 
 		$this->object = new Gitignore($this->options, $this->client);
 	}
@@ -80,7 +58,7 @@ class GitignoreTest extends \PHPUnit_Framework_TestCase
 
 		$this->client->expects($this->once())
 			->method('get')
-			->with('/gitignore/templates', 0, 0)
+			->with('/gitignore/templates', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -101,7 +79,8 @@ class GitignoreTest extends \PHPUnit_Framework_TestCase
 		$this->response->code = 200;
 		$this->response->body = '{
     "name": "C",
-    "source": "# Object files\n*.o\n\n# Libraries\n*.lib\n*.a\n\n# Shared objects (inc. Windows DLLs)\n*.dll\n*.so\n*.so.*\n*.dylib\n\n# Executables\n*.exe\n*.out\n*.app\n"
+    "source": "# Object files\n*.o\n\n# Libraries\n*.lib\n*.a\n\n# Shared objects (inc. Windows DLLs)\n'
+			. '*.dll\n*.so\n*.so.*\n*.dylib\n\n# Executables\n*.exe\n*.out\n*.app\n"
     }';
 
 		$this->client->expects($this->once())

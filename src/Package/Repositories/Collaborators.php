@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework GitHub Package
  *
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -13,14 +13,14 @@ use Joomla\Github\AbstractPackage;
 /**
  * GitHub API Repositories Collaborators class for the Joomla Framework.
  *
- * @documentation http://developer.github.com/v3/repos/collaborators
+ * @link   https://developer.github.com/v3/repos/collaborators
  *
  * @since  1.0
  */
 class Collaborators extends AbstractPackage
 {
 	/**
-	 * List.
+	 * List collaborators.
 	 *
 	 * When authenticating as an organization owner of an organization-owned repository, all organization
 	 * owners are included in the list of collaborators. Otherwise, only users with access to the repository
@@ -44,7 +44,7 @@ class Collaborators extends AbstractPackage
 	}
 
 	/**
-	 * Test if a user is a collaborator.
+	 * Check if a user is a collaborator.
 	 *
 	 * @param   string  $owner  The name of the owner of the GitHub repository.
 	 * @param   string  $repo   The name of the GitHub repository.
@@ -79,7 +79,7 @@ class Collaborators extends AbstractPackage
 	}
 
 	/**
-	 * Add collaborator.
+	 * Add user as a collaborator.
 	 *
 	 * @param   string  $owner  The name of the owner of the GitHub repository.
 	 * @param   string  $repo   The name of the GitHub repository.
@@ -101,7 +101,7 @@ class Collaborators extends AbstractPackage
 	}
 
 	/**
-	 * Remove collaborator.
+	 * Remove user as a collaborator.
 	 *
 	 * @param   string  $owner  The name of the owner of the GitHub repository.
 	 * @param   string  $repo   The name of the GitHub repository.

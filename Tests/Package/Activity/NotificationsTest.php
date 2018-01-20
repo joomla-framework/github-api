@@ -1,57 +1,28 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Github\Tests;
 
 use Joomla\Github\Package\Activity\Notifications;
-use Joomla\Registry\Registry;
-use Joomla\Date\Date;
+use Joomla\Github\Tests\Stub\GitHubTestCase;
 
 /**
- * Test class for the GitHub API package.
+ * Test class.
+ *
+ * @covers \Joomla\Github\Package\Activity\Notifications
  *
  * @since  1.0
  */
-class NotificationsTest extends \PHPUnit_Framework_TestCase
+class NotificationsTest extends GitHubTestCase
 {
-	/**
-	 * @var    Registry  Options for the GitHub object.
-	 * @since  1.0
-	 */
-	protected $options;
-
-	/**
-	 * @var    \PHPUnit_Framework_MockObject_MockObject  Mock client object.
-	 * @since  1.0
-	 */
-	protected $client;
-
 	/**
 	 * @var    Notifications  Object under test.
 	 * @since  1.0
 	 */
 	protected $object;
-
-	/**
-	 * @var    \Joomla\Http\Response  Mock response object.
-	 * @since  12.3
-	 */
-	protected $response;
-
-	/**
-	 * @var    string  Sample JSON string.
-	 * @since  12.3
-	 */
-	protected $sampleString = '{"a":1,"b":2,"c":3,"d":4,"e":5}';
-
-	/**
-	 * @var    string  Sample JSON error message.
-	 * @since  12.3
-	 */
-	protected $errorString = '{"message": "Generic Error"}';
 
 	/**
 	 * Sets up the fixture, for example, opens a network connection.
@@ -65,57 +36,62 @@ class NotificationsTest extends \PHPUnit_Framework_TestCase
 	{
 		parent::setUp();
 
-		$this->options = new Registry;
-		$this->client = $this->getMock('\\Joomla\\Github\\Http', array('get', 'post', 'delete', 'patch', 'put'));
-		$this->response = $this->getMock('\\Joomla\\Http\\Response');
-
 		$this->object = new Notifications($this->options, $this->client);
 	}
 
 	/**
-	 * Tests the getList method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Activity\Notifications::getList()
 	 *
 	 * @return  void
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
-			->with('/notifications?&all=1&participating=1', 0, 0)
+			->with('/notifications?all=1&participating=1&since=2005-08-17T00:00:00+00:00&before=2005-08-17T00:00:00+00:00', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
-			$this->object->getList(),
+			$this->object->getList(true, true, new \DateTime('2005-8-17', new \DateTimeZone('UTC')), new  \DateTime('2005-8-17', new \DateTimeZone('UTC'))),
 			$this->equalTo(json_decode($this->response->body))
 		);
 	}
 
 	/**
-	 * Tests the getListRepository method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Activity\Notifications::getListRepository()
 	 *
 	 * @return  void
 	 */
 	public function testGetListRepository()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
+		$args = 'all=1&participating=1&since=2005-08-17T00:00:00+00:00&before=2005-08-17T00:00:00+00:00';
 
 		$this->client->expects($this->once())
 			->method('get')
-			->with('/repos/joomla/joomla-platform/notifications?&all=1&participating=1', 0, 0)
+			->with('/repos/{owner}/{repo}/notifications?' . $args, array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
-			$this->object->getListRepository('joomla', 'joomla-platform'),
+			$this->object->getListRepository(
+				'{owner}',
+				'{repo}',
+				true,
+				true,
+				new \DateTime('2005-8-17', new \DateTimeZone('UTC')),
+				new \DateTime('2005-8-17', new \DateTimeZone('UTC'))
+			),
 			$this->equalTo(json_decode($this->response->body))
 		);
 	}
 
 	/**
-	 * Tests the markRead method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Activity\Notifications::markRead()
 	 *
 	 * @return  void
 	 */
@@ -126,7 +102,7 @@ class NotificationsTest extends \PHPUnit_Framework_TestCase
 
 		$this->client->expects($this->once())
 			->method('put')
-			->with('/notifications', '{"unread":true,"read":true}', 0, 0)
+			->with('/notifications', '{"unread":true,"read":true}', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -136,7 +112,9 @@ class NotificationsTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the markReadLastRead method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Activity\Notifications::markRead()
 	 *
 	 * @return  void
 	 */
@@ -145,12 +123,12 @@ class NotificationsTest extends \PHPUnit_Framework_TestCase
 		$this->response->code = 205;
 		$this->response->body = '';
 
-		$date = new Date('1966-09-14');
+		$date = new \DateTime('1966-09-14', new \DateTimeZone('UTC'));
 		$data = '{"unread":true,"read":true,"last_read_at":"1966-09-14T00:00:00+00:00"}';
 
 		$this->client->expects($this->once())
 			->method('put')
-			->with('/notifications', $data, 0, 0)
+			->with('/notifications', $data, array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -160,7 +138,9 @@ class NotificationsTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the markReadRepository method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Activity\Notifications::markReadRepository()
 	 *
 	 * @return  void
 	 */
@@ -173,7 +153,7 @@ class NotificationsTest extends \PHPUnit_Framework_TestCase
 
 		$this->client->expects($this->once())
 			->method('put')
-			->with('/repos/joomla/joomla-platform/notifications', $data, 0, 0)
+			->with('/repos/joomla/joomla-platform/notifications', $data, array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -183,7 +163,9 @@ class NotificationsTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the markReadRepositoryLastRead method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Activity\Notifications::markReadRepository()
 	 *
 	 * @return  void
 	 */
@@ -192,12 +174,12 @@ class NotificationsTest extends \PHPUnit_Framework_TestCase
 		$this->response->code = 205;
 		$this->response->body = '';
 
-		$date = new Date('1966-09-14');
+		$date = new \DateTime('1966-09-14', new \DateTimeZone('UTC'));
 		$data = '{"unread":true,"read":true,"last_read_at":"1966-09-14T00:00:00+00:00"}';
 
 		$this->client->expects($this->once())
 			->method('put')
-			->with('/repos/joomla/joomla-platform/notifications', $data, 0, 0)
+			->with('/repos/joomla/joomla-platform/notifications', $data, array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -207,18 +189,17 @@ class NotificationsTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the viewThread method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Activity\Notifications::viewThread()
 	 *
 	 * @return  void
 	 */
 	public function testViewThread()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
-			->with('/notifications/threads/1', 0, 0)
+			->with('/notifications/threads/1', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -228,18 +209,19 @@ class NotificationsTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the markReadThread method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Activity\Notifications::markReadThread()
 	 *
 	 * @return  void
 	 */
 	public function testMarkReadThread()
 	{
 		$this->response->code = 205;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('patch')
-			->with('/notifications/threads/1', '{"unread":true,"read":true}', 0, 0)
+			->with('/notifications/threads/1', '{"unread":true,"read":true}', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -249,18 +231,17 @@ class NotificationsTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the getThreadSubscription method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Activity\Notifications::getThreadSubscription()
 	 *
 	 * @return  void
 	 */
 	public function testGetThreadSubscription()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
-			->with('/notifications/threads/1/subscription', 0, 0)
+			->with('/notifications/threads/1/subscription', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -270,18 +251,17 @@ class NotificationsTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the setThreadSubscription method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Activity\Notifications::setThreadSubscription()
 	 *
 	 * @return  void
 	 */
 	public function testSetThreadSubscription()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('put')
-			->with('/notifications/threads/1/subscription', '{"subscribed":true,"ignored":false}', 0, 0)
+			->with('/notifications/threads/1/subscription', '{"subscribed":true,"ignored":false}', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -291,7 +271,9 @@ class NotificationsTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the deleteThreadSubscription method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Activity\Notifications::deleteThreadSubscription()
 	 *
 	 * @return  void
 	 */
@@ -302,7 +284,7 @@ class NotificationsTest extends \PHPUnit_Framework_TestCase
 
 		$this->client->expects($this->once())
 			->method('delete')
-			->with('/notifications/threads/1/subscription', 0, 0)
+			->with('/notifications/threads/1/subscription', array(), 0)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(

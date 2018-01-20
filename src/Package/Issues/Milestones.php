@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -13,14 +13,14 @@ use Joomla\Github\AbstractPackage;
 /**
  * GitHub API Milestones class for the Joomla Framework.
  *
- * @documentation http://developer.github.com/v3/issues/milestones/
+ * @link   https://developer.github.com/v3/issues/milestones/
  *
  * @since  1.0
  */
 class Milestones extends AbstractPackage
 {
 	/**
-	 * Method to get the list of milestones for a repo.
+	 * List milestones for a repository.
 	 *
 	 * @param   string   $user       The name of the owner of the GitHub repository.
 	 * @param   string   $repo       The name of the GitHub repository.
@@ -30,10 +30,10 @@ class Milestones extends AbstractPackage
 	 * @param   integer  $page       The page number from which to get items.
 	 * @param   integer  $limit      The number of items on a page.
 	 *
-	 * @throws \DomainException
-	 * @since   1.0
+	 * @return  object
 	 *
-	 * @return  array
+	 * @since   1.0
+	 * @throws  \DomainException
 	 */
 	public function getList($user, $repo, $state = 'open', $sort = 'due_date', $direction = 'desc', $page = 0, $limit = 0)
 	{
@@ -45,30 +45,20 @@ class Milestones extends AbstractPackage
 		$path .= '&direction=' . $direction;
 
 		// Send the request.
-		$response = $this->client->get($this->fetchUrl($path, $page, $limit));
-
-		// Validate the response code.
-		if ($response->code != 200)
-		{
-			// Decode the error response and throw an exception.
-			$error = json_decode($response->body);
-			throw new \DomainException($error->message, $response->code);
-		}
-
-		return json_decode($response->body);
+		return $this->processResponse($this->client->get($this->fetchUrl($path, $page, $limit)));
 	}
 
 	/**
-	 * Method to get a specific milestone.
+	 * Get a single milestone.
 	 *
 	 * @param   string   $user         The name of the owner of the GitHub repository.
 	 * @param   string   $repo         The name of the GitHub repository.
 	 * @param   integer  $milestoneId  The milestone id to get.
 	 *
-	 * @throws \DomainException
 	 * @return  object
 	 *
 	 * @since   1.0
+	 * @throws  \DomainException
 	 */
 	public function get($user, $repo, $milestoneId)
 	{
@@ -76,33 +66,24 @@ class Milestones extends AbstractPackage
 		$path = '/repos/' . $user . '/' . $repo . '/milestones/' . (int) $milestoneId;
 
 		// Send the request.
-		$response = $this->client->get($this->fetchUrl($path));
-
-		// Validate the response code.
-		if ($response->code != 200)
-		{
-			// Decode the error response and throw an exception.
-			$error = json_decode($response->body);
-			throw new \DomainException($error->message, $response->code);
-		}
-
-		return json_decode($response->body);
+		return $this->processResponse($this->client->get($this->fetchUrl($path)));
 	}
 
 	/**
-	 * Method to create a milestone for a repository.
+	 * Create a milestone.
 	 *
 	 * @param   string   $user         The name of the owner of the GitHub repository.
 	 * @param   string   $repo         The name of the GitHub repository.
 	 * @param   integer  $title        The title of the milestone.
 	 * @param   string   $state        Can be open (default) or closed.
 	 * @param   string   $description  Optional description for milestone.
-	 * @param   string   $due_on       Optional ISO 8601 time.
+	 * @param   string   $due_on       The milestone due date. This is a timestamp in ISO 8601 format.
 	 *
-	 * @throws \DomainException
 	 * @return  object
 	 *
+	 * @note    As of 2.0 the $due_on parameter will be typehinted to a \DateTime object
 	 * @since   1.0
+	 * @throws  \DomainException
 	 */
 	public function create($user, $repo, $title, $state = null, $description = null, $due_on = null)
 	{
@@ -132,21 +113,11 @@ class Milestones extends AbstractPackage
 		$data = json_encode($data);
 
 		// Send the request.
-		$response = $this->client->post($this->fetchUrl($path), $data);
-
-		// Validate the response code.
-		if ($response->code != 201)
-		{
-			// Decode the error response and throw an exception.
-			$error = json_decode($response->body);
-			throw new \DomainException($error->message, $response->code);
-		}
-
-		return json_decode($response->body);
+		return $this->processResponse($this->client->post($this->fetchUrl($path), $data), 201);
 	}
 
 	/**
-	 * Method to update a milestone.
+	 * Update a milestone.
 	 *
 	 * @param   string   $user         The name of the owner of the GitHub repository.
 	 * @param   string   $repo         The name of the GitHub repository.
@@ -154,12 +125,13 @@ class Milestones extends AbstractPackage
 	 * @param   integer  $title        Optional title of the milestone.
 	 * @param   string   $state        Can be open (default) or closed.
 	 * @param   string   $description  Optional description for milestone.
-	 * @param   string   $due_on       Optional ISO 8601 time.
+	 * @param   string   $due_on       The milestone due date. This is a timestamp in ISO 8601 format.
 	 *
-	 * @throws \DomainException
 	 * @return  object
 	 *
+	 * @note    As of 2.0 the $due_on parameter will be typehinted to a \DateTime object
 	 * @since   1.0
+	 * @throws  \DomainException
 	 */
 	public function edit($user, $repo, $milestoneId, $title = null, $state = null, $description = null, $due_on = null)
 	{
@@ -192,30 +164,20 @@ class Milestones extends AbstractPackage
 		$data = json_encode($data);
 
 		// Send the request.
-		$response = $this->client->patch($this->fetchUrl($path), $data);
-
-		// Validate the response code.
-		if ($response->code != 200)
-		{
-			// Decode the error response and throw an exception.
-			$error = json_decode($response->body);
-			throw new \DomainException($error->message, $response->code);
-		}
-
-		return json_decode($response->body);
+		return $this->processResponse($this->client->patch($this->fetchUrl($path), $data));
 	}
 
 	/**
-	 * Method to delete a milestone.
+	 * Delete a milestone.
 	 *
 	 * @param   string   $user         The name of the owner of the GitHub repository.
 	 * @param   string   $repo         The name of the GitHub repository.
 	 * @param   integer  $milestoneId  The id of the milestone to delete.
 	 *
-	 * @throws \DomainException
 	 * @return  void
 	 *
 	 * @since   1.0
+	 * @throws  \DomainException
 	 */
 	public function delete($user, $repo, $milestoneId)
 	{
@@ -223,14 +185,6 @@ class Milestones extends AbstractPackage
 		$path = '/repos/' . $user . '/' . $repo . '/milestones/' . (int) $milestoneId;
 
 		// Send the request.
-		$response = $this->client->delete($this->fetchUrl($path));
-
-		// Validate the response code.
-		if ($response->code != 204)
-		{
-			// Decode the error response and throw an exception.
-			$error = json_decode($response->body);
-			throw new \DomainException($error->message, $response->code);
-		}
+		$this->processResponse($this->client->delete($this->fetchUrl($path)), 204);
 	}
 }

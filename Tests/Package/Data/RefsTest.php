@@ -1,56 +1,26 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Github\Tests;
 
 use Joomla\Github\Package\Data\Refs;
-use Joomla\Registry\Registry;
+use Joomla\Github\Tests\Stub\GitHubTestCase;
 
 /**
  * Test class for the GitHub API package.
  *
  * @since  1.0
  */
-class RefsTest extends \PHPUnit_Framework_TestCase
+class RefsTest extends GitHubTestCase
 {
-	/**
-	 * @var    Registry  Options for the GitHub object.
-	 * @since  1.0
-	 */
-	protected $options;
-
-	/**
-	 * @var    \PHPUnit_Framework_MockObject_MockObject  Mock client object.
-	 * @since  1.0
-	 */
-	protected $client;
-
 	/**
 	 * @var    Refs  Object under test.
 	 * @since  1.0
 	 */
 	protected $object;
-
-	/**
-	 * @var    \Joomla\Http\Response  Mock response object.
-	 * @since  1.0
-	 */
-	protected $response;
-
-	/**
-	 * @var    string  Sample JSON string.
-	 * @since  11.4
-	 */
-	protected $sampleString = '{"a":1,"b":2,"c":3,"d":4,"e":5}';
-
-	/**
-	 * @var    string  Sample JSON error message.
-	 * @since  11.4
-	 */
-	protected $errorString = '{"message": "Generic Error"}';
 
 	/**
 	 * Sets up the fixture, for example, opens a network connection.
@@ -64,10 +34,6 @@ class RefsTest extends \PHPUnit_Framework_TestCase
 	{
 		parent::setUp();
 
-		$this->options  = new Registry;
-		$this->client   = $this->getMock('\\Joomla\\Github\\Http', array('get', 'post', 'delete', 'patch', 'put'));
-		$this->response = $this->getMock('\\Joomla\\Http\\Response');
-
 		$this->object = new Refs($this->options, $this->client);
 	}
 
@@ -78,9 +44,6 @@ class RefsTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGet()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/git/refs/heads/master')
@@ -120,7 +83,6 @@ class RefsTest extends \PHPUnit_Framework_TestCase
 	public function testCreate()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		// Build the request data.
 		$data = json_encode(
@@ -176,9 +138,6 @@ class RefsTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testEdit()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		// Build the request data.
 		$data = json_encode(
 			array(
@@ -232,9 +191,6 @@ class RefsTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/git/refs')
@@ -242,6 +198,24 @@ class RefsTest extends \PHPUnit_Framework_TestCase
 
 		$this->assertThat(
 			$this->object->getList('joomla', 'joomla-platform'),
+			$this->equalTo(json_decode($this->sampleString))
+		);
+	}
+
+	/**
+	 * Tests the getList method with a namespace
+	 *
+	 * @return void
+	 */
+	public function testGetListWithNamespace()
+	{
+		$this->client->expects($this->once())
+			->method('get')
+			->with('/repos/joomla/joomla-platform/git/refs/tags')
+			->will($this->returnValue($this->response));
+
+		$this->assertThat(
+			$this->object->getList('joomla', 'joomla-platform', 'tags'),
 			$this->equalTo(json_decode($this->sampleString))
 		);
 	}
@@ -267,7 +241,7 @@ class RefsTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the getList method
+	 * Tests the delete method
 	 *
 	 * @return void
 	 */
@@ -290,7 +264,7 @@ class RefsTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the getList method - failure
+	 * Tests the delete method - failure
 	 *
 	 * @expectedException  \DomainException
 	 *

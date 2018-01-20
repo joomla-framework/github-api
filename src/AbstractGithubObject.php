@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -39,6 +39,39 @@ abstract class AbstractGithubObject
 	protected $package = '';
 
 	/**
+	 * Array containing the allowed hook events
+	 *
+	 * @var    array
+	 * @since  1.5.2
+	 * @link   https://developer.github.com/webhooks/#events
+	 * @note   From 1.4.0 to 1.5.1 this was named $events, it was renamed due to naming conflicts with package subclasses
+	 */
+	protected $hookEvents = array(
+		'*',
+		'commit_comment',
+		'create',
+		'delete',
+		'deployment',
+		'deployment_status',
+		'fork',
+		'gollum',
+		'issue_comment',
+		'issues',
+		'member',
+		'membership',
+		'page_build',
+		'public',
+		'pull_request_review_comment',
+		'pull_request',
+		'push',
+		'repository',
+		'release',
+		'status',
+		'team_add',
+		'watch',
+	);
+
+	/**
 	 * Constructor.
 	 *
 	 * @param   Registry  $options  GitHub options object.
@@ -70,7 +103,7 @@ abstract class AbstractGithubObject
 	 */
 	protected function fetchUrl($path, $page = 0, $limit = 0)
 	{
-		// Get a new Uri object fousing the api url and given path.
+		// Get a new Uri object focusing the api url and given path.
 		$uri = new Uri($this->options->get('api.url') . $path);
 
 		if ($this->options->get('gh.token', false))

@@ -1,55 +1,25 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Github\Tests;
 
 use Joomla\Github\Package\Pulls;
-use Joomla\Registry\Registry;
+use Joomla\Github\Tests\Stub\GitHubTestCase;
 
 /**
  * Test class for Pulls.
  *
  * @since  1.0
  */
-class JGithubPackagePullsTest extends \PHPUnit_Framework_TestCase
+class JGithubPackagePullsTest extends GitHubTestCase
 {
-	/**
-	 * @var    Registry  Options for the GitHub object.
-	 * @since  1.0
-	 */
-	protected $options;
-
-	/**
-	 * @var    \PHPUnit_Framework_MockObject_MockObject  Mock client object.
-	 * @since  1.0
-	 */
-	protected $client;
-
-	/**
-	 * @var    \Joomla\Http\Response  Mock response object.
-	 * @since  1.0
-	 */
-	protected $response;
-
 	/**
 	 * @var Pulls
 	 */
 	protected $object;
-
-	/**
-	 * @var    string  Sample JSON string.
-	 * @since  11.4
-	 */
-	protected $sampleString = '{"a":1,"b":2,"c":3,"d":4,"e":5}';
-
-	/**
-	 * @var    string  Sample JSON error message.
-	 * @since  11.4
-	 */
-	protected $errorString = '{"message": "Generic Error"}';
 
 	/**
 	 * Sets up the fixture, for example, opens a network connection.
@@ -63,27 +33,7 @@ class JGithubPackagePullsTest extends \PHPUnit_Framework_TestCase
 	{
 		parent::setUp();
 
-		$this->options  = new Registry;
-		$this->client = $this->getMock('\\Joomla\\Github\\Http', array('get', 'post', 'delete', 'patch', 'put'));
-		$this->response = $this->getMock('\\Joomla\\Http\\Response');
-
 		$this->object = new Pulls($this->options, $this->client);
-	}
-
-	/**
-	 * Test...
-	 *
-	 * @param   string  $name  The method name.
-	 *
-	 * @return string
-	 */
-	protected function getMethod($name)
-	{
-		$class = new ReflectionClass('JGithubPulls');
-		$method = $class->getMethod($name);
-		$method->setAccessible(true);
-
-		return $method;
 	}
 
 	/**
@@ -94,7 +44,6 @@ class JGithubPackagePullsTest extends \PHPUnit_Framework_TestCase
 	public function testCreate()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$pull = new \stdClass;
 		$pull->title = 'My Pull Request';
@@ -109,7 +58,8 @@ class JGithubPackagePullsTest extends \PHPUnit_Framework_TestCase
 
 		$this->assertThat(
 			$this->object->create('joomla', 'joomla-platform', 'My Pull Request', 'staging', 'joomla-jenkins:mychanges',
-				'These are my changes - please review them'),
+				'These are my changes - please review them'
+			),
 			$this->equalTo(json_decode($this->sampleString))
 		);
 	}
@@ -138,114 +88,9 @@ class JGithubPackagePullsTest extends \PHPUnit_Framework_TestCase
 			->will($this->returnValue($this->response));
 
 		$this->object->create('joomla', 'joomla-platform', 'My Pull Request', 'staging', 'joomla-jenkins:mychanges',
-			'These are my changes - please review them');
-	}
-
-	/**
-	 * Tests the createComment method
-	 * @todo move
-	 * @return void
-	 *
-	public function testCreateComment()
-	{
-		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
-
-		$pull = new \stdClass;
-		$pull->body = 'My Insightful Comment';
-		$pull->commit_id = 'abcde12345';
-		$pull->path = '/path/to/file';
-		$pull->position = 254;
-
-		$this->client->expects($this->once())
-			->method('post')
-			->with('/repos/joomla/joomla-platform/pulls/523/comments', json_encode($pull))
-			->will($this->returnValue($this->response));
-
-		$this->assertThat(
-			$this->object->createComment('joomla', 'joomla-platform', 523, 'My Insightful Comment', 'abcde12345', '/path/to/file', 254),
-			$this->equalTo(json_decode($this->sampleString))
+			'These are my changes - please review them'
 		);
 	}
-	 */
-
-	/**
-	 * Tests the createComment method - failure
-	 * @todo move
-	 * @expectedException  \DomainException
-	 *
-	 * @return void
-	 *
-	public function testCreateCommentFailure()
-	{
-		$this->response->code = 501;
-		$this->response->body = $this->errorString;
-
-		$pull = new \stdClass;
-		$pull->body = 'My Insightful Comment';
-		$pull->commit_id = 'abcde12345';
-		$pull->path = '/path/to/file';
-		$pull->position = 254;
-
-		$this->client->expects($this->once())
-			->method('post')
-			->with('/repos/joomla/joomla-platform/pulls/523/comments', json_encode($pull))
-			->will($this->returnValue($this->response));
-
-		$this->object->createComment('joomla', 'joomla-platform', 523, 'My Insightful Comment', 'abcde12345', '/path/to/file', 254);
-	}
-	 */
-
-	/**
-	 * Tests the createCommentReply method
-	 * @todo move
-	 * @return void
-	 *
-	public function testCreateCommentReply()
-	{
-		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
-
-		$pull = new \stdClass;
-		$pull->body = 'My Insightful Comment';
-		$pull->in_reply_to = 434;
-
-		$this->client->expects($this->once())
-			->method('post')
-			->with('/repos/joomla/joomla-platform/pulls/523/comments', json_encode($pull))
-			->will($this->returnValue($this->response));
-
-		$this->assertThat(
-			$this->object->createCommentReply('joomla', 'joomla-platform', 523, 'My Insightful Comment', 434),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
-	 */
-
-	/**
-	 * Tests the createCommentReply method - failure
-	 * @todo move
-	 * @expectedException  \DomainException
-	 *
-	 * @return void
-	 *
-	public function testCreateCommentReplyFailure()
-	{
-		$this->response->code = 501;
-		$this->response->body = $this->errorString;
-
-		$pull = new \stdClass;
-		$pull->body = 'My Insightful Comment';
-		$pull->in_reply_to = 434;
-
-		$this->client->expects($this->once())
-			->method('post')
-			->with('/repos/joomla/joomla-platform/pulls/523/comments', json_encode($pull))
-			->will($this->returnValue($this->response));
-
-		$this->object->createCommentReply('joomla', 'joomla-platform', 523, 'My Insightful Comment', 434);
-	}
-	 */
 
 	/**
 	 * Tests the createFromIssue method
@@ -255,7 +100,6 @@ class JGithubPackagePullsTest extends \PHPUnit_Framework_TestCase
 	public function testCreateFromIssue()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$pull = new \stdClass;
 		$pull->issue = 254;
@@ -299,59 +143,17 @@ class JGithubPackagePullsTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the deleteComment method
-	 * @todo move
-	 * @return void
-	 *
-	public function testDeleteComment()
-	{
-		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
-
-		$this->client->expects($this->once())
-			->method('delete')
-			->with('/repos/joomla/joomla-platform/pulls/comments/254')
-			->will($this->returnValue($this->response));
-
-		$this->object->deleteComment('joomla', 'joomla-platform', 254);
-	}
-	 */
-
-	/**
-	 * Tests the deleteComment method - failure
-	 * @todo move
-	 * @expectedException  \DomainException
-	 *
-	 * @return void
-	 *
-	public function testDeleteCommentFailure()
-	{
-		$this->response->code = 504;
-		$this->response->body = $this->errorString;
-
-		$this->client->expects($this->once())
-			->method('delete')
-			->with('/repos/joomla/joomla-platform/pulls/comments/254')
-			->will($this->returnValue($this->response));
-
-		$this->object->deleteComment('joomla', 'joomla-platform', 254);
-	}
-	 */
-
-	/**
 	 * Tests the edit method
 	 *
 	 * @return void
 	 */
 	public function testEdit()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$pull = new \stdClass;
 		$pull->title = 'My Pull Request';
 		$pull->body = 'These are my changes - please review them';
 		$pull->state = 'Closed';
+		$pull->base = 'new';
 
 		$this->client->expects($this->once())
 			->method('patch')
@@ -359,7 +161,7 @@ class JGithubPackagePullsTest extends \PHPUnit_Framework_TestCase
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
-			$this->object->edit('joomla', 'joomla-platform', 523, 'My Pull Request', 'These are my changes - please review them', 'Closed'),
+			$this->object->edit('joomla', 'joomla-platform', 523, 'My Pull Request', 'These are my changes - please review them', 'Closed', 'new'),
 			$this->equalTo(json_decode($this->sampleString))
 		);
 	}
@@ -389,64 +191,12 @@ class JGithubPackagePullsTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the editComment method
-	 * @todo move
-	 * @return void
-	 *
-	public function testEditComment()
-	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
-		$pull = new \stdClass;
-		$pull->body = 'This comment is now even more insightful';
-
-		$this->client->expects($this->once())
-			->method('patch')
-			->with('/repos/joomla/joomla-platform/pulls/comments/523', json_encode($pull))
-			->will($this->returnValue($this->response));
-
-		$this->assertThat(
-			$this->object->editComment('joomla', 'joomla-platform', 523, 'This comment is now even more insightful'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
-	 */
-
-	/**
-	 * Tests the editComment method - failure
-	 * @todo move
-	 * @expectedException  \DomainException
-	 *
-	 * @return void
-	 *
-	public function testEditCommentFailure()
-	{
-		$this->response->code = 500;
-		$this->response->body = $this->errorString;
-
-		$pull = new \stdClass;
-		$pull->body = 'This comment is now even more insightful';
-
-		$this->client->expects($this->once())
-			->method('patch')
-			->with('/repos/joomla/joomla-platform/pulls/comments/523', json_encode($pull))
-			->will($this->returnValue($this->response));
-
-		$this->object->editComment('joomla', 'joomla-platform', 523, 'This comment is now even more insightful');
-	}
-	 */
-
-	/**
 	 * Tests the get method
 	 *
 	 * @return void
 	 */
 	public function testGet()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/pulls/523')
@@ -479,101 +229,12 @@ class JGithubPackagePullsTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the getComment method
-	 * @todo move
-	 * @return void
-	 *
-	public function testGetComment()
-	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/repos/joomla/joomla-platform/pulls/comments/523')
-			->will($this->returnValue($this->response));
-
-		$this->assertThat(
-			$this->object->getComment('joomla', 'joomla-platform', 523),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
-	 */
-
-	/**
-	 * Tests the getComment method - failure
-	 * @todo move
-	 * @expectedException  \DomainException
-	 *
-	 * @return void
-	 *
-	public function testGetCommentFailure()
-	{
-		$this->response->code = 500;
-		$this->response->body = $this->errorString;
-
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/repos/joomla/joomla-platform/pulls/comments/523')
-			->will($this->returnValue($this->response));
-
-		$this->object->getComment('joomla', 'joomla-platform', 523);
-	}
-	 */
-
-	/**
-	 * Tests the getComments method
-	 * @todo move
-	 * @return void
-	 *
-	public function testGetComments()
-	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/repos/joomla/joomla-platform/pulls/523/comments')
-			->will($this->returnValue($this->response));
-
-		$this->assertThat(
-			$this->object->getComments('joomla', 'joomla-platform', 523),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
-	 */
-
-	/**
-	 * Tests the getComments method - failure
-	 * @todo move
-	 * @expectedException  \DomainException
-	 *
-	 * @return void
-	 *
-	public function testGetCommentsFailure()
-	{
-		$this->response->code = 500;
-		$this->response->body = $this->errorString;
-
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/repos/joomla/joomla-platform/pulls/523/comments')
-			->will($this->returnValue($this->response));
-
-		$this->object->getComments('joomla', 'joomla-platform', 523);
-	}
-	 */
-
-	/**
 	 * Tests the getCommits method
 	 *
 	 * @return void
 	 */
 	public function testGetCommits()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/pulls/523/commits')
@@ -612,9 +273,6 @@ class JGithubPackagePullsTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetFiles()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/pulls/523/files')
@@ -653,9 +311,6 @@ class JGithubPackagePullsTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/pulls?state=closed')
@@ -695,7 +350,6 @@ class JGithubPackagePullsTest extends \PHPUnit_Framework_TestCase
 	public function testIsMergedTrue()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('get')
@@ -716,7 +370,6 @@ class JGithubPackagePullsTest extends \PHPUnit_Framework_TestCase
 	public function testIsMergedFalse()
 	{
 		$this->response->code = 404;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('get')
@@ -756,9 +409,6 @@ class JGithubPackagePullsTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testMerge()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('put')
 			->with('/repos/joomla/joomla-platform/pulls/523/merge')

@@ -1,56 +1,28 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Github\Tests;
 
 use Joomla\Github\Package\Repositories\Hooks;
-use Joomla\Registry\Registry;
+use Joomla\Github\Tests\Stub\GitHubTestCase;
 
 /**
- * Test class for Hooks.
+ * Test class.
+ *
+ * @covers \Joomla\Github\Package\Repositories\Hooks
  *
  * @since  1.0
  */
-class HooksTest extends \PHPUnit_Framework_TestCase
+class HooksTest extends GitHubTestCase
 {
-	/**
-	 * @var    Registry  Options for the GitHub object.
-	 * @since  1.0
-	 */
-	protected $options;
-
-	/**
-	 * @var    \PHPUnit_Framework_MockObject_MockObject  Mock client object.
-	 * @since  1.0
-	 */
-	protected $client;
-
-	/**
-	 * @var    \Joomla\Http\Response  Mock response object.
-	 * @since  1.0
-	 */
-	protected $response;
-
 	/**
 	 * @var    Hooks  Object under test.
 	 * @since  12.3
 	 */
 	protected $object;
-
-	/**
-	 * @var    string  Sample JSON string.
-	 * @since  12.3
-	 */
-	protected $sampleString = '{"a":1,"b":2,"c":3,"d":4,"e":5}';
-
-	/**
-	 * @var    string  Sample JSON error message.
-	 * @since  12.3
-	 */
-	protected $errorString = '{"message": "Generic Error"}';
 
 	/**
 	 * Sets up the fixture, for example, opens a network connection.
@@ -64,15 +36,13 @@ class HooksTest extends \PHPUnit_Framework_TestCase
 	{
 		parent::setUp();
 
-		$this->options = new Registry;
-		$this->client = $this->getMock('\\Joomla\\Github\\Http', array('get', 'post', 'delete', 'patch', 'put'));
-		$this->response = $this->getMock('\\Joomla\\Http\\Response');
-
 		$this->object = new Hooks($this->options, $this->client);
 	}
 
 	/**
-	 * Tests the create method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Hooks::create()
 	 *
 	 * @return  void
 	 *
@@ -81,7 +51,6 @@ class HooksTest extends \PHPUnit_Framework_TestCase
 	public function testCreate()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$hook = new \stdClass;
 		$hook->name = 'acunote';
@@ -101,7 +70,9 @@ class HooksTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the create method - simulated failure
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Hooks::create()
 	 *
 	 * @return  void
 	 *
@@ -138,11 +109,16 @@ class HooksTest extends \PHPUnit_Framework_TestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
 	/**
-	 * Tests the create method - unauthorised event
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Hooks::create()
+	 *
+	 * Unauthorised event
 	 *
 	 * @return  void
 	 *
@@ -156,7 +132,9 @@ class HooksTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the delete method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Hooks::delete()
 	 *
 	 * @return  void
 	 *
@@ -165,7 +143,6 @@ class HooksTest extends \PHPUnit_Framework_TestCase
 	public function testDelete()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('delete')
@@ -179,7 +156,11 @@ class HooksTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the delete method - simulated failure
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Hooks::delete()
+	 *
+	 * Simulated failure
 	 *
 	 * @return  void
 	 *
@@ -210,11 +191,14 @@ class HooksTest extends \PHPUnit_Framework_TestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
 	/**
-	 * Tests the edit method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Hooks::edit()
 	 *
 	 * @return  void
 	 *
@@ -222,20 +206,14 @@ class HooksTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testEdit()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
-		$hook = new \stdClass;
-		$hook->name = 'acunote';
-		$hook->config = array('token' => '123456789');
-		$hook->events = array('push', 'public');
-		$hook->add_events = array('watch');
-		$hook->remove_events = array('watch');
-		$hook->active = true;
+		$hook = '{'
+			. '"name":"acunote","config":{"token":"123456789"},"events":["push","public"],'
+			. '"add_events":["watch"],"remove_events":["watch"],"active":true'
+			. '}';
 
 		$this->client->expects($this->once())
 			->method('patch')
-			->with('/repos/joomla/joomla-platform/hooks/42', json_encode($hook))
+			->with('/repos/joomla/joomla-platform/hooks/42', $hook)
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -247,7 +225,11 @@ class HooksTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the edit method - simulated failure
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Hooks::edit()
+	 *
+	 * Simulated failure
 	 *
 	 * @return  void
 	 *
@@ -260,17 +242,14 @@ class HooksTest extends \PHPUnit_Framework_TestCase
 		$this->response->code = 500;
 		$this->response->body = $this->errorString;
 
-		$hook = new \stdClass;
-		$hook->name = 'acunote';
-		$hook->config = array('token' => '123456789');
-		$hook->events = array('push', 'public');
-		$hook->add_events = array('watch');
-		$hook->remove_events = array('watch');
-		$hook->active = true;
+		$hook = '{'
+			. '"name":"acunote","config":{"token":"123456789"},"events":["push","public"],'
+			. '"add_events":["watch"],"remove_events":["watch"],"active":true'
+			. '}';
 
 		$this->client->expects($this->once())
 			->method('patch')
-			->with('/repos/joomla/joomla-platform/hooks/42', json_encode($hook))
+			->with('/repos/joomla/joomla-platform/hooks/42', $hook)
 			->will($this->returnValue($this->response));
 
 		try
@@ -288,17 +267,22 @@ class HooksTest extends \PHPUnit_Framework_TestCase
 				$this->equalTo(json_decode($this->errorString)->message)
 			);
 		}
+
 		$this->assertTrue($exception);
 	}
 
 	/**
-	 * Tests the edit method - unauthorised event
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Hooks::edit()
+	 *
+	 * Unauthorised event
 	 *
 	 * @return  void
 	 *
 	 * @since   1.0
 	 *
-	 * @expectedException  RuntimeException
+	 * @expectedException  \RuntimeException
 	 */
 	public function testEditUnauthorisedEvent()
 	{
@@ -306,7 +290,11 @@ class HooksTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the edit method - unauthorised event
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Hooks::edit()
+	 *
+	 * Unauthorised event
 	 *
 	 * @return  void
 	 *
@@ -320,7 +308,11 @@ class HooksTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the edit method - unauthorised event
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Hooks::edit()
+	 *
+	 * Unauthorised event
 	 *
 	 * @return  void
 	 *
@@ -330,11 +322,15 @@ class HooksTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testEditUnauthorisedRemoveEvent()
 	{
-		$this->object->edit('joomla', 'joomla-platform', 42, 'acunote', array('token' => '123456789'), array('push'), array('push'), array('invalid'));
+		$this->object->edit(
+			'joomla', 'joomla-platform', 42, 'acunote', array('token' => '123456789'), array('push'), array('push'), array('invalid')
+		);
 	}
 
 	/**
-	 * Tests the get method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Hooks::get()
 	 *
 	 * @return  void
 	 *
@@ -342,9 +338,6 @@ class HooksTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGet()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/hooks/42')
@@ -357,7 +350,11 @@ class HooksTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the get method - failure
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Hooks::get()
+	 *
+	 * Failure
 	 *
 	 * @return  void
 	 *
@@ -379,7 +376,9 @@ class HooksTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the getList method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Hooks::getList()
 	 *
 	 * @return  void
 	 *
@@ -387,9 +386,6 @@ class HooksTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/hooks')
@@ -402,7 +398,11 @@ class HooksTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the getList method - failure
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Hooks::getList()
+	 *
+	 * Failure
 	 *
 	 * @return  void
 	 *
@@ -424,7 +424,9 @@ class HooksTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the test method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Hooks::test()
 	 *
 	 * @return  void
 	 *
@@ -433,7 +435,6 @@ class HooksTest extends \PHPUnit_Framework_TestCase
 	public function testTest()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')
@@ -447,7 +448,11 @@ class HooksTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the test method - failure
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Hooks::test()
+	 *
+	 * Failure
 	 *
 	 * @return  void
 	 *
@@ -466,5 +471,29 @@ class HooksTest extends \PHPUnit_Framework_TestCase
 			->will($this->returnValue($this->response));
 
 		$this->object->test('joomla', 'joomla-platform', 42);
+	}
+
+	/**
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Hooks::ping()
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 */
+	public function testPing()
+	{
+		$this->response->code = 204;
+
+		$this->client->expects($this->once())
+			->method('post')
+			->with('/repos/{user}/{repo}/hooks/42/pings')
+			->will($this->returnValue($this->response));
+
+		$this->assertThat(
+			$this->object->ping('{user}', '{repo}', 42),
+			$this->equalTo(json_decode($this->sampleString))
+		);
 	}
 }

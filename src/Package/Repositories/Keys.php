@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework GitHub Package
  *
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -13,14 +13,14 @@ use Joomla\Github\AbstractPackage;
 /**
  * GitHub API Forks class for the Joomla Framework.
  *
- * @documentation http://developer.github.com/v3/repos/keys
+ * @link   https://developer.github.com/v3/repos/keys
  *
  * @since  1.0
  */
 class Keys extends AbstractPackage
 {
 	/**
-	 * List keys in a repository.
+	 * List deploy keys.
 	 *
 	 * @param   string  $owner  The name of the owner of the GitHub repository.
 	 * @param   string  $repo   The name of the GitHub repository.
@@ -40,7 +40,7 @@ class Keys extends AbstractPackage
 	}
 
 	/**
-	 * Get a key.
+	 * Get a deploy key.
 	 *
 	 * @param   string   $owner  The name of the owner of the GitHub repository.
 	 * @param   string   $repo   The name of the GitHub repository.
@@ -61,7 +61,7 @@ class Keys extends AbstractPackage
 	}
 
 	/**
-	 * Create a key.
+	 * Add a new deploy key.
 	 *
 	 * @param   string  $owner  The name of the owner of the GitHub repository.
 	 * @param   string  $repo   The name of the GitHub repository.
@@ -89,7 +89,7 @@ class Keys extends AbstractPackage
 	}
 
 	/**
-	 * Edit a key.
+	 * Edit a deploy key.
 	 *
 	 * @param   string   $owner  The name of the owner of the GitHub repository.
 	 * @param   string   $repo   The name of the GitHub repository.
@@ -117,7 +117,7 @@ class Keys extends AbstractPackage
 	}
 
 	/**
-	 * Delete a key.
+	 * Remove a deploy key.
 	 *
 	 * @param   string   $owner  The name of the owner of the GitHub repository.
 	 * @param   string   $repo   The name of the GitHub repository.

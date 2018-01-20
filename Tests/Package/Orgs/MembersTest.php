@@ -1,55 +1,27 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Github\Tests;
 
 use Joomla\Github\Package\Orgs\Members;
-use Joomla\Registry\Registry;
+use Joomla\Github\Tests\Stub\GitHubTestCase;
 
 /**
- * Test class for Members.
+ * Test class.
+ *
+ * @covers \Joomla\Github\Package\Orgs\Members
  *
  * @since  1.0
  */
-class MembersTest extends \PHPUnit_Framework_TestCase
+class MembersTest extends GitHubTestCase
 {
-	/**
-	 * @var    Registry  Options for the GitHub object.
-	 * @since  1.0
-	 */
-	protected $options;
-
-	/**
-	 * @var    \PHPUnit_Framework_MockObject_MockObject  Mock client object.
-	 * @since  1.0
-	 */
-	protected $client;
-
-	/**
-	 * @var    \Joomla\Http\Response  Mock response object.
-	 * @since  1.0
-	 */
-	protected $response;
-
 	/**
 	 * @var Members
 	 */
 	protected $object;
-
-	/**
-	 * @var    string  Sample JSON string.
-	 * @since  12.3
-	 */
-	protected $sampleString = '{"a":1,"b":2,"c":3,"d":4,"e":5}';
-
-	/**
-	 * @var    string  Sample JSON error message.
-	 * @since  12.3
-	 */
-	protected $errorString = '{"message": "Generic Error"}';
 
 	/**
 	 * Sets up the fixture, for example, opens a network connection.
@@ -63,23 +35,18 @@ class MembersTest extends \PHPUnit_Framework_TestCase
 	{
 		parent::setUp();
 
-		$this->options  = new Registry;
-		$this->client   = $this->getMock('\\Joomla\\Github\\Http', array('get', 'post', 'delete', 'patch', 'put'));
-		$this->response = $this->getMock('\\Joomla\\Http\\Response');
-
 		$this->object = new Members($this->options, $this->client);
 	}
 
 	/**
-	 * Tests the getList method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Members::getList()
 	 *
 	 * @return  void
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/orgs/joomla/members')
@@ -92,14 +59,15 @@ class MembersTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the getListNotAMember method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Members::getList()
 	 *
 	 * @return  void
 	 */
 	public function testGetListNotAMember()
 	{
 		$this->response->code = 302;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('get')
@@ -113,7 +81,9 @@ class MembersTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the getListUnexpected method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Members::getList()
 	 *
 	 * @return  void
 	 *
@@ -122,7 +92,6 @@ class MembersTest extends \PHPUnit_Framework_TestCase
 	public function testGetListUnexpected()
 	{
 		$this->response->code = 666;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('get')
@@ -136,14 +105,15 @@ class MembersTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the check method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Members::check()
 	 *
 	 * @return  void
 	 */
 	public function testCheck()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('get')
@@ -157,14 +127,15 @@ class MembersTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the checkNoMember method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Members::check()
 	 *
 	 * @return  void
 	 */
 	public function testCheckNoMember()
 	{
 		$this->response->code = 404;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('get')
@@ -178,14 +149,15 @@ class MembersTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the checkRequesterNoMember method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Members::check()
 	 *
 	 * @return  void
 	 */
 	public function testCheckRequesterNoMember()
 	{
 		$this->response->code = 302;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('get')
@@ -199,7 +171,9 @@ class MembersTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the checkUnexpectedr method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Members::check()
 	 *
 	 * @return  void
 	 *
@@ -208,7 +182,6 @@ class MembersTest extends \PHPUnit_Framework_TestCase
 	public function testCheckUnexpectedr()
 	{
 		$this->response->code = 666;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('get')
@@ -222,14 +195,15 @@ class MembersTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the remove method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Members::remove()
 	 *
 	 * @return  void
 	 */
 	public function testRemove()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('delete')
@@ -243,15 +217,14 @@ class MembersTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the getListPublic method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Members::getListPublic()
 	 *
 	 * @return  void
 	 */
 	public function testGetListPublic()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/orgs/joomla/public_members')
@@ -264,14 +237,15 @@ class MembersTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the checkPublic method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Members::checkPublic()
 	 *
 	 * @return  void
 	 */
 	public function testCheckPublic()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('get')
@@ -285,14 +259,15 @@ class MembersTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the checkPublicNo method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Members::checkPublic()
 	 *
 	 * @return  void
 	 */
 	public function testCheckPublicNo()
 	{
 		$this->response->code = 404;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('get')
@@ -306,7 +281,9 @@ class MembersTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the checkPublicUnexpected method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Members::checkPublic()
 	 *
 	 * @return  void
 	 *
@@ -315,7 +292,6 @@ class MembersTest extends \PHPUnit_Framework_TestCase
 	public function testCheckPublicUnexpected()
 	{
 		$this->response->code = 666;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('get')
@@ -329,14 +305,15 @@ class MembersTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the publicize method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Members::publicize()
 	 *
 	 * @return  void
 	 */
 	public function testPublicize()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('put')
@@ -350,14 +327,15 @@ class MembersTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests the conceal method
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Members::conceal()
 	 *
 	 * @return  void
 	 */
 	public function testConceal()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('delete')
@@ -368,5 +346,157 @@ class MembersTest extends \PHPUnit_Framework_TestCase
 			$this->object->conceal('joomla', 'elkuku'),
 			$this->equalTo(json_decode($this->sampleString))
 		);
+	}
+
+	/**
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Members::getMembership()
+	 *
+	 * @return  void
+	 */
+	public function testGetMembership()
+	{
+		$this->client->expects($this->once())
+			->method('get')
+			->with('/orgs/{org}/memberships/{user}')
+			->will($this->returnValue($this->response));
+
+		$this->assertThat(
+			$this->object->getMembership('{org}', '{user}'),
+			$this->equalTo(json_decode($this->sampleString))
+		);
+	}
+
+	/**
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Members::updateMembership()
+	 *
+	 * @return  void
+	 */
+	public function testUpdateMembership()
+	{
+		$this->client->expects($this->once())
+			->method('put')
+			->with('/orgs/{org}/memberships/{user}')
+			->will($this->returnValue($this->response));
+
+		$this->assertThat(
+			$this->object->updateMembership('{org}', '{user}'),
+			$this->equalTo(json_decode($this->sampleString))
+		);
+	}
+
+	/**
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Members::updateMembership()
+	 *
+	 * @return  void
+	 *
+	 * @expectedException \InvalidArgumentException
+	 * @expectedExceptionMessage The user's role must be: member, admin
+	 */
+	public function testUpdateMembershipInvalidRole()
+	{
+		$this->object->updateMembership('{org}', '{user}', 'INVALID');
+	}
+
+	/**
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Members::removeMembership()
+	 *
+	 * @return  void
+	 */
+	public function testRemoveMembership()
+	{
+		$this->response->code = 204;
+
+		$this->client->expects($this->once())
+			->method('delete')
+			->with('/orgs/{org}/memberships/{user}')
+			->will($this->returnValue($this->response));
+
+		$this->assertThat(
+			$this->object->removeMembership('{org}', '{user}'),
+			$this->equalTo(json_decode($this->sampleString))
+		);
+	}
+
+	/**
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Members::listMemberships()
+	 *
+	 * @return  void
+	 */
+	public function testListMemberships()
+	{
+		$this->client->expects($this->once())
+			->method('get')
+			->with('/user/memberships/orgs')
+			->will($this->returnValue($this->response));
+
+		$this->assertThat(
+			$this->object->listMemberships(),
+			$this->equalTo(json_decode($this->sampleString))
+		);
+	}
+
+	/**
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Members::listOrganizationMembership()
+	 *
+	 * @return  void
+	 */
+	public function testListOrganizationMemberships()
+	{
+		$this->client->expects($this->once())
+			->method('get')
+			->with('/user/memberships/orgs/{org}')
+			->will($this->returnValue($this->response));
+
+		$this->assertThat(
+			$this->object->listOrganizationMembership('{org}'),
+			$this->equalTo(json_decode($this->sampleString))
+		);
+	}
+
+	/**
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Members::editOrganizationMembership()
+	 *
+	 * @return  void
+	 */
+	public function testEditOrganizationMemberships()
+	{
+		$this->client->expects($this->once())
+			->method('patch')
+			->with('/user/memberships/orgs/{org}')
+			->will($this->returnValue($this->response));
+
+		$this->assertThat(
+			$this->object->editOrganizationMembership('{org}', 'active'),
+			$this->equalTo(json_decode($this->sampleString))
+		);
+	}
+
+	/**
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Orgs\Members::editOrganizationMembership()
+	 *
+	 * @return  void
+	 *
+	 * @expectedException \InvalidArgumentException
+	 * @expectedExceptionMessage The state must be "active".
+	 */
+	public function testEditOrganizationMembershipsInvalidState()
+	{
+		$this->object->editOrganizationMembership('{org}', 'INVALID');
 	}
 }

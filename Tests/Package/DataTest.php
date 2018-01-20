@@ -1,39 +1,23 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Github\Tests;
 
 use Joomla\Github\Package\Data;
-use Joomla\Registry\Registry;
+use Joomla\Github\Tests\Stub\GitHubTestCase;
 
 /**
- * Test class for Data.
+ * Test class.
+ *
+ * @covers \Joomla\Github\Package\Data
  *
  * @since  1.0
  */
-class DataTest extends \PHPUnit_Framework_TestCase
+class DataTest extends GitHubTestCase
 {
-	/**
-	 * @var    Registry  Options for the GitHub object.
-	 * @since  1.0
-	 */
-	protected $options;
-
-	/**
-	 * @var    \PHPUnit_Framework_MockObject_MockObject  Mock client object.
-	 * @since  1.0
-	 */
-	protected $client;
-
-	/**
-	 * @var    \Joomla\Http\Response  Mock response object.
-	 * @since  1.0
-	 */
-	protected $response;
-
 	/**
 	 * @var Data
 	 */
@@ -51,15 +35,13 @@ class DataTest extends \PHPUnit_Framework_TestCase
 	{
 		parent::setUp();
 
-		$this->options  = new Registry;
-		$this->client = $this->getMock('\\Joomla\\Github\\Http', array('get', 'post', 'delete', 'patch', 'put'));
-		$this->response = $this->getMock('\\Joomla\\Http\\Response');
-
 		$this->object = new Data($this->options, $this->client);
 	}
 
 	/**
-	 * Tests the getList method.
+	 * Test method.
+	 *
+	 * @covers \Joomla\Github\Package\Data::__construct()
 	 *
 	 * @return  void
 	 *
@@ -67,5 +49,7 @@ class DataTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testConstruct()
 	{
+		// Dummy to make PHPUnit "happy"
+		self::assertEquals(true, true);
 	}
 }

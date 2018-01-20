@@ -1,56 +1,26 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Github\Tests;
 
 use Joomla\Github\Package\Repositories\Statistics;
-use Joomla\Registry\Registry;
+use Joomla\Github\Tests\Stub\GitHubTestCase;
 
 /**
  * Test class for Statistics.
  *
  * @since  1.0
  */
-class StatisticsTest extends \PHPUnit_Framework_TestCase
+class StatisticsTest extends GitHubTestCase
 {
-	/**
-	 * @var    \Joomla\Registry\Registry  Options for the GitHub object.
-	 * @since  1.0
-	 */
-	protected $options;
-
-	/**
-	 * @var    \PHPUnit_Framework_MockObject_MockObject  Mock client object.
-	 * @since  1.0
-	 */
-	protected $client;
-
-	/**
-	 * @var    \Joomla\Http\Response  Mock response object.
-	 * @since  1.0
-	 */
-	protected $response;
-
 	/**
 	 * @var    Statistics  Object under test.
 	 * @since  11.4
 	 */
 	protected $object;
-
-	/**
-	 * @var    string  Sample JSON string.
-	 * @since  11.4
-	 */
-	protected $sampleString = '{"a":1,"b":2,"c":3,"d":4,"e":5}';
-
-	/**
-	 * @var    string  Sample JSON error message.
-	 * @since  11.4
-	 */
-	protected $errorString = '{"message": "Generic Error"}';
 
 	/**
 	 * Sets up the fixture, for example, opens a network connection.
@@ -64,10 +34,6 @@ class StatisticsTest extends \PHPUnit_Framework_TestCase
 	{
 		parent::setUp();
 
-		$this->options  = new Registry;
-		$this->client   = $this->getMock('\\Joomla\\Github\\Http', array('get', 'post', 'delete', 'patch', 'put'));
-		$this->response = $this->getMock('\\Joomla\\Http\\Response');
-
 		$this->object = new Statistics($this->options, $this->client);
 	}
 
@@ -78,9 +44,6 @@ class StatisticsTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testContributors()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-framework/stats/contributors')
@@ -99,9 +62,6 @@ class StatisticsTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testActivity()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-framework/stats/commit_activity')
@@ -120,9 +80,6 @@ class StatisticsTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testFrequency()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-framework/stats/code_frequency')
@@ -141,9 +98,6 @@ class StatisticsTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testParticipation()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-framework/stats/participation')
@@ -162,9 +116,6 @@ class StatisticsTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testPunchCard()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-framework/stats/punch_card')
@@ -185,7 +136,6 @@ class StatisticsTest extends \PHPUnit_Framework_TestCase
 	public function testProcessResponse202()
 	{
 		$this->response->code = 202;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('get')
