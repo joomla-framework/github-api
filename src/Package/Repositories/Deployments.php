@@ -92,7 +92,8 @@ class Deployments extends AbstractPackage
 	 * @throws  \RuntimeException
 	 */
 	public function create($owner, $repo, $ref, $task = '', $autoMerge = true, $requiredContexts = null, $payload = '', $environment = '',
-		$description = '')
+		$description = ''
+	)
 	{
 		// Build the request path.
 		$path = "/repos/$owner/$repo/deployments";

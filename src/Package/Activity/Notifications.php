@@ -83,7 +83,8 @@ class Notifications extends AbstractPackage
 	 * @since   1.0
 	 */
 	public function getListRepository($owner, $repo, $all = true, $participating = true, \DateTimeInterface $since = null,
-		\DateTimeInterface $before = null)
+		\DateTimeInterface $before = null
+	)
 	{
 		// Build the request path.
 		$path = '/repos/' . $owner . '/' . $repo . '/notifications?';

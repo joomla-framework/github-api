@@ -101,8 +101,7 @@ class Issues extends AbstractPackage
 	 * @since   1.0
 	 * @throws  \DomainException
 	 */
-	public function edit($user, $repo, $issueId, $state = null, $title = null, $body = null, $assignee = null,
-		$milestone = null, array $labels = null)
+	public function edit($user, $repo, $issueId, $state = null, $title = null, $body = null, $assignee = null, $milestone = null, array $labels = [])
 	{
 		// Build the request path.
 		$path = '/repos/' . $user . '/' . $repo . '/issues/' . (int) $issueId;
@@ -198,7 +197,8 @@ class Issues extends AbstractPackage
 	 * @throws  \DomainException
 	 */
 	public function getList($filter = null, $state = null, $labels = null, $sort = null,
-		$direction = null, \DateTimeInterface $since = null, $page = 0, $limit = 0)
+		$direction = null, \DateTimeInterface $since = null, $page = 0, $limit = 0
+	)
 	{
 		// Build the request path.
 		$path = '/issues';
@@ -261,7 +261,8 @@ class Issues extends AbstractPackage
 	 * @throws  \DomainException
 	 */
 	public function getListByRepository($user, $repo, $milestone = null, $state = null, $assignee = null, $mentioned = null, $labels = null,
-		$sort = null, $direction = null, \DateTime $since = null, $page = 0, $limit = 0)
+		$sort = null, $direction = null, \DateTime $since = null, $page = 0, $limit = 0
+	)
 	{
 		// Build the request path.
 		$path = '/repos/' . $user . '/' . $repo . '/issues';
