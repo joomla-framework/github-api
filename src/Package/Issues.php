@@ -140,7 +140,7 @@ class Issues extends AbstractPackage
 		}
 
 		// If labels are set add them to the data object.
-		if (isset($labels))
+		if (!empty($labels))
 		{
 			// Ensure that we have a non-associative array.
 			if (isset($labels))
