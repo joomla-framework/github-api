@@ -37,7 +37,7 @@ class Notifications extends AbstractPackage
 	public function getList($all = true, $participating = true, \DateTimeInterface $since = null, \DateTimeInterface $before = null)
 	{
 		// Build the request path.
-		$path = '/notifications?';
+		$path = '/notifications';
 
 		$uri = new Uri($this->fetchUrl($path));
 
@@ -61,9 +61,7 @@ class Notifications extends AbstractPackage
 			$uri->setVar('before', $before->format(\DateTime::RFC3339));
 		}
 
-		return $this->processResponse(
-			$this->client->get((string) $uri)
-		);
+		return $this->processResponse($this->client->get($uri));
 	}
 
 	/**
@@ -87,7 +85,7 @@ class Notifications extends AbstractPackage
 	)
 	{
 		// Build the request path.
-		$path = '/repos/' . $owner . '/' . $repo . '/notifications?';
+		$path = '/repos/' . $owner . '/' . $repo . '/notifications';
 
 		$uri = new Uri($this->fetchUrl($path));
 
@@ -111,9 +109,7 @@ class Notifications extends AbstractPackage
 			$uri->setVar('before', $before->format(\DateTime::RFC3339));
 		}
 
-		return $this->processResponse(
-			$this->client->get((string) $uri)
-		);
+		return $this->processResponse($this->client->get($uri));
 	}
 
 	/**
