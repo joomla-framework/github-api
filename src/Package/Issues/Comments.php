@@ -9,7 +9,6 @@
 namespace Joomla\Github\Package\Issues;
 
 use Joomla\Github\AbstractPackage;
-use Joomla\Uri\Uri;
 
 /**
  * GitHub API Comments class for the Joomla Framework.
@@ -43,7 +42,7 @@ class Comments extends AbstractPackage
 		// Build the request path.
 		$path = '/repos/' . $owner . '/' . $repo . '/issues/' . (int) $issueId . '/comments';
 
-		$uri = new Uri($this->fetchUrl($path, $page, $limit));
+		$uri = $this->fetchUrl($path, $page, $limit);
 
 		if ($since)
 		{
@@ -92,7 +91,7 @@ class Comments extends AbstractPackage
 			);
 		}
 
-		$uri = new Uri($this->fetchUrl($path));
+		$uri = $this->fetchUrl($path);
 		$uri->setVar('sort', $sort);
 		$uri->setVar('direction', $direction);
 

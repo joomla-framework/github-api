@@ -97,7 +97,7 @@ abstract class AbstractGithubObject
 	 * @param   integer  $page   Page to request
 	 * @param   integer  $limit  Number of results to return per page
 	 *
-	 * @return  string   The request URL.
+	 * @return  Uri
 	 *
 	 * @since   1.0
 	 */

@@ -10,7 +10,6 @@ namespace Joomla\Github\Package\Repositories;
 
 use Joomla\Github\AbstractPackage;
 use Joomla\Http\Exception\UnexpectedResponseException;
-use Joomla\Uri\Uri;
 
 /**
  * GitHub API Repositories Commits class for the Joomla Framework.
@@ -47,7 +46,7 @@ class Commits extends AbstractPackage
 		// Build the request path.
 		$rPath = '/repos/' . $user . '/' . $repo . '/commits';
 
-		$uri = new Uri($this->fetchUrl($rPath));
+		$uri = $this->fetchUrl($rPath);
 
 		if ($sha)
 		{

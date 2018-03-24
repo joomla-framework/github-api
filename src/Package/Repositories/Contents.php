@@ -9,7 +9,6 @@
 namespace Joomla\Github\Package\Repositories;
 
 use Joomla\Github\AbstractPackage;
-use Joomla\Uri\Uri;
 
 /**
  * GitHub API Repositories Contents class for the Joomla Framework.
@@ -41,7 +40,7 @@ class Contents extends AbstractPackage
 		// Build the request path.
 		$path = '/repos/' . $owner . '/' . $repo . '/readme';
 
-		$uri = new Uri($this->fetchUrl($path));
+		$uri = $this->fetchUrl($path);
 
 		if ($ref)
 		{
@@ -71,7 +70,7 @@ class Contents extends AbstractPackage
 		// Build the request path.
 		$rPath = '/repos/' . $owner . '/' . $repo . '/contents/' . $path;
 
-		$uri = new Uri($this->fetchUrl($rPath));
+		$uri = $this->fetchUrl($rPath);
 
 		if ($ref)
 		{
@@ -113,7 +112,7 @@ class Contents extends AbstractPackage
 
 		// Build the request path.
 		$path = '/repos/' . $owner . '/' . $repo . '/' . $archiveFormat;
-		$uri = new Uri($this->fetchUrl($path));
+		$uri = $this->fetchUrl($path);
 
 		if ($ref)
 		{

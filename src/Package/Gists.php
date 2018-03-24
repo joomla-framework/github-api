@@ -10,7 +10,6 @@ namespace Joomla\Github\Package;
 
 use Joomla\Github\AbstractPackage;
 use Joomla\Http\Exception\UnexpectedResponseException;
-use Joomla\Uri\Uri;
 
 /**
  * GitHub API Gists class for the Joomla Framework.
@@ -237,7 +236,7 @@ class Gists extends AbstractPackage
 	public function getListByUser($user, $page = 0, $limit = 0, \DateTime $since = null)
 	{
 		// Build the request path.
-		$uri = new Uri($this->fetchUrl('/users/' . $user . '/gists', $page, $limit));
+		$uri = $this->fetchUrl('/users/' . $user . '/gists', $page, $limit);
 
 		if ($since)
 		{
@@ -263,7 +262,7 @@ class Gists extends AbstractPackage
 	public function getListPublic($page = 0, $limit = 0, \DateTime $since = null)
 	{
 		// Build the request path.
-		$uri = new Uri($this->fetchUrl('/gists/public', $page, $limit));
+		$uri = $this->fetchUrl('/gists/public', $page, $limit);
 
 		if ($since)
 		{
@@ -289,7 +288,7 @@ class Gists extends AbstractPackage
 	public function getListStarred($page = 0, $limit = 0, \DateTime $since = null)
 	{
 		// Build the request path.
-		$uri = new Uri($this->fetchUrl('/gists/starred', $page, $limit));
+		$uri = $this->fetchUrl('/gists/starred', $page, $limit);
 
 		if ($since)
 		{

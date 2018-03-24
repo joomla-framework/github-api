@@ -9,7 +9,6 @@
 namespace Joomla\Github\Package\Issues;
 
 use Joomla\Github\AbstractPackage;
-use Joomla\Uri\Uri;
 
 /**
  * GitHub API Milestones class for the Joomla Framework.
@@ -41,7 +40,7 @@ class Milestones extends AbstractPackage
 		// Build the request path.
 		$path = '/repos/' . $user . '/' . $repo . '/milestones';
 
-		$uri = new Uri($this->fetchUrl($path, $page, $limit));
+		$uri = $this->fetchUrl($path, $page, $limit);
 		$uri->setVar('state', $state);
 		$uri->setVar('sort', $sort);
 		$uri->setVar('direction', $direction);

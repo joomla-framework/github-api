@@ -9,7 +9,6 @@
 namespace Joomla\Github\Package;
 
 use Joomla\Github\AbstractPackage;
-use Joomla\Uri\Uri;
 
 /**
  * GitHub API Issues class for the Joomla Framework.
@@ -201,7 +200,7 @@ class Issues extends AbstractPackage
 	)
 	{
 		// Build the request path.
-		$uri = new Uri($this->fetchUrl('/issues', $page, $limit));
+		$uri = $this->fetchUrl('/issues', $page, $limit);
 
 		if ($filter)
 		{
@@ -265,7 +264,7 @@ class Issues extends AbstractPackage
 		// Build the request path.
 		$path = '/repos/' . $user . '/' . $repo . '/issues';
 
-		$uri = new Uri($this->fetchUrl($path, $page, $limit));
+		$uri = $this->fetchUrl($path, $page, $limit);
 
 		if ($milestone)
 		{

@@ -9,7 +9,6 @@
 namespace Joomla\Github\Package;
 
 use Joomla\Github\AbstractPackage;
-use Joomla\Uri\Uri;
 
 /**
  * GitHub API Activity class for the Joomla Framework.
@@ -71,7 +70,7 @@ class Repositories extends AbstractPackage
 		}
 
 		// Build the request path.
-		$uri = new Uri($this->fetchUrl('/user/repos'));
+		$uri = $this->fetchUrl('/user/repos');
 		$uri->setVar('type', $type);
 		$uri->setVar('sort', $sort);
 		$uri->setVar('direction', $direction);
@@ -116,7 +115,7 @@ class Repositories extends AbstractPackage
 		}
 
 		// Build the request path.
-		$uri = new Uri($this->fetchUrl('/users/' . $user . '/repos'));
+		$uri = $this->fetchUrl('/users/' . $user . '/repos');
 		$uri->setVar('type', $type);
 		$uri->setVar('sort', $sort);
 		$uri->setVar('direction', $direction);
@@ -146,7 +145,7 @@ class Repositories extends AbstractPackage
 		}
 
 		// Build the request path.
-		$uri = new Uri($this->fetchUrl('/orgs/' . $org . '/repos'));
+		$uri = $this->fetchUrl('/orgs/' . $org . '/repos');
 		$uri->setVar('type', $type);
 
 		// Send the request.
@@ -168,7 +167,7 @@ class Repositories extends AbstractPackage
 	public function getList($id = 0)
 	{
 		// Build the request path.
-		$uri = new Uri($this->fetchUrl('/repositories'));
+		$uri = $this->fetchUrl('/repositories');
 
 		if ($id)
 		{
@@ -311,7 +310,7 @@ class Repositories extends AbstractPackage
 	public function getListContributors($owner, $repo, $anon = false)
 	{
 		// Build the request path.
-		$uri = new Uri($this->fetchUrl('/repos/' . $owner . '/' . $repo . '/contributors'));
+		$uri = $this->fetchUrl('/repos/' . $owner . '/' . $repo . '/contributors');
 
 		if ($anon)
 		{

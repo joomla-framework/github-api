@@ -9,7 +9,6 @@
 namespace Joomla\Github\Package\Repositories;
 
 use Joomla\Github\AbstractPackage;
-use Joomla\Uri\Uri;
 
 /**
  * GitHub API Deployments class for the Joomla Framework.
@@ -41,7 +40,7 @@ class Deployments extends AbstractPackage
 		// Build the request path.
 		$path = "/repos/$owner/$repo/deployments";
 
-		$uri = new Uri($this->fetchUrl($path, $page, $limit));
+		$uri = $this->fetchUrl($path, $page, $limit);
 
 		if ($sha)
 		{

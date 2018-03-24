@@ -9,7 +9,6 @@
 namespace Joomla\Github\Package\Activity;
 
 use Joomla\Github\AbstractPackage;
-use Joomla\Uri\Uri;
 
 /**
  * GitHub API Activity Events class for the Joomla Framework.
@@ -39,7 +38,7 @@ class Notifications extends AbstractPackage
 		// Build the request path.
 		$path = '/notifications';
 
-		$uri = new Uri($this->fetchUrl($path));
+		$uri = $this->fetchUrl($path);
 
 		if ($all)
 		{
@@ -87,7 +86,7 @@ class Notifications extends AbstractPackage
 		// Build the request path.
 		$path = '/repos/' . $owner . '/' . $repo . '/notifications';
 
-		$uri = new Uri($this->fetchUrl($path));
+		$uri = $this->fetchUrl($path);
 
 		if ($all)
 		{

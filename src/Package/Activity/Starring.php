@@ -9,7 +9,6 @@
 namespace Joomla\Github\Package\Activity;
 
 use Joomla\Github\AbstractPackage;
-use Joomla\Uri\Uri;
 
 /**
  * GitHub API Activity Events class for the Joomla Framework.
@@ -84,7 +83,7 @@ class Starring extends AbstractPackage
 			? '/users/' . $user . '/starred'
 			: '/user/starred';
 
-		$uri = new Uri($this->fetchUrl($path));
+		$uri = $this->fetchUrl($path);
 		$uri->setVar('sort', $sort);
 		$uri->setVar('direction', $direction);
 
