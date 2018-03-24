@@ -100,7 +100,6 @@ abstract class AbstractGithubObject
 	 * @return  string   The request URL.
 	 *
 	 * @since   1.0
-	 * @note    As of 2.0 this method will return a Joomla\Uri\Uri object
 	 */
 	protected function fetchUrl($path, $page = 0, $limit = 0)
 	{
@@ -138,7 +137,7 @@ abstract class AbstractGithubObject
 			$uri->setVar('per_page', (int) $limit);
 		}
 
-		return (string) $uri;
+		return $uri;
 	}
 
 	/**
