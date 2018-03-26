@@ -58,13 +58,20 @@ class Github
 	public function __construct(Registry $options = null, BaseHttp $client = null)
 	{
 		$this->options = $options ?: new Registry;
-		$this->client  = $client ?: new Http($this->options);
+
+		// Setup the default user agent if not already set.
+		if (!$this->getOption('userAgent'))
+		{
+			$this->setOption('userAgent', 'JGitHub/2.0');
+		}
 
 		// Setup the default API url if not already set.
 		if (!$this->getOption('api.url'))
 		{
 			$this->setOption('api.url', 'https://api.github.com');
 		}
+
+		$this->client = $client ?: new Http($this->options);
 	}
 
 	/**
