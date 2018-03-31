@@ -60,7 +60,7 @@ abstract class GitHubTestCase extends TestCase
 
 		$this->options  = new Registry;
 
-		$this->client = $this->getMockBuilder('\\Joomla\\Github\\Http')
+		$this->client = $this->getMockBuilder('\\Joomla\\Http\\Http')
 			->setMethods(array('get', 'post', 'delete', 'patch', 'put'))
 			->getMock();
 

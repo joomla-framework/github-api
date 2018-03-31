@@ -8,7 +8,7 @@
 
 namespace Joomla\Github;
 
-use Joomla\Http\Http as BaseHttp;
+use Joomla\Http\Http;
 use Joomla\Registry\Registry;
 
 /**
@@ -22,11 +22,11 @@ abstract class AbstractPackage extends AbstractGithubObject
 	 * Constructor.
 	 *
 	 * @param   Registry  $options  GitHub options object.
-	 * @param   BaseHttp  $client   The HTTP client object.
+	 * @param   Http      $client   The HTTP client object.
 	 *
 	 * @since   1.0
 	 */
-	public function __construct(Registry $options = null, BaseHttp $client = null)
+	public function __construct(Registry $options = null, Http $client = null)
 	{
 		parent::__construct($options, $client);
 

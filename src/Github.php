@@ -8,7 +8,8 @@
 
 namespace Joomla\Github;
 
-use Joomla\Http\Http as BaseHttp;
+use Joomla\Http\Http;
+use Joomla\Http\HttpFactory;
 use Joomla\Registry\Registry;
 
 /**
@@ -51,11 +52,11 @@ class Github
 	 * Constructor.
 	 *
 	 * @param   Registry  $options  GitHub options object.
-	 * @param   BaseHttp  $client   The HTTP client object.
+	 * @param   Http      $client   The HTTP client object.
 	 *
 	 * @since   1.0
 	 */
-	public function __construct(Registry $options = null, BaseHttp $client = null)
+	public function __construct(Registry $options = null, Http $client = null)
 	{
 		$this->options = $options ?: new Registry;
 
@@ -71,7 +72,7 @@ class Github
 			$this->setOption('api.url', 'https://api.github.com');
 		}
 
-		$this->client = $client ?: new Http($this->options);
+		$this->client = $client ?: (new HttpFactory)->getHttp($this->options);
 	}
 
 	/**
