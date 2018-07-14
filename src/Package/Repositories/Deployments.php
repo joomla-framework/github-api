@@ -105,7 +105,7 @@ class Deployments extends AbstractPackage
 			$data['task'] = $task;
 		}
 
-		if (is_array($requiredContexts))
+		if (\is_array($requiredContexts))
 		{
 			$data['required_contexts'] = $requiredContexts;
 		}
@@ -191,7 +191,7 @@ class Deployments extends AbstractPackage
 		// Build the request path.
 		$path = "/repos/$owner/$repo/deployments/" . (int) $id . '/statuses';
 
-		if (!in_array($state, $allowedStates))
+		if (!\in_array($state, $allowedStates))
 		{
 			throw new \InvalidArgumentException(sprintf('The deployment state must be: %s', implode(', ', $allowedStates)));
 		}

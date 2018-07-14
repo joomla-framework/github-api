@@ -86,7 +86,7 @@ abstract class AbstractGithubObject
 		$this->options = $options ?: new Registry;
 		$this->client = $client ?: (new HttpFactory)->getHttp($this->options);
 
-		$this->package = get_class($this);
+		$this->package = \get_class($this);
 		$this->package = substr($this->package, strrpos($this->package, '\\') + 1);
 	}
 
