@@ -88,7 +88,7 @@ class Users extends AbstractPackage
 			'company'  => $company,
 			'location' => $location,
 			'hireable' => $hireable,
-			'bio'      => $bio
+			'bio'      => $bio,
 		);
 
 		// Build the request path.

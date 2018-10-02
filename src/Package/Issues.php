@@ -58,7 +58,7 @@ class Issues extends AbstractPackage
 			'title'     => $title,
 			'milestone' => $milestone,
 			'labels'    => $labels,
-			'body'      => $body
+			'body'      => $body,
 		);
 
 		if (\is_string($assignee) && !empty($assignees))
@@ -195,8 +195,8 @@ class Issues extends AbstractPackage
 	 * @since   1.0
 	 * @throws  \DomainException
 	 */
-	public function getList($filter = null, $state = null, $labels = null, $sort = null,
-		$direction = null, \DateTimeInterface $since = null, $page = 0, $limit = 0
+	public function getList($filter = null, $state = null, $labels = null, $sort = null, $direction = null, \DateTimeInterface $since = null,
+		$page = 0, $limit = 0
 	)
 	{
 		// Build the request path.

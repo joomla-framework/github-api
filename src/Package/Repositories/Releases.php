@@ -44,12 +44,12 @@ class Releases extends AbstractPackage
 		// Build the request data.
 		$data = json_encode(
 			array(
-				'tag_name' => $tagName,
+				'tag_name'         => $tagName,
 				'target_commitish' => $targetCommitish,
-				'name' => $name,
-				'body' => $body,
-				'draft' => (boolean) $draft,
-				'prerelease' => (boolean) $preRelease,
+				'name'             => $name,
+				'body'             => $body,
+				'draft'            => (boolean) $draft,
+				'prerelease'       => (boolean) $preRelease,
 			)
 		);
 
@@ -87,10 +87,8 @@ class Releases extends AbstractPackage
 	 * @param   integer  $releaseId        The release id.
 	 * @param   string   $tagName          The name of the tag.
 	 * @param   string   $targetCommitish  The commitish value that determines where the Git tag is created from.
-	 * @param   string   $name             The branch (or git ref) you want your changes pulled into. This
-	 *                                     should be an existing branch on the current repository. You cannot
-	 *                                     submit a pull request to one repo that requests a merge to a base
-	 *                                     of another repo.
+	 * @param   string   $name             The branch (or git ref) you want your changes pulled into. This should be an existing branch on the current
+	 *                                     repository. You cannot submit a pull request to one repo that requests a merge to a base of another repo.
 	 * @param   boolean  $body             The body text for the new pull request.
 	 * @param   boolean  $draft            The branch (or git ref) where your changes are implemented.
 	 * @param   string   $preRelease       The branch (or git ref) where your changes are implemented.
@@ -101,15 +99,13 @@ class Releases extends AbstractPackage
 	 * @since   1.1.0
 	 * @throws  \DomainException
 	 */
-	public function edit($user, $repo, $releaseId, $tagName,
-		$targetCommitish = null, $name = null, $body = null, $draft = null, $preRelease = null
-	)
+	public function edit($user, $repo, $releaseId, $tagName, $targetCommitish = null, $name = null, $body = null, $draft = null, $preRelease = null)
 	{
 		// Build the request path.
 		$path = '/repos/' . $user . '/' . $repo . '/releases/' . (int) $releaseId;
 
 		// Create the data object.
-		$data = new \stdClass;
+		$data           = new \stdClass;
 		$data->tag_name = $tagName;
 
 		// Check if input values are set and add them to the data object.

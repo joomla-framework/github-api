@@ -44,7 +44,7 @@ class Gists extends AbstractPackage
 			array(
 				'files'       => $this->buildFileData((array) $files),
 				'public'      => (bool) $public,
-				'description' => $description
+				'description' => $description,
 			)
 		);
 
@@ -349,8 +349,9 @@ class Gists extends AbstractPackage
 		}
 
 		// Decode the error response and throw an exception.
-		$error = json_decode($response->body);
+		$error   = json_decode($response->body);
 		$message = isset($error->message) ? $error->message : 'Invalid response received from GitHub.';
+
 		throw new UnexpectedResponseException($response, $message, $response->code);
 	}
 

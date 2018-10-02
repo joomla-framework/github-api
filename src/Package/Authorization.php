@@ -145,7 +145,7 @@ class Authorization extends AbstractPackage
 			array(
 				$scope     => $scopeData,
 				'note'     => $note,
-				'note_url' => $url
+				'note_url' => $url,
 			)
 		);
 
@@ -255,6 +255,7 @@ class Authorization extends AbstractPackage
 
 			// Decode the error response and throw an exception.
 			$error = json_decode($response->body);
+
 			throw new UnexpectedResponseException($response, $error->message, $response->code);
 		}
 
@@ -318,7 +319,7 @@ class Authorization extends AbstractPackage
 		$data = array(
 			'client_id'     => $clientId,
 			'client_secret' => $clientSecret,
-			'code'          => $code
+			'code'          => $code,
 		);
 
 		if ($redirectUri)
@@ -332,15 +333,20 @@ class Authorization extends AbstractPackage
 		{
 			case 'json' :
 				$headers['Accept'] = 'application/json';
+
 				break;
+
 			case 'xml' :
 				$headers['Accept'] = 'application/xml';
+
 				break;
+
 			default :
 				if ($format)
 				{
 					throw new \UnexpectedValueException('Invalid format');
 				}
+
 				break;
 		}
 

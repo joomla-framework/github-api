@@ -12,8 +12,8 @@ use Joomla\Http\Exception\UnexpectedResponseException;
 use Joomla\Http\Http;
 use Joomla\Http\HttpFactory;
 use Joomla\Http\Response;
-use Joomla\Uri\Uri;
 use Joomla\Registry\Registry;
+use Joomla\Uri\Uri;
 
 /**
  * GitHub API object class for the Joomla Framework.
@@ -84,7 +84,7 @@ abstract class AbstractGithubObject
 	public function __construct(Registry $options = null, Http $client = null)
 	{
 		$this->options = $options ?: new Registry;
-		$this->client = $client ?: (new HttpFactory)->getHttp($this->options);
+		$this->client  = $client ?: (new HttpFactory)->getHttp($this->options);
 
 		$this->package = \get_class($this);
 		$this->package = substr($this->package, strrpos($this->package, '\\') + 1);
@@ -159,8 +159,9 @@ abstract class AbstractGithubObject
 		if ($response->code != $expectedCode)
 		{
 			// Decode the error response and throw an exception.
-			$error = json_decode($response->body);
+			$error   = json_decode($response->body);
 			$message = isset($error->message) ? $error->message : 'Invalid response received from GitHub.';
+
 			throw new UnexpectedResponseException($response, $message, $response->code);
 		}
 
