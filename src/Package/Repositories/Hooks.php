@@ -35,7 +35,7 @@ class Hooks extends AbstractPackage
 	 * @throws  \DomainException
 	 * @throws  \RuntimeException
 	 */
-	public function create($user, $repo, $name, $config, array $events = array('push'), $active = true)
+	public function create($user, $repo, $name, $config, array $events = ['push'], $active = true)
 	{
 		// Build the request path.
 		$path = '/repos/' . $user . '/' . $repo . '/hooks';
@@ -50,7 +50,7 @@ class Hooks extends AbstractPackage
 		}
 
 		$data = json_encode(
-			array('name' => $name, 'config' => $config, 'events' => $events, 'active' => $active)
+			['name' => $name, 'config' => $config, 'events' => $events, 'active' => $active]
 		);
 
 		return $this->processResponse(
@@ -101,9 +101,7 @@ class Hooks extends AbstractPackage
 	 * @throws  \DomainException
 	 * @throws  \RuntimeException
 	 */
-	public function edit($user, $repo, $id, $name, $config, array $events = array('push'), array $addEvents = array(),
-		array $removeEvents = array(), $active = true
-	)
+	public function edit($user, $repo, $id, $name, $config, array $events = ['push'], array $addEvents = [], array $removeEvents = [], $active = true)
 	{
 		// Check to ensure all events are in the allowed list
 		foreach ($events as $event)
@@ -134,14 +132,14 @@ class Hooks extends AbstractPackage
 		$path = '/repos/' . $user . '/' . $repo . '/hooks/' . $id;
 
 		$data = json_encode(
-			array(
+			[
 				'name'          => $name,
 				'config'        => $config,
 				'events'        => $events,
 				'add_events'    => $addEvents,
 				'remove_events' => $removeEvents,
 				'active'        => $active,
-			)
+			]
 		);
 
 		return $this->processResponse(

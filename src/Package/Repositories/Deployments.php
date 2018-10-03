@@ -95,10 +95,10 @@ class Deployments extends AbstractPackage
 		// Build the request path.
 		$path = "/repos/$owner/$repo/deployments";
 
-		$data = array(
+		$data = [
 			'ref'        => $ref,
 			'auto_merge' => $autoMerge,
-		);
+		];
 
 		if ($task)
 		{
@@ -186,7 +186,7 @@ class Deployments extends AbstractPackage
 	 */
 	public function createStatus($owner, $repo, $id, $state, $targetUrl = '', $description = '')
 	{
-		$allowedStates = array('pending', 'success', 'error', 'failure');
+		$allowedStates = ['pending', 'success', 'error', 'failure'];
 
 		// Build the request path.
 		$path = "/repos/$owner/$repo/deployments/" . (int) $id . '/statuses';
@@ -196,9 +196,9 @@ class Deployments extends AbstractPackage
 			throw new \InvalidArgumentException(sprintf('The deployment state must be: %s', implode(', ', $allowedStates)));
 		}
 
-		$data = array(
+		$data = [
 			'state' => $state,
-		);
+		];
 
 		if ($targetUrl)
 		{

@@ -54,12 +54,12 @@ class Issues extends AbstractPackage
 		}
 
 		// Build the request data.
-		$data = array(
+		$data = [
 			'title'     => $title,
 			'milestone' => $milestone,
 			'labels'    => $labels,
 			'body'      => $body,
-		);
+		];
 
 		if (\is_string($assignee) && !empty($assignees))
 		{
@@ -239,18 +239,18 @@ class Issues extends AbstractPackage
 	/**
 	 * List issues for a repository.
 	 *
-	 * @param   string     $user       The name of the owner of the GitHub repository.
-	 * @param   string     $repo       The name of the GitHub repository.
-	 * @param   string     $milestone  The milestone number, 'none', or *.
-	 * @param   string     $state      The optional state to filter requests by. [open, closed]
-	 * @param   string     $assignee   The assignee name, 'none', or *.
-	 * @param   string     $mentioned  The GitHub user name.
-	 * @param   string     $labels     The list of comma separated Label names. Example: bug,ui,@high.
-	 * @param   string     $sort       The sort order: created, updated, comments, default: created.
-	 * @param   string     $direction  The list direction: asc or desc, default: desc.
-	 * @param   \DateTime  $since      Only issues updated at or after this time are returned.
-	 * @param   integer    $page       The page number from which to get items.
-	 * @param   integer    $limit      The number of items on a page.
+	 * @param   string              $user       The name of the owner of the GitHub repository.
+	 * @param   string              $repo       The name of the GitHub repository.
+	 * @param   string              $milestone  The milestone number, 'none', or *.
+	 * @param   string              $state      The optional state to filter requests by. [open, closed]
+	 * @param   string              $assignee   The assignee name, 'none', or *.
+	 * @param   string              $mentioned  The GitHub user name.
+	 * @param   string              $labels     The list of comma separated Label names. Example: bug,ui,@high.
+	 * @param   string              $sort       The sort order: created, updated, comments, default: created.
+	 * @param   string              $direction  The list direction: asc or desc, default: desc.
+	 * @param   \DateTimeInterface  $since      Only issues updated at or after this time are returned.
+	 * @param   integer             $page       The page number from which to get items.
+	 * @param   integer             $limit      The number of items on a page.
 	 *
 	 * @return  object
 	 *
@@ -258,7 +258,7 @@ class Issues extends AbstractPackage
 	 * @throws  \DomainException
 	 */
 	public function getListByRepository($user, $repo, $milestone = null, $state = null, $assignee = null, $mentioned = null, $labels = null,
-		$sort = null, $direction = null, \DateTime $since = null, $page = 0, $limit = 0
+		$sort = null, $direction = null, \DateTimeInterface $since = null, $page = 0, $limit = 0
 	)
 	{
 		// Build the request path.
@@ -327,7 +327,7 @@ class Issues extends AbstractPackage
 		// Build the request path.
 		$path = "/repos/$user/$repo/issues/" . (int) $issueId . '/lock';
 
-		return $this->processResponse($this->client->put($this->fetchUrl($path), array()), 204);
+		return $this->processResponse($this->client->put($this->fetchUrl($path), []), 204);
 	}
 
 	/**

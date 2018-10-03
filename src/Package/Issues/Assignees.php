@@ -107,9 +107,9 @@ class Assignees extends AbstractPackage
 		$path = "/repos/$owner/$repo/issues/$number/assignees";
 
 		$data = json_encode(
-			array(
+			[
 				'assignees' => $assignees,
-			)
+			]
 		);
 
 		return $this->processResponse($this->client->post($this->fetchUrl($path), $data), 201);
@@ -136,11 +136,11 @@ class Assignees extends AbstractPackage
 		$path = "/repos/$owner/$repo/issues/$number/assignees";
 
 		$data = json_encode(
-			array(
+			[
 				'assignees' => $assignees,
-			)
+			]
 		);
 
-		return $this->processResponse($this->client->delete($this->fetchUrl($path), array(), null, $data));
+		return $this->processResponse($this->client->delete($this->fetchUrl($path), [], null, $data));
 	}
 }

@@ -51,12 +51,12 @@ class Repositories extends AbstractPackage
 	 */
 	public function getListOwn($type = 'all', $sort = 'full_name', $direction = '')
 	{
-		if (\in_array($type, array('all', 'owner', 'public', 'private', 'member')) == false)
+		if (\in_array($type, ['all', 'owner', 'public', 'private', 'member']) == false)
 		{
 			throw new \RuntimeException('Invalid type');
 		}
 
-		if (\in_array($sort, array('created', 'updated', 'pushed', 'full_name')) == false)
+		if (\in_array($sort, ['created', 'updated', 'pushed', 'full_name']) == false)
 		{
 			throw new \RuntimeException('Invalid sort field');
 		}
@@ -64,7 +64,7 @@ class Repositories extends AbstractPackage
 		// Sort direction default: when using full_name: asc, otherwise desc.
 		$direction = ($direction) ? : (($sort == 'full_name') ? 'asc' : 'desc');
 
-		if (\in_array($direction, array('asc', 'desc')) == false)
+		if (\in_array($direction, ['asc', 'desc']) == false)
 		{
 			throw new \RuntimeException('Invalid sort order');
 		}
@@ -96,12 +96,12 @@ class Repositories extends AbstractPackage
 	 */
 	public function getListUser($user, $type = 'all', $sort = 'full_name', $direction = '')
 	{
-		if (\in_array($type, array('all', 'owner', 'member')) == false)
+		if (\in_array($type, ['all', 'owner', 'member']) == false)
 		{
 			throw new \RuntimeException('Invalid type');
 		}
 
-		if (\in_array($sort, array('created', 'updated', 'pushed', 'full_name')) == false)
+		if (\in_array($sort, ['created', 'updated', 'pushed', 'full_name']) == false)
 		{
 			throw new \RuntimeException('Invalid sort field');
 		}
@@ -109,7 +109,7 @@ class Repositories extends AbstractPackage
 		// Sort direction default: when using full_name: asc, otherwise desc.
 		$direction = $direction ?: ($sort == 'full_name' ? 'asc' : 'desc');
 
-		if (\in_array($direction, array('asc', 'desc')) == false)
+		if (\in_array($direction, ['asc', 'desc']) == false)
 		{
 			throw new \RuntimeException('Invalid sort order');
 		}
@@ -139,7 +139,7 @@ class Repositories extends AbstractPackage
 	 */
 	public function getListOrg($org, $type = 'all')
 	{
-		if (\in_array($type, array('all', 'public', 'private', 'forks', 'sources', 'member')) == false)
+		if (\in_array($type, ['all', 'public', 'private', 'forks', 'sources', 'member']) == false)
 		{
 			throw new \RuntimeException('Invalid type');
 		}
@@ -212,7 +212,7 @@ class Repositories extends AbstractPackage
 			// Create a repository for a user
 			: '/user/repos';
 
-		$data = array(
+		$data = [
 			'name'               => $name,
 			'description'        => $description,
 			'homepage'           => $homepage,
@@ -223,7 +223,7 @@ class Repositories extends AbstractPackage
 			'team_id'            => $teamId,
 			'auto_init'          => $autoInit,
 			'gitignore_template' => $gitignoreTemplate,
-		);
+		];
 
 		// Send the request.
 		return $this->processResponse(
@@ -278,7 +278,7 @@ class Repositories extends AbstractPackage
 	{
 		$path = '/repos/' . $owner . '/' . $repo;
 
-		$data = array(
+		$data = [
 			'name'           => $name,
 			'description'    => $description,
 			'homepage'       => $homepage,
@@ -287,7 +287,7 @@ class Repositories extends AbstractPackage
 			'has_wiki'       => $hasWiki,
 			'has_downloads'  => $hasDownloads,
 			'default_branch' => $defaultBranch,
-		);
+		];
 
 		// Send the request.
 		return $this->processResponse(

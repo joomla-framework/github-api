@@ -77,10 +77,10 @@ class Keys extends AbstractPackage
 		// Build the request path.
 		$path = '/repos/' . $owner . '/' . $repo . '/keys';
 
-		$data = array(
+		$data = [
 			'title' => $title,
 			'key'   => $key,
-		);
+		];
 
 		return $this->processResponse(
 			$this->client->post($this->fetchUrl($path), json_encode($data)),
@@ -106,10 +106,10 @@ class Keys extends AbstractPackage
 		// Build the request path.
 		$path = '/repos/' . $owner . '/' . $repo . '/keys/' . (int) $id;
 
-		$data = array(
+		$data = [
 			'title' => $title,
 			'key'   => $key,
-		);
+		];
 
 		return $this->processResponse(
 			$this->client->patch($this->fetchUrl($path), json_encode($data))

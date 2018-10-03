@@ -61,10 +61,10 @@ class Blobs extends AbstractPackage
 		// Build the request path.
 		$path = '/repos/' . $owner . '/' . $repo . '/git/blobs';
 
-		$data = array(
+		$data = [
 			'content'  => $content,
 			'encoding' => $encoding,
-		);
+		];
 
 		return $this->processResponse(
 			$this->client->post($this->fetchUrl($path), json_encode($data)),

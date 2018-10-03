@@ -92,9 +92,9 @@ class Milestones extends AbstractPackage
 		$path = '/repos/' . $user . '/' . $repo . '/milestones';
 
 		// Build the request data.
-		$data = array(
+		$data = [
 			'title' => $title,
-		);
+		];
 
 		if ($state !== null)
 		{
@@ -140,7 +140,7 @@ class Milestones extends AbstractPackage
 		$path = '/repos/' . $user . '/' . $repo . '/milestones/' . (int) $milestoneId;
 
 		// Build the request data.
-		$data = array();
+		$data = [];
 
 		if ($title !== null)
 		{

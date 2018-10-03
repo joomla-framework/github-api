@@ -36,7 +36,7 @@ class Markdown extends AbstractPackage
 	public function render($text, $mode = 'gfm', $context = null)
 	{
 		// The valid modes
-		$validModes = array('gfm', 'markdown');
+		$validModes = ['gfm', 'markdown'];
 
 		// Make sure the scope is valid
 		if (!\in_array($mode, $validModes))

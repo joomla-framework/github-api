@@ -98,7 +98,7 @@ class Trees extends AbstractPackage
 		// Build the request path.
 		$path = '/repos/' . $owner . '/' . $repo . '/git/trees';
 
-		$data = array();
+		$data = [];
 
 		$data['tree'] = $tree;
 

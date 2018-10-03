@@ -88,10 +88,10 @@ class Refs extends AbstractPackage
 
 		// Build the request data.
 		$data = json_encode(
-			array(
+			[
 				'ref' => $ref,
 				'sha' => $sha,
-			)
+			]
 		);
 
 		// Send the request.

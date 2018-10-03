@@ -39,12 +39,12 @@ class Forks extends AbstractPackage
 		if (\strlen($org) > 0)
 		{
 			$data = json_encode(
-				array('org' => $org)
+				['org' => $org]
 			);
 		}
 		else
 		{
-			$data = json_encode(array());
+			$data = json_encode([]);
 		}
 
 		// Send the request.

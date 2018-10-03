@@ -55,8 +55,8 @@ class Starring extends AbstractPackage
 	 */
 	public function getRepositories($user = '', $sort = 'created', $direction = 'desc')
 	{
-		$allowedSort = array('created', 'updated');
-		$allowedDir  = array('asc', 'desc');
+		$allowedSort = ['created', 'updated'];
+		$allowedDir  = ['asc', 'desc'];
 
 		if (!\in_array($sort, $allowedSort))
 		{

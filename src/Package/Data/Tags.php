@@ -69,17 +69,17 @@ class Tags extends AbstractPackage
 		// Build the request path.
 		$path = '/repos/' . $owner . '/' . $repo . '/git/tags';
 
-		$data = array(
+		$data = [
 			'tag'     => $tag,
 			'message' => $message,
 			'object'  => $object,
 			'type'    => $type,
-			'tagger'  => array(
+			'tagger'  => [
 				'name'  => $taggerName,
 				'email' => $taggerEmail,
 				'date'  => $taggerDate,
-			),
-		);
+			],
+		];
 
 		return $this->processResponse(
 			$this->client->post($this->fetchUrl($path), json_encode($data)),

@@ -86,9 +86,9 @@ class Orgs extends AbstractPackage
 		// Build the request path.
 		$path = '/orgs/' . $org;
 
-		$args = array('billing_email', 'company', 'email', 'location', 'name');
+		$args = ['billing_email', 'company', 'email', 'location', 'name'];
 
-		$data = array();
+		$data = [];
 
 		$fArgs = \func_get_args();
 

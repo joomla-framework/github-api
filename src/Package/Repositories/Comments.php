@@ -106,9 +106,9 @@ class Comments extends AbstractPackage
 		$path = '/repos/' . $user . '/' . $repo . '/comments/' . $id;
 
 		$data = json_encode(
-			array(
+			[
 				'body' => $comment,
-			)
+			]
 		);
 
 		// Send the request.
@@ -161,12 +161,12 @@ class Comments extends AbstractPackage
 		$path = '/repos/' . $user . '/' . $repo . '/commits/' . $sha . '/comments';
 
 		$data = json_encode(
-			array(
+			[
 				'body'     => $comment,
 				'path'     => $filepath,
 				'position' => (int) $position,
 				'line'     => (int) $line,
-			)
+			]
 		);
 
 		// Send the request.

@@ -106,14 +106,14 @@ class Contents extends AbstractPackage
 	 */
 	public function getArchiveLink($owner, $repo, $archiveFormat = 'zipball', $ref = '')
 	{
-		if (\in_array($archiveFormat, array('tarball', 'zipball')) == false)
+		if (\in_array($archiveFormat, ['tarball', 'zipball']) == false)
 		{
 			throw new \UnexpectedValueException('Archive format must be either "tarball" or "zipball".');
 		}
 
 		// Build the request path.
 		$path = '/repos/' . $owner . '/' . $repo . '/' . $archiveFormat;
-		$uri = $this->fetchUrl($path);
+		$uri  = $this->fetchUrl($path);
 
 		if ($ref)
 		{
@@ -159,11 +159,11 @@ class Contents extends AbstractPackage
 		// Build the request path.
 		$route = '/repos/' . $owner . '/' . $repo . '/contents/' . $path;
 
-		$data = array(
+		$data = [
 			'message' => $message,
 			'content' => $content,
 			'branch'  => $branch,
-		);
+		];
 
 		if ($authorName)
 		{
@@ -172,10 +172,10 @@ class Contents extends AbstractPackage
 				throw new \UnexpectedValueException('You must provide an author e-mail if you supply an author name');
 			}
 
-			$data['author'] = array(
+			$data['author'] = [
 				'name'  => $authorName,
 				'email' => $authorEmail,
-			);
+			];
 		}
 
 		if ($committerName)
@@ -185,10 +185,10 @@ class Contents extends AbstractPackage
 				throw new \UnexpectedValueException('You must provide a committer e-mail if you supply a committer name');
 			}
 
-			$data['committer'] = array(
+			$data['committer'] = [
 				'name'  => $committerName,
 				'email' => $committerEmail,
-			);
+			];
 		}
 
 		return $this->processResponse($this->client->put($this->fetchUrl($route), json_encode($data)), 201);
@@ -230,12 +230,12 @@ class Contents extends AbstractPackage
 		// Build the request path.
 		$route = '/repos/' . $owner . '/' . $repo . '/contents/' . $path;
 
-		$data = array(
+		$data = [
 			'message' => $message,
 			'content' => $content,
 			'sha'     => $sha,
 			'branch'  => $branch,
-		);
+		];
 
 		if ($authorName)
 		{
@@ -244,10 +244,10 @@ class Contents extends AbstractPackage
 				throw new \UnexpectedValueException('You must provide an author e-mail if you supply an author name');
 			}
 
-			$data['author'] = array(
+			$data['author'] = [
 				'name'  => $authorName,
 				'email' => $authorEmail,
-			);
+			];
 		}
 
 		if ($committerName)
@@ -257,10 +257,10 @@ class Contents extends AbstractPackage
 				throw new \UnexpectedValueException('You must provide a committer e-mail if you supply a committer name');
 			}
 
-			$data['committer'] = array(
+			$data['committer'] = [
 				'name'  => $committerName,
 				'email' => $committerEmail,
-			);
+			];
 		}
 
 		return $this->processResponse($this->client->put($this->fetchUrl($route), json_encode($data)));
@@ -294,11 +294,11 @@ class Contents extends AbstractPackage
 		// Build the request path.
 		$route = '/repos/' . $owner . '/' . $repo . '/contents/' . $path;
 
-		$data = array(
+		$data = [
 			'message' => $message,
 			'sha'     => $sha,
 			'branch'  => $branch,
-		);
+		];
 
 		if ($authorName)
 		{
@@ -307,10 +307,10 @@ class Contents extends AbstractPackage
 				throw new \UnexpectedValueException('You must provide an author e-mail if you supply an author name');
 			}
 
-			$data['author'] = array(
+			$data['author'] = [
 				'name'  => $authorName,
 				'email' => $authorEmail,
-			);
+			];
 		}
 
 		if ($committerName)
@@ -320,16 +320,18 @@ class Contents extends AbstractPackage
 				throw new \UnexpectedValueException('You must provide a committer e-mail if you supply a committer name');
 			}
 
-			$data['committer'] = array(
+			$data['committer'] = [
 				'name'  => $committerName,
 				'email' => $committerEmail,
-			);
+			];
 		}
 
 		return $this->processResponse(
 			$this->client->delete(
 				$this->fetchUrl($route),
-				array(), null, json_encode($data)
+				[],
+				null,
+				json_encode($data)
 			)
 		);
 	}

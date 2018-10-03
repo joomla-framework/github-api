@@ -81,7 +81,7 @@ class Users extends AbstractPackage
 	 */
 	public function edit($name = '', $email = '', $blog = '', $company = '', $location = '', $hireable = '', $bio = '')
 	{
-		$data = array(
+		$data = [
 			'name'     => $name,
 			'email'    => $email,
 			'blog'     => $blog,
@@ -89,7 +89,7 @@ class Users extends AbstractPackage
 			'location' => $location,
 			'hireable' => $hireable,
 			'bio'      => $bio,
-		);
+		];
 
 		// Build the request path.
 		$path = '/user';

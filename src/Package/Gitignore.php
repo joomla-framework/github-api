@@ -58,7 +58,7 @@ class Gitignore extends AbstractPackage
 		// Build the request path.
 		$path = '/gitignore/templates/' . $name;
 
-		$headers = array();
+		$headers = [];
 
 		if ($raw)
 		{

@@ -47,12 +47,12 @@ class Pulls extends AbstractPackage
 
 		// Build the request data.
 		$data = json_encode(
-			array(
+			[
 				'title' => $title,
 				'base'  => $base,
 				'head'  => $head,
 				'body'  => $body,
-			)
+			]
 		);
 
 		// Send the request.
@@ -83,11 +83,11 @@ class Pulls extends AbstractPackage
 
 		// Build the request data.
 		$data = json_encode(
-			array(
+			[
 				'issue' => (int) $issueId,
 				'base'  => $base,
 				'head'  => $head,
-			)
+			]
 		);
 
 		// Send the request.
@@ -303,9 +303,9 @@ class Pulls extends AbstractPackage
 
 		// Build the request data.
 		$data = json_encode(
-			array(
+			[
 				'commit_message' => $message,
-			)
+			]
 		);
 
 		// Send the request.

@@ -130,10 +130,10 @@ class Notifications extends AbstractPackage
 		// Build the request path.
 		$path = '/notifications';
 
-		$data = array(
+		$data = [
 			'unread' => $unread,
 			'read'   => $read,
-		);
+		];
 
 		if ($lastReadAt)
 		{
@@ -167,10 +167,10 @@ class Notifications extends AbstractPackage
 		// Build the request path.
 		$path = '/repos/' . $owner . '/' . $repo . '/notifications';
 
-		$data = array(
+		$data = [
 			'unread' => $unread,
 			'read'   => $read,
-		);
+		];
 
 		if ($lastReadAt)
 		{
@@ -218,10 +218,10 @@ class Notifications extends AbstractPackage
 		// Build the request path.
 		$path = '/notifications/threads/' . $id;
 
-		$data = array(
+		$data = [
 			'unread' => $unread,
 			'read'   => $read,
-		);
+		];
 
 		return $this->processResponse(
 			$this->client->patch($this->fetchUrl($path), json_encode($data)),
@@ -271,10 +271,10 @@ class Notifications extends AbstractPackage
 		// Build the request path.
 		$path = '/notifications/threads/' . $id . '/subscription';
 
-		$data = array(
+		$data = [
 			'subscribed' => $subscribed,
 			'ignored'    => $ignored,
-		);
+		];
 
 		return $this->processResponse(
 			$this->client->put($this->fetchUrl($path), json_encode($data))

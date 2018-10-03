@@ -99,10 +99,10 @@ class Watching extends AbstractPackage
 		// Build the request path.
 		$path = '/repos/' . $owner . '/' . $repo . '/subscription';
 
-		$data = array(
+		$data = [
 			'subscribed' => $subscribed,
 			'ignored'    => $ignored,
-		);
+		];
 
 		return $this->processResponse(
 			$this->client->put($this->fetchUrl($path), json_encode($data))

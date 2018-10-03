@@ -41,11 +41,11 @@ class Gists extends AbstractPackage
 
 		// Build the request data.
 		$data = json_encode(
-			array(
+			[
 				'files'       => $this->buildFileData((array) $files),
 				'public'      => (bool) $public,
 				'description' => $description,
-			)
+			]
 		);
 
 		// Send the request.
@@ -406,14 +406,14 @@ class Gists extends AbstractPackage
 	 */
 	protected function buildFileData(array $files)
 	{
-		$data = array();
+		$data = [];
 
 		foreach ($files as $key => $file)
 		{
 			if (!is_numeric($key))
 			{
 				// If the key isn't numeric, then we are dealing with a file whose content has been supplied
-				$data[$key] = array('content' => $file);
+				$data[$key] = ['content' => $file];
 			}
 			elseif (!file_exists($file))
 			{
@@ -423,7 +423,7 @@ class Gists extends AbstractPackage
 			}
 			else
 			{
-				$data[basename($file)] = array('content' => file_get_contents($file));
+				$data[basename($file)] = ['content' => file_get_contents($file)];
 			}
 		}
 
