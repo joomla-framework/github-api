@@ -29,7 +29,7 @@ class ContentsTest extends GitHubTestCase
 	 *
 	 * @return  void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -152,11 +152,11 @@ class ContentsTest extends GitHubTestCase
 	 * Tests the GetArchiveLinkInvalidFormat method.
 	 *
 	 * @return  void
-	 *
-	 * @expectedException \UnexpectedValueException
 	 */
 	public function testGetArchiveLinkInvalidFormat()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->response->code = 302;
 
 		$this->object->getArchiveLink('joomla', 'joomla-platform', 'invalid');
@@ -188,12 +188,12 @@ class ContentsTest extends GitHubTestCase
 	/**
 	 * Tests the create method with missing author e-mail.
 	 *
-	 * @expectedException \UnexpectedValueException
-	 *
 	 * @return  void
 	 */
 	public function testCreateFail1()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->object->create(
 			'joomla', 'joomla-platform', 'src/foo', 'my Message', 'ABC123def', 'xxbranch',
 			'eddieajau', '', 'elkuku', 'elkuku@example.com'
@@ -203,12 +203,12 @@ class ContentsTest extends GitHubTestCase
 	/**
 	 * Tests the create method with missing committer e-mail.
 	 *
-	 * @expectedException \UnexpectedValueException
-	 *
 	 * @return  void
 	 */
 	public function testCreateFail2()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->object->create(
 			'joomla', 'joomla-platform', 'src/foo', 'my Message', 'ABC123def', 'xxbranch',
 			'eddieajau', 'eddieajau@example.com', 'elkuku', ''
@@ -239,12 +239,12 @@ class ContentsTest extends GitHubTestCase
 	/**
 	 * Tests the update method with missing author e-mail.
 	 *
-	 * @expectedException \UnexpectedValueException
-	 *
 	 * @return  void
 	 */
 	public function testUpdateFail1()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->object->update(
 			'joomla', 'joomla-platform', 'src/foo', 'my Message', 'ABC123def', 'abcd1234', 'xxbranch',
 			'eddieajau', '', 'elkuku', 'elkuku@example.com'
@@ -254,12 +254,12 @@ class ContentsTest extends GitHubTestCase
 	/**
 	 * Tests the update method with missing committer e-mail.
 	 *
-	 * @expectedException \UnexpectedValueException
-	 *
 	 * @return  void
 	 */
 	public function testUpdateFail2()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->object->update(
 			'joomla', 'joomla-platform', 'src/foo', 'my Message', 'ABC123def', 'abcd1234', 'xxbranch',
 			'eddieajau', 'eddieajau@example.com', 'elkuku', ''
@@ -290,12 +290,12 @@ class ContentsTest extends GitHubTestCase
 	/**
 	 * Tests the delete method with missing author e-mail.
 	 *
-	 * @expectedException \UnexpectedValueException
-	 *
 	 * @return  void
 	 */
 	public function testDeleteFail1()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->object->delete(
 			'joomla', 'joomla-platform', 'src/foo', 'my Message', 'ABC123def', 'xxbranch',
 			'eddieajau', '', 'elkuku', 'elkuku@example.com'
@@ -305,12 +305,12 @@ class ContentsTest extends GitHubTestCase
 	/**
 	 * Tests the update method with missing committer e-mail.
 	 *
-	 * @expectedException \UnexpectedValueException
-	 *
 	 * @return  void
 	 */
 	public function testDeleteFail2()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->object->delete(
 			'joomla', 'joomla-platform', 'src/foo', 'my Message', 'ABC123def', 'xxbranch',
 			'eddieajau', 'eddieajau@example.com', 'elkuku', ''

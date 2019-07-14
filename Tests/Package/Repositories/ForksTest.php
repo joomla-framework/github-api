@@ -30,7 +30,7 @@ class ForksTest extends GitHubTestCase
 	 *
 	 * @return void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -67,12 +67,12 @@ class ForksTest extends GitHubTestCase
 	/**
 	 * Tests the create method - failure
 	 *
-	 * @expectedException  \DomainException
-	 *
 	 * @return void
 	 */
 	public function testCreateFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 500;
 		$this->response->body = $this->errorString;
 
@@ -110,12 +110,12 @@ class ForksTest extends GitHubTestCase
 	/**
 	 * Tests the getList method - failure
 	 *
-	 * @expectedException  \DomainException
-	 *
 	 * @return void
 	 */
 	public function testGetListFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 500;
 		$this->response->body = $this->errorString;
 

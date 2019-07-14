@@ -4,7 +4,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Joomla\Github\Tests;
+namespace Joomla\Github\Tests\Package\Orgs;
 
 use Joomla\Github\Package\Orgs\Members;
 use Joomla\Github\Tests\Stub\GitHubTestCase;
@@ -31,7 +31,7 @@ class MembersTest extends GitHubTestCase
 	 *
 	 * @return  void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -86,11 +86,11 @@ class MembersTest extends GitHubTestCase
 	 * @covers \Joomla\Github\Package\Orgs\Members::getList()
 	 *
 	 * @return  void
-	 *
-	 * @expectedException \UnexpectedValueException
 	 */
 	public function testGetListUnexpected()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->response->code = 666;
 
 		$this->client->expects($this->once())
@@ -176,11 +176,11 @@ class MembersTest extends GitHubTestCase
 	 * @covers \Joomla\Github\Package\Orgs\Members::check()
 	 *
 	 * @return  void
-	 *
-	 * @expectedException \UnexpectedValueException
 	 */
 	public function testCheckUnexpectedr()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->response->code = 666;
 
 		$this->client->expects($this->once())
@@ -286,11 +286,11 @@ class MembersTest extends GitHubTestCase
 	 * @covers \Joomla\Github\Package\Orgs\Members::checkPublic()
 	 *
 	 * @return  void
-	 *
-	 * @expectedException \UnexpectedValueException
 	 */
 	public function testCheckPublicUnexpected()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->response->code = 666;
 
 		$this->client->expects($this->once())
@@ -394,12 +394,12 @@ class MembersTest extends GitHubTestCase
 	 * @covers \Joomla\Github\Package\Orgs\Members::updateMembership()
 	 *
 	 * @return  void
-	 *
-	 * @expectedException \InvalidArgumentException
-	 * @expectedExceptionMessage The user's role must be: member, admin
 	 */
 	public function testUpdateMembershipInvalidRole()
 	{
+		$this->expectException(\InvalidArgumentException::class);
+		$this->expectExceptionMessage("The user's role must be: member, admin");
+
 		$this->object->updateMembership('{org}', '{user}', 'INVALID');
 	}
 
@@ -491,12 +491,12 @@ class MembersTest extends GitHubTestCase
 	 * @covers \Joomla\Github\Package\Orgs\Members::editOrganizationMembership()
 	 *
 	 * @return  void
-	 *
-	 * @expectedException \InvalidArgumentException
-	 * @expectedExceptionMessage The state must be "active".
 	 */
 	public function testEditOrganizationMembershipsInvalidState()
 	{
+		$this->expectException(\InvalidArgumentException::class);
+		$this->expectExceptionMessage('The state must be "active".');
+
 		$this->object->editOrganizationMembership('{org}', 'INVALID');
 	}
 }

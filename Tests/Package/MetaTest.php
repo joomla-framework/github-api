@@ -36,7 +36,7 @@ class MetaTest extends GitHubTestCase
 	 *
 	 * @since   1.0
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -73,11 +73,11 @@ class MetaTest extends GitHubTestCase
 	 * @return  void
 	 *
 	 * @since   1.0
-	 *
-	 * @expectedException  \DomainException
 	 */
 	public function testGetMetaFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 500;
 		$this->response->body = $this->errorString;
 

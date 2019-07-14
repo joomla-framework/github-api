@@ -29,7 +29,7 @@ class GistsTest extends GitHubTestCase
 	 *
 	 * @return void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -113,12 +113,12 @@ class GistsTest extends GitHubTestCase
 	/**
 	 * Tests the create method loading file content from a file - file does not exist
 	 *
-	 * @expectedException \InvalidArgumentException
-	 *
 	 * @return void
 	 */
 	public function testCreateGistFromFileNotFound()
 	{
+		$this->expectException(\InvalidArgumentException::class);
+
 		$this->response->code = 501;
 
 		$this->object->create(

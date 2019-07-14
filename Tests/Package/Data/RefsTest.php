@@ -30,7 +30,7 @@ class RefsTest extends GitHubTestCase
 	 *
 	 * @return void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -58,12 +58,12 @@ class RefsTest extends GitHubTestCase
 	/**
 	 * Tests the get method
 	 *
-	 * @expectedException \DomainException
-	 *
 	 * @return void
 	 */
 	public function testGetFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 500;
 		$this->response->body = $this->errorString;
 
@@ -106,12 +106,12 @@ class RefsTest extends GitHubTestCase
 	/**
 	 * Tests the create method - failure
 	 *
-	 * @expectedException  \DomainException
-	 *
 	 * @return void
 	 */
 	public function testCreateFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 501;
 		$this->response->body = $this->errorString;
 
@@ -160,12 +160,12 @@ class RefsTest extends GitHubTestCase
 	/**
 	 * Tests the edit method - failure
 	 *
-	 * @expectedException  \DomainException
-	 *
 	 * @return void
 	 */
 	public function testEditFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 500;
 		$this->response->body = $this->errorString;
 
@@ -223,12 +223,12 @@ class RefsTest extends GitHubTestCase
 	/**
 	 * Tests the getList method - failure
 	 *
-	 * @expectedException  \DomainException
-	 *
 	 * @return void
 	 */
 	public function testGetListFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 500;
 		$this->response->body = $this->errorString;
 
@@ -266,12 +266,12 @@ class RefsTest extends GitHubTestCase
 	/**
 	 * Tests the delete method - failure
 	 *
-	 * @expectedException  \DomainException
-	 *
 	 * @return void
 	 */
 	public function testDeleteFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 500;
 		$this->response->body = $this->errorString;
 

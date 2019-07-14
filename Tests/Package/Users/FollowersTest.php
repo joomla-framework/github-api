@@ -31,7 +31,7 @@ class FollowersTest extends GitHubTestCase
 	 *
 	 * @return  void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -174,11 +174,11 @@ class FollowersTest extends GitHubTestCase
 	 * @covers \Joomla\Github\Package\Users\Followers::check()
 	 *
 	 * @return  void
-	 *
-	 * @expectedException \UnexpectedValueException
 	 */
 	public function testCheckUnexpected()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->response->code = 666;
 		$this->response->body = false;
 
@@ -301,12 +301,12 @@ class FollowersTest extends GitHubTestCase
 	 * @return  void
 	 *
 	 * @since   1.0
-	 *
-	 * @expectedException \UnexpectedValueException
-	 * @expectedExceptionMessage Unexpected response code: 666
 	 */
 	public function testCheckUserFollowingUnexpected()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+		$this->expectExceptionMessage('Unexpected response code: 666');
+
 		$this->response->code = 666;
 
 		$this->client->expects($this->once())

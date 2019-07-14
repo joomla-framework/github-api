@@ -29,7 +29,7 @@ class SearchTest extends GitHubTestCase
 	 *
 	 * @return  void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -58,11 +58,11 @@ class SearchTest extends GitHubTestCase
 	 * Tests the issuesInvalidState method
 	 *
 	 * @return  void
-	 *
-	 * @expectedException \UnexpectedValueException
 	 */
 	public function testIssuesInvalidState()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->object->issues('joomla', 'joomla-platform', 'invalid', 'github');
 	}
 

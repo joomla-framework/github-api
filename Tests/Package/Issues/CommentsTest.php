@@ -30,7 +30,7 @@ class CommentsTest extends GitHubTestCase
 	 *
 	 * @return  void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -76,22 +76,24 @@ class CommentsTest extends GitHubTestCase
 	/**
 	 * Tests the getRepositoryListInvalidSort method
 	 *
-	 * @expectedException \UnexpectedValueException
 	 * @return  void
 	 */
 	public function testGetRepositoryListInvalidSort()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->object->getRepositoryList('joomla', 'joomla-platform', 'invalid');
 	}
 
 	/**
 	 * Tests the getRepositoryListInvalidDirection method
 	 *
-	 * @expectedException \UnexpectedValueException
 	 * @return  void
 	 */
 	public function testGetRepositoryListInvalidDirection()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->object->getRepositoryList('joomla', 'joomla-platform', 'created', 'invalid');
 	}
 

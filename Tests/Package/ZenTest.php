@@ -29,7 +29,7 @@ class ZenTest extends GitHubTestCase
 	 *
 	 * @return  void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -60,12 +60,12 @@ class ZenTest extends GitHubTestCase
 	/**
 	 * Tests the Get method.
 	 *
-	 * @expectedException \RuntimeException
-	 *
 	 * @return void
 	 */
 	public function testGetFailure()
 	{
+		$this->expectException(\RuntimeException::class);
+
 		$this->response->code = 400;
 		$this->response->body = 'My Zen';
 

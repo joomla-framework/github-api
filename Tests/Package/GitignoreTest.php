@@ -29,7 +29,7 @@ class GitignoreTest extends GitHubTestCase
 	 *
 	 * @return  void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -137,13 +137,13 @@ class GitignoreTest extends GitHubTestCase
 	/**
 	 * Tests the get method with failure.
 	 *
-	 * @expectedException \DomainException
-	 *
 	 * @since   1.0
 	 * @return  void
 	 */
 	public function testGetFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 404;
 		$this->response->body = '{"message":"Not found"}';
 

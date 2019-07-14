@@ -29,7 +29,7 @@ class CollaboratorsTest extends GitHubTestCase
 	 *
 	 * @return  void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -100,11 +100,11 @@ class CollaboratorsTest extends GitHubTestCase
 	 * Tests the GetUnexpected method.
 	 *
 	 * @return  void
-	 *
-	 * @expectedException \UnexpectedValueException
 	 */
 	public function testGetUnexpected()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->response->code = 666;
 		$this->response->body = null;
 

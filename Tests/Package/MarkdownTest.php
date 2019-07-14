@@ -29,7 +29,7 @@ class MarkdownTest extends GitHubTestCase
 	 *
 	 * @return void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -78,11 +78,11 @@ class MarkdownTest extends GitHubTestCase
 	 * Tests the renderInvalidMode method
 	 *
 	 * @return  void
-	 *
-	 * @expectedException  \InvalidArgumentException
 	 */
 	public function testRenderInvalidMode()
 	{
+		$this->expectException(\InvalidArgumentException::class);
+
 		$this->assertThat(
 			$this->object->render('', 'xxx', 'github/gollum'),
 			$this->equalTo('')
@@ -93,11 +93,11 @@ class MarkdownTest extends GitHubTestCase
 	 * Tests the renderFailure method
 	 *
 	 * @return  void
-	 *
-	 * @expectedException  \DomainException
 	 */
 	public function testRenderFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 404;
 		$this->response->body = '';
 

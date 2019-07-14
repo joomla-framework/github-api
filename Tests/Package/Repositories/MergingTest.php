@@ -30,7 +30,7 @@ class MergingTest extends GitHubTestCase
 	 *
 	 * @return  void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -61,11 +61,11 @@ class MergingTest extends GitHubTestCase
 	 * Tests the Perform method.
 	 *
 	 * @return  void
-	 *
-	 * @expectedException \UnexpectedValueException
 	 */
 	public function testPerformNoOp()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->response->code = 204;
 
 		$this->client->expects($this->once())
@@ -82,12 +82,12 @@ class MergingTest extends GitHubTestCase
 	/**
 	 * Tests the Perform method.
 	 *
-	 * @expectedException \UnexpectedValueException
-	 *
 	 * @return  void
 	 */
 	public function testPerformMissing()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->response->code = 404;
 
 		$this->client->expects($this->once())
@@ -104,12 +104,12 @@ class MergingTest extends GitHubTestCase
 	/**
 	 * Tests the Perform method.
 	 *
-	 * @expectedException \UnexpectedValueException
-	 *
 	 * @return  void
 	 */
 	public function testPerformConflict()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->response->code = 409;
 
 		$this->client->expects($this->once())
@@ -126,12 +126,12 @@ class MergingTest extends GitHubTestCase
 	/**
 	 * Tests the Perform method.
 	 *
-	 * @expectedException \UnexpectedValueException
-	 *
 	 * @return  void
 	 */
 	public function testPerformUnexpected()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->response->code = 666;
 
 		$this->client->expects($this->once())

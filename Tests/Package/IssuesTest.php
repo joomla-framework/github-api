@@ -32,7 +32,7 @@ class IssuesTest extends GitHubTestCase
 	 *
 	 * @return void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -104,12 +104,12 @@ class IssuesTest extends GitHubTestCase
 	 *
 	 * Failure
 	 *
-	 * @expectedException  \DomainException
-	 *
 	 * @return void
 	 */
 	public function testCreateFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 501;
 		$this->response->body = $this->errorString;
 
@@ -160,12 +160,12 @@ class IssuesTest extends GitHubTestCase
 	 *
 	 * Failure
 	 *
-	 * @expectedException  \DomainException
-	 *
 	 * @return void
 	 */
 	public function testCreateCommentFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 501;
 		$this->response->body = $this->errorString;
 
@@ -217,12 +217,12 @@ class IssuesTest extends GitHubTestCase
 	 *
 	 * Failure
 	 *
-	 * @expectedException  \DomainException
-	 *
 	 * @return void
 	 */
 	public function testEditFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 500;
 		$this->response->body = $this->errorString;
 
@@ -266,12 +266,12 @@ class IssuesTest extends GitHubTestCase
 	 *
 	 * Failure
 	 *
-	 * @expectedException  \DomainException
-	 *
 	 * @return void
 	 */
 	public function testGetFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 500;
 		$this->response->body = $this->errorString;
 
@@ -332,12 +332,12 @@ class IssuesTest extends GitHubTestCase
 	 *
 	 * Failure
 	 *
-	 * @expectedException  \DomainException
-	 *
 	 * @return void
 	 */
 	public function testGetListFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 500;
 		$this->response->body = $this->errorString;
 
@@ -414,12 +414,12 @@ class IssuesTest extends GitHubTestCase
 	 *
 	 * Failure
 	 *
-	 * @expectedException  \DomainException
-	 *
 	 * @return void
 	 */
 	public function testGetListByRepositoryFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 500;
 		$this->response->body = $this->errorString;
 
@@ -460,12 +460,12 @@ class IssuesTest extends GitHubTestCase
 	 *
 	 * Failure
 	 *
-	 * @expectedException  \DomainException
-	 *
 	 * @return void
 	 */
 	public function testLockFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 500;
 		$this->response->body = $this->errorString;
 
@@ -506,12 +506,12 @@ class IssuesTest extends GitHubTestCase
 	 *
 	 * Failure
 	 *
-	 * @expectedException  \DomainException
-	 *
 	 * @return void
 	 */
 	public function testUnlockFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 500;
 		$this->response->body = $this->errorString;
 

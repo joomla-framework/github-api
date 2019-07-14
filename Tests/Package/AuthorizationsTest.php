@@ -29,7 +29,7 @@ class AuthorizationsTest extends GitHubTestCase
 	 *
 	 * @since   1.0
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -348,11 +348,11 @@ class AuthorizationsTest extends GitHubTestCase
 	 * @return  void
 	 *
 	 * @since   1.0
-	 *
-	 * @expectedException  \RuntimeException
 	 */
 	public function testEditTooManyScopes()
 	{
+		$this->expectException(\RuntimeException::class);
+
 		$this->object->edit(42, array(), array('public_repo', 'gist'), array('public_repo', 'gist'), 'My test app', 'http://www.joomla.org');
 	}
 
@@ -382,11 +382,11 @@ class AuthorizationsTest extends GitHubTestCase
 	 * @return  void
 	 *
 	 * @since   1.0
-	 *
-	 * @expectedException  \DomainException
 	 */
 	public function testGetFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 500;
 		$this->response->body = $this->errorString;
 
@@ -424,11 +424,11 @@ class AuthorizationsTest extends GitHubTestCase
 	 * @return  void
 	 *
 	 * @since   1.0
-	 *
-	 * @expectedException  \DomainException
 	 */
 	public function testGetGrantFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 500;
 		$this->response->body = $this->errorString;
 
@@ -466,11 +466,11 @@ class AuthorizationsTest extends GitHubTestCase
 	 * @return  void
 	 *
 	 * @since   1.0
-	 *
-	 * @expectedException  \DomainException
 	 */
 	public function testGetListFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 500;
 		$this->response->body = $this->errorString;
 
@@ -508,11 +508,11 @@ class AuthorizationsTest extends GitHubTestCase
 	 * @return  void
 	 *
 	 * @since   1.0
-	 *
-	 * @expectedException  \DomainException
 	 */
 	public function testGetListGrantsFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 500;
 		$this->response->body = $this->errorString;
 
@@ -570,11 +570,11 @@ class AuthorizationsTest extends GitHubTestCase
 	 * @return  void
 	 *
 	 * @since   1.0
-	 *
-	 * @expectedException  \DomainException
 	 */
 	public function testGetRateLimitFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 500;
 		$this->response->body = $this->errorString;
 
@@ -670,11 +670,11 @@ class AuthorizationsTest extends GitHubTestCase
 	 * Tests the requestTokenInvalidFormat method
 	 *
 	 * @return  void
-	 *
-	 * @expectedException \UnexpectedValueException
 	 */
 	public function testRequestTokenInvalidFormat()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->response->code = 200;
 		$this->response->body = '';
 
@@ -709,11 +709,11 @@ class AuthorizationsTest extends GitHubTestCase
 	 * @return  void
 	 *
 	 * @since   1.0
-	 *
-	 * @expectedException  \DomainException
 	 */
 	public function testRevokeGrantForApplicationFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 500;
 		$this->response->body = $this->errorString;
 

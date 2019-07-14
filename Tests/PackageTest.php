@@ -30,7 +30,7 @@ class PackageTest extends GitHubTestCase
 	 *
 	 * @since   1.0
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -58,11 +58,11 @@ class PackageTest extends GitHubTestCase
 	 * @return  void
 	 *
 	 * @since   1.0
-	 *
-	 * @expectedException \InvalidArgumentException
 	 */
 	public function testGetInvalid()
 	{
+		$this->expectException(\InvalidArgumentException::class);
+
 		$this->object->repositories->INVALID;
 	}
 }

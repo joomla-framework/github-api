@@ -30,7 +30,7 @@ class WatchingTest extends GitHubTestCase
 	 *
 	 * @return  void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -193,11 +193,12 @@ class WatchingTest extends GitHubTestCase
 	/**
 	 * Tests the checkUnexpected method
 	 *
-	 * @expectedException \UnexpectedValueException
 	 * @return  void
 	 */
 	public function testCheckUnexpected()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->response->code = 666;
 		$this->response->body = '';
 

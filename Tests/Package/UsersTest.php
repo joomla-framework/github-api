@@ -29,7 +29,7 @@ class UsersTest extends GitHubTestCase
 	 *
 	 * @return void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -80,11 +80,12 @@ class UsersTest extends GitHubTestCase
 	/**
 	 * Tests the getUser method with failure
 	 *
-	 * @expectedException  \DomainException
 	 * @return void
 	 */
 	public function testGetFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 404;
 		$this->response->body = '{"message":"Not Found"}';
 
@@ -154,12 +155,12 @@ class UsersTest extends GitHubTestCase
 	/**
 	 * Tests the GetAuthenticatedUser method with failure
 	 *
-	 * @expectedException  \DomainException
-	 *
 	 * @return void
 	 */
 	public function testGetAuthenticatedUserFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 401;
 		$this->response->body = '{"message":"Requires authentication"}';
 
@@ -286,12 +287,12 @@ class UsersTest extends GitHubTestCase
 	/**
 	 * Tests the getUsers method
 	 *
-	 * @expectedException \DomainException
-	 *
 	 * @return void
 	 */
 	public function testEditFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$name     = 'monalisa octocat';
 		$email    = 'octocat@github.com';
 		$blog     = 'https =>//github.com/blog';

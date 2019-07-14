@@ -31,7 +31,7 @@ class TeamsTest extends GitHubTestCase
 	 *
 	 * @return  void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -106,11 +106,11 @@ class TeamsTest extends GitHubTestCase
 	 * @covers \Joomla\Github\Package\Orgs\Teams::create()
 	 *
 	 * @return  void
-	 *
-	 * @expectedException \UnexpectedValueException
 	 */
 	public function testCreateWrongPermission()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->response->code = 201;
 
 		$this->object->create('joomla', 'TheTeam', array('joomla-platform'), 'invalid');
@@ -142,11 +142,11 @@ class TeamsTest extends GitHubTestCase
 	 * @covers \Joomla\Github\Package\Orgs\Teams::edit()
 	 *
 	 * @return  void
-	 *
-	 * @expectedException \UnexpectedValueException
 	 */
 	public function testEditWrongPermission()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->object->edit(123, 'TheTeam', 'invalid');
 	}
 
@@ -248,11 +248,11 @@ class TeamsTest extends GitHubTestCase
 	 * @deprecated
 	 *
 	 * @return  void
-	 *
-	 * @expectedException \UnexpectedValueException
 	 */
 	public function testIsMemberUnexpected()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->response->code = 666;
 
 		$this->client->expects($this->once())
@@ -384,11 +384,11 @@ class TeamsTest extends GitHubTestCase
 	 * @covers \Joomla\Github\Package\Orgs\Teams::checkRepo()
 	 *
 	 * @return  void
-	 *
-	 * @expectedException \UnexpectedValueException
 	 */
 	public function testCheckRepoUnexpected()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->response->code = 666;
 
 		$this->client->expects($this->once())
@@ -502,12 +502,12 @@ class TeamsTest extends GitHubTestCase
 	 * Unexpected Response
 	 *
 	 * @return  void
-	 *
-	 * @expectedException \UnexpectedValueException
-	 * @expectedExceptionMessage Unexpected response code: 666
 	 */
 	public function testGetTeamMembershipsFailure2()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+		$this->expectExceptionMessage('Unexpected response code: 666');
+
 		$this->response->code = 666;
 		$this->response->body = '{"state":"TEST"}';
 
@@ -550,12 +550,12 @@ class TeamsTest extends GitHubTestCase
 	 * Invalid role
 	 *
 	 * @return  void
-	 *
-	 * @expectedException \UnexpectedValueException
-	 * @expectedExceptionMessage Roles must be either "member" or "maintainer".
 	 */
 	public function testAddTeamMembershipsFailure()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+		$this->expectExceptionMessage('Roles must be either "member" or "maintainer".');
+
 		$this->object->addTeamMembership(123, '{user}', 'INVALID');
 	}
 

@@ -30,7 +30,7 @@ class LabelsTest extends GitHubTestCase
 	 *
 	 * @return  void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -96,11 +96,12 @@ class LabelsTest extends GitHubTestCase
 	/**
 	 * Tests the createFailure method
 	 *
-	 * @expectedException \DomainException
 	 * @return  void
 	 */
 	public function testCreateFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 404;
 		$this->response->body = $this->errorString;
 

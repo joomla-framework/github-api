@@ -29,7 +29,7 @@ class RepositoriesTest extends GitHubTestCase
 	 *
 	 * @return  void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -57,36 +57,36 @@ class RepositoriesTest extends GitHubTestCase
 	/**
 	 * Tests the GetListOwn method.
 	 *
-	 * @expectedException \RuntimeException
-	 *
 	 * @return void
 	 */
 	public function testGetListOwnInvalidType()
 	{
+		$this->expectException(\RuntimeException::class);
+
 		$this->object->getListOwn('INVALID');
 	}
 
 	/**
 	 * Tests the GetListOwn method.
 	 *
-	 * @expectedException \RuntimeException
-	 *
 	 * @return void
 	 */
 	public function testGetListOwnInvalidSortField()
 	{
+		$this->expectException(\RuntimeException::class);
+
 		$this->object->getListOwn('all', 'INVALID');
 	}
 
 	/**
 	 * Tests the GetListOwn method.
 	 *
-	 * @expectedException \RuntimeException
-	 *
 	 * @return void
 	 */
 	public function testGetListOwnInvalidSortOrder()
 	{
+		$this->expectException(\RuntimeException::class);
+
 		$this->object->getListOwn('all', 'full_name', 'INVALID');
 	}
 
@@ -111,36 +111,36 @@ class RepositoriesTest extends GitHubTestCase
 	/**
 	 * Tests the GetListUser method.
 	 *
-	 * @expectedException \RuntimeException
-	 *
 	 * @return void
 	 */
 	public function testGetListUserInvalidType()
 	{
+		$this->expectException(\RuntimeException::class);
+
 		$this->object->getListUser('joomla', 'INVALID');
 	}
 
 	/**
 	 * Tests the GetListUser method.
 	 *
-	 * @expectedException \RuntimeException
-	 *
 	 * @return void
 	 */
 	public function testGetListUserInvalidSortField()
 	{
+		$this->expectException(\RuntimeException::class);
+
 		$this->object->getListUser('joomla', 'all', 'INVALID');
 	}
 
 	/**
 	 * Tests the GetListUser method.
 	 *
-	 * @expectedException \RuntimeException
-	 *
 	 * @return void
 	 */
 	public function testGetListUserInvalidSortOrder()
 	{
+		$this->expectException(\RuntimeException::class);
+
 		$this->object->getListUser('joomla', 'all', 'full_name', 'INVALID');
 	}
 
@@ -249,12 +249,12 @@ class RepositoriesTest extends GitHubTestCase
 	/**
 	 * Tests the GetListOrg method.
 	 *
-	 * @expectedException \RuntimeException
-	 *
 	 * @return void
 	 */
 	public function testGetListOrgInvalidType()
 	{
+		$this->expectException(\RuntimeException::class);
+
 		$this->object->getListOrg('joomla', 'INVALID');
 	}
 

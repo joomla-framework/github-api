@@ -31,7 +31,7 @@ class HooksTest extends GitHubTestCase
 	 *
 	 * @return  void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -106,12 +106,12 @@ class HooksTest extends GitHubTestCase
 	 * @covers \Joomla\Github\Package\Orgs\Hooks::create()
 	 *
 	 * @return  void
-	 *
-	 * @expectedException \UnexpectedValueException
-	 * @expectedExceptionMessage Content type must be either "form" or "json".
 	 */
 	public function testCreateFailure()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+		$this->expectExceptionMessage('Content type must be either "form" or "json"');
+
 		$this->object->create('joomla', '{url}', '{invalid}');
 	}
 
@@ -121,12 +121,12 @@ class HooksTest extends GitHubTestCase
 	 * @covers \Joomla\Github\Package\Orgs\Hooks::create()
 	 *
 	 * @return  void
-	 *
-	 * @expectedException \RuntimeException
-	 * @expectedExceptionMessage Your events array contains an unauthorized event.
 	 */
 	public function testCreateInvalidEvent()
 	{
+		$this->expectException(\RuntimeException::class);
+		$this->expectExceptionMessage('Your events array contains an unauthorized event.');
+
 		$this->object->create('{org}', '{url}', 'form', null, false, ['{invalid}']);
 	}
 
@@ -158,11 +158,11 @@ class HooksTest extends GitHubTestCase
 	 * @covers \Joomla\Github\Package\Orgs\Hooks::edit()
 	 *
 	 * @return  void
-	 *
-	 * @expectedException \UnexpectedValueException
 	 */
 	public function testEditFailure()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->object->edit('{org}', '{url}', '{invalid}');
 	}
 
@@ -172,11 +172,11 @@ class HooksTest extends GitHubTestCase
 	 * @covers \Joomla\Github\Package\Orgs\Hooks::edit()
 	 *
 	 * @return  void
-	 *
-	 * @expectedException \RuntimeException
 	 */
 	public function testEditFailure2()
 	{
+		$this->expectException(\RuntimeException::class);
+
 		$this->object->edit('{org}', '{url}', 'json', '{secret}', 1, array('{invalid}'));
 	}
 

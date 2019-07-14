@@ -32,7 +32,7 @@ class StarringTest extends GitHubTestCase
 	 *
 	 * @return  void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -107,11 +107,11 @@ class StarringTest extends GitHubTestCase
 	 * Invalid sort option
 	 *
 	 * @return  void
-	 *
-	 * @expectedException \InvalidArgumentException
 	 */
 	public function testGetRepositoriesInvalidSort()
 	{
+		$this->expectException(\InvalidArgumentException::class);
+
 		$this->object->getRepositories('', 'invalid');
 	}
 
@@ -123,11 +123,11 @@ class StarringTest extends GitHubTestCase
 	 * Invalid direction option
 	 *
 	 * @return  void
-	 *
-	 * @expectedException \InvalidArgumentException
 	 */
 	public function testGetRepositoriesInvalidDirection()
 	{
+		$this->expectException(\InvalidArgumentException::class);
+
 		$this->object->getRepositories('', 'created', 'invalid');
 	}
 
@@ -182,11 +182,12 @@ class StarringTest extends GitHubTestCase
 	 *
 	 * @covers \Joomla\Github\Package\Activity\Starring::check()
 	 *
-	 * @expectedException \UnexpectedValueException
 	 * @return  void
 	 */
 	public function testCheckUnexpected()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->response->code = 666;
 		$this->response->body = false;
 

@@ -8,6 +8,7 @@ namespace Joomla\Github\Tests;
 
 use Joomla\Github\Package\Repositories\Commits;
 use Joomla\Github\Tests\Stub\GitHubTestCase;
+use Joomla\Http\Exception\UnexpectedResponseException;
 
 /**
  * Test class.
@@ -32,7 +33,7 @@ class CommitsTest extends GitHubTestCase
 	 *
 	 * @since   1.0
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -69,12 +70,12 @@ class CommitsTest extends GitHubTestCase
 	 * @return  void
 	 *
 	 * @since   1.0
-	 *
-	 * @expectedException  \DomainException
-	 * @expectedExceptionMessage Generic Error
 	 */
 	public function testGetFailure()
 	{
+		$this->expectException(\DomainException::class);
+		$this->expectExceptionMessage('Generic Error');
+
 		$this->response->code = 500;
 		$this->response->body = $this->errorString;
 
@@ -116,12 +117,12 @@ class CommitsTest extends GitHubTestCase
 	 * @return  void
 	 *
 	 * @since   1.0
-	 *
-	 * @expectedException  \DomainException
-	 * @expectedExceptionMessage Generic Error
 	 */
 	public function testGetListFailure()
 	{
+		$this->expectException(\DomainException::class);
+		$this->expectExceptionMessage('Generic Error');
+
 		$this->response->code = 500;
 		$this->response->body = $this->errorString;
 
@@ -185,12 +186,12 @@ class CommitsTest extends GitHubTestCase
 	 * @return  void
 	 *
 	 * @since   1.0
-	 *
-	 * @expectedException \Joomla\Http\Exception\UnexpectedResponseException
-	 * @expectedExceptionMessage Invalid response received from GitHub.
 	 */
 	public function testgetShaFailure()
 	{
+		$this->expectException(UnexpectedResponseException::class);
+		$this->expectExceptionMessage('Invalid response received from GitHub.');
+
 		$this->response->code = 666;
 
 		$this->client->expects($this->once())

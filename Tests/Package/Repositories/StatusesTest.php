@@ -32,7 +32,7 @@ class StatusesTest extends GitHubTestCase
 	 *
 	 * @return void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -86,12 +86,12 @@ class StatusesTest extends GitHubTestCase
 	 *
 	 * Failure
 	 *
-	 * @expectedException  \DomainException
-	 *
 	 * @return void
 	 */
 	public function testCreateFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 501;
 		$this->response->body = $this->errorString;
 
@@ -117,12 +117,12 @@ class StatusesTest extends GitHubTestCase
 	 *
 	 * Failure
 	 *
-	 * @expectedException  \InvalidArgumentException
-	 *
 	 * @return void
 	 */
 	public function testCreateInvalidState()
 	{
+		$this->expectException(\InvalidArgumentException::class);
+
 		$this->response->code = 501;
 		$this->response->body = $this->errorString;
 
@@ -156,12 +156,12 @@ class StatusesTest extends GitHubTestCase
 	 *
 	 * Failure
 	 *
-	 * @expectedException  \DomainException
-	 *
 	 * @return void
 	 */
 	public function testGetListFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 500;
 		$this->response->body = $this->errorString;
 

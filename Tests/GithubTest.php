@@ -30,7 +30,7 @@ class GithubTest extends GitHubTestCase
 	 *
 	 * @since   1.0
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -102,11 +102,12 @@ class GithubTest extends GitHubTestCase
 	 *
 	 * @return  void
 	 *
-	 * @since              1.0
-	 * @expectedException  \InvalidArgumentException
+	 * @since   1.0
 	 */
 	public function testGetFailure()
 	{
+		$this->expectException(\InvalidArgumentException::class);
+
 		$this->object->other;
 	}
 

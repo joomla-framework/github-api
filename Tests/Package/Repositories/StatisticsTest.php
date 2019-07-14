@@ -30,7 +30,7 @@ class StatisticsTest extends GitHubTestCase
 	 *
 	 * @return void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -130,11 +130,12 @@ class StatisticsTest extends GitHubTestCase
 	/**
 	 * Tests the ProcessResponse method with failure.
 	 *
-	 * @expectedException \DomainException
 	 * @return  void
 	 */
 	public function testProcessResponse202()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 202;
 
 		$this->client->expects($this->once())

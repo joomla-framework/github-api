@@ -30,7 +30,7 @@ class MilestonesTest extends GitHubTestCase
 	 *
 	 * @return void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -66,14 +66,14 @@ class MilestonesTest extends GitHubTestCase
 	/**
 	 * Tests the create method - failure
 	 *
-	 * @expectedException  \DomainException
-	 *
 	 * @return void
 	 *
 	 * @since  12.3
 	 */
 	public function testCreateFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 501;
 		$this->response->body = $this->errorString;
 
@@ -141,14 +141,14 @@ class MilestonesTest extends GitHubTestCase
 	/**
 	 * Tests the edit method - failure
 	 *
-	 * @expectedException  \DomainException
-	 *
 	 * @return void
 	 *
 	 * @since  12.3
 	 */
 	public function testEditFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 500;
 		$this->response->body = $this->errorString;
 
@@ -186,14 +186,14 @@ class MilestonesTest extends GitHubTestCase
 	/**
 	 * Tests the get method - failure
 	 *
-	 * @expectedException  \DomainException
-	 *
 	 * @return void
 	 *
 	 * @since  12.3
 	 */
 	public function testGetFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 500;
 		$this->response->body = $this->errorString;
 
@@ -228,14 +228,14 @@ class MilestonesTest extends GitHubTestCase
 	/**
 	 * Tests the getList method - failure
 	 *
-	 * @expectedException  \DomainException
-	 *
 	 * @return void
 	 *
 	 * @since  12.3
 	 */
 	public function testGetListFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 500;
 		$this->response->body = $this->errorString;
 
@@ -269,14 +269,14 @@ class MilestonesTest extends GitHubTestCase
 	/**
 	 * Tests the delete method - failure
 	 *
-	 * @expectedException  \DomainException
-	 *
 	 * @return void
 	 *
 	 * @since  12.3
 	 */
 	public function testDeleteFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 504;
 		$this->response->body = $this->errorString;
 

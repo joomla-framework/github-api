@@ -29,7 +29,7 @@ class DeploymentsTest extends GitHubTestCase
 	 *
 	 * @return  void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -80,12 +80,12 @@ class DeploymentsTest extends GitHubTestCase
 	/**
 	 * Tests the Create method.
 	 *
-	 * @expectedException \RuntimeException
-	 *
 	 * @return  void
 	 */
 	public function testCreateMergeConflict()
 	{
+		$this->expectException(\RuntimeException::class);
+
 		$this->response->code = 409;
 
 		$this->client->expects($this->once())
@@ -102,12 +102,12 @@ class DeploymentsTest extends GitHubTestCase
 	/**
 	 * Tests the Create method.
 	 *
-	 * @expectedException \UnexpectedValueException
-	 *
 	 * @return  void
 	 */
 	public function testCreateFailure()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->response->code = 666;
 
 		$this->client->expects($this->once())
@@ -162,12 +162,12 @@ class DeploymentsTest extends GitHubTestCase
 	/**
 	 * Tests the CreateStatus method.
 	 *
-	 * @expectedException \InvalidArgumentException
-	 *
 	 * @return  void
 	 */
 	public function testCreateStatusFailure()
 	{
+		$this->expectException(\InvalidArgumentException::class);
+
 		$this->object->createStatus('{owner}', '{repo}', 123, '{invalid}');
 	}
 }
