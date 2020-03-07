@@ -7,13 +7,13 @@
     "license": "GPL-2.0-or-later",
     "require": {
         "php": "^7.2.5",
-        "joomla/http": "~1.3|~2.0",
-        "joomla/registry": "^1.4.5|~2.0",
-        "joomla/uri": "~1.0|~2.0"
+        "joomla/http": "^1.3|^2.0",
+        "joomla/registry": "^1.4.5|^2.0",
+        "joomla/uri": "^1.0|^2.0"
     },
     "require-dev": {
-        "joomla/coding-standards": "~2.0@alpha",
-        "phpunit/phpunit": "~8.2"
+        "joomla/coding-standards": "^2.0@alpha",
+        "phpunit/phpunit": "^8.5|^9.0"
     },
     "autoload": {
         "psr-4": {
