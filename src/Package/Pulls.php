@@ -311,4 +311,32 @@ class Pulls extends AbstractPackage
 		// Send the request.
 		return $this->processResponse($this->client->put($this->fetchUrl($path), $data));
 	}
+
+	/**
+	 * Update a pull request branch
+	 *
+	 * @param   string   $user    The name of the owner of the GitHub repository.
+	 * @param   string   $repo    The name of the GitHub repository.
+ 	 * @param   integer  $pullId  The pull request number.
+	 *
+	 * @return  object
+	 *
+	 * @since   1.0
+	 * @throws  \DomainException
+	 */
+	public function updateBranch($user, $repo, $pullId)
+	{
+		// Build the request path.
+		$path = '/repos/' . $user . '/' . $repo . '/pulls/' . $pullId . '/update-branch';
+
+		/**
+		 * Note: Updating the pull request branch with latest upstream changes is currently available
+		 * for developers to preview. To access this new endpoint during the preview period, you must
+		 * provide a custom media type in the Accept header: application/vnd.github.lydian-preview+json
+		 */
+		$headers = array('Accept' => 'application/vnd.github.lydian-preview+json');
+		
+		// Send the request.
+		return $this->processResponse($this->client->put($this->fetchUrl($path), $headers), 202);
+	}
 }
