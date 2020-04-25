@@ -317,7 +317,7 @@ class Pulls extends AbstractPackage
 	 *
 	 * @param   string   $user    The name of the owner of the GitHub repository.
 	 * @param   string   $repo    The name of the GitHub repository.
- 	 * @param   integer  $pullId  The pull request number.
+	 * @param   integer  $pullId  The pull request number.
 	 *
 	 * @return  object
 	 *
@@ -335,7 +335,7 @@ class Pulls extends AbstractPackage
 		 * provide a custom media type in the Accept header: application/vnd.github.lydian-preview+json
 		 */
 		$headers = array('Accept' => 'application/vnd.github.lydian-preview+json');
-		
+
 		// Send the request.
 		return $this->processResponse($this->client->put($this->fetchUrl($path), $headers), 202);
 	}
