@@ -75,6 +75,20 @@ class Github
 			$this->setOption('api.url', 'https://api.github.com');
 		}
 
+		// Add the auth token to the header and unset the gh.token value
+		if ($this->getOption('gh.token'))
+		{
+			$headers = $this->getOption('headers', []);
+
+			if (!isset($headers['Authorization']))
+			{
+				$headers['Authorization'] = 'token ' . $this->getOption('gh.token');
+				$this->setOption('gh.token', '');
+			}
+
+			$this->setOption('headers', $headers);
+		}
+		
 		$this->client = $client ?: new Http($this->options);
 	}
 
