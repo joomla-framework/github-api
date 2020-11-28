@@ -47,11 +47,33 @@ class GithubObjectTest extends GitHubTestCase
 	public function fetchUrlData()
 	{
 		return array(
-			'Standard github - no pagination data' => array('https://api.github.com', '/gists', 0, 0, 'https://api.github.com/gists'),
-			'Enterprise github - no pagination data' => array('https://mygithub.com', '/gists', 0, 0, 'https://mygithub.com/gists'),
-			'Standard github - page 3' => array('https://api.github.com', '/gists', 3, 0, 'https://api.github.com/gists?page=3'),
+			'Standard github - no pagination data'    => array(
+				'https://api.github.com',
+				'/gists',
+				0,
+				0,
+				'https://api.github.com/gists'
+			),
+			'Enterprise github - no pagination data'  => array(
+				'https://mygithub.com',
+				'/gists',
+				0,
+				0,
+				'https://mygithub.com/gists'
+			),
+			'Standard github - page 3'                => array(
+				'https://api.github.com',
+				'/gists',
+				3,
+				0,
+				'https://api.github.com/gists?page=3'
+			),
 			'Enterprise github - page 3, 50 per page' => array(
-				'https://mygithub.com', '/gists', 3, 50, 'https://mygithub.com/gists?page=3&per_page=50'
+				'https://mygithub.com',
+				'/gists',
+				3,
+				50,
+				'https://mygithub.com/gists?page=3&per_page=50'
 			),
 		);
 	}
@@ -96,7 +118,8 @@ class GithubObjectTest extends GitHubTestCase
 
 		$this->assertThat(
 			$this->object->fetchUrl('/gists', 0, 0),
-			$this->equalTo('https://MyTestUser:MyTestPass@api.github.com/gists')
+			$this->equalTo('https://MyTestUser:MyTestPass@api.github.com/gists'),
+			'URL is not as expected.'
 		);
 	}
 
@@ -113,7 +136,14 @@ class GithubObjectTest extends GitHubTestCase
 
 		$this->assertThat(
 			$this->object->fetchUrl('/gists', 0, 0),
-			$this->equalTo('https://api.github.com/gists?access_token=MyTestToken')
+			$this->equalTo('https://api.github.com/gists'),
+			'URL is not as expected.'
+		);
+
+		$this->assertThat(
+			$this->client->getOption('headers'),
+			$this->equalTo(['Authorization' => 'token MyTestToken']),
+			'Token should be propagated as a header.'
 		);
 	}
 }
