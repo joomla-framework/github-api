@@ -135,7 +135,7 @@ class GithubObjectTest extends GitHubTestCase
 		$this->options->set('gh.token', 'MyTestToken');
 
 		$this->assertThat(
-			$this->object->fetchUrl('/gists', 0, 0),
+			(string) $this->object->fetchUrl('/gists', 0, 0),
 			$this->equalTo('https://api.github.com/gists'),
 			'URL is not as expected.'
 		);
