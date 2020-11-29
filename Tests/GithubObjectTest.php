@@ -147,10 +147,18 @@ class GithubObjectTest extends GitHubTestCase
 
 		$this->object = new ObjectMock($this->options, $this->client);
 
+		$clientBeforeFetchUrl = clone $this->client;
+
 		self::assertEquals(
 			'https://api.github.com/gists',
 			(string) $this->object->fetchUrl('/gists', 0, 0),
 			'URL is not as expected.'
+		);
+
+		self::assertEquals(
+			$clientBeforeFetchUrl,
+			$this->client,
+			'HTTP client should not have changed'
 		);
 
 		self::assertEquals(
