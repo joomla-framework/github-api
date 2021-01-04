@@ -115,8 +115,14 @@ abstract class AbstractGithubObject
 
 		if ($this->options->get('gh.token', false))
 		{
-			// Use oAuth authentication - @todo set in request header ?
-			$uri->setVar('access_token', $this->options->get('gh.token'));
+			// Use oAuth authentication
+			$headers = $this->client->getOption('headers', array());
+
+			if (!isset($headers['Authorization']))
+			{
+				$headers['Authorization'] = 'token ' . $this->options->get('gh.token');
+				$this->client->setOption('headers', $headers);
+			}
 		}
 		else
 		{
