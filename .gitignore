@@ -2,8 +2,5 @@ vendor/
 composer.phar
 composer.lock
 phpunit.xml
-.phpunit.result.cache
-
-# Build files
-/build/coverage
-/build/logs
+build/
+/.phpunit.result.cache
