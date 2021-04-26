@@ -143,13 +143,22 @@ class GithubObjectTest extends GitHubTestCase
 	public function testFetchUrlToken()
 	{
 		$this->options->set('api.url', 'https://api.github.com');
-
 		$this->options->set('gh.token', 'MyTestToken');
+
+		$this->object = new ObjectMock($this->options, $this->client);
+
+		$clientBeforeFetchUrl = clone $this->client;
 
 		self::assertEquals(
 			'https://api.github.com/gists',
 			(string) $this->object->fetchUrl('/gists', 0, 0),
 			'URL is not as expected.'
+		);
+
+		self::assertEquals(
+			$clientBeforeFetchUrl,
+			$this->client,
+			'HTTP client should not have changed'
 		);
 
 		self::assertEquals(
