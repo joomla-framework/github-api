@@ -10,6 +10,7 @@ namespace Joomla\Github;
 
 use Joomla\Http\Exception\UnexpectedResponseException;
 use Joomla\Http\Http as BaseHttp;
+use Joomla\Http\HttpFactory;
 use Joomla\Http\Response;
 use Joomla\Registry\Registry;
 use Joomla\Uri\Uri;
