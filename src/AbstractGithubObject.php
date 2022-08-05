@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2021 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2022 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -10,6 +10,7 @@ namespace Joomla\Github;
 
 use Joomla\Http\Exception\UnexpectedResponseException;
 use Joomla\Http\Http as BaseHttp;
+use Joomla\Http\HttpFactory;
 use Joomla\Http\Response;
 use Joomla\Registry\Registry;
 use Joomla\Uri\Uri;
