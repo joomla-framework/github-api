@@ -25,7 +25,7 @@ local composer(phpversion, params) = {
 local phpunit(phpversion) = {
     name: "PHPUnit",
     image: "joomlaprojects/docker-images:php" + phpversion,
-    [if phpversion == "8.0" then "failure"]: "ignore",
+    [if phpversion == "8.2" then "failure"]: "ignore",
     commands: ["vendor/bin/phpunit"]
 };
 
@@ -60,8 +60,7 @@ local pipeline(name, phpversion, params) = {
                 image: "joomlaprojects/docker-images:php7.4",
                 depends: [ "composer" ],
                 commands: [
-                    "vendor/bin/phpcs --config-set installed_paths vendor/joomla/coding-standards",
-                    "vendor/bin/phpcs -p --report=full --extensions=php --standard=ruleset.xml src/"
+                    "vendor/bin/phpcs --standard=ruleset.xml"
                 ]
             },
             {
@@ -110,5 +109,7 @@ local pipeline(name, phpversion, params) = {
     pipeline("7.2", "7.2", "--prefer-stable"),
     pipeline("7.3", "7.3", "--prefer-stable"),
     pipeline("7.4", "7.4", "--prefer-stable"),
-    pipeline("8.0", "8.0", "--ignore-platform-reqs --prefer-stable")
+    pipeline("8.0", "8.0", "--prefer-stable"),
+    pipeline("8.1", "8.1", "--prefer-stable"),
+    pipeline("8.2", "8.2", "--prefer-stable --ignore-platform-reqs"),
 ]
