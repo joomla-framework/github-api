@@ -1,17 +1,22 @@
-# The Github Package [![Build Status](https://ci.joomla.org/api/badges/joomla-framework/github-api/status.svg?ref=refs/heads/2.0-dev)](https://ci.joomla.org/joomla-framework/github-api)
+# The GitHub Package [![Build Status](https://ci.joomla.org/api/badges/joomla-framework/github-api/status.svg?ref=refs/heads/2.0-dev)](https://ci.joomla.org/joomla-framework/github-api)
 
-## Using the Github Package
+[![Latest Stable Version](https://poser.pugx.org/joomla/github/v/stable)](https://packagist.org/packages/joomla/github)
+[![Total Downloads](https://poser.pugx.org/joomla/github/downloads)](https://packagist.org/packages/joomla/github)
+[![Latest Unstable Version](https://poser.pugx.org/joomla/github/v/unstable)](https://packagist.org/packages/joomla/github)
+[![License](https://poser.pugx.org/joomla/github/license)](https://packagist.org/packages/joomla/github)
 
-The Github package is designed to be a straightforward interface for working with Github. It is based on version 3 of
-the Github API. You can find documentation on the API at [http://developer.github.com/v3/](http://developer.github.com/v3/).
+## Using the GitHub Package
 
-Github is built upon the Http package which provides an easy way to consume URLs and web services in a transport
+The GitHub package is designed to be a straightforward interface for working with GitHub. It is based on version 3 of
+the GitHub API. You can find documentation on the API at [http://developer.github.com/v3/](http://developer.github.com/v3/).
+
+GitHub is built upon the Http package which provides an easy way to consume URLs and web services in a transport
 independent way. `Joomla\Http` currently supports streams, sockets and cURL. It is possible to create a custom
-context and inject it into the Github class if one so desires.
+context and inject it into the GitHub class if one so desires.
 
-### Instantiating Github
+### Instantiating GitHub
 
-Instantiating Github is easy:
+Instantiating GitHub is easy:
 
 ```php
 use Joomla\Github\Github;
@@ -19,11 +24,11 @@ use Joomla\Github\Github;
 $github = new Github;
 ```
 
-This creates a basic Github object that can be used to access publicly available resources on [github.com](https://github.com).
+This creates a basic GitHub object that can be used to access publicly available resources on [github.com](https://github.com).
 
 Sometimes it is necessary to specify additional options. This can be done by injecting in a Registry object with your
-preferred options. Support is available for optionally providing a custom Github account username and password,
-as well as a custom URL for the Github server (as would be the case for using a local instance of [Github Enterprise](https://enterprise.github.com)).
+preferred options. Support is available for optionally providing a custom GitHub account username and password,
+as well as a custom URL for the GitHub server (as would be the case for using a local instance of [GitHub Enterprise](https://enterprise.github.com)).
 
 ```php
 use Joomla\Github\Github;
@@ -39,7 +44,7 @@ $github = new Github($options);
 
 A `gh.token` option is also available.
 
-Here is an example demonstrating more of the Github package:
+Here is an example demonstrating more of the GitHub package:
 
 ```php
 use Joomla\Github\Github;
@@ -67,13 +72,13 @@ $summary = implode("\n", $issueSummary);
 $github->gists->create(array('issue_summary.txt' => $summary));
 ```
 
-## Accessing the Github APIs
+## Accessing the GitHub APIs
 
-The Github object using magic methods to access sub-packages of the Github server's API that can be accessed using
+The GitHub object using magic methods to access sub-packages of the GitHub server's API that can be accessed using
 the `->` object operator.
 
 Where a result is returned by a PHP method, the result is the PHP equivalent of the JSON response that can be found in
-the Github API documentation.
+the GitHub API documentation.
 
 ### Activity
 
@@ -743,7 +748,7 @@ $github->pulls->comments->delete(':owner', ':repo', ':commentId');
 ## See Also
 
 The following resources contain more information:  [Joomla! API Reference](http://api.joomla.org),
-[Github API Reference](http://developer.github.com).
+[GitHub API Reference](http://developer.github.com).
 
 
 ## Installation via Composer
