@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Part of the Joomla Framework Github Package
  *
@@ -29,7 +30,7 @@ class Statuses extends AbstractPackage
      * @param   string  $targetUrl    Optional target URL.
      * @param   string  $description  Optional description for the status.
      * @param   string  $context      A string label to differentiate this status from the status of other systems.
-     * 							      Default: "default"
+     *                                Default: "default"
      *
      * @throws \InvalidArgumentException
      * @throws \DomainException
