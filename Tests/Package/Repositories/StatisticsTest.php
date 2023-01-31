@@ -16,136 +16,136 @@ use Joomla\Github\Tests\Stub\GitHubTestCase;
  */
 class StatisticsTest extends GitHubTestCase
 {
-	/**
-	 * @var    Statistics  Object under test.
-	 * @since  11.4
-	 */
-	protected $object;
+    /**
+     * @var    Statistics  Object under test.
+     * @since  11.4
+     */
+    protected $object;
 
-	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 *
-	 * @access protected
-	 *
-	 * @return void
-	 */
-	protected function setUp(): void
-	{
-		parent::setUp();
+    /**
+     * Sets up the fixture, for example, opens a network connection.
+     * This method is called before a test is executed.
+     *
+     * @access protected
+     *
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		$this->object = new Statistics($this->options, $this->client);
-	}
+        $this->object = new Statistics($this->options, $this->client);
+    }
 
-	/**
-	 * Tests the getListContributors method.
-	 *
-	 * @return  void
-	 */
-	public function testContributors()
-	{
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/repos/joomla/joomla-framework/stats/contributors')
-			->will($this->returnValue($this->response));
+    /**
+     * Tests the getListContributors method.
+     *
+     * @return  void
+     */
+    public function testContributors()
+    {
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/repos/joomla/joomla-framework/stats/contributors')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->getListContributors('joomla', 'joomla-framework'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->getListContributors('joomla', 'joomla-framework'),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 
-	/**
-	 * Tests the getActivityData method.
-	 *
-	 * @return  void
-	 */
-	public function testActivity()
-	{
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/repos/joomla/joomla-framework/stats/commit_activity')
-			->will($this->returnValue($this->response));
+    /**
+     * Tests the getActivityData method.
+     *
+     * @return  void
+     */
+    public function testActivity()
+    {
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/repos/joomla/joomla-framework/stats/commit_activity')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->getActivityData('joomla', 'joomla-framework'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->getActivityData('joomla', 'joomla-framework'),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 
-	/**
-	 * Tests the getCodeFrequency method.
-	 *
-	 * @return  void
-	 */
-	public function testFrequency()
-	{
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/repos/joomla/joomla-framework/stats/code_frequency')
-			->will($this->returnValue($this->response));
+    /**
+     * Tests the getCodeFrequency method.
+     *
+     * @return  void
+     */
+    public function testFrequency()
+    {
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/repos/joomla/joomla-framework/stats/code_frequency')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->getCodeFrequency('joomla', 'joomla-framework'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->getCodeFrequency('joomla', 'joomla-framework'),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 
-	/**
-	 * Tests the getParticipation method.
-	 *
-	 * @return  void
-	 */
-	public function testParticipation()
-	{
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/repos/joomla/joomla-framework/stats/participation')
-			->will($this->returnValue($this->response));
+    /**
+     * Tests the getParticipation method.
+     *
+     * @return  void
+     */
+    public function testParticipation()
+    {
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/repos/joomla/joomla-framework/stats/participation')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->getParticipation('joomla', 'joomla-framework'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->getParticipation('joomla', 'joomla-framework'),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 
-	/**
-	 * Tests the getPunchCard method.
-	 *
-	 * @return  void
-	 */
-	public function testPunchCard()
-	{
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/repos/joomla/joomla-framework/stats/punch_card')
-			->will($this->returnValue($this->response));
+    /**
+     * Tests the getPunchCard method.
+     *
+     * @return  void
+     */
+    public function testPunchCard()
+    {
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/repos/joomla/joomla-framework/stats/punch_card')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->getPunchCard('joomla', 'joomla-framework'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->getPunchCard('joomla', 'joomla-framework'),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 
-	/**
-	 * Tests the ProcessResponse method with failure.
-	 *
-	 * @return  void
-	 */
-	public function testProcessResponse202()
-	{
-		$this->expectException(\DomainException::class);
+    /**
+     * Tests the ProcessResponse method with failure.
+     *
+     * @return  void
+     */
+    public function testProcessResponse202()
+    {
+        $this->expectException(\DomainException::class);
 
-		$this->response->code = 202;
+        $this->response->code = 202;
 
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/repos/joomla/joomla-framework/stats/punch_card')
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/repos/joomla/joomla-framework/stats/punch_card')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->getPunchCard('joomla', 'joomla-framework'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->getPunchCard('joomla', 'joomla-framework'),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 }

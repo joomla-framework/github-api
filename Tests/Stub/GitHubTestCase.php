@@ -16,59 +16,59 @@ use PHPUnit\Framework\TestCase;
  */
 abstract class GitHubTestCase extends TestCase
 {
-	/**
-	 * @var    Registry  Options for the GitHub object.
-	 * @since  1.0
-	 */
-	protected $options;
+    /**
+     * @var    Registry  Options for the GitHub object.
+     * @since  1.0
+     */
+    protected $options;
 
-	/**
-	 * @var    \PHPUnit_Framework_MockObject_MockObject  Mock client object.
-	 * @since  1.0
-	 */
-	protected $client;
+    /**
+     * @var    \PHPUnit_Framework_MockObject_MockObject  Mock client object.
+     * @since  1.0
+     */
+    protected $client;
 
-	/**
-	 * @var    \Joomla\Http\Response  Mock response object.
-	 * @since  1.0
-	 */
-	protected $response;
+    /**
+     * @var    \Joomla\Http\Response  Mock response object.
+     * @since  1.0
+     */
+    protected $response;
 
-	/**
-	 * @var    string  Sample JSON string.
-	 * @since  12.3
-	 */
-	protected $sampleString = '{"a":1,"b":2,"c":3,"d":4,"e":5}';
+    /**
+     * @var    string  Sample JSON string.
+     * @since  12.3
+     */
+    protected $sampleString = '{"a":1,"b":2,"c":3,"d":4,"e":5}';
 
-	/**
-	 * @var    string  Sample JSON error message.
-	 * @since  12.3
-	 */
-	protected $errorString = '{"message": "Generic Error"}';
+    /**
+     * @var    string  Sample JSON error message.
+     * @since  12.3
+     */
+    protected $errorString = '{"message": "Generic Error"}';
 
-	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 *
-	 * @since   1.0
-	 *
-	 * @return  void
-	 */
-	protected function setUp(): void
-	{
-		parent::setUp();
+    /**
+     * Sets up the fixture, for example, opens a network connection.
+     * This method is called before a test is executed.
+     *
+     * @since   1.0
+     *
+     * @return  void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		$this->options  = new Registry;
+        $this->options  = new Registry();
 
-		$this->client = $this->getMockBuilder('\\Joomla\\Http\\Http')
-			->setMethods(array('get', 'post', 'delete', 'patch', 'put'))
-			->getMock();
+        $this->client = $this->getMockBuilder('\\Joomla\\Http\\Http')
+            ->setMethods(['get', 'post', 'delete', 'patch', 'put'])
+            ->getMock();
 
-		$this->response = $this->getMockBuilder('\\Joomla\\Http\\Response')
-			->getMock();
+        $this->response = $this->getMockBuilder('\\Joomla\\Http\\Response')
+            ->getMock();
 
-		// Set a default response
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-	}
+        // Set a default response
+        $this->response->code = 200;
+        $this->response->body = $this->sampleString;
+    }
 }

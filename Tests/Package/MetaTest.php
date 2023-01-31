@@ -16,76 +16,76 @@ use Joomla\Github\Tests\Stub\GitHubTestCase;
  */
 class MetaTest extends GitHubTestCase
 {
-	/**
-	 * @var    Meta  Object under test.
-	 * @since  1.0
-	 */
-	protected $object;
+    /**
+     * @var    Meta  Object under test.
+     * @since  1.0
+     */
+    protected $object;
 
-	/**
-	 * @var    string  Sample JSON string.
-	 * @since  1.0
-	 */
-	protected $sampleString = '{"hooks":["127.0.0.1/32","192.168.1.1/32","10.10.1.1/27"],"git":["127.0.0.1/32"]}';
+    /**
+     * @var    string  Sample JSON string.
+     * @since  1.0
+     */
+    protected $sampleString = '{"hooks":["127.0.0.1/32","192.168.1.1/32","10.10.1.1/27"],"git":["127.0.0.1/32"]}';
 
-	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	protected function setUp(): void
-	{
-		parent::setUp();
+    /**
+     * Sets up the fixture, for example, opens a network connection.
+     * This method is called before a test is executed.
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		$this->object = new Meta($this->options, $this->client);
-	}
+        $this->object = new Meta($this->options, $this->client);
+    }
 
-	/**
-	 * Tests the getMeta method
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	public function testGetMeta()
-	{
-		$decodedResponse = new \stdClass;
-		$decodedResponse->hooks = array('127.0.0.1/32', '192.168.1.1/32', '10.10.1.1/27');
-		$decodedResponse->git   = array('127.0.0.1/32');
+    /**
+     * Tests the getMeta method
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    public function testGetMeta()
+    {
+        $decodedResponse        = new \stdClass();
+        $decodedResponse->hooks = ['127.0.0.1/32', '192.168.1.1/32', '10.10.1.1/27'];
+        $decodedResponse->git   = ['127.0.0.1/32'];
 
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/meta')
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/meta')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->getMeta(),
-			$this->equalTo($decodedResponse)
-		);
-	}
+        $this->assertThat(
+            $this->object->getMeta(),
+            $this->equalTo($decodedResponse)
+        );
+    }
 
-	/**
-	 * Tests the getMeta method - failure
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	public function testGetMetaFailure()
-	{
-		$this->expectException(\DomainException::class);
+    /**
+     * Tests the getMeta method - failure
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    public function testGetMetaFailure()
+    {
+        $this->expectException(\DomainException::class);
 
-		$this->response->code = 500;
-		$this->response->body = $this->errorString;
+        $this->response->code = 500;
+        $this->response->body = $this->errorString;
 
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/meta')
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/meta')
+            ->will($this->returnValue($this->response));
 
-		$this->object->getMeta();
-	}
+        $this->object->getMeta();
+    }
 }

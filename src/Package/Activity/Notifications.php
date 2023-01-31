@@ -19,285 +19,279 @@ use Joomla\Github\AbstractPackage;
  */
 class Notifications extends AbstractPackage
 {
-	/**
-	 * List your notifications.
-	 *
-	 * List all notifications for the current user, grouped by repository.
-	 *
-	 * @param   boolean             $all            True to show notifications marked as read.
-	 * @param   boolean             $participating  True to show only notifications in which the user is directly participating or mentioned.
-	 * @param   \DateTimeInterface  $since          Only show notifications updated after the given time.
-	 * @param   \DateTimeInterface  $before         Only show notifications updated before the given time.
-	 *
-	 * @return  object
-	 *
-	 * @since   1.0
-	 */
-	public function getList($all = true, $participating = true, \DateTimeInterface $since = null, \DateTimeInterface $before = null)
-	{
-		// Build the request path.
-		$path = '/notifications';
+    /**
+     * List your notifications.
+     *
+     * List all notifications for the current user, grouped by repository.
+     *
+     * @param   boolean             $all            True to show notifications marked as read.
+     * @param   boolean             $participating  True to show only notifications in which the user is directly participating or mentioned.
+     * @param   \DateTimeInterface  $since          Only show notifications updated after the given time.
+     * @param   \DateTimeInterface  $before         Only show notifications updated before the given time.
+     *
+     * @return  object
+     *
+     * @since   1.0
+     */
+    public function getList($all = true, $participating = true, \DateTimeInterface $since = null, \DateTimeInterface $before = null)
+    {
+        // Build the request path.
+        $path = '/notifications';
 
-		$uri = $this->fetchUrl($path);
+        $uri = $this->fetchUrl($path);
 
-		if ($all)
-		{
-			$uri->setVar('all', 1);
-		}
+        if ($all) {
+            $uri->setVar('all', 1);
+        }
 
-		if ($participating)
-		{
-			$uri->setVar('participating', 1);
-		}
+        if ($participating) {
+            $uri->setVar('participating', 1);
+        }
 
-		if ($since)
-		{
-			$uri->setVar('since', $since->format(\DateTime::RFC3339));
-		}
+        if ($since) {
+            $uri->setVar('since', $since->format(\DateTime::RFC3339));
+        }
 
-		if ($before)
-		{
-			$uri->setVar('before', $before->format(\DateTime::RFC3339));
-		}
+        if ($before) {
+            $uri->setVar('before', $before->format(\DateTime::RFC3339));
+        }
 
-		return $this->processResponse($this->client->get($uri));
-	}
+        return $this->processResponse($this->client->get($uri));
+    }
 
-	/**
-	 * List your notifications in a repository.
-	 *
-	 * List all notifications for the current user.
-	 *
-	 * @param   string              $owner          Repository owner.
-	 * @param   string              $repo           Repository name.
-	 * @param   boolean             $all            True to show notifications marked as read.
-	 * @param   boolean             $participating  True to show only notifications in which the user is directly participating or mentioned.
-	 * @param   \DateTimeInterface  $since          Only show notifications updated after the given time.
-	 * @param   \DateTimeInterface  $before         Only show notifications updated before the given time.
-	 *
-	 * @return  object
-	 *
-	 * @since   1.0
-	 */
-	public function getListRepository($owner, $repo, $all = true, $participating = true, \DateTimeInterface $since = null,
-		\DateTimeInterface $before = null
-	)
-	{
-		// Build the request path.
-		$path = '/repos/' . $owner . '/' . $repo . '/notifications';
+    /**
+     * List your notifications in a repository.
+     *
+     * List all notifications for the current user.
+     *
+     * @param   string              $owner          Repository owner.
+     * @param   string              $repo           Repository name.
+     * @param   boolean             $all            True to show notifications marked as read.
+     * @param   boolean             $participating  True to show only notifications in which the user is directly participating or mentioned.
+     * @param   \DateTimeInterface  $since          Only show notifications updated after the given time.
+     * @param   \DateTimeInterface  $before         Only show notifications updated before the given time.
+     *
+     * @return  object
+     *
+     * @since   1.0
+     */
+    public function getListRepository(
+        $owner,
+        $repo,
+        $all = true,
+        $participating = true,
+        \DateTimeInterface $since = null,
+        \DateTimeInterface $before = null
+    ) {
+        // Build the request path.
+        $path = '/repos/' . $owner . '/' . $repo . '/notifications';
 
-		$uri = $this->fetchUrl($path);
+        $uri = $this->fetchUrl($path);
 
-		if ($all)
-		{
-			$uri->setVar('all', 1);
-		}
+        if ($all) {
+            $uri->setVar('all', 1);
+        }
 
-		if ($participating)
-		{
-			$uri->setVar('participating', 1);
-		}
+        if ($participating) {
+            $uri->setVar('participating', 1);
+        }
 
-		if ($since)
-		{
-			$uri->setVar('since', $since->format(\DateTime::RFC3339));
-		}
+        if ($since) {
+            $uri->setVar('since', $since->format(\DateTime::RFC3339));
+        }
 
-		if ($before)
-		{
-			$uri->setVar('before', $before->format(\DateTime::RFC3339));
-		}
+        if ($before) {
+            $uri->setVar('before', $before->format(\DateTime::RFC3339));
+        }
 
-		return $this->processResponse($this->client->get($uri));
-	}
+        return $this->processResponse($this->client->get($uri));
+    }
 
-	/**
-	 * Mark as read.
-	 *
-	 * Marking a notification as “read” removes it from the default view on GitHub.com.
-	 *
-	 * @param   boolean             $unread      Changes the unread status of the threads.
-	 * @param   boolean             $read        Inverse of “unread”.
-	 * @param   \DateTimeInterface  $lastReadAt  Describes the last point that notifications were checked.
-	 *                                           Anything updated since this time will not be updated. Default: Now. Expected in ISO 8601 format.
-	 *
-	 * @return  object
-	 *
-	 * @since   1.0
-	 */
-	public function markRead($unread = true, $read = true, \DateTimeInterface $lastReadAt = null)
-	{
-		// Build the request path.
-		$path = '/notifications';
+    /**
+     * Mark as read.
+     *
+     * Marking a notification as “read” removes it from the default view on GitHub.com.
+     *
+     * @param   boolean             $unread      Changes the unread status of the threads.
+     * @param   boolean             $read        Inverse of “unread”.
+     * @param   \DateTimeInterface  $lastReadAt  Describes the last point that notifications were checked.
+     *                                           Anything updated since this time will not be updated. Default: Now. Expected in ISO 8601 format.
+     *
+     * @return  object
+     *
+     * @since   1.0
+     */
+    public function markRead($unread = true, $read = true, \DateTimeInterface $lastReadAt = null)
+    {
+        // Build the request path.
+        $path = '/notifications';
 
-		$data = [
-			'unread' => $unread,
-			'read'   => $read,
-		];
+        $data = [
+            'unread' => $unread,
+            'read'   => $read,
+        ];
 
-		if ($lastReadAt)
-		{
-			$data['last_read_at'] = $lastReadAt->format(\DateTime::RFC3339);
-		}
+        if ($lastReadAt) {
+            $data['last_read_at'] = $lastReadAt->format(\DateTime::RFC3339);
+        }
 
-		return $this->processResponse(
-			$this->client->put($this->fetchUrl($path), json_encode($data)),
-			205
-		);
-	}
+        return $this->processResponse(
+            $this->client->put($this->fetchUrl($path), json_encode($data)),
+            205
+        );
+    }
 
-	/**
-	 * Mark notifications as read in a repository.
-	 *
-	 * Marking all notifications in a repository as “read” removes them from the default view on GitHub.com.
-	 *
-	 * @param   string              $owner       Repository owner.
-	 * @param   string              $repo        Repository name.
-	 * @param   boolean             $unread      Changes the unread status of the threads.
-	 * @param   boolean             $read        Inverse of “unread”.
-	 * @param   \DateTimeInterface  $lastReadAt  Describes the last point that notifications were checked.
-	 *                                           Anything updated since this time will not be updated. Default: Now. Expected in ISO 8601 format.
-	 *
-	 * @return  object
-	 *
-	 * @since   1.0
-	 */
-	public function markReadRepository($owner, $repo, $unread, $read, \DateTimeInterface $lastReadAt = null)
-	{
-		// Build the request path.
-		$path = '/repos/' . $owner . '/' . $repo . '/notifications';
+    /**
+     * Mark notifications as read in a repository.
+     *
+     * Marking all notifications in a repository as “read” removes them from the default view on GitHub.com.
+     *
+     * @param   string              $owner       Repository owner.
+     * @param   string              $repo        Repository name.
+     * @param   boolean             $unread      Changes the unread status of the threads.
+     * @param   boolean             $read        Inverse of “unread”.
+     * @param   \DateTimeInterface  $lastReadAt  Describes the last point that notifications were checked.
+     *                                           Anything updated since this time will not be updated. Default: Now. Expected in ISO 8601 format.
+     *
+     * @return  object
+     *
+     * @since   1.0
+     */
+    public function markReadRepository($owner, $repo, $unread, $read, \DateTimeInterface $lastReadAt = null)
+    {
+        // Build the request path.
+        $path = '/repos/' . $owner . '/' . $repo . '/notifications';
 
-		$data = [
-			'unread' => $unread,
-			'read'   => $read,
-		];
+        $data = [
+            'unread' => $unread,
+            'read'   => $read,
+        ];
 
-		if ($lastReadAt)
-		{
-			$data['last_read_at'] = $lastReadAt->format(\DateTime::RFC3339);
-		}
+        if ($lastReadAt) {
+            $data['last_read_at'] = $lastReadAt->format(\DateTime::RFC3339);
+        }
 
-		return $this->processResponse(
-			$this->client->put($this->fetchUrl($path), json_encode($data)),
-			205
-		);
-	}
+        return $this->processResponse(
+            $this->client->put($this->fetchUrl($path), json_encode($data)),
+            205
+        );
+    }
 
-	/**
-	 * View a single thread.
-	 *
-	 * @param   integer  $id  The thread id.
-	 *
-	 * @return  object
-	 *
-	 * @since   1.0
-	 */
-	public function viewThread($id)
-	{
-		// Build the request path.
-		$path = '/notifications/threads/' . $id;
+    /**
+     * View a single thread.
+     *
+     * @param   integer  $id  The thread id.
+     *
+     * @return  object
+     *
+     * @since   1.0
+     */
+    public function viewThread($id)
+    {
+        // Build the request path.
+        $path = '/notifications/threads/' . $id;
 
-		return $this->processResponse(
-			$this->client->get($this->fetchUrl($path))
-		);
-	}
+        return $this->processResponse(
+            $this->client->get($this->fetchUrl($path))
+        );
+    }
 
-	/**
-	 * Mark a thread as read.
-	 *
-	 * @param   integer  $id      The thread id.
-	 * @param   boolean  $unread  Changes the unread status of the threads.
-	 * @param   boolean  $read    Inverse of “unread”.
-	 *
-	 * @return  object
-	 *
-	 * @since   1.0
-	 */
-	public function markReadThread($id, $unread = true, $read = true)
-	{
-		// Build the request path.
-		$path = '/notifications/threads/' . $id;
+    /**
+     * Mark a thread as read.
+     *
+     * @param   integer  $id      The thread id.
+     * @param   boolean  $unread  Changes the unread status of the threads.
+     * @param   boolean  $read    Inverse of “unread”.
+     *
+     * @return  object
+     *
+     * @since   1.0
+     */
+    public function markReadThread($id, $unread = true, $read = true)
+    {
+        // Build the request path.
+        $path = '/notifications/threads/' . $id;
 
-		$data = [
-			'unread' => $unread,
-			'read'   => $read,
-		];
+        $data = [
+            'unread' => $unread,
+            'read'   => $read,
+        ];
 
-		return $this->processResponse(
-			$this->client->patch($this->fetchUrl($path), json_encode($data)),
-			205
-		);
-	}
+        return $this->processResponse(
+            $this->client->patch($this->fetchUrl($path), json_encode($data)),
+            205
+        );
+    }
 
-	/**
-	 * Get a Thread Subscription.
-	 *
-	 * This checks to see if the current user is subscribed to a thread.
-	 * You can also get a Repository subscription.
-	 *
-	 * @param   integer  $id  The thread id.
-	 *
-	 * @return  object
-	 *
-	 * @since   1.0
-	 */
-	public function getThreadSubscription($id)
-	{
-		// Build the request path.
-		$path = '/notifications/threads/' . $id . '/subscription';
+    /**
+     * Get a Thread Subscription.
+     *
+     * This checks to see if the current user is subscribed to a thread.
+     * You can also get a Repository subscription.
+     *
+     * @param   integer  $id  The thread id.
+     *
+     * @return  object
+     *
+     * @since   1.0
+     */
+    public function getThreadSubscription($id)
+    {
+        // Build the request path.
+        $path = '/notifications/threads/' . $id . '/subscription';
 
-		return $this->processResponse(
-			$this->client->get($this->fetchUrl($path))
-		);
-	}
+        return $this->processResponse(
+            $this->client->get($this->fetchUrl($path))
+        );
+    }
 
-	/**
-	 * Set a Thread Subscription.
-	 *
-	 * This lets you subscribe to a thread, or ignore it. Subscribing to a thread is unnecessary
-	 * if the user is already subscribed to the repository. Ignoring a thread will mute all
-	 * future notifications (until you comment or get @mentioned).
-	 *
-	 * @param   integer  $id          The thread id.
-	 * @param   boolean  $subscribed  Determines if notifications should be received from this thread.
-	 * @param   boolean  $ignored     Determines if all notifications should be blocked from this thread.
-	 *
-	 * @return  object
-	 *
-	 * @since   1.0
-	 */
-	public function setThreadSubscription($id, $subscribed, $ignored)
-	{
-		// Build the request path.
-		$path = '/notifications/threads/' . $id . '/subscription';
+    /**
+     * Set a Thread Subscription.
+     *
+     * This lets you subscribe to a thread, or ignore it. Subscribing to a thread is unnecessary
+     * if the user is already subscribed to the repository. Ignoring a thread will mute all
+     * future notifications (until you comment or get @mentioned).
+     *
+     * @param   integer  $id          The thread id.
+     * @param   boolean  $subscribed  Determines if notifications should be received from this thread.
+     * @param   boolean  $ignored     Determines if all notifications should be blocked from this thread.
+     *
+     * @return  object
+     *
+     * @since   1.0
+     */
+    public function setThreadSubscription($id, $subscribed, $ignored)
+    {
+        // Build the request path.
+        $path = '/notifications/threads/' . $id . '/subscription';
 
-		$data = [
-			'subscribed' => $subscribed,
-			'ignored'    => $ignored,
-		];
+        $data = [
+            'subscribed' => $subscribed,
+            'ignored'    => $ignored,
+        ];
 
-		return $this->processResponse(
-			$this->client->put($this->fetchUrl($path), json_encode($data))
-		);
-	}
+        return $this->processResponse(
+            $this->client->put($this->fetchUrl($path), json_encode($data))
+        );
+    }
 
-	/**
-	 * Delete a Thread Subscription.
-	 *
-	 * @param   integer  $id  The thread id.
-	 *
-	 * @return  object
-	 *
-	 * @since   1.0
-	 */
-	public function deleteThreadSubscription($id)
-	{
-		// Build the request path.
-		$path = '/notifications/threads/' . $id . '/subscription';
+    /**
+     * Delete a Thread Subscription.
+     *
+     * @param   integer  $id  The thread id.
+     *
+     * @return  object
+     *
+     * @since   1.0
+     */
+    public function deleteThreadSubscription($id)
+    {
+        // Build the request path.
+        $path = '/notifications/threads/' . $id . '/subscription';
 
-		return $this->processResponse(
-			$this->client->delete($this->fetchUrl($path)),
-			204
-		);
-	}
+        return $this->processResponse(
+            $this->client->delete($this->fetchUrl($path)),
+            204
+        );
+    }
 }

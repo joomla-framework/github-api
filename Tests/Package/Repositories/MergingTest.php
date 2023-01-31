@@ -16,132 +16,132 @@ use Joomla\Github\Tests\Stub\GitHubTestCase;
  */
 class MergingTest extends GitHubTestCase
 {
-	/**
-	 * @var Merging
-	 * @since  1.0
-	 */
-	protected $object;
+    /**
+     * @var Merging
+     * @since  1.0
+     */
+    protected $object;
 
-	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 *
-	 * @since   1.0
-	 *
-	 * @return  void
-	 */
-	protected function setUp(): void
-	{
-		parent::setUp();
+    /**
+     * Sets up the fixture, for example, opens a network connection.
+     * This method is called before a test is executed.
+     *
+     * @since   1.0
+     *
+     * @return  void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		$this->object = new Merging($this->options, $this->client);
-	}
+        $this->object = new Merging($this->options, $this->client);
+    }
 
-	/**
-	 * Tests the Perform method.
-	 *
-	 * @return  void
-	 */
-	public function testPerform()
-	{
-		$this->response->code = 201;
+    /**
+     * Tests the Perform method.
+     *
+     * @return  void
+     */
+    public function testPerform()
+    {
+        $this->response->code = 201;
 
-		$this->client->expects($this->once())
-			->method('post')
-			->with('/repos/joomla/joomla-platform/merges')
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('post')
+            ->with('/repos/joomla/joomla-platform/merges')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->perform('joomla', 'joomla-platform', '123', '456', 'My Message'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->perform('joomla', 'joomla-platform', '123', '456', 'My Message'),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 
-	/**
-	 * Tests the Perform method.
-	 *
-	 * @return  void
-	 */
-	public function testPerformNoOp()
-	{
-		$this->expectException(\UnexpectedValueException::class);
+    /**
+     * Tests the Perform method.
+     *
+     * @return  void
+     */
+    public function testPerformNoOp()
+    {
+        $this->expectException(\UnexpectedValueException::class);
 
-		$this->response->code = 204;
+        $this->response->code = 204;
 
-		$this->client->expects($this->once())
-			->method('post')
-			->with('/repos/joomla/joomla-platform/merges')
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('post')
+            ->with('/repos/joomla/joomla-platform/merges')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->perform('joomla', 'joomla-platform', '123', '456', 'My Message'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->perform('joomla', 'joomla-platform', '123', '456', 'My Message'),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 
-	/**
-	 * Tests the Perform method.
-	 *
-	 * @return  void
-	 */
-	public function testPerformMissing()
-	{
-		$this->expectException(\UnexpectedValueException::class);
+    /**
+     * Tests the Perform method.
+     *
+     * @return  void
+     */
+    public function testPerformMissing()
+    {
+        $this->expectException(\UnexpectedValueException::class);
 
-		$this->response->code = 404;
+        $this->response->code = 404;
 
-		$this->client->expects($this->once())
-			->method('post')
-			->with('/repos/joomla/joomla-platform/merges')
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('post')
+            ->with('/repos/joomla/joomla-platform/merges')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->perform('joomla', 'joomla-platform', '123', '456', 'My Message'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->perform('joomla', 'joomla-platform', '123', '456', 'My Message'),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 
-	/**
-	 * Tests the Perform method.
-	 *
-	 * @return  void
-	 */
-	public function testPerformConflict()
-	{
-		$this->expectException(\UnexpectedValueException::class);
+    /**
+     * Tests the Perform method.
+     *
+     * @return  void
+     */
+    public function testPerformConflict()
+    {
+        $this->expectException(\UnexpectedValueException::class);
 
-		$this->response->code = 409;
+        $this->response->code = 409;
 
-		$this->client->expects($this->once())
-			->method('post')
-			->with('/repos/joomla/joomla-platform/merges')
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('post')
+            ->with('/repos/joomla/joomla-platform/merges')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->perform('joomla', 'joomla-platform', '123', '456', 'My Message'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->perform('joomla', 'joomla-platform', '123', '456', 'My Message'),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 
-	/**
-	 * Tests the Perform method.
-	 *
-	 * @return  void
-	 */
-	public function testPerformUnexpected()
-	{
-		$this->expectException(\UnexpectedValueException::class);
+    /**
+     * Tests the Perform method.
+     *
+     * @return  void
+     */
+    public function testPerformUnexpected()
+    {
+        $this->expectException(\UnexpectedValueException::class);
 
-		$this->response->code = 666;
+        $this->response->code = 666;
 
-		$this->client->expects($this->once())
-			->method('post')
-			->with('/repos/joomla/joomla-platform/merges')
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('post')
+            ->with('/repos/joomla/joomla-platform/merges')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->perform('joomla', 'joomla-platform', '123', '456', 'My Message'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->perform('joomla', 'joomla-platform', '123', '456', 'My Message'),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 }

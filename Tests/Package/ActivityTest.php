@@ -18,38 +18,38 @@ use Joomla\Github\Tests\Stub\GitHubTestCase;
  */
 class ActivityTest extends GitHubTestCase
 {
-	/**
-	 * @var Activity
-	 */
-	protected $object;
+    /**
+     * @var Activity
+     */
+    protected $object;
 
-	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 *
-	 * @since   1.0
-	 *
-	 * @return  void
-	 */
-	protected function setUp(): void
-	{
-		parent::setUp();
+    /**
+     * Sets up the fixture, for example, opens a network connection.
+     * This method is called before a test is executed.
+     *
+     * @since   1.0
+     *
+     * @return  void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		$this->object = new Activity($this->options, $this->client);
-	}
+        $this->object = new Activity($this->options, $this->client);
+    }
 
-	/**
-	 * Test method.
-	 *
-	 * @covers \Joomla\Github\Package\Activity::__construct()
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	public function testConstruct()
-	{
-		// Dummy to make PHPUnit "happy"
-		self::assertEquals(true, true);
-	}
+    /**
+     * Test method.
+     *
+     * @covers \Joomla\Github\Package\Activity::__construct()
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    public function testConstruct()
+    {
+        // Dummy to make PHPUnit "happy"
+        self::assertEquals(true, true);
+    }
 }

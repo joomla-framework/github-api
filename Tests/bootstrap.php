@@ -1,4 +1,5 @@
 <?php
+
 require_once 'vendor/autoload.php';
 
 // Turn off E_DEPRECATED caused by outdated PHPUnit

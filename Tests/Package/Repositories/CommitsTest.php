@@ -19,189 +19,189 @@ use Joomla\Http\Exception\UnexpectedResponseException;
  */
 class CommitsTest extends GitHubTestCase
 {
-	/**
-	 * @var    Commits  Object under test.
-	 * @since  12.1
-	 */
-	protected $object;
+    /**
+     * @var    Commits  Object under test.
+     * @since  12.1
+     */
+    protected $object;
 
-	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	protected function setUp(): void
-	{
-		parent::setUp();
+    /**
+     * Sets up the fixture, for example, opens a network connection.
+     * This method is called before a test is executed.
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		$this->object = new Commits($this->options, $this->client);
-	}
+        $this->object = new Commits($this->options, $this->client);
+    }
 
-	/**
-	 * Test method.
-	 *
-	 * @covers \Joomla\Github\Package\Repositories\Commits::get()
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	public function testGet()
-	{
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/repos/joomla/joomla-platform/commits/abc1234')
-			->will($this->returnValue($this->response));
+    /**
+     * Test method.
+     *
+     * @covers \Joomla\Github\Package\Repositories\Commits::get()
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    public function testGet()
+    {
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/repos/joomla/joomla-platform/commits/abc1234')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->get('joomla', 'joomla-platform', 'abc1234'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->get('joomla', 'joomla-platform', 'abc1234'),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 
-	/**
-	 * Test method.
-	 *
-	 * @covers \Joomla\Github\Package\Repositories\Commits::get()
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	public function testGetFailure()
-	{
-		$this->expectException(\DomainException::class);
-		$this->expectExceptionMessage('Generic Error');
+    /**
+     * Test method.
+     *
+     * @covers \Joomla\Github\Package\Repositories\Commits::get()
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    public function testGetFailure()
+    {
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('Generic Error');
 
-		$this->response->code = 500;
-		$this->response->body = $this->errorString;
+        $this->response->code = 500;
+        $this->response->body = $this->errorString;
 
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/repos/joomla/joomla-platform/commits/abc1234')
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/repos/joomla/joomla-platform/commits/abc1234')
+            ->will($this->returnValue($this->response));
 
-		$this->object->get('joomla', 'joomla-platform', 'abc1234');
-	}
+        $this->object->get('joomla', 'joomla-platform', 'abc1234');
+    }
 
-	/**
-	 * Test method.
-	 *
-	 * @covers \Joomla\Github\Package\Repositories\Commits::getList()
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	public function testGetList()
-	{
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/repos/joomla/joomla-platform/commits')
-			->will($this->returnValue($this->response));
+    /**
+     * Test method.
+     *
+     * @covers \Joomla\Github\Package\Repositories\Commits::getList()
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    public function testGetList()
+    {
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/repos/joomla/joomla-platform/commits')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->getList('joomla', 'joomla-platform'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->getList('joomla', 'joomla-platform'),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 
-	/**
-	 * Test method.
-	 *
-	 * @covers \Joomla\Github\Package\Repositories\Commits::getList()
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	public function testGetListFailure()
-	{
-		$this->expectException(\DomainException::class);
-		$this->expectExceptionMessage('Generic Error');
+    /**
+     * Test method.
+     *
+     * @covers \Joomla\Github\Package\Repositories\Commits::getList()
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    public function testGetListFailure()
+    {
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('Generic Error');
 
-		$this->response->code = 500;
-		$this->response->body = $this->errorString;
+        $this->response->code = 500;
+        $this->response->body = $this->errorString;
 
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/repos/joomla/joomla-platform/commits')
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/repos/joomla/joomla-platform/commits')
+            ->will($this->returnValue($this->response));
 
-		$this->object->getList('joomla', 'joomla-platform');
-	}
+        $this->object->getList('joomla', 'joomla-platform');
+    }
 
-	/**
-	 * Test method.
-	 *
-	 * @covers \Joomla\Github\Package\Repositories\Commits::compare()
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	public function testCompare()
-	{
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/repos/joomla/joomla-platform/compare/123abc...456def')
-			->will($this->returnValue($this->response));
+    /**
+     * Test method.
+     *
+     * @covers \Joomla\Github\Package\Repositories\Commits::compare()
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    public function testCompare()
+    {
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/repos/joomla/joomla-platform/compare/123abc...456def')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->compare('joomla', 'joomla-platform', '123abc', '456def'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->compare('joomla', 'joomla-platform', '123abc', '456def'),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 
-	/**
-	 * Test method.
-	 *
-	 * @covers \Joomla\Github\Package\Repositories\Commits::getSha()
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	public function testgetSha()
-	{
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/repos/{user}/{repo}/commits/{ref}')
-			->will($this->returnValue($this->response));
+    /**
+     * Test method.
+     *
+     * @covers \Joomla\Github\Package\Repositories\Commits::getSha()
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    public function testgetSha()
+    {
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/repos/{user}/{repo}/commits/{ref}')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->getSha('{user}', '{repo}', '{ref}'),
-			$this->equalTo($this->sampleString)
-		);
-	}
+        $this->assertThat(
+            $this->object->getSha('{user}', '{repo}', '{ref}'),
+            $this->equalTo($this->sampleString)
+        );
+    }
 
-	/**
-	 * Test method.
-	 *
-	 * @covers \Joomla\Github\Package\Repositories\Commits::getSha()
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	public function testgetShaFailure()
-	{
-		$this->expectException(UnexpectedResponseException::class);
-		$this->expectExceptionMessage('Invalid response received from GitHub.');
+    /**
+     * Test method.
+     *
+     * @covers \Joomla\Github\Package\Repositories\Commits::getSha()
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    public function testgetShaFailure()
+    {
+        $this->expectException(UnexpectedResponseException::class);
+        $this->expectExceptionMessage('Invalid response received from GitHub.');
 
-		$this->response->code = 666;
+        $this->response->code = 666;
 
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/repos/{user}/{repo}/commits/{ref}')
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/repos/{user}/{repo}/commits/{ref}')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->getSha('{user}', '{repo}', '{ref}'),
-			$this->equalTo($this->sampleString)
-		);
-	}
+        $this->assertThat(
+            $this->object->getSha('{user}', '{repo}', '{ref}'),
+            $this->equalTo($this->sampleString)
+        );
+    }
 }

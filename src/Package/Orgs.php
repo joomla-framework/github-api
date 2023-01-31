@@ -23,86 +23,84 @@ use Joomla\Github\AbstractPackage;
  */
 class Orgs extends AbstractPackage
 {
-	/**
-	 * List user organizations.
-	 *
-	 * If a user name is given, public and private organizations for the authenticated user will be listed.
-	 *
-	 * @param   string  $user  The user name.
-	 *
-	 * @return  object
-	 *
-	 * @since   1.0
-	 */
-	public function getList($user = '')
-	{
-		// Build the request path.
-		$path = ($user)
-			? '/users/' . $user . '/orgs'
-			: '/user/orgs';
+    /**
+     * List user organizations.
+     *
+     * If a user name is given, public and private organizations for the authenticated user will be listed.
+     *
+     * @param   string  $user  The user name.
+     *
+     * @return  object
+     *
+     * @since   1.0
+     */
+    public function getList($user = '')
+    {
+        // Build the request path.
+        $path = ($user)
+            ? '/users/' . $user . '/orgs'
+            : '/user/orgs';
 
-		// Send the request.
-		return $this->processResponse(
-			$this->client->get($this->fetchUrl($path))
-		);
-	}
+        // Send the request.
+        return $this->processResponse(
+            $this->client->get($this->fetchUrl($path))
+        );
+    }
 
-	/**
-	 * Get an organization.
-	 *
-	 * @param   string  $org  The organization name.
-	 *
-	 * @return  object
-	 *
-	 * @since   1.0
-	 */
-	public function get($org)
-	{
-		// Build the request path.
-		$path = '/orgs/' . $org;
+    /**
+     * Get an organization.
+     *
+     * @param   string  $org  The organization name.
+     *
+     * @return  object
+     *
+     * @since   1.0
+     */
+    public function get($org)
+    {
+        // Build the request path.
+        $path = '/orgs/' . $org;
 
-		// Send the request.
-		return $this->processResponse(
-			$this->client->get($this->fetchUrl($path))
-		);
-	}
+        // Send the request.
+        return $this->processResponse(
+            $this->client->get($this->fetchUrl($path))
+        );
+    }
 
-	/**
-	 * Edit an organization.
-	 *
-	 * @param   string  $org           The organization name.
-	 * @param   string  $billingEmail  Billing email address. This address is not publicized.
-	 * @param   string  $company       The company name.
-	 * @param   string  $email         The email address.
-	 * @param   string  $location      The location name.
-	 * @param   string  $name          The name.
-	 *
-	 * @return  object
-	 *
-	 * @since   1.0
-	 */
-	public function edit($org, $billingEmail = '', $company = '', $email = '', $location = '', $name = '')
-	{
-		// Build the request path.
-		$path = '/orgs/' . $org;
+    /**
+     * Edit an organization.
+     *
+     * @param   string  $org           The organization name.
+     * @param   string  $billingEmail  Billing email address. This address is not publicized.
+     * @param   string  $company       The company name.
+     * @param   string  $email         The email address.
+     * @param   string  $location      The location name.
+     * @param   string  $name          The name.
+     *
+     * @return  object
+     *
+     * @since   1.0
+     */
+    public function edit($org, $billingEmail = '', $company = '', $email = '', $location = '', $name = '')
+    {
+        // Build the request path.
+        $path = '/orgs/' . $org;
 
-		$args = ['billing_email', 'company', 'email', 'location', 'name'];
+        $args = ['billing_email', 'company', 'email', 'location', 'name'];
 
-		$data = [];
+        $data = [];
 
-		$fArgs = \func_get_args();
+        $fArgs = \func_get_args();
 
-		foreach ($args as $i => $arg)
-		{
-			if (array_key_exists($i + 1, $fArgs) && $fArgs[$i + 1])
-			{
-				$data[$arg] = $fArgs[$i + 1];
-			}
-		}
+        foreach ($args as $i => $arg) {
+            if (array_key_exists($i + 1, $fArgs) && $fArgs[$i + 1]) {
+                $data[$arg] = $fArgs[$i + 1];
+            }
+        }
 
-		// Send the request.
-		return $this->processResponse(
-			$this->client->patch($this->fetchUrl($path), $data)
-		);
-	}
+        // Send the request.
+        return $this->processResponse(
+            $this->client->patch($this->fetchUrl($path), $data)
+        );
+    }
 }

@@ -16,42 +16,42 @@ use Joomla\Github\Tests\Stub\GitHubTestCase;
  */
 class FeedsTest extends GitHubTestCase
 {
-	/**
-	 * @var    Feeds  Object under test.
-	 * @since  1.4.0
-	 */
-	protected $object;
+    /**
+     * @var    Feeds  Object under test.
+     * @since  1.4.0
+     */
+    protected $object;
 
-	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 *
-	 * @since   1.4.0
-	 *
-	 * @return  void
-	 */
-	protected function setUp(): void
-	{
-		parent::setUp();
+    /**
+     * Sets up the fixture, for example, opens a network connection.
+     * This method is called before a test is executed.
+     *
+     * @since   1.4.0
+     *
+     * @return  void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		$this->object = new Feeds($this->options, $this->client);
-	}
+        $this->object = new Feeds($this->options, $this->client);
+    }
 
-	/**
-	 * Tests the getFeeds method
-	 *
-	 * @return  void
-	 */
-	public function testGetFeeds()
-	{
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/feeds')
-			->will($this->returnValue($this->response));
+    /**
+     * Tests the getFeeds method
+     *
+     * @return  void
+     */
+    public function testGetFeeds()
+    {
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/feeds')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->getFeeds(),
-			$this->equalTo(json_decode($this->response->body))
-		);
-	}
+        $this->assertThat(
+            $this->object->getFeeds(),
+            $this->equalTo(json_decode($this->response->body))
+        );
+    }
 }

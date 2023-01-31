@@ -20,127 +20,122 @@ use Joomla\Http\Exception\UnexpectedResponseException;
  */
 class Assignees extends AbstractPackage
 {
-	/**
-	 * List assignees.
-	 *
-	 * This call lists all the available assignees (owner + collaborators) to which issues may be assigned.
-	 *
-	 * @param   string  $owner  The name of the owner of the GitHub repository.
-	 * @param   string  $repo   The name of the GitHub repository.
-	 *
-	 * @return  object
-	 *
-	 * @since   1.0
-	 */
-	public function getList($owner, $repo)
-	{
-		// Build the request path.
-		$path = '/repos/' . $owner . '/' . $repo . '/assignees';
+    /**
+     * List assignees.
+     *
+     * This call lists all the available assignees (owner + collaborators) to which issues may be assigned.
+     *
+     * @param   string  $owner  The name of the owner of the GitHub repository.
+     * @param   string  $repo   The name of the GitHub repository.
+     *
+     * @return  object
+     *
+     * @since   1.0
+     */
+    public function getList($owner, $repo)
+    {
+        // Build the request path.
+        $path = '/repos/' . $owner . '/' . $repo . '/assignees';
 
-		return $this->processResponse(
-			$this->client->get($this->fetchUrl($path))
-		);
-	}
+        return $this->processResponse(
+            $this->client->get($this->fetchUrl($path))
+        );
+    }
 
-	/**
-	 * Check assignee.
-	 *
-	 * You may check to see if a particular user is an assignee for a repository.
-	 * If the given assignee login belongs to an assignee for the repository, a 204 header
-	 * with no content is returned.
-	 * Otherwise a 404 status code is returned.
-	 *
-	 * @param   string  $owner     The name of the owner of the GitHub repository.
-	 * @param   string  $repo      The name of the GitHub repository.
-	 * @param   string  $assignee  The assignees login name.
-	 *
-	 * @return  boolean
-	 *
-	 * @since   1.0
-	 * @throws  \DomainException
-	 */
-	public function check($owner, $repo, $assignee)
-	{
-		// Build the request path.
-		$path = '/repos/' . $owner . '/' . $repo . '/assignees/' . $assignee;
+    /**
+     * Check assignee.
+     *
+     * You may check to see if a particular user is an assignee for a repository.
+     * If the given assignee login belongs to an assignee for the repository, a 204 header
+     * with no content is returned.
+     * Otherwise a 404 status code is returned.
+     *
+     * @param   string  $owner     The name of the owner of the GitHub repository.
+     * @param   string  $repo      The name of the GitHub repository.
+     * @param   string  $assignee  The assignees login name.
+     *
+     * @return  boolean
+     *
+     * @since   1.0
+     * @throws  \DomainException
+     */
+    public function check($owner, $repo, $assignee)
+    {
+        // Build the request path.
+        $path = '/repos/' . $owner . '/' . $repo . '/assignees/' . $assignee;
 
-		try
-		{
-			$response = $this->client->get($this->fetchUrl($path));
+        try {
+            $response = $this->client->get($this->fetchUrl($path));
 
-			if ($response->code == 204)
-			{
-				return true;
-			}
+            if ($response->code == 204) {
+                return true;
+            }
 
-			throw new UnexpectedResponseException($response, 'Invalid response: ' . $response->code);
-		}
-		catch (\DomainException $e)
-		{
-			if (isset($response->code) && $response->code == 404)
-			{
-				return false;
-			}
+            throw new UnexpectedResponseException($response, 'Invalid response: ' . $response->code);
+        } catch (\DomainException $e) {
+            if (isset($response->code) && $response->code == 404) {
+                return false;
+            }
 
-			throw $e;
-		}
-	}
+            throw $e;
+        }
+    }
 
-	/**
-	 * Add assignees to an Issue
-	 *
-	 * This call adds the users passed in the assignees key (as their logins) to the issue.
-	 *
-	 * @param   string    $owner      The name of the owner of the GitHub repository.
-	 * @param   string    $repo       The name of the GitHub repository.
-	 * @param   integer   $number     The issue number to add assignees to.
-	 * @param   string[]  $assignees  The logins for GitHub users to assign to this issue.
-	 *
-	 * @return  object
-	 *
-	 * @since   1.4.0
-	 * @throws  \DomainException
-	 */
-	public function add($owner, $repo, $number, array $assignees)
-	{
-		// Build the request path.
-		$path = "/repos/$owner/$repo/issues/$number/assignees";
+    /**
+     * Add assignees to an Issue
+     *
+     * This call adds the users passed in the assignees key (as their logins) to the issue.
+     *
+     * @param   string    $owner      The name of the owner of the GitHub repository.
+     * @param   string    $repo       The name of the GitHub repository.
+     * @param   integer   $number     The issue number to add assignees to.
+     * @param   string[]  $assignees  The logins for GitHub users to assign to this issue.
+     *
+     * @return  object
+     *
+     * @since   1.4.0
+     * @throws  \DomainException
+     */
+    public function add($owner, $repo, $number, array $assignees)
+    {
+        // Build the request path.
+        $path = "/repos/$owner/$repo/issues/$number/assignees";
 
-		$data = json_encode(
-			[
-				'assignees' => $assignees,
-			]
-		);
+        $data = json_encode(
+            [
+                'assignees' => $assignees,
+            ]
+        );
 
-		return $this->processResponse($this->client->post($this->fetchUrl($path), $data), 201);
-	}
+        return $this->processResponse($this->client->post($this->fetchUrl($path), $data), 201);
+    }
 
-	/**
-	 * Remove assignees from an Issue
-	 *
-	 * This call removes the users passed in the assignees key (as their logins) from the issue.
-	 *
-	 * @param   string    $owner      The name of the owner of the GitHub repository.
-	 * @param   string    $repo       The name of the GitHub repository.
-	 * @param   integer   $number     The issue number to add assignees to.
-	 * @param   string[]  $assignees  The logins for GitHub users to assign to this issue.
-	 *
-	 * @return  object
-	 *
-	 * @since   1.4.0
-	 * @throws  \DomainException
-	 */
-	public function remove($owner, $repo, $number, array $assignees)
-	{
-		// Build the request path.
-		$path = "/repos/$owner/$repo/issues/$number/assignees";
+    /**
+     * Remove assignees from an Issue
+     *
+     * This call removes the users passed in the assignees key (as their logins) from the issue.
+     *
+     * @param   string    $owner      The name of the owner of the GitHub repository.
+     * @param   string    $repo       The name of the GitHub repository.
+     * @param   integer   $number     The issue number to add assignees to.
+     * @param   string[]  $assignees  The logins for GitHub users to assign to this issue.
+     *
+     * @return  object
+     *
+     * @since   1.4.0
+     * @throws  \DomainException
+     */
+    public function remove($owner, $repo, $number, array $assignees)
+    {
+        // Build the request path.
+        $path = "/repos/$owner/$repo/issues/$number/assignees";
 
-		$data = json_encode(
-			[
-				'assignees' => $assignees,
-			]
-		);
+        $data = json_encode(
+            [
+                'assignees' => $assignees,
+            ]
+        );
 
-		return $this->processResponse($this->client->delete($this->fetchUrl($path), [], null, $data));
-	}
+        return $this->processResponse($this->client->delete($this->fetchUrl($path), [], null, $data));
+    }
 }

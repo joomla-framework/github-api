@@ -16,132 +16,132 @@ use Joomla\Github\Tests\Stub\GitHubTestCase;
  */
 class GithubTest extends GitHubTestCase
 {
-	/**
-	 * @var    Github  Object under test.
-	 * @since  1.0
-	 */
-	protected $object;
+    /**
+     * @var    Github  Object under test.
+     * @since  1.0
+     */
+    protected $object;
 
-	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	protected function setUp(): void
-	{
-		parent::setUp();
+    /**
+     * Sets up the fixture, for example, opens a network connection.
+     * This method is called before a test is executed.
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		$this->object = new Github($this->options, $this->client);
-	}
+        $this->object = new Github($this->options, $this->client);
+    }
 
-	/**
-	 * Tests the magic __get method - forks
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	public function testGetForks()
-	{
-		$this->assertThat(
-			$this->object->repositories->forks,
-			$this->isInstanceOf('Joomla\Github\Package\Repositories\Forks')
-		);
-	}
+    /**
+     * Tests the magic __get method - forks
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    public function testGetForks()
+    {
+        $this->assertThat(
+            $this->object->repositories->forks,
+            $this->isInstanceOf('Joomla\Github\Package\Repositories\Forks')
+        );
+    }
 
-	/**
-	 * Tests the magic __get method - commits
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	public function testGetCommits()
-	{
-		$this->assertThat(
-			$this->object->repositories->commits,
-			$this->isInstanceOf('Joomla\Github\Package\Repositories\Commits')
-		);
-	}
+    /**
+     * Tests the magic __get method - commits
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    public function testGetCommits()
+    {
+        $this->assertThat(
+            $this->object->repositories->commits,
+            $this->isInstanceOf('Joomla\Github\Package\Repositories\Commits')
+        );
+    }
 
-	/**
-	 * Tests the magic __get method - statuses
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	public function testGetStatuses()
-	{
-		$this->assertThat(
-			$this->object->repositories->statuses,
-			$this->isInstanceOf('Joomla\Github\Package\Repositories\Statuses')
-		);
-	}
+    /**
+     * Tests the magic __get method - statuses
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    public function testGetStatuses()
+    {
+        $this->assertThat(
+            $this->object->repositories->statuses,
+            $this->isInstanceOf('Joomla\Github\Package\Repositories\Statuses')
+        );
+    }
 
-	/**
-	 * Tests the magic __get method - hooks
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	public function testGetHooks()
-	{
-		$this->assertThat(
-			$this->object->repositories->hooks,
-			$this->isInstanceOf('Joomla\Github\Package\Repositories\Hooks')
-		);
-	}
+    /**
+     * Tests the magic __get method - hooks
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    public function testGetHooks()
+    {
+        $this->assertThat(
+            $this->object->repositories->hooks,
+            $this->isInstanceOf('Joomla\Github\Package\Repositories\Hooks')
+        );
+    }
 
-	/**
-	 * Tests the magic __get method - failure
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	public function testGetFailure()
-	{
-		$this->expectException(\InvalidArgumentException::class);
+    /**
+     * Tests the magic __get method - failure
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    public function testGetFailure()
+    {
+        $this->expectException(\InvalidArgumentException::class);
 
-		$this->object->other;
-	}
+        $this->object->other;
+    }
 
-	/**
-	 * Tests the setOption method
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	public function testSetOption()
-	{
-		$this->object->setOption('api.url', 'https://example.com/settest');
+    /**
+     * Tests the setOption method
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    public function testSetOption()
+    {
+        $this->object->setOption('api.url', 'https://example.com/settest');
 
-		$this->assertThat(
-			$this->options->get('api.url'),
-			$this->equalTo('https://example.com/settest')
-		);
-	}
+        $this->assertThat(
+            $this->options->get('api.url'),
+            $this->equalTo('https://example.com/settest')
+        );
+    }
 
-	/**
-	 * Tests the getOption method
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	public function testGetOption()
-	{
-		$this->options->set('api.url', 'https://example.com/gettest');
+    /**
+     * Tests the getOption method
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    public function testGetOption()
+    {
+        $this->options->set('api.url', 'https://example.com/gettest');
 
-		$this->assertThat(
-			$this->object->getOption('api.url'),
-			$this->equalTo('https://example.com/gettest')
-		);
-	}
+        $this->assertThat(
+            $this->object->getOption('api.url'),
+            $this->equalTo('https://example.com/gettest')
+        );
+    }
 }

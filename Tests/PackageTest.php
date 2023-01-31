@@ -16,53 +16,53 @@ use Joomla\Github\Tests\Stub\GitHubTestCase;
  */
 class PackageTest extends GitHubTestCase
 {
-	/**
-	 * @var    Github  Object under test.
-	 * @since  1.0
-	 */
-	protected $object;
+    /**
+     * @var    Github  Object under test.
+     * @since  1.0
+     */
+    protected $object;
 
-	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	protected function setUp(): void
-	{
-		parent::setUp();
+    /**
+     * Sets up the fixture, for example, opens a network connection.
+     * This method is called before a test is executed.
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		$this->object = new Github($this->options, $this->client);
-	}
+        $this->object = new Github($this->options, $this->client);
+    }
 
-	/**
-	 * Tests the magic __get method
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	public function testGet()
-	{
-		$this->assertThat(
-			$this->object->repositories->forks,
-			$this->isInstanceOf('Joomla\Github\Package\Repositories\Forks')
-		);
-	}
+    /**
+     * Tests the magic __get method
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    public function testGet()
+    {
+        $this->assertThat(
+            $this->object->repositories->forks,
+            $this->isInstanceOf('Joomla\Github\Package\Repositories\Forks')
+        );
+    }
 
-	/**
-	 * Tests the magic __get method with an invalid parameter.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	public function testGetInvalid()
-	{
-		$this->expectException(\InvalidArgumentException::class);
+    /**
+     * Tests the magic __get method with an invalid parameter.
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    public function testGetInvalid()
+    {
+        $this->expectException(\InvalidArgumentException::class);
 
-		$this->object->repositories->INVALID;
-	}
+        $this->object->repositories->INVALID;
+    }
 }

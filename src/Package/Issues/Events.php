@@ -23,67 +23,67 @@ use Joomla\Github\AbstractPackage;
  */
 class Events extends AbstractPackage
 {
-	/**
-	 * List events for an issue.
-	 *
-	 * @param   string   $owner        The name of the owner of the GitHub repository.
-	 * @param   string   $repo         The name of the GitHub repository.
-	 * @param   integer  $issueNumber  The issue number.
-	 * @param   integer  $page         The page number from which to get items.
-	 * @param   integer  $limit        The number of items on a page.
-	 *
-	 * @return object
-	 */
-	public function getList($owner, $repo, $issueNumber, $page = 0, $limit = 0)
-	{
-		// Build the request path.
-		$path = '/repos/' . $owner . '/' . $repo . '/issues/' . (int) $issueNumber . '/events';
+    /**
+     * List events for an issue.
+     *
+     * @param   string   $owner        The name of the owner of the GitHub repository.
+     * @param   string   $repo         The name of the GitHub repository.
+     * @param   integer  $issueNumber  The issue number.
+     * @param   integer  $page         The page number from which to get items.
+     * @param   integer  $limit        The number of items on a page.
+     *
+     * @return object
+     */
+    public function getList($owner, $repo, $issueNumber, $page = 0, $limit = 0)
+    {
+        // Build the request path.
+        $path = '/repos/' . $owner . '/' . $repo . '/issues/' . (int) $issueNumber . '/events';
 
-		// Send the request.
-		return $this->processResponse(
-			$this->client->get($this->fetchUrl($path, $page, $limit))
-		);
-	}
+        // Send the request.
+        return $this->processResponse(
+            $this->client->get($this->fetchUrl($path, $page, $limit))
+        );
+    }
 
-	/**
-	 * List events for a repository.
-	 *
-	 * @param   string   $owner    The name of the owner of the GitHub repository.
-	 * @param   string   $repo     The name of the GitHub repository.
-	 * @param   integer  $issueId  The issue number.
-	 * @param   integer  $page     The page number from which to get items.
-	 * @param   integer  $limit    The number of items on a page.
-	 *
-	 * @return object
-	 */
-	public function getListRepository($owner, $repo, $issueId, $page = 0, $limit = 0)
-	{
-		// Build the request path.
-		$path = '/repos/' . $owner . '/' . $repo . '/issues/' . (int) $issueId . '/comments';
+    /**
+     * List events for a repository.
+     *
+     * @param   string   $owner    The name of the owner of the GitHub repository.
+     * @param   string   $repo     The name of the GitHub repository.
+     * @param   integer  $issueId  The issue number.
+     * @param   integer  $page     The page number from which to get items.
+     * @param   integer  $limit    The number of items on a page.
+     *
+     * @return object
+     */
+    public function getListRepository($owner, $repo, $issueId, $page = 0, $limit = 0)
+    {
+        // Build the request path.
+        $path = '/repos/' . $owner . '/' . $repo . '/issues/' . (int) $issueId . '/comments';
 
-		// Send the request.
-		return $this->processResponse(
-			$this->client->get($this->fetchUrl($path, $page, $limit))
-		);
-	}
+        // Send the request.
+        return $this->processResponse(
+            $this->client->get($this->fetchUrl($path, $page, $limit))
+        );
+    }
 
-	/**
-	 * Get a single event.
-	 *
-	 * @param   string   $owner  The name of the owner of the GitHub repository.
-	 * @param   string   $repo   The name of the GitHub repository.
-	 * @param   integer  $id     The event number.
-	 *
-	 * @return object
-	 */
-	public function get($owner, $repo, $id)
-	{
-		// Build the request path.
-		$path = '/repos/' . $owner . '/' . $repo . '/issues/events/' . (int) $id;
+    /**
+     * Get a single event.
+     *
+     * @param   string   $owner  The name of the owner of the GitHub repository.
+     * @param   string   $repo   The name of the GitHub repository.
+     * @param   integer  $id     The event number.
+     *
+     * @return object
+     */
+    public function get($owner, $repo, $id)
+    {
+        // Build the request path.
+        $path = '/repos/' . $owner . '/' . $repo . '/issues/events/' . (int) $id;
 
-		// Send the request.
-		return $this->processResponse(
-			$this->client->get($this->fetchUrl($path))
-		);
-	}
+        // Send the request.
+        return $this->processResponse(
+            $this->client->get($this->fetchUrl($path))
+        );
+    }
 }

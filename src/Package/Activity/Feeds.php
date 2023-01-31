@@ -19,20 +19,20 @@ use Joomla\Github\AbstractPackage;
  */
 class Feeds extends AbstractPackage
 {
-	/**
-	 * List Feeds.
-	 *
-	 * @return  object
-	 *
-	 * @since   1.4.0
-	 */
-	public function getFeeds()
-	{
-		// Build the request path.
-		$path = '/feeds';
+    /**
+     * List Feeds.
+     *
+     * @return  object
+     *
+     * @since   1.4.0
+     */
+    public function getFeeds()
+    {
+        // Build the request path.
+        $path = '/feeds';
 
-		return $this->processResponse(
-			$this->client->get($this->fetchUrl($path))
-		);
-	}
+        return $this->processResponse(
+            $this->client->get($this->fetchUrl($path))
+        );
+    }
 }

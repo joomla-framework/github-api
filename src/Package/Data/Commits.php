@@ -19,54 +19,54 @@ use Joomla\Github\AbstractPackage;
  */
 class Commits extends AbstractPackage
 {
-	/**
-	 * Get a Commit.
-	 *
-	 * @param   string  $owner  The name of the owner of the GitHub repository.
-	 * @param   string  $repo   The name of the GitHub repository.
-	 * @param   string  $sha    The commit SHA.
-	 *
-	 * @return object
-	 */
-	public function get($owner, $repo, $sha)
-	{
-		// Build the request path.
-		$path = '/repos/' . $owner . '/' . $repo . '/git/commits/' . $sha;
+    /**
+     * Get a Commit.
+     *
+     * @param   string  $owner  The name of the owner of the GitHub repository.
+     * @param   string  $repo   The name of the GitHub repository.
+     * @param   string  $sha    The commit SHA.
+     *
+     * @return object
+     */
+    public function get($owner, $repo, $sha)
+    {
+        // Build the request path.
+        $path = '/repos/' . $owner . '/' . $repo . '/git/commits/' . $sha;
 
-		return $this->processResponse(
-			$this->client->get($this->fetchUrl($path))
-		);
-	}
+        return $this->processResponse(
+            $this->client->get($this->fetchUrl($path))
+        );
+    }
 
-	/**
-	 * Create a Commit.
-	 *
-	 * @param   string  $owner    The name of the owner of the GitHub repository.
-	 * @param   string  $repo     The name of the GitHub repository.
-	 * @param   string  $message  The commit message.
-	 * @param   string  $tree     SHA of the tree object this commit points to.
-	 * @param   array   $parents  Array of the SHAs of the commits that were the parents of this commit.
-	 *                            If omitted or empty, the commit will be written as a root commit.
-	 *                            For a single parent, an array of one SHA should be provided.
-	 *                            For a merge commit, an array of more than one should be provided.
-	 *
-	 * @since   1.0
-	 *
-	 * @return  object
-	 */
-	public function create($owner, $repo, $message, $tree, array $parents = [])
-	{
-		// Build the request path.
-		$path = '/repos/' . $owner . '/' . $repo . '/git/commits';
+    /**
+     * Create a Commit.
+     *
+     * @param   string  $owner    The name of the owner of the GitHub repository.
+     * @param   string  $repo     The name of the GitHub repository.
+     * @param   string  $message  The commit message.
+     * @param   string  $tree     SHA of the tree object this commit points to.
+     * @param   array   $parents  Array of the SHAs of the commits that were the parents of this commit.
+     *                            If omitted or empty, the commit will be written as a root commit.
+     *                            For a single parent, an array of one SHA should be provided.
+     *                            For a merge commit, an array of more than one should be provided.
+     *
+     * @since   1.0
+     *
+     * @return  object
+     */
+    public function create($owner, $repo, $message, $tree, array $parents = [])
+    {
+        // Build the request path.
+        $path = '/repos/' . $owner . '/' . $repo . '/git/commits';
 
-		$data = json_encode(
-			['message' => $message, 'tree' => $tree, 'parents' => $parents]
-		);
+        $data = json_encode(
+            ['message' => $message, 'tree' => $tree, 'parents' => $parents]
+        );
 
-		// Send the request.
-		return $this->processResponse(
-			$response = $this->client->post($this->fetchUrl($path), $data),
-			201
-		);
-	}
+        // Send the request.
+        return $this->processResponse(
+            $response = $this->client->post($this->fetchUrl($path), $data),
+            201
+        );
+    }
 }

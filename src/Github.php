@@ -36,104 +36,100 @@ use Joomla\Registry\Registry;
  */
 class Github
 {
-	/**
-	 * Options for the GitHub object.
-	 *
-	 * @var    array
-	 * @since  1.0
-	 */
-	protected $options;
+    /**
+     * Options for the GitHub object.
+     *
+     * @var    array
+     * @since  1.0
+     */
+    protected $options;
 
-	/**
-	 * The HTTP client object to use in sending HTTP requests.
-	 *
-	 * @var    Http
-	 * @since  1.0
-	 */
-	protected $client;
+    /**
+     * The HTTP client object to use in sending HTTP requests.
+     *
+     * @var    Http
+     * @since  1.0
+     */
+    protected $client;
 
-	/**
-	 * Constructor.
-	 *
-	 * @param   Registry  $options  GitHub options object.
-	 * @param   Http      $client   The HTTP client object.
-	 *
-	 * @since   1.0
-	 */
-	public function __construct(Registry $options = null, Http $client = null)
-	{
-		$this->options = $options ?: new Registry;
+    /**
+     * Constructor.
+     *
+     * @param   Registry  $options  GitHub options object.
+     * @param   Http      $client   The HTTP client object.
+     *
+     * @since   1.0
+     */
+    public function __construct(Registry $options = null, Http $client = null)
+    {
+        $this->options = $options ?: new Registry();
 
-		// Setup the default user agent if not already set.
-		if (!$this->getOption('userAgent'))
-		{
-			$this->setOption('userAgent', 'JGitHub/2.0');
-		}
+        // Setup the default user agent if not already set.
+        if (!$this->getOption('userAgent')) {
+            $this->setOption('userAgent', 'JGitHub/2.0');
+        }
 
-		// Setup the default API url if not already set.
-		if (!$this->getOption('api.url'))
-		{
-			$this->setOption('api.url', 'https://api.github.com');
-		}
+        // Setup the default API url if not already set.
+        if (!$this->getOption('api.url')) {
+            $this->setOption('api.url', 'https://api.github.com');
+        }
 
-		$this->client = $client ?: (new HttpFactory)->getHttp($this->options);
-	}
+        $this->client = $client ?: (new HttpFactory())->getHttp($this->options);
+    }
 
-	/**
-	 * Magic method to lazily create API objects
-	 *
-	 * @param   string  $name  Name of property to retrieve
-	 *
-	 * @return  AbstractGithubObject  GitHub API object (gists, issues, pulls, etc).
-	 *
-	 * @since   1.0
-	 * @throws  \InvalidArgumentException If $name is not a valid sub class.
-	 */
-	public function __get($name)
-	{
-		$class = 'Joomla\\Github\\Package\\' . ucfirst($name);
+    /**
+     * Magic method to lazily create API objects
+     *
+     * @param   string  $name  Name of property to retrieve
+     *
+     * @return  AbstractGithubObject  GitHub API object (gists, issues, pulls, etc).
+     *
+     * @since   1.0
+     * @throws  \InvalidArgumentException If $name is not a valid sub class.
+     */
+    public function __get($name)
+    {
+        $class = 'Joomla\\Github\\Package\\' . ucfirst($name);
 
-		if (class_exists($class))
-		{
-			if (isset($this->$name) == false)
-			{
-				$this->$name = new $class($this->options, $this->client);
-			}
+        if (class_exists($class)) {
+            if (isset($this->$name) == false) {
+                $this->$name = new $class($this->options, $this->client);
+            }
 
-			return $this->$name;
-		}
+            return $this->$name;
+        }
 
-		throw new \InvalidArgumentException(sprintf('Argument %s produced an invalid class name: %s', $name, $class));
-	}
+        throw new \InvalidArgumentException(sprintf('Argument %s produced an invalid class name: %s', $name, $class));
+    }
 
-	/**
-	 * Get an option from the GitHub instance.
-	 *
-	 * @param   string  $key  The name of the option to get.
-	 *
-	 * @return  mixed  The option value.
-	 *
-	 * @since   1.0
-	 */
-	public function getOption($key)
-	{
-		return isset($this->options[$key]) ? $this->options[$key] : null;
-	}
+    /**
+     * Get an option from the GitHub instance.
+     *
+     * @param   string  $key  The name of the option to get.
+     *
+     * @return  mixed  The option value.
+     *
+     * @since   1.0
+     */
+    public function getOption($key)
+    {
+        return isset($this->options[$key]) ? $this->options[$key] : null;
+    }
 
-	/**
-	 * Set an option for the GitHub instance.
-	 *
-	 * @param   string  $key    The name of the option to set.
-	 * @param   mixed   $value  The option value to set.
-	 *
-	 * @return  GitHub  This object for method chaining.
-	 *
-	 * @since   1.0
-	 */
-	public function setOption($key, $value)
-	{
-		$this->options[$key] = $value;
+    /**
+     * Set an option for the GitHub instance.
+     *
+     * @param   string  $key    The name of the option to set.
+     * @param   mixed   $value  The option value to set.
+     *
+     * @return  GitHub  This object for method chaining.
+     *
+     * @since   1.0
+     */
+    public function setOption($key, $value)
+    {
+        $this->options[$key] = $value;
 
-		return $this;
-	}
+        return $this;
+    }
 }

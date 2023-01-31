@@ -16,234 +16,234 @@ use Joomla\Github\Tests\Stub\GitHubTestCase;
  */
 class EventsTest extends GitHubTestCase
 {
-	/**
-	 * @var    Events  Object under test.
-	 * @since  1.0
-	 */
-	protected $object;
+    /**
+     * @var    Events  Object under test.
+     * @since  1.0
+     */
+    protected $object;
 
-	/**
-	 * @var string
-	 * @since  1.0
-	 */
-	protected $owner = 'joomla';
+    /**
+     * @var string
+     * @since  1.0
+     */
+    protected $owner = 'joomla';
 
-	/**
-	 * @var string
-	 * @since  1.0
-	 */
-	protected $repo = 'joomla-framework';
+    /**
+     * @var string
+     * @since  1.0
+     */
+    protected $repo = 'joomla-framework';
 
-	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 *
-	 * @since   1.0
-	 *
-	 * @return  void
-	 */
-	protected function setUp(): void
-	{
-		parent::setUp();
+    /**
+     * Sets up the fixture, for example, opens a network connection.
+     * This method is called before a test is executed.
+     *
+     * @since   1.0
+     *
+     * @return  void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		$this->object = new Events($this->options, $this->client);
-	}
+        $this->object = new Events($this->options, $this->client);
+    }
 
-	/**
-	 * Tests the getPublic method
-	 *
-	 * @return  void
-	 */
-	public function testGetPublic()
-	{
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/events')
-			->will($this->returnValue($this->response));
+    /**
+     * Tests the getPublic method
+     *
+     * @return  void
+     */
+    public function testGetPublic()
+    {
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/events')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->getPublic(),
-			$this->equalTo(json_decode($this->response->body))
-		);
-	}
+        $this->assertThat(
+            $this->object->getPublic(),
+            $this->equalTo(json_decode($this->response->body))
+        );
+    }
 
-	/**
-	 * Tests the getRepository method
-	 *
-	 * @return  void
-	 */
-	public function testGetRepository()
-	{
-		$path = '/repos/' . $this->owner . '/' . $this->repo . '/events';
+    /**
+     * Tests the getRepository method
+     *
+     * @return  void
+     */
+    public function testGetRepository()
+    {
+        $path = '/repos/' . $this->owner . '/' . $this->repo . '/events';
 
-		$this->client->expects($this->once())
-			->method('get')
-			->with($path)
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with($path)
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->getRepository($this->owner, $this->repo),
-			$this->equalTo(json_decode($this->response->body))
-		);
-	}
+        $this->assertThat(
+            $this->object->getRepository($this->owner, $this->repo),
+            $this->equalTo(json_decode($this->response->body))
+        );
+    }
 
-	/**
-	 * Tests the getIssue method
-	 *
-	 * @return  void
-	 */
-	public function testGetIssue()
-	{
-		$path = '/repos/' . $this->owner . '/' . $this->repo . '/issues/events';
+    /**
+     * Tests the getIssue method
+     *
+     * @return  void
+     */
+    public function testGetIssue()
+    {
+        $path = '/repos/' . $this->owner . '/' . $this->repo . '/issues/events';
 
-		$this->client->expects($this->once())
-			->method('get')
-			->with($path)
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with($path)
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->getIssue($this->owner, $this->repo),
-			$this->equalTo(json_decode($this->response->body))
-		);
-	}
+        $this->assertThat(
+            $this->object->getIssue($this->owner, $this->repo),
+            $this->equalTo(json_decode($this->response->body))
+        );
+    }
 
-	/**
-	 * Tests the getNetwork method
-	 *
-	 * @return  void
-	 */
-	public function testGetNetwork()
-	{
-		$path = '/networks/' . $this->owner . '/' . $this->repo . '/events';
+    /**
+     * Tests the getNetwork method
+     *
+     * @return  void
+     */
+    public function testGetNetwork()
+    {
+        $path = '/networks/' . $this->owner . '/' . $this->repo . '/events';
 
-		$this->client->expects($this->once())
-			->method('get')
-			->with($path)
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with($path)
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->getNetwork($this->owner, $this->repo),
-			$this->equalTo(json_decode($this->response->body))
-		);
-	}
+        $this->assertThat(
+            $this->object->getNetwork($this->owner, $this->repo),
+            $this->equalTo(json_decode($this->response->body))
+        );
+    }
 
-	/**
-	 * Tests the getOrg method
-	 *
-	 * @return  void
-	 */
-	public function testGetOrg()
-	{
-		$path = '/orgs/' . $this->owner . '/events';
+    /**
+     * Tests the getOrg method
+     *
+     * @return  void
+     */
+    public function testGetOrg()
+    {
+        $path = '/orgs/' . $this->owner . '/events';
 
-		$this->client->expects($this->once())
-			->method('get')
-			->with($path)
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with($path)
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->getOrg($this->owner),
-			$this->equalTo(json_decode($this->response->body))
-		);
-	}
+        $this->assertThat(
+            $this->object->getOrg($this->owner),
+            $this->equalTo(json_decode($this->response->body))
+        );
+    }
 
-	/**
-	 * Tests the getUser method
-	 *
-	 * @return  void
-	 */
-	public function testGetUser()
-	{
-		$path = '/users/' . $this->owner . '/received_events';
+    /**
+     * Tests the getUser method
+     *
+     * @return  void
+     */
+    public function testGetUser()
+    {
+        $path = '/users/' . $this->owner . '/received_events';
 
-		$this->client->expects($this->once())
-			->method('get')
-			->with($path)
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with($path)
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->getUser($this->owner),
-			$this->equalTo(json_decode($this->response->body))
-		);
-	}
+        $this->assertThat(
+            $this->object->getUser($this->owner),
+            $this->equalTo(json_decode($this->response->body))
+        );
+    }
 
-	/**
-	 * Tests the getUserPublic method
-	 *
-	 * @return  void
-	 */
-	public function testGetUserPublic()
-	{
-		$path = '/users/' . $this->owner . '/received_events/public';
+    /**
+     * Tests the getUserPublic method
+     *
+     * @return  void
+     */
+    public function testGetUserPublic()
+    {
+        $path = '/users/' . $this->owner . '/received_events/public';
 
-		$this->client->expects($this->once())
-			->method('get')
-			->with($path)
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with($path)
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->getUserPublic($this->owner),
-			$this->equalTo(json_decode($this->response->body))
-		);
-	}
+        $this->assertThat(
+            $this->object->getUserPublic($this->owner),
+            $this->equalTo(json_decode($this->response->body))
+        );
+    }
 
-	/**
-	 * Tests the getByUser method
-	 *
-	 * @return  void
-	 */
-	public function testGetByUser()
-	{
-		$path = '/users/' . $this->owner . '/events';
+    /**
+     * Tests the getByUser method
+     *
+     * @return  void
+     */
+    public function testGetByUser()
+    {
+        $path = '/users/' . $this->owner . '/events';
 
-		$this->client->expects($this->once())
-			->method('get')
-			->with($path)
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with($path)
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->getByUser($this->owner),
-			$this->equalTo(json_decode($this->response->body))
-		);
-	}
+        $this->assertThat(
+            $this->object->getByUser($this->owner),
+            $this->equalTo(json_decode($this->response->body))
+        );
+    }
 
-	/**
-	 * Tests the getByUserPublic method
-	 *
-	 * @return  void
-	 */
-	public function testGetByUserPublic()
-	{
-		$path = '/users/' . $this->owner . '/events/public';
+    /**
+     * Tests the getByUserPublic method
+     *
+     * @return  void
+     */
+    public function testGetByUserPublic()
+    {
+        $path = '/users/' . $this->owner . '/events/public';
 
-		$this->client->expects($this->once())
-			->method('get')
-			->with($path)
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with($path)
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->getByUserPublic($this->owner),
-			$this->equalTo(json_decode($this->response->body))
-		);
-	}
+        $this->assertThat(
+            $this->object->getByUserPublic($this->owner),
+            $this->equalTo(json_decode($this->response->body))
+        );
+    }
 
-	/**
-	 * Tests the getUserOrg method
-	 *
-	 * @return  void
-	 */
-	public function testGetUserOrg()
-	{
-		$path = '/users/' . $this->owner . '/events/orgs/' . $this->repo;
+    /**
+     * Tests the getUserOrg method
+     *
+     * @return  void
+     */
+    public function testGetUserOrg()
+    {
+        $path = '/users/' . $this->owner . '/events/orgs/' . $this->repo;
 
-		$this->client->expects($this->once())
-			->method('get')
-			->with($path)
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with($path)
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->getUserOrg($this->owner, $this->repo),
-			$this->equalTo(json_decode($this->response->body))
-		);
-	}
+        $this->assertThat(
+            $this->object->getUserOrg($this->owner, $this->repo),
+            $this->equalTo(json_decode($this->response->body))
+        );
+    }
 }

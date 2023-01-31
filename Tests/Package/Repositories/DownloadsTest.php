@@ -16,107 +16,118 @@ use Joomla\Github\Tests\Stub\GitHubTestCase;
  */
 class DownloadsTest extends GitHubTestCase
 {
-	/**
-	 * @var Downloads
-	 */
-	protected $object;
+    /**
+     * @var Downloads
+     */
+    protected $object;
 
-	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 *
-	 * @since   1.0
-	 *
-	 * @return  void
-	 */
-	protected function setUp(): void
-	{
-		parent::setUp();
+    /**
+     * Sets up the fixture, for example, opens a network connection.
+     * This method is called before a test is executed.
+     *
+     * @since   1.0
+     *
+     * @return  void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		$this->object = new Downloads($this->options, $this->client);
-	}
+        $this->object = new Downloads($this->options, $this->client);
+    }
 
-	/**
-	 * Tests the GetList method.
-	 *
-	 * @return  void
-	 */
-	public function testGetList()
-	{
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/repos/joomla/joomla-platform/downloads')
-			->will($this->returnValue($this->response));
+    /**
+     * Tests the GetList method.
+     *
+     * @return  void
+     */
+    public function testGetList()
+    {
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/repos/joomla/joomla-platform/downloads')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->getList('joomla', 'joomla-platform'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->getList('joomla', 'joomla-platform'),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 
-	/**
-	 * Tests the Get method.
-	 *
-	 * @return  void
-	 */
-	public function testGet()
-	{
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/repos/joomla/joomla-platform/downloads/123abc')
-			->will($this->returnValue($this->response));
+    /**
+     * Tests the Get method.
+     *
+     * @return  void
+     */
+    public function testGet()
+    {
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/repos/joomla/joomla-platform/downloads/123abc')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->get('joomla', 'joomla-platform', '123abc'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->get('joomla', 'joomla-platform', '123abc'),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 
-	/**
-	 * Tests the Create method.
-	 *
-	 * @return  void
-	 */
-	public function testCreate()
-	{
-		$this->expectException(\RuntimeException::class);
-		$this->expectExceptionMessage('The GitHub API no longer supports creating downloads. The Releases API should be used instead.');
+    /**
+     * Tests the Create method.
+     *
+     * @return  void
+     */
+    public function testCreate()
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('The GitHub API no longer supports creating downloads. The Releases API should be used instead.');
 
-		$this->object->create('joomla', 'joomla-platform', 'aaa.zip', 1234, 'Description', 'content_type');
-	}
+        $this->object->create('joomla', 'joomla-platform', 'aaa.zip', 1234, 'Description', 'content_type');
+    }
 
-	/**
-	 * Tests the Upload method.
-	 *
-	 * @return  void
-	 */
-	public function testUpload()
-	{
-		$this->expectException(\RuntimeException::class);
-		$this->expectExceptionMessage('The GitHub API no longer supports creating downloads. The Releases API should be used instead.');
+    /**
+     * Tests the Upload method.
+     *
+     * @return  void
+     */
+    public function testUpload()
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('The GitHub API no longer supports creating downloads. The Releases API should be used instead.');
 
-		$this->object->upload(
-			'joomla', 'joomla-platform', 123, 'a/b/aaa.zip', 'acl', 201, 'aaa.zip', '123abc', '123abc', '123abc', 'content_type', '@aaa.zip'
-		);
-	}
+        $this->object->upload(
+            'joomla',
+            'joomla-platform',
+            123,
+            'a/b/aaa.zip',
+            'acl',
+            201,
+            'aaa.zip',
+            '123abc',
+            '123abc',
+            '123abc',
+            'content_type',
+            '@aaa.zip'
+        );
+    }
 
-	/**
-	 * Tests the Delete method.
-	 *
-	 * @return  void
-	 */
-	public function testDelete()
-	{
-		$this->response->code = 204;
+    /**
+     * Tests the Delete method.
+     *
+     * @return  void
+     */
+    public function testDelete()
+    {
+        $this->response->code = 204;
 
-		$this->client->expects($this->once())
-			->method('delete')
-			->with('/repos/joomla/joomla-platform/downloads/123')
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('delete')
+            ->with('/repos/joomla/joomla-platform/downloads/123')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->delete('joomla', 'joomla-platform', 123),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->delete('joomla', 'joomla-platform', 123),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 }

@@ -16,107 +16,107 @@ use Joomla\Github\Tests\Stub\GitHubTestCase;
  */
 class SearchTest extends GitHubTestCase
 {
-	/**
-	 * @var Search
-	 */
-	protected $object;
+    /**
+     * @var Search
+     */
+    protected $object;
 
-	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 *
-	 * @since   1.0
-	 *
-	 * @return  void
-	 */
-	protected function setUp(): void
-	{
-		parent::setUp();
+    /**
+     * Sets up the fixture, for example, opens a network connection.
+     * This method is called before a test is executed.
+     *
+     * @since   1.0
+     *
+     * @return  void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		$this->object = new Search($this->options, $this->client);
-	}
+        $this->object = new Search($this->options, $this->client);
+    }
 
-	/**
-	 * Tests the issues method
-	 *
-	 * @return  void
-	 */
-	public function testIssues()
-	{
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/legacy/issues/search/joomla/joomla-platform/open/github')
-			->will($this->returnValue($this->response));
+    /**
+     * Tests the issues method
+     *
+     * @return  void
+     */
+    public function testIssues()
+    {
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/legacy/issues/search/joomla/joomla-platform/open/github')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->issues('joomla', 'joomla-platform', 'open', 'github'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->issues('joomla', 'joomla-platform', 'open', 'github'),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 
-	/**
-	 * Tests the issuesInvalidState method
-	 *
-	 * @return  void
-	 */
-	public function testIssuesInvalidState()
-	{
-		$this->expectException(\UnexpectedValueException::class);
+    /**
+     * Tests the issuesInvalidState method
+     *
+     * @return  void
+     */
+    public function testIssuesInvalidState()
+    {
+        $this->expectException(\UnexpectedValueException::class);
 
-		$this->object->issues('joomla', 'joomla-platform', 'invalid', 'github');
-	}
+        $this->object->issues('joomla', 'joomla-platform', 'invalid', 'github');
+    }
 
-	/**
-	 * Tests the repositories method
-	 *
-	 * @return  void
-	 */
-	public function testRepositories()
-	{
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/legacy/repos/search/joomla')
-			->will($this->returnValue($this->response));
+    /**
+     * Tests the repositories method
+     *
+     * @return  void
+     */
+    public function testRepositories()
+    {
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/legacy/repos/search/joomla')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->repositories('joomla'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->repositories('joomla'),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 
-	/**
-	 * Tests the users method
-	 *
-	 * @return  void
-	 */
-	public function testUsers()
-	{
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/legacy/user/search/joomla')
-			->will($this->returnValue($this->response));
+    /**
+     * Tests the users method
+     *
+     * @return  void
+     */
+    public function testUsers()
+    {
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/legacy/user/search/joomla')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->users('joomla'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->users('joomla'),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 
-	/**
-	 * Tests the email method
-	 *
-	 * @return  void
-	 */
-	public function testEmail()
-	{
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/legacy/user/email/email@joomla')
-			->will($this->returnValue($this->response));
+    /**
+     * Tests the email method
+     *
+     * @return  void
+     */
+    public function testEmail()
+    {
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/legacy/user/email/email@joomla')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->email('email@joomla'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->email('email@joomla'),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 }

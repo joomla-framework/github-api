@@ -18,63 +18,63 @@ use Joomla\Github\Tests\Stub\GitHubTestCase;
  */
 class BranchesTest extends GitHubTestCase
 {
-	/**
-	 * @var Branches
-	 */
-	protected $object;
+    /**
+     * @var Branches
+     */
+    protected $object;
 
-	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 *
-	 * @since   1.0
-	 *
-	 * @return  void
-	 */
-	protected function setUp(): void
-	{
-		parent::setUp();
+    /**
+     * Sets up the fixture, for example, opens a network connection.
+     * This method is called before a test is executed.
+     *
+     * @since   1.0
+     *
+     * @return  void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		$this->object = new Branches($this->options, $this->client);
-	}
+        $this->object = new Branches($this->options, $this->client);
+    }
 
-	/**
-	 * Tests the GetList method.
-	 *
-	 * @covers \Joomla\Github\Package\Repositories\Branches::getList()
-	 *
-	 * @return  void
-	 */
-	public function testGetList()
-	{
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/repos/{owner}/{repo}/branches')
-			->will($this->returnValue($this->response));
+    /**
+     * Tests the GetList method.
+     *
+     * @covers \Joomla\Github\Package\Repositories\Branches::getList()
+     *
+     * @return  void
+     */
+    public function testGetList()
+    {
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/repos/{owner}/{repo}/branches')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->getList('{owner}', '{repo}'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->getList('{owner}', '{repo}'),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 
-	/**
-	 * Tests the Get method.
-	 *
-	 * @covers \Joomla\Github\Package\Repositories\Branches::get()
-	 *
-	 * @return  void
-	 */
-	public function testGet()
-	{
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/repos/{owner}/{repo}/branches/{branch}')
-			->will($this->returnValue($this->response));
+    /**
+     * Tests the Get method.
+     *
+     * @covers \Joomla\Github\Package\Repositories\Branches::get()
+     *
+     * @return  void
+     */
+    public function testGet()
+    {
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/repos/{owner}/{repo}/branches/{branch}')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->get('{owner}', '{repo}', '{branch}'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->get('{owner}', '{repo}', '{branch}'),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 }

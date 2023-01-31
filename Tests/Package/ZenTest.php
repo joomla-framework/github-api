@@ -16,67 +16,67 @@ use Joomla\Github\Tests\Stub\GitHubTestCase;
  */
 class ZenTest extends GitHubTestCase
 {
-	/**
-	 * @var Zen
-	 */
-	protected $object;
+    /**
+     * @var Zen
+     */
+    protected $object;
 
-	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 *
-	 * @since   1.0
-	 *
-	 * @return  void
-	 */
-	protected function setUp(): void
-	{
-		parent::setUp();
+    /**
+     * Sets up the fixture, for example, opens a network connection.
+     * This method is called before a test is executed.
+     *
+     * @since   1.0
+     *
+     * @return  void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		$this->object = new Zen($this->options, $this->client);
-	}
+        $this->object = new Zen($this->options, $this->client);
+    }
 
-	/**
-	 * Tests the Get method.
-	 *
-	 * @return void
-	 */
-	public function testGet()
-	{
-		$this->response->code = 200;
-		$this->response->body = 'My Zen';
+    /**
+     * Tests the Get method.
+     *
+     * @return void
+     */
+    public function testGet()
+    {
+        $this->response->code = 200;
+        $this->response->body = 'My Zen';
 
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/zen', array(), 0)
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/zen', [], 0)
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->get(),
-			$this->equalTo($this->response->body)
-		);
-	}
+        $this->assertThat(
+            $this->object->get(),
+            $this->equalTo($this->response->body)
+        );
+    }
 
-	/**
-	 * Tests the Get method.
-	 *
-	 * @return void
-	 */
-	public function testGetFailure()
-	{
-		$this->expectException(\RuntimeException::class);
+    /**
+     * Tests the Get method.
+     *
+     * @return void
+     */
+    public function testGetFailure()
+    {
+        $this->expectException(\RuntimeException::class);
 
-		$this->response->code = 400;
-		$this->response->body = 'My Zen';
+        $this->response->code = 400;
+        $this->response->body = 'My Zen';
 
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/zen', array(), 0)
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/zen', [], 0)
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->get(),
-			$this->equalTo($this->response->body)
-		);
-	}
+        $this->assertThat(
+            $this->object->get(),
+            $this->equalTo($this->response->body)
+        );
+    }
 }

@@ -19,65 +19,65 @@ use Joomla\Github\AbstractPackage;
  */
 class Pages extends AbstractPackage
 {
-	/**
-	 * Get information about a Pages site.
-	 *
-	 * @param   string  $owner  The name of the owner of the GitHub repository.
-	 * @param   string  $repo   The name of the GitHub repository.
-	 *
-	 * @return  object
-	 *
-	 * @since   1.4.0
-	 */
-	public function getInfo($owner, $repo)
-	{
-		// Build the request path.
-		$path = "/repos/$owner/$repo/pages";
+    /**
+     * Get information about a Pages site.
+     *
+     * @param   string  $owner  The name of the owner of the GitHub repository.
+     * @param   string  $repo   The name of the GitHub repository.
+     *
+     * @return  object
+     *
+     * @since   1.4.0
+     */
+    public function getInfo($owner, $repo)
+    {
+        // Build the request path.
+        $path = "/repos/$owner/$repo/pages";
 
-		return $this->processResponse(
-			$this->client->get($this->fetchUrl($path))
-		);
-	}
+        return $this->processResponse(
+            $this->client->get($this->fetchUrl($path))
+        );
+    }
 
-	/**
-	 * List Pages builds.
-	 *
-	 * @param   string   $owner  The name of the owner of the GitHub repository.
-	 * @param   string   $repo   The name of the GitHub repository.
-	 * @param   integer  $page   The page number from which to get items.
-	 * @param   integer  $limit  The number of items on a page.
-	 *
-	 * @return  object
-	 *
-	 * @since   1.4.0
-	 */
-	public function getList($owner, $repo, $page = 0, $limit = 0)
-	{
-		// Build the request path.
-		$path = "/repos/$owner/$repo/pages/builds";
+    /**
+     * List Pages builds.
+     *
+     * @param   string   $owner  The name of the owner of the GitHub repository.
+     * @param   string   $repo   The name of the GitHub repository.
+     * @param   integer  $page   The page number from which to get items.
+     * @param   integer  $limit  The number of items on a page.
+     *
+     * @return  object
+     *
+     * @since   1.4.0
+     */
+    public function getList($owner, $repo, $page = 0, $limit = 0)
+    {
+        // Build the request path.
+        $path = "/repos/$owner/$repo/pages/builds";
 
-		return $this->processResponse(
-			$this->client->get($this->fetchUrl($path, $page, $limit))
-		);
-	}
+        return $this->processResponse(
+            $this->client->get($this->fetchUrl($path, $page, $limit))
+        );
+    }
 
-	/**
-	 * List latest Pages build.
-	 *
-	 * @param   string  $owner  The name of the owner of the GitHub repository.
-	 * @param   string  $repo   The name of the GitHub repository.
-	 *
-	 * @return  object
-	 *
-	 * @since   1.4.0
-	 */
-	public function getLatest($owner, $repo)
-	{
-		// Build the request path.
-		$path = "/repos/$owner/$repo/pages/builds/latest";
+    /**
+     * List latest Pages build.
+     *
+     * @param   string  $owner  The name of the owner of the GitHub repository.
+     * @param   string  $repo   The name of the GitHub repository.
+     *
+     * @return  object
+     *
+     * @since   1.4.0
+     */
+    public function getLatest($owner, $repo)
+    {
+        // Build the request path.
+        $path = "/repos/$owner/$repo/pages/builds/latest";
 
-		return $this->processResponse(
-			$this->client->get($this->fetchUrl($path))
-		);
-	}
+        return $this->processResponse(
+            $this->client->get($this->fetchUrl($path))
+        );
+    }
 }

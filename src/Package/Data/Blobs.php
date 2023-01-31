@@ -23,52 +23,52 @@ use Joomla\Github\AbstractPackage;
  */
 class Blobs extends AbstractPackage
 {
-	/**
-	 * Get a Blob.
-	 *
-	 * @param   string  $owner  Repository owner.
-	 * @param   string  $repo   Repository name.
-	 * @param   string  $sha    The commit SHA.
-	 *
-	 * @return  object
-	 *
-	 * @since   1.0
-	 */
-	public function get($owner, $repo, $sha)
-	{
-		// Build the request path.
-		$path = '/repos/' . $owner . '/' . $repo . '/git/blobs/' . $sha;
+    /**
+     * Get a Blob.
+     *
+     * @param   string  $owner  Repository owner.
+     * @param   string  $repo   Repository name.
+     * @param   string  $sha    The commit SHA.
+     *
+     * @return  object
+     *
+     * @since   1.0
+     */
+    public function get($owner, $repo, $sha)
+    {
+        // Build the request path.
+        $path = '/repos/' . $owner . '/' . $repo . '/git/blobs/' . $sha;
 
-		return $this->processResponse(
-			$this->client->get($this->fetchUrl($path))
-		);
-	}
+        return $this->processResponse(
+            $this->client->get($this->fetchUrl($path))
+        );
+    }
 
-	/**
-	 * Create a Blob.
-	 *
-	 * @param   string  $owner     Repository owner.
-	 * @param   string  $repo      Repository name.
-	 * @param   string  $content   The content of the blob.
-	 * @param   string  $encoding  The encoding to use.
-	 *
-	 * @return  object
-	 *
-	 * @since   1.0
-	 */
-	public function create($owner, $repo, $content, $encoding = 'utf-8')
-	{
-		// Build the request path.
-		$path = '/repos/' . $owner . '/' . $repo . '/git/blobs';
+    /**
+     * Create a Blob.
+     *
+     * @param   string  $owner     Repository owner.
+     * @param   string  $repo      Repository name.
+     * @param   string  $content   The content of the blob.
+     * @param   string  $encoding  The encoding to use.
+     *
+     * @return  object
+     *
+     * @since   1.0
+     */
+    public function create($owner, $repo, $content, $encoding = 'utf-8')
+    {
+        // Build the request path.
+        $path = '/repos/' . $owner . '/' . $repo . '/git/blobs';
 
-		$data = [
-			'content'  => $content,
-			'encoding' => $encoding,
-		];
+        $data = [
+            'content'  => $content,
+            'encoding' => $encoding,
+        ];
 
-		return $this->processResponse(
-			$this->client->post($this->fetchUrl($path), json_encode($data)),
-			201
-		);
-	}
+        return $this->processResponse(
+            $this->client->post($this->fetchUrl($path), json_encode($data)),
+            201
+        );
+    }
 }

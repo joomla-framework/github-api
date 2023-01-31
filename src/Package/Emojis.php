@@ -19,20 +19,20 @@ use Joomla\Github\AbstractPackage;
  */
 class Emojis extends AbstractPackage
 {
-	/**
-	 * Lists all the emojis available to use on GitHub.
-	 *
-	 * @return  array
-	 *
-	 * @since   1.1
-	 * @throws  \DomainException
-	 */
-	public function getList()
-	{
-		// Build the request path.
-		$path = '/emojis';
+    /**
+     * Lists all the emojis available to use on GitHub.
+     *
+     * @return  array
+     *
+     * @since   1.1
+     * @throws  \DomainException
+     */
+    public function getList()
+    {
+        // Build the request path.
+        $path = '/emojis';
 
-		// Send the request.
-		return $this->processResponse($this->client->get($this->fetchUrl($path)));
-	}
+        // Send the request.
+        return $this->processResponse($this->client->get($this->fetchUrl($path)));
+    }
 }

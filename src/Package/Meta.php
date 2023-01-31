@@ -17,18 +17,18 @@ use Joomla\Github\AbstractPackage;
  */
 class Meta extends AbstractPackage
 {
-	/**
-	 * Method to get the authorized IP addresses for services
-	 *
-	 * @return  array  Authorized IP addresses in CIDR format
-	 *
-	 * @since   1.0
-	 */
-	public function getMeta()
-	{
-		// Build the request path.
-		$path = '/meta';
+    /**
+     * Method to get the authorized IP addresses for services
+     *
+     * @return  array  Authorized IP addresses in CIDR format
+     *
+     * @since   1.0
+     */
+    public function getMeta()
+    {
+        // Build the request path.
+        $path = '/meta';
 
-		return $this->processResponse($this->client->get($this->fetchUrl($path)), 200);
-	}
+        return $this->processResponse($this->client->get($this->fetchUrl($path)), 200);
+    }
 }

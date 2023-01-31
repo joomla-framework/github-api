@@ -16,81 +16,81 @@ use Joomla\Github\Tests\Stub\GitHubTestCase;
  */
 class EmailsTest extends GitHubTestCase
 {
-	/**
-	 * @var Emails
-	 */
-	protected $object;
+    /**
+     * @var Emails
+     */
+    protected $object;
 
-	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 *
-	 * @since   1.0
-	 *
-	 * @return  void
-	 */
-	protected function setUp(): void
-	{
-		parent::setUp();
+    /**
+     * Sets up the fixture, for example, opens a network connection.
+     * This method is called before a test is executed.
+     *
+     * @since   1.0
+     *
+     * @return  void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		$this->object = new Emails($this->options, $this->client);
-	}
+        $this->object = new Emails($this->options, $this->client);
+    }
 
-	/**
-	 * Tests the getList method
-	 *
-	 * @return  void
-	 */
-	public function testGetList()
-	{
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/user/emails')
-			->will($this->returnValue($this->response));
+    /**
+     * Tests the getList method
+     *
+     * @return  void
+     */
+    public function testGetList()
+    {
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/user/emails')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->getList(),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->getList(),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 
-	/**
-	 * Tests the add method
-	 *
-	 * @return  void
-	 */
-	public function testAdd()
-	{
-		$this->response->code = 201;
+    /**
+     * Tests the add method
+     *
+     * @return  void
+     */
+    public function testAdd()
+    {
+        $this->response->code = 201;
 
-		$this->client->expects($this->once())
-			->method('post')
-			->with('/user/emails')
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('post')
+            ->with('/user/emails')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->add('email@example.com'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->add('email@example.com'),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 
-	/**
-	 * Tests the delete method
-	 *
-	 * @return  void
-	 */
-	public function testDelete()
-	{
-		$this->response->code = 204;
+    /**
+     * Tests the delete method
+     *
+     * @return  void
+     */
+    public function testDelete()
+    {
+        $this->response->code = 204;
 
-		$this->client->expects($this->once())
-			->method('delete')
-			->with('/user/emails')
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('delete')
+            ->with('/user/emails')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->delete('email@example.com'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->delete('email@example.com'),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 }

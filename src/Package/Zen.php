@@ -19,22 +19,21 @@ use Joomla\Github\AbstractPackage;
  */
 class Zen extends AbstractPackage
 {
-	/**
-	 * Get a random response about one of our design philosophies.
-	 *
-	 * @throws \RuntimeException
-	 *
-	 * @return string
-	 */
-	public function get()
-	{
-		$response = $this->client->get($this->fetchUrl('/zen'));
+    /**
+     * Get a random response about one of our design philosophies.
+     *
+     * @throws \RuntimeException
+     *
+     * @return string
+     */
+    public function get()
+    {
+        $response = $this->client->get($this->fetchUrl('/zen'));
 
-		if ($response->code != 200)
-		{
-			throw new \RuntimeException('Can\'t get a Zen');
-		}
+        if ($response->code != 200) {
+            throw new \RuntimeException('Can\'t get a Zen');
+        }
 
-		return $response->body;
-	}
+        return $response->body;
+    }
 }

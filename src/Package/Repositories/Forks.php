@@ -19,57 +19,54 @@ use Joomla\Github\AbstractPackage;
  */
 class Forks extends AbstractPackage
 {
-	/**
-	 * Create a fork.
-	 *
-	 * @param   string  $owner  The name of the owner of the GitHub repository.
-	 * @param   string  $repo   The name of the GitHub repository.
-	 * @param   string  $org    The organization to fork the repo into. By default it is forked to the current user.
-	 *
-	 * @return  object
-	 *
-	 * @since   1.0
-	 * @throws  \DomainException
-	 */
-	public function create($owner, $repo, $org = '')
-	{
-		// Build the request path.
-		$path = '/repos/' . $owner . '/' . $repo . '/forks';
+    /**
+     * Create a fork.
+     *
+     * @param   string  $owner  The name of the owner of the GitHub repository.
+     * @param   string  $repo   The name of the GitHub repository.
+     * @param   string  $org    The organization to fork the repo into. By default it is forked to the current user.
+     *
+     * @return  object
+     *
+     * @since   1.0
+     * @throws  \DomainException
+     */
+    public function create($owner, $repo, $org = '')
+    {
+        // Build the request path.
+        $path = '/repos/' . $owner . '/' . $repo . '/forks';
 
-		if (\strlen($org) > 0)
-		{
-			$data = json_encode(
-				['org' => $org]
-			);
-		}
-		else
-		{
-			$data = json_encode([]);
-		}
+        if (\strlen($org) > 0) {
+            $data = json_encode(
+                ['org' => $org]
+            );
+        } else {
+            $data = json_encode([]);
+        }
 
-		// Send the request.
-		return $this->processResponse($this->client->post($this->fetchUrl($path), $data), 202);
-	}
+        // Send the request.
+        return $this->processResponse($this->client->post($this->fetchUrl($path), $data), 202);
+    }
 
-	/**
-	 * List forks.
-	 *
-	 * @param   string   $owner  The name of the owner of the GitHub repository.
-	 * @param   string   $repo   The name of the GitHub repository.
-	 * @param   integer  $page   Page to request
-	 * @param   integer  $limit  Number of results to return per page
-	 *
-	 * @return  array
-	 *
-	 * @since   1.0
-	 * @throws  \DomainException
-	 */
-	public function getList($owner, $repo, $page = 0, $limit = 0)
-	{
-		// Build the request path.
-		$path = '/repos/' . $owner . '/' . $repo . '/forks';
+    /**
+     * List forks.
+     *
+     * @param   string   $owner  The name of the owner of the GitHub repository.
+     * @param   string   $repo   The name of the GitHub repository.
+     * @param   integer  $page   Page to request
+     * @param   integer  $limit  Number of results to return per page
+     *
+     * @return  array
+     *
+     * @since   1.0
+     * @throws  \DomainException
+     */
+    public function getList($owner, $repo, $page = 0, $limit = 0)
+    {
+        // Build the request path.
+        $path = '/repos/' . $owner . '/' . $repo . '/forks';
 
-		// Send the request.
-		return $this->processResponse($this->client->get($this->fetchUrl($path, $page, $limit)), 200);
-	}
+        // Send the request.
+        return $this->processResponse($this->client->get($this->fetchUrl($path, $page, $limit)), 200);
+    }
 }

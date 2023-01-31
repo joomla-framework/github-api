@@ -16,118 +16,118 @@ use Joomla\Github\Tests\Stub\GitHubTestCase;
  */
 class KeysTest extends GitHubTestCase
 {
-	/**
-	 * @var Keys
-	 */
-	protected $object;
+    /**
+     * @var Keys
+     */
+    protected $object;
 
-	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 *
-	 * @since   1.0
-	 *
-	 * @return  void
-	 */
-	protected function setUp(): void
-	{
-		parent::setUp();
+    /**
+     * Sets up the fixture, for example, opens a network connection.
+     * This method is called before a test is executed.
+     *
+     * @since   1.0
+     *
+     * @return  void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		$this->object = new Keys($this->options, $this->client);
-	}
+        $this->object = new Keys($this->options, $this->client);
+    }
 
-	/**
-	 * Tests the GetList method.
-	 *
-	 * @return  void
-	 */
-	public function testGetList()
-	{
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/repos/joomla/joomla-platform/keys')
-			->will($this->returnValue($this->response));
+    /**
+     * Tests the GetList method.
+     *
+     * @return  void
+     */
+    public function testGetList()
+    {
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/repos/joomla/joomla-platform/keys')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->getList('joomla', 'joomla-platform'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->getList('joomla', 'joomla-platform'),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 
-	/**
-	 * Tests the Get method.
-	 *
-	 * @return  void
-	 */
-	public function testGet()
-	{
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/repos/joomla/joomla-platform/keys/1')
-			->will($this->returnValue($this->response));
+    /**
+     * Tests the Get method.
+     *
+     * @return  void
+     */
+    public function testGet()
+    {
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/repos/joomla/joomla-platform/keys/1')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->get('joomla', 'joomla-platform', 1),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->get('joomla', 'joomla-platform', 1),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 
-	/**
-	 * Tests the Create method.
-	 *
-	 * @return  void
-	 */
-	public function testCreate()
-	{
-		$this->response->code = 201;
+    /**
+     * Tests the Create method.
+     *
+     * @return  void
+     */
+    public function testCreate()
+    {
+        $this->response->code = 201;
 
-		$this->client->expects($this->once())
-			->method('post')
-			->with('/repos/joomla/joomla-platform/keys')
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('post')
+            ->with('/repos/joomla/joomla-platform/keys')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->create('joomla', 'joomla-platform', 'email@example.com', '123abc'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->create('joomla', 'joomla-platform', 'email@example.com', '123abc'),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 
-	/**
-	 * Tests the Edit method.
-	 *
-	 * @return  void
-	 */
-	public function testEdit()
-	{
-		$this->client->expects($this->once())
-			->method('patch')
-			->with('/repos/joomla/joomla-platform/keys/1')
-			->will($this->returnValue($this->response));
+    /**
+     * Tests the Edit method.
+     *
+     * @return  void
+     */
+    public function testEdit()
+    {
+        $this->client->expects($this->once())
+            ->method('patch')
+            ->with('/repos/joomla/joomla-platform/keys/1')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->edit('joomla', 'joomla-platform', 1, 'email@example.com', '123abc'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->edit('joomla', 'joomla-platform', 1, 'email@example.com', '123abc'),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 
-	/**
-	 * Tests the Delete method.
-	 *
-	 * @return  void
-	 */
-	public function testDelete()
-	{
-		$this->response->code = 204;
-		$this->response->body = true;
+    /**
+     * Tests the Delete method.
+     *
+     * @return  void
+     */
+    public function testDelete()
+    {
+        $this->response->code = 204;
+        $this->response->body = true;
 
-		$this->client->expects($this->once())
-			->method('delete')
-			->with('/repos/joomla/joomla-platform/keys/1')
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('delete')
+            ->with('/repos/joomla/joomla-platform/keys/1')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->delete('joomla', 'joomla-platform', 1),
-			$this->equalTo($this->response->body)
-		);
-	}
+        $this->assertThat(
+            $this->object->delete('joomla', 'joomla-platform', 1),
+            $this->equalTo($this->response->body)
+        );
+    }
 }

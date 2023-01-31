@@ -19,99 +19,95 @@ use Joomla\Github\AbstractPackage;
  */
 class Statuses extends AbstractPackage
 {
-	/**
-	 * Create a Status.
-	 *
-	 * @param   string  $user         The name of the owner of the GitHub repository.
-	 * @param   string  $repo         The name of the GitHub repository.
-	 * @param   string  $sha          The SHA1 value for which to set the status.
-	 * @param   string  $state        The state (pending, success, error or failure).
-	 * @param   string  $targetUrl    Optional target URL.
-	 * @param   string  $description  Optional description for the status.
-	 * @param   string  $context      A string label to differentiate this status from the status of other systems.
-	 * 							      Default: "default"
-	 *
-	 * @throws \InvalidArgumentException
-	 * @throws \DomainException
-	 *
-	 * @return object
-	 *
-	 * @since   1.0
-	 */
-	public function create($user, $repo, $sha, $state, $targetUrl = null, $description = null, $context = null)
-	{
-		// Build the request path.
-		$path = "/repos/$user/$repo/statuses/$sha";
+    /**
+     * Create a Status.
+     *
+     * @param   string  $user         The name of the owner of the GitHub repository.
+     * @param   string  $repo         The name of the GitHub repository.
+     * @param   string  $sha          The SHA1 value for which to set the status.
+     * @param   string  $state        The state (pending, success, error or failure).
+     * @param   string  $targetUrl    Optional target URL.
+     * @param   string  $description  Optional description for the status.
+     * @param   string  $context      A string label to differentiate this status from the status of other systems.
+     * 							      Default: "default"
+     *
+     * @throws \InvalidArgumentException
+     * @throws \DomainException
+     *
+     * @return object
+     *
+     * @since   1.0
+     */
+    public function create($user, $repo, $sha, $state, $targetUrl = null, $description = null, $context = null)
+    {
+        // Build the request path.
+        $path = "/repos/$user/$repo/statuses/$sha";
 
-		if (!\in_array($state, ['pending', 'success', 'error', 'failure']))
-		{
-			throw new \InvalidArgumentException('State must be one of pending, success, error or failure.');
-		}
+        if (!\in_array($state, ['pending', 'success', 'error', 'failure'])) {
+            throw new \InvalidArgumentException('State must be one of pending, success, error or failure.');
+        }
 
-		// Build the request data.
-		$data = [
-			'state' => $state,
-		];
+        // Build the request data.
+        $data = [
+            'state' => $state,
+        ];
 
-		if ($targetUrl !== null)
-		{
-			$data['target_url'] = $targetUrl;
-		}
+        if ($targetUrl !== null) {
+            $data['target_url'] = $targetUrl;
+        }
 
-		if ($description !== null)
-		{
-			$data['description'] = $description;
-		}
+        if ($description !== null) {
+            $data['description'] = $description;
+        }
 
-		if ($context !== null)
-		{
-			$data['context'] = $context;
-		}
+        if ($context !== null) {
+            $data['context'] = $context;
+        }
 
-		// Send the request.
-		return $this->processResponse(
-			$this->client->post($this->fetchUrl($path), json_encode($data)),
-			201
-		);
-	}
+        // Send the request.
+        return $this->processResponse(
+            $this->client->post($this->fetchUrl($path), json_encode($data)),
+            201
+        );
+    }
 
-	/**
-	 * List Statuses for a specific Ref.
-	 *
-	 * @param   string  $user  The name of the owner of the GitHub repository.
-	 * @param   string  $repo  The name of the GitHub repository.
-	 * @param   string  $sha   SHA1 for which to get the statuses.
-	 *
-	 * @return  array
-	 *
-	 * @since   1.0
-	 */
-	public function getList($user, $repo, $sha)
-	{
-		// Build the request path.
-		$path = "/repos/$user/$repo/statuses/$sha";
+    /**
+     * List Statuses for a specific Ref.
+     *
+     * @param   string  $user  The name of the owner of the GitHub repository.
+     * @param   string  $repo  The name of the GitHub repository.
+     * @param   string  $sha   SHA1 for which to get the statuses.
+     *
+     * @return  array
+     *
+     * @since   1.0
+     */
+    public function getList($user, $repo, $sha)
+    {
+        // Build the request path.
+        $path = "/repos/$user/$repo/statuses/$sha";
 
-		// Send the request.
-		return $this->processResponse($this->client->get($this->fetchUrl($path)));
-	}
+        // Send the request.
+        return $this->processResponse($this->client->get($this->fetchUrl($path)));
+    }
 
-	/**
-	 * Get the combined Status for a specific Ref.
-	 *
-	 * @param   string  $user  The name of the owner of the GitHub repository.
-	 * @param   string  $repo  The name of the GitHub repository.
-	 * @param   string  $sha   SHA1 for which to get the combined status.
-	 *
-	 * @return  array
-	 *
-	 * @since   1.4.0
-	 */
-	public function getCombinedStatus($user, $repo, $sha)
-	{
-		// Build the request path.
-		$path = "/repos/$user/$repo/commits/$sha/status";
+    /**
+     * Get the combined Status for a specific Ref.
+     *
+     * @param   string  $user  The name of the owner of the GitHub repository.
+     * @param   string  $repo  The name of the GitHub repository.
+     * @param   string  $sha   SHA1 for which to get the combined status.
+     *
+     * @return  array
+     *
+     * @since   1.4.0
+     */
+    public function getCombinedStatus($user, $repo, $sha)
+    {
+        // Build the request path.
+        $path = "/repos/$user/$repo/commits/$sha/status";
 
-		// Send the request.
-		return $this->processResponse($this->client->get($this->fetchUrl($path)));
-	}
+        // Send the request.
+        return $this->processResponse($this->client->get($this->fetchUrl($path)));
+    }
 }

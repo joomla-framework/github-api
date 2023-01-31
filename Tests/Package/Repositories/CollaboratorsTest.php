@@ -16,146 +16,146 @@ use Joomla\Github\Tests\Stub\GitHubTestCase;
  */
 class CollaboratorsTest extends GitHubTestCase
 {
-	/**
-	 * @var Collaborators
-	 */
-	protected $object;
+    /**
+     * @var Collaborators
+     */
+    protected $object;
 
-	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 *
-	 * @since   1.0
-	 *
-	 * @return  void
-	 */
-	protected function setUp(): void
-	{
-		parent::setUp();
+    /**
+     * Sets up the fixture, for example, opens a network connection.
+     * This method is called before a test is executed.
+     *
+     * @since   1.0
+     *
+     * @return  void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		$this->object = new Collaborators($this->options, $this->client);
-	}
+        $this->object = new Collaborators($this->options, $this->client);
+    }
 
-	/**
-	 * Tests the GetList method.
-	 *
-	 * @return  void
-	 */
-	public function testGetList()
-	{
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/repos/joomla/joomla-framework/collaborators')
-			->will($this->returnValue($this->response));
+    /**
+     * Tests the GetList method.
+     *
+     * @return  void
+     */
+    public function testGetList()
+    {
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/repos/joomla/joomla-framework/collaborators')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->getList('joomla', 'joomla-framework'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->getList('joomla', 'joomla-framework'),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 
-	/**
-	 * Tests the Get method.
-	 *
-	 * @return  void
-	 */
-	public function testGet()
-	{
-		$this->response->code = 204;
-		$this->response->body = true;
+    /**
+     * Tests the Get method.
+     *
+     * @return  void
+     */
+    public function testGet()
+    {
+        $this->response->code = 204;
+        $this->response->body = true;
 
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/repos/joomla/joomla-framework/collaborators/elkuku')
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/repos/joomla/joomla-framework/collaborators/elkuku')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->get('joomla', 'joomla-framework', 'elkuku'),
-			$this->equalTo($this->response->body)
-		);
-	}
+        $this->assertThat(
+            $this->object->get('joomla', 'joomla-framework', 'elkuku'),
+            $this->equalTo($this->response->body)
+        );
+    }
 
-	/**
-	 * Tests the GetNegative method.
-	 *
-	 * @return  void
-	 */
-	public function testGetNegative()
-	{
-		$this->response->code = 404;
-		$this->response->body = false;
+    /**
+     * Tests the GetNegative method.
+     *
+     * @return  void
+     */
+    public function testGetNegative()
+    {
+        $this->response->code = 404;
+        $this->response->body = false;
 
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/repos/joomla/joomla-framework/collaborators/elkuku')
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/repos/joomla/joomla-framework/collaborators/elkuku')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->get('joomla', 'joomla-framework', 'elkuku'),
-			$this->equalTo($this->response->body)
-		);
-	}
+        $this->assertThat(
+            $this->object->get('joomla', 'joomla-framework', 'elkuku'),
+            $this->equalTo($this->response->body)
+        );
+    }
 
-	/**
-	 * Tests the GetUnexpected method.
-	 *
-	 * @return  void
-	 */
-	public function testGetUnexpected()
-	{
-		$this->expectException(\UnexpectedValueException::class);
+    /**
+     * Tests the GetUnexpected method.
+     *
+     * @return  void
+     */
+    public function testGetUnexpected()
+    {
+        $this->expectException(\UnexpectedValueException::class);
 
-		$this->response->code = 666;
-		$this->response->body = null;
+        $this->response->code = 666;
+        $this->response->body = null;
 
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/repos/joomla/joomla-framework/collaborators/elkuku')
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/repos/joomla/joomla-framework/collaborators/elkuku')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->get('joomla', 'joomla-framework', 'elkuku'),
-			$this->equalTo($this->response->body)
-		);
-	}
+        $this->assertThat(
+            $this->object->get('joomla', 'joomla-framework', 'elkuku'),
+            $this->equalTo($this->response->body)
+        );
+    }
 
-	/**
-	 * Tests the Add method.
-	 *
-	 * @return  void
-	 */
-	public function testAdd()
-	{
-		$this->response->code = 204;
+    /**
+     * Tests the Add method.
+     *
+     * @return  void
+     */
+    public function testAdd()
+    {
+        $this->response->code = 204;
 
-		$this->client->expects($this->once())
-			->method('put')
-			->with('/repos/joomla/joomla-framework/collaborators/elkuku')
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('put')
+            ->with('/repos/joomla/joomla-framework/collaborators/elkuku')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->add('joomla', 'joomla-framework', 'elkuku'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->add('joomla', 'joomla-framework', 'elkuku'),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 
-	/**
-	 * Tests the Remove method.
-	 *
-	 * @return  void
-	 */
-	public function testRemove()
-	{
-		$this->response->code = 204;
+    /**
+     * Tests the Remove method.
+     *
+     * @return  void
+     */
+    public function testRemove()
+    {
+        $this->response->code = 204;
 
-		$this->client->expects($this->once())
-			->method('delete')
-			->with('/repos/joomla/joomla-framework/collaborators/elkuku')
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('delete')
+            ->with('/repos/joomla/joomla-framework/collaborators/elkuku')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->remove('joomla', 'joomla-framework', 'elkuku'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->remove('joomla', 'joomla-framework', 'elkuku'),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 }

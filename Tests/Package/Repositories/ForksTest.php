@@ -16,114 +16,114 @@ use Joomla\Github\Tests\Stub\GitHubTestCase;
  */
 class ForksTest extends GitHubTestCase
 {
-	/**
-	 * @var    Forks  Object under test.
-	 * @since  11.4
-	 */
-	protected $object;
+    /**
+     * @var    Forks  Object under test.
+     * @since  11.4
+     */
+    protected $object;
 
-	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 *
-	 * @access protected
-	 *
-	 * @return void
-	 */
-	protected function setUp(): void
-	{
-		parent::setUp();
+    /**
+     * Sets up the fixture, for example, opens a network connection.
+     * This method is called before a test is executed.
+     *
+     * @access protected
+     *
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		$this->object = new Forks($this->options, $this->client);
-	}
+        $this->object = new Forks($this->options, $this->client);
+    }
 
-	/**
-	 * Tests the create method
-	 *
-	 * @return void
-	 */
-	public function testCreate()
-	{
-		$this->response->code = 202;
+    /**
+     * Tests the create method
+     *
+     * @return void
+     */
+    public function testCreate()
+    {
+        $this->response->code = 202;
 
-		// Build the request data.
-		$data = json_encode(
-			array(
-				'org' => 'jenkins-jools'
-			)
-		);
+        // Build the request data.
+        $data = json_encode(
+            [
+                'org' => 'jenkins-jools',
+            ]
+        );
 
-		$this->client->expects($this->once())
-			->method('post')
-			->with('/repos/joomla/joomla-platform/forks', $data)
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('post')
+            ->with('/repos/joomla/joomla-platform/forks', $data)
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->create('joomla', 'joomla-platform', 'jenkins-jools'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
-	}
+        $this->assertThat(
+            $this->object->create('joomla', 'joomla-platform', 'jenkins-jools'),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
 
-	/**
-	 * Tests the create method - failure
-	 *
-	 * @return void
-	 */
-	public function testCreateFailure()
-	{
-		$this->expectException(\DomainException::class);
+    /**
+     * Tests the create method - failure
+     *
+     * @return void
+     */
+    public function testCreateFailure()
+    {
+        $this->expectException(\DomainException::class);
 
-		$this->response->code = 500;
-		$this->response->body = $this->errorString;
+        $this->response->code = 500;
+        $this->response->body = $this->errorString;
 
-		// Build the request data.
-		$data = json_encode(
-			array()
-		);
+        // Build the request data.
+        $data = json_encode(
+            []
+        );
 
-		$this->client->expects($this->once())
-			->method('post')
-			->with('/repos/joomla/joomla-platform/forks', $data)
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('post')
+            ->with('/repos/joomla/joomla-platform/forks', $data)
+            ->will($this->returnValue($this->response));
 
-		$this->object->create('joomla', 'joomla-platform', '');
-	}
+        $this->object->create('joomla', 'joomla-platform', '');
+    }
 
-	/**
-	 * Tests the getList method
-	 *
-	 * @return void
-	 */
-	public function testGetList()
-	{
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/repos/joomla/joomla-platform/forks')
-			->will($this->returnValue($this->response));
+    /**
+     * Tests the getList method
+     *
+     * @return void
+     */
+    public function testGetList()
+    {
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/repos/joomla/joomla-platform/forks')
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->getList('joomla', 'joomla-platform'),
-			$this->equalTo(json_decode($this->response->body))
-		);
-	}
+        $this->assertThat(
+            $this->object->getList('joomla', 'joomla-platform'),
+            $this->equalTo(json_decode($this->response->body))
+        );
+    }
 
-	/**
-	 * Tests the getList method - failure
-	 *
-	 * @return void
-	 */
-	public function testGetListFailure()
-	{
-		$this->expectException(\DomainException::class);
+    /**
+     * Tests the getList method - failure
+     *
+     * @return void
+     */
+    public function testGetListFailure()
+    {
+        $this->expectException(\DomainException::class);
 
-		$this->response->code = 500;
-		$this->response->body = $this->errorString;
+        $this->response->code = 500;
+        $this->response->body = $this->errorString;
 
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/repos/joomla/joomla-platform/forks')
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/repos/joomla/joomla-platform/forks')
+            ->will($this->returnValue($this->response));
 
-		$this->object->getList('joomla', 'joomla-platform');
-	}
+        $this->object->getList('joomla', 'joomla-platform');
+    }
 }

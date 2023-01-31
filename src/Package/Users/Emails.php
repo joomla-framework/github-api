@@ -22,62 +22,62 @@ use Joomla\Github\AbstractPackage;
  */
 class Emails extends AbstractPackage
 {
-	/**
-	 * List email addresses for a user.
-	 *
-	 * @return  object
-	 *
-	 * @since   1.0
-	 */
-	public function getList()
-	{
-		// Build the request path.
-		$path = '/user/emails';
+    /**
+     * List email addresses for a user.
+     *
+     * @return  object
+     *
+     * @since   1.0
+     */
+    public function getList()
+    {
+        // Build the request path.
+        $path = '/user/emails';
 
-		return $this->processResponse(
-			$this->client->get($this->fetchUrl($path))
-		);
-	}
+        return $this->processResponse(
+            $this->client->get($this->fetchUrl($path))
+        );
+    }
 
-	/**
-	 * Add email address(es).
-	 *
-	 * @param   string|array  $email  The email address(es).
-	 *
-	 * @return  object
-	 *
-	 * @since   1.0
-	 */
-	public function add($email)
-	{
-		// Build the request path.
-		$path = '/user/emails';
+    /**
+     * Add email address(es).
+     *
+     * @param   string|array  $email  The email address(es).
+     *
+     * @return  object
+     *
+     * @since   1.0
+     */
+    public function add($email)
+    {
+        // Build the request path.
+        $path = '/user/emails';
 
-		return $this->processResponse(
-			$this->client->post($this->fetchUrl($path), json_encode($email)),
-			201
-		);
-	}
+        return $this->processResponse(
+            $this->client->post($this->fetchUrl($path), json_encode($email)),
+            201
+        );
+    }
 
-	/**
-	 * Delete email address(es).
-	 *
-	 * @param   string|array  $email  The email address(es).
-	 *
-	 * @return  object
-	 *
-	 * @since   1.0
-	 */
-	public function delete($email)
-	{
-		// Build the request path.
-		$path = '/user/emails';
+    /**
+     * Delete email address(es).
+     *
+     * @param   string|array  $email  The email address(es).
+     *
+     * @return  object
+     *
+     * @since   1.0
+     */
+    public function delete($email)
+    {
+        // Build the request path.
+        $path = '/user/emails';
 
-		$this->client->setOption('body', json_encode($email));
+        $this->client->setOption('body', json_encode($email));
 
-		return $this->processResponse(
-			$this->client->delete($this->fetchUrl($path)),
-			204
-		);
-	}
+        return $this->processResponse(
+            $this->client->delete($this->fetchUrl($path)),
+            204
+        );
+    }
 }

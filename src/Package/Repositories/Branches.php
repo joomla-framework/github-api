@@ -19,46 +19,46 @@ use Joomla\Github\AbstractPackage;
  */
 class Branches extends AbstractPackage
 {
-	/**
-	 * List Branches.
-	 *
-	 * @param   string  $owner  Repository owner.
-	 * @param   string  $repo   Repository name.
-	 *
-	 * @return  object
-	 *
-	 * @since   1.4.0
-	 */
-	public function getList($owner, $repo)
-	{
-		// Build the request path.
-		$path = "/repos/$owner/$repo/branches";
+    /**
+     * List Branches.
+     *
+     * @param   string  $owner  Repository owner.
+     * @param   string  $repo   Repository name.
+     *
+     * @return  object
+     *
+     * @since   1.4.0
+     */
+    public function getList($owner, $repo)
+    {
+        // Build the request path.
+        $path = "/repos/$owner/$repo/branches";
 
-		// Send the request.
-		return $this->processResponse(
-			$this->client->get($this->fetchUrl($path))
-		);
-	}
+        // Send the request.
+        return $this->processResponse(
+            $this->client->get($this->fetchUrl($path))
+        );
+    }
 
-	/**
-	 * Get Branch.
-	 *
-	 * @param   string  $owner   Repository owner.
-	 * @param   string  $repo    Repository name.
-	 * @param   string  $branch  Branch name.
-	 *
-	 * @return  object
-	 *
-	 * @since   1.4.0
-	 */
-	public function get($owner, $repo, $branch)
-	{
-		// Build the request path.
-		$path = "/repos/$owner/$repo/branches/$branch";
+    /**
+     * Get Branch.
+     *
+     * @param   string  $owner   Repository owner.
+     * @param   string  $repo    Repository name.
+     * @param   string  $branch  Branch name.
+     *
+     * @return  object
+     *
+     * @since   1.4.0
+     */
+    public function get($owner, $repo, $branch)
+    {
+        // Build the request path.
+        $path = "/repos/$owner/$repo/branches/$branch";
 
-		// Send the request.
-		return $this->processResponse(
-			$this->client->get($this->fetchUrl($path))
-		);
-	}
+        // Send the request.
+        return $this->processResponse(
+            $this->client->get($this->fetchUrl($path))
+        );
+    }
 }

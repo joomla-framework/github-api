@@ -16,35 +16,35 @@ use Joomla\Github\Tests\Stub\GitHubTestCase;
  */
 class UsersTest extends GitHubTestCase
 {
-	/**
-	 * @var Users
-	 */
-	protected $object;
+    /**
+     * @var Users
+     */
+    protected $object;
 
-	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 *
-	 * @access protected
-	 *
-	 * @return void
-	 */
-	protected function setUp(): void
-	{
-		parent::setUp();
+    /**
+     * Sets up the fixture, for example, opens a network connection.
+     * This method is called before a test is executed.
+     *
+     * @access protected
+     *
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-		$this->object = new Users($this->options, $this->client);
-	}
+        $this->object = new Users($this->options, $this->client);
+    }
 
-	/**
-	 * Tests the getUser method
-	 *
-	 * @return void
-	 */
-	public function testGet()
-	{
-		$this->response->code = 200;
-		$this->response->body = '{
+    /**
+     * Tests the getUser method
+     *
+     * @return void
+     */
+    public function testGet()
+    {
+        $this->response->code = 200;
+        $this->response->body = '{
   "login": "octocat",
   "id": 1,
   "avatar_url": "https://github.com/images/error/octocat_happy.gif",
@@ -66,49 +66,49 @@ class UsersTest extends GitHubTestCase
   "type": "User"
 }';
 
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/users/joomla', array(), 0)
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/users/joomla', [], 0)
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->get('joomla'),
-			$this->equalTo(json_decode($this->response->body))
-		);
-	}
+        $this->assertThat(
+            $this->object->get('joomla'),
+            $this->equalTo(json_decode($this->response->body))
+        );
+    }
 
-	/**
-	 * Tests the getUser method with failure
-	 *
-	 * @return void
-	 */
-	public function testGetFailure()
-	{
-		$this->expectException(\DomainException::class);
+    /**
+     * Tests the getUser method with failure
+     *
+     * @return void
+     */
+    public function testGetFailure()
+    {
+        $this->expectException(\DomainException::class);
 
-		$this->response->code = 404;
-		$this->response->body = '{"message":"Not Found"}';
+        $this->response->code = 404;
+        $this->response->body = '{"message":"Not Found"}';
 
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/users/nonexistentuser', array(), 0)
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/users/nonexistentuser', [], 0)
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->get('nonexistentuser'),
-			$this->equalTo(json_decode($this->response->body))
-		);
-	}
+        $this->assertThat(
+            $this->object->get('nonexistentuser'),
+            $this->equalTo(json_decode($this->response->body))
+        );
+    }
 
-	/**
-	 * Tests the getAuthenticatedUser method
-	 *
-	 * @return void
-	 */
-	public function testGetAuthenticatedUser()
-	{
-		$this->response->code = 200;
-		$this->response->body = '{
+    /**
+     * Tests the getAuthenticatedUser method
+     *
+     * @return void
+     */
+    public function testGetAuthenticatedUser()
+    {
+        $this->response->code = 200;
+        $this->response->body = '{
   "login": "octocat",
   "id": 1,
   "avatar_url": "https://github.com/images/error/octocat_happy.gif",
@@ -141,49 +141,49 @@ class UsersTest extends GitHubTestCase
   }
 }';
 
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/user', array(), 0)
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/user', [], 0)
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->getAuthenticatedUser(),
-			$this->equalTo(json_decode($this->response->body))
-		);
-	}
+        $this->assertThat(
+            $this->object->getAuthenticatedUser(),
+            $this->equalTo(json_decode($this->response->body))
+        );
+    }
 
-	/**
-	 * Tests the GetAuthenticatedUser method with failure
-	 *
-	 * @return void
-	 */
-	public function testGetAuthenticatedUserFailure()
-	{
-		$this->expectException(\DomainException::class);
+    /**
+     * Tests the GetAuthenticatedUser method with failure
+     *
+     * @return void
+     */
+    public function testGetAuthenticatedUserFailure()
+    {
+        $this->expectException(\DomainException::class);
 
-		$this->response->code = 401;
-		$this->response->body = '{"message":"Requires authentication"}';
+        $this->response->code = 401;
+        $this->response->body = '{"message":"Requires authentication"}';
 
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/user', array(), 0)
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/user', [], 0)
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->getAuthenticatedUser(),
-			$this->equalTo(json_decode($this->response->body))
-		);
-	}
+        $this->assertThat(
+            $this->object->getAuthenticatedUser(),
+            $this->equalTo(json_decode($this->response->body))
+        );
+    }
 
-	/**
-	 * Tests the getUsers method
-	 *
-	 * @return void
-	 */
-	public function testGetList()
-	{
-		$this->response->code = 200;
-		$this->response->body = '[
+    /**
+     * Tests the getUsers method
+     *
+     * @return void
+     */
+    public function testGetList()
+    {
+        $this->response->code = 200;
+        $this->response->body = '[
   {
     "login": "octocat",
     "id": 1,
@@ -201,34 +201,34 @@ class UsersTest extends GitHubTestCase
   }
 ]';
 
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/users', array(), 0)
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/users', [], 0)
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->getList(),
-			$this->equalTo(json_decode($this->response->body))
-		);
-	}
+        $this->assertThat(
+            $this->object->getList(),
+            $this->equalTo(json_decode($this->response->body))
+        );
+    }
 
-	/**
-	 * Tests the getUsers method
-	 *
-	 * @return void
-	 */
-	public function testEdit()
-	{
-		$name     = 'monalisa octocat';
-		$email    = 'octocat@github.com';
-		$blog     = 'https =>//github.com/blog';
-		$company  = 'GitHub';
-		$location = 'San Francisco';
-		$hireable = true;
-		$bio      = 'There once...';
+    /**
+     * Tests the getUsers method
+     *
+     * @return void
+     */
+    public function testEdit()
+    {
+        $name     = 'monalisa octocat';
+        $email    = 'octocat@github.com';
+        $blog     = 'https =>//github.com/blog';
+        $company  = 'GitHub';
+        $location = 'San Francisco';
+        $hireable = true;
+        $bio      = 'There once...';
 
-		$this->response->code = 200;
-		$this->response->body = '{
+        $this->response->code = 200;
+        $this->response->body = '{
   "login": "octocat",
   "id": 1,
   "avatar_url": "https://github.com/images/error/octocat_happy.gif",
@@ -261,71 +261,71 @@ class UsersTest extends GitHubTestCase
   }
 }';
 
-		$input = json_encode(
-			array(
-				'name'     => $name,
-				'email'    => $email,
-				'blog'     => $blog,
-				'company'  => $company,
-				'location' => $location,
-				'hireable' => $hireable,
-				'bio'      => $bio
-			)
-		);
+        $input = json_encode(
+            [
+                'name'     => $name,
+                'email'    => $email,
+                'blog'     => $blog,
+                'company'  => $company,
+                'location' => $location,
+                'hireable' => $hireable,
+                'bio'      => $bio,
+            ]
+        );
 
-		$this->client->expects($this->once())
-			->method('patch')
-			->with('/user', $input, array(), 0)
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('patch')
+            ->with('/user', $input, [], 0)
+            ->will($this->returnValue($this->response));
 
-		$this->assertThat(
-			$this->object->edit($name, $email, $blog, $company, $location, $hireable, $bio),
-			$this->equalTo(json_decode($this->response->body))
-		);
-	}
+        $this->assertThat(
+            $this->object->edit($name, $email, $blog, $company, $location, $hireable, $bio),
+            $this->equalTo(json_decode($this->response->body))
+        );
+    }
 
-	/**
-	 * Tests the getUsers method
-	 *
-	 * @return void
-	 */
-	public function testEditFailure()
-	{
-		$this->expectException(\DomainException::class);
+    /**
+     * Tests the getUsers method
+     *
+     * @return void
+     */
+    public function testEditFailure()
+    {
+        $this->expectException(\DomainException::class);
 
-		$name     = 'monalisa octocat';
-		$email    = 'octocat@github.com';
-		$blog     = 'https =>//github.com/blog';
-		$company  = 'GitHub';
-		$location = 'San Francisco';
-		$hireable = true;
-		$bio      = 'There once...';
+        $name     = 'monalisa octocat';
+        $email    = 'octocat@github.com';
+        $blog     = 'https =>//github.com/blog';
+        $company  = 'GitHub';
+        $location = 'San Francisco';
+        $hireable = true;
+        $bio      = 'There once...';
 
-		$this->response->code = 404;
-		$this->response->body = $this->errorString;
+        $this->response->code = 404;
+        $this->response->body = $this->errorString;
 
-		$input = json_encode(
-			array(
-				'name'     => $name,
-				'email'    => $email,
-				'blog'     => $blog,
-				'company'  => $company,
-				'location' => $location,
-				'hireable' => $hireable,
-				'bio'      => $bio
-			)
-		);
+        $input = json_encode(
+            [
+                'name'     => $name,
+                'email'    => $email,
+                'blog'     => $blog,
+                'company'  => $company,
+                'location' => $location,
+                'hireable' => $hireable,
+                'bio'      => $bio,
+            ]
+        );
 
-		$this->client->expects($this->once())
-			->method('patch')
-			->with('/user', $input, array(), 0)
-			->will($this->returnValue($this->response));
+        $this->client->expects($this->once())
+            ->method('patch')
+            ->with('/user', $input, [], 0)
+            ->will($this->returnValue($this->response));
 
-		// $this->object->edit($name, $email, $blog, $company, $location, $hireable, $bio);
+        // $this->object->edit($name, $email, $blog, $company, $location, $hireable, $bio);
 
-		$this->assertThat(
-			$this->object->edit($name, $email, $blog, $company, $location, $hireable, $bio),
-			$this->equalTo(json_decode($this->response->body))
-		);
-	}
+        $this->assertThat(
+            $this->object->edit($name, $email, $blog, $company, $location, $hireable, $bio),
+            $this->equalTo(json_decode($this->response->body))
+        );
+    }
 }

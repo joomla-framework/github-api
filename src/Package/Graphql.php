@@ -19,38 +19,37 @@ use Joomla\Github\AbstractPackage;
  */
 class Graphql extends AbstractPackage
 {
-	/**
-	 * Execute a query against the GraphQL API.
-	 *
-	 * @param   string  $query      The query to perform.
-	 * @param   array   $variables  An optional array of variables to include in the request.
-	 *
-	 * @return  string
-	 *
-	 * @since   1.6.0
-	 */
-	public function execute($query, array $variables = [])
-	{
-		// Build the request path.
-		$path = '/graphql';
+    /**
+     * Execute a query against the GraphQL API.
+     *
+     * @param   string  $query      The query to perform.
+     * @param   array   $variables  An optional array of variables to include in the request.
+     *
+     * @return  string
+     *
+     * @since   1.6.0
+     */
+    public function execute($query, array $variables = [])
+    {
+        // Build the request path.
+        $path = '/graphql';
 
-		$headers = [
-			'Accept'       => 'application/vnd.github.v4+json',
-			'Content-Type' => 'application/json',
-		];
+        $headers = [
+            'Accept'       => 'application/vnd.github.v4+json',
+            'Content-Type' => 'application/json',
+        ];
 
-		$data = [
-			'query' => $query,
-		];
+        $data = [
+            'query' => $query,
+        ];
 
-		if (!empty($variables))
-		{
-			$data['variables'] = $variables;
-		}
+        if (!empty($variables)) {
+            $data['variables'] = $variables;
+        }
 
-		// Send the request.
-		return $this->processResponse(
-			$this->client->post($this->fetchUrl($path), json_encode($data), $headers)
-		);
-	}
+        // Send the request.
+        return $this->processResponse(
+            $this->client->post($this->fetchUrl($path), json_encode($data), $headers)
+        );
+    }
 }

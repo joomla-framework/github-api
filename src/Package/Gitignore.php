@@ -23,60 +23,58 @@ use Joomla\Http\Exception\UnexpectedResponseException;
  */
 class Gitignore extends AbstractPackage
 {
-	/**
-	 * Listing available templates
-	 *
-	 * List all templates available to pass as an option when creating a repository.
-	 *
-	 * @return  object
-	 *
-	 * @since   1.0
-	 */
-	public function getList()
-	{
-		// Build the request path.
-		$path = '/gitignore/templates';
+    /**
+     * Listing available templates
+     *
+     * List all templates available to pass as an option when creating a repository.
+     *
+     * @return  object
+     *
+     * @since   1.0
+     */
+    public function getList()
+    {
+        // Build the request path.
+        $path = '/gitignore/templates';
 
-		return $this->processResponse(
-			$this->client->get($this->fetchUrl($path))
-		);
-	}
+        return $this->processResponse(
+            $this->client->get($this->fetchUrl($path))
+        );
+    }
 
-	/**
-	 * Get a single template
-	 *
-	 * @param   string   $name  The name of the template
-	 * @param   boolean  $raw   Raw output
-	 *
-	 * @return  mixed|string
-	 *
-	 * @since   1.0
-	 * @throws  UnexpectedResponseException
-	 */
-	public function get($name, $raw = false)
-	{
-		// Build the request path.
-		$path = '/gitignore/templates/' . $name;
+    /**
+     * Get a single template
+     *
+     * @param   string   $name  The name of the template
+     * @param   boolean  $raw   Raw output
+     *
+     * @return  mixed|string
+     *
+     * @since   1.0
+     * @throws  UnexpectedResponseException
+     */
+    public function get($name, $raw = false)
+    {
+        // Build the request path.
+        $path = '/gitignore/templates/' . $name;
 
-		$headers = [];
+        $headers = [];
 
-		if ($raw)
-		{
-			$headers['Accept'] = 'application/vnd.github.raw+json';
-		}
+        if ($raw) {
+            $headers['Accept'] = 'application/vnd.github.raw+json';
+        }
 
-		$response = $this->client->get($this->fetchUrl($path), $headers);
+        $response = $this->client->get($this->fetchUrl($path), $headers);
 
-		// Validate the response code.
-		if ($response->code != 200)
-		{
-			// Decode the error response and throw an exception.
-			$error   = json_decode($response->body);
-			$message = isset($error->message) ? $error->message : 'Invalid response received from GitHub.';
+        // Validate the response code.
+        if ($response->code != 200) {
+            // Decode the error response and throw an exception.
+            $error   = json_decode($response->body);
+            $message = isset($error->message) ? $error->message : 'Invalid response received from GitHub.';
 
-			throw new UnexpectedResponseException($response, $message, $response->code);
-		}
+            throw new UnexpectedResponseException($response, $message, $response->code);
+        }
 
-		return ($raw) ? $response->body : json_decode($response->body);
-	}
+        return ($raw) ? $response->body : json_decode($response->body);
+    }
 }
