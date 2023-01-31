@@ -47,7 +47,7 @@ local pipeline(name, phpversion, params) = {
         steps: [
             {
                 name: "composer",
-                image: "joomlaprojects/docker-images:php7.4",
+                image: "joomlaprojects/docker-images:php8.1",
                 volumes: volumes,
                 commands: [
                     "php -v",
@@ -57,16 +57,15 @@ local pipeline(name, phpversion, params) = {
             },
             {
                 name: "phpcs",
-                image: "joomlaprojects/docker-images:php7.4",
+                image: "joomlaprojects/docker-images:php8.1",
                 depends: [ "composer" ],
                 commands: [
-                    "vendor/bin/phpcs --config-set installed_paths vendor/joomla/coding-standards",
                     "vendor/bin/phpcs --standard=ruleset.xml src/"
                 ]
             },
             {
                 name: "phpmd",
-                image: "joomlaprojects/docker-images:php7.4",
+                image: "joomlaprojects/docker-images:php8.1",
                 depends: [ "composer" ],
                 failure: "ignore",
                 commands: [
@@ -79,7 +78,7 @@ local pipeline(name, phpversion, params) = {
             },
             {
                 name: "phpstan",
-                image: "joomlaprojects/docker-images:php7.4",
+                image: "joomlaprojects/docker-images:php8.1",
                 depends: [ "composer" ],
                 failure: "ignore",
                 commands: [
@@ -88,7 +87,7 @@ local pipeline(name, phpversion, params) = {
             },
             {
                 name: "phploc",
-                image: "joomlaprojects/docker-images:php7.4",
+                image: "joomlaprojects/docker-images:php8.1",
                 depends: [ "composer" ],
                 failure: "ignore",
                 commands: [
@@ -97,7 +96,7 @@ local pipeline(name, phpversion, params) = {
             },
             {
                 name: "phpcpd",
-                image: "joomlaprojects/docker-images:php7.4",
+                image: "joomlaprojects/docker-images:php8.1",
                 depends: [ "composer" ],
                 failure: "ignore",
                 commands: [
@@ -106,11 +105,7 @@ local pipeline(name, phpversion, params) = {
             }
         ]
     },
-    pipeline("7.2 lowest", "7.2", "--prefer-stable --prefer-lowest"),
-    pipeline("7.2", "7.2", "--prefer-stable"),
-    pipeline("7.3", "7.3", "--prefer-stable"),
-    pipeline("7.4", "7.4", "--prefer-stable"),
-    pipeline("8.0", "8.0", "--prefer-stable"),
+    pipeline("8.1 lowest", "8.1", "--prefer-stable --prefer-lowest"),
     pipeline("8.1", "8.1", "--prefer-stable"),
     pipeline("8.2", "8.2", "--prefer-stable --ignore-platform-reqs"),
 ]
