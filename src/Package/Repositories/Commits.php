@@ -29,13 +29,13 @@ class Commits extends AbstractPackage
      * Please follow the link headers as outlined in the pagination overview instead of constructing
      * page links yourself.
      *
-     * @param   string              $user    The name of the owner of the GitHub repository.
-     * @param   string              $repo    The name of the GitHub repository.
-     * @param   string              $sha     Sha or branch to start listing commits from.
-     * @param   string              $path    Only commits containing this file path will be returned.
-     * @param   string              $author  GitHub login, name, or email by which to filter by commit author.
-     * @param   \DateTimeInterface  $since   ISO 8601 Date - Only commits after this date will be returned.
-     * @param   \DateTimeInterface  $until   ISO 8601 Date - Only commits before this date will be returned.
+     * @param   string               $user    The name of the owner of the GitHub repository.
+     * @param   string               $repo    The name of the GitHub repository.
+     * @param   string               $sha     Sha or branch to start listing commits from.
+     * @param   string               $path    Only commits containing this file path will be returned.
+     * @param   string               $author  GitHub login, name, or email by which to filter by commit author.
+     * @param   ?\DateTimeInterface  $since   ISO 8601 Date - Only commits after this date will be returned.
+     * @param   ?\DateTimeInterface  $until   ISO 8601 Date - Only commits before this date will be returned.
      *
      * @return  object
      *

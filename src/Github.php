@@ -40,7 +40,7 @@ class Github
     /**
      * Options for the GitHub object.
      *
-     * @var    array
+     * @var    Registry
      * @since  1.0
      */
     protected $options;
@@ -56,8 +56,8 @@ class Github
     /**
      * Constructor.
      *
-     * @param   Registry  $options  GitHub options object.
-     * @param   Http      $client   The HTTP client object.
+     * @param   ?Registry  $options  GitHub options object.
+     * @param   ?Http      $client   The HTTP client object.
      *
      * @since   1.0
      */

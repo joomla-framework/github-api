@@ -170,14 +170,14 @@ class Issues extends AbstractPackage
     /**
      * List issues.
      *
-     * @param   string              $filter     The filter type: assigned, created, mentioned, subscribed.
-     * @param   string              $state      The optional state to filter requests by. [open, closed]
-     * @param   string              $labels     The list of comma separated Label names. Example: bug,ui,@high.
-     * @param   string              $sort       The sort order: created, updated, comments, default: created.
-     * @param   string              $direction  The list direction: asc or desc, default: desc.
-     * @param   \DateTimeInterface  $since      Only issues updated at or after this time are returned.
-     * @param   integer             $page       The page number from which to get items.
-     * @param   integer             $limit      The number of items on a page.
+     * @param   string               $filter     The filter type: assigned, created, mentioned, subscribed.
+     * @param   string               $state      The optional state to filter requests by. [open, closed]
+     * @param   string               $labels     The list of comma separated Label names. Example: bug,ui,@high.
+     * @param   string               $sort       The sort order: created, updated, comments, default: created.
+     * @param   string               $direction  The list direction: asc or desc, default: desc.
+     * @param   ?\DateTimeInterface  $since      Only issues updated at or after this time are returned.
+     * @param   integer              $page       The page number from which to get items.
+     * @param   integer              $limit      The number of items on a page.
      *
      * @return  object
      *
@@ -228,18 +228,18 @@ class Issues extends AbstractPackage
     /**
      * List issues for a repository.
      *
-     * @param   string              $user       The name of the owner of the GitHub repository.
-     * @param   string              $repo       The name of the GitHub repository.
-     * @param   string              $milestone  The milestone number, 'none', or *.
-     * @param   string              $state      The optional state to filter requests by. [open, closed]
-     * @param   string              $assignee   The assignee name, 'none', or *.
-     * @param   string              $mentioned  The GitHub user name.
-     * @param   string              $labels     The list of comma separated Label names. Example: bug,ui,@high.
-     * @param   string              $sort       The sort order: created, updated, comments, default: created.
-     * @param   string              $direction  The list direction: asc or desc, default: desc.
-     * @param   \DateTimeInterface  $since      Only issues updated at or after this time are returned.
-     * @param   integer             $page       The page number from which to get items.
-     * @param   integer             $limit      The number of items on a page.
+     * @param   string               $user       The name of the owner of the GitHub repository.
+     * @param   string               $repo       The name of the GitHub repository.
+     * @param   string               $milestone  The milestone number, 'none', or *.
+     * @param   string               $state      The optional state to filter requests by. [open, closed]
+     * @param   string               $assignee   The assignee name, 'none', or *.
+     * @param   string               $mentioned  The GitHub user name.
+     * @param   string               $labels     The list of comma separated Label names. Example: bug,ui,@high.
+     * @param   string               $sort       The sort order: created, updated, comments, default: created.
+     * @param   string               $direction  The list direction: asc or desc, default: desc.
+     * @param   ?\DateTimeInterface  $since      Only issues updated at or after this time are returned.
+     * @param   integer              $page       The page number from which to get items.
+     * @param   integer              $limit      The number of items on a page.
      *
      * @return  object
      *
