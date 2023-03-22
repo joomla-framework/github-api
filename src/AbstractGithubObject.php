@@ -83,8 +83,8 @@ abstract class AbstractGithubObject
     /**
      * Constructor.
      *
-     * @param   Registry  $options  GitHub options object.
-     * @param   BaseHttp  $client   The HTTP client object.
+     * @param   ?Registry  $options  GitHub options object.
+     * @param   ?BaseHttp  $client   The HTTP client object.
      *
      * @since   1.0
      */

@@ -221,10 +221,10 @@ class Gists extends AbstractPackage
     /**
      * List a user’s gists.
      *
-     * @param   string     $user   The name of the GitHub user from which to list gists.
-     * @param   integer    $page   The page number from which to get items.
-     * @param   integer    $limit  The number of items on a page.
-     * @param   \DateTime  $since  Only gists updated at or after this time are returned.
+     * @param   string      $user   The name of the GitHub user from which to list gists.
+     * @param   integer     $page   The page number from which to get items.
+     * @param   integer     $limit  The number of items on a page.
+     * @param   ?\DateTime  $since  Only gists updated at or after this time are returned.
      *
      * @return  array
      *
@@ -247,9 +247,9 @@ class Gists extends AbstractPackage
     /**
      * List all public gists.
      *
-     * @param   integer    $page   The page number from which to get items.
-     * @param   integer    $limit  The number of items on a page.
-     * @param   \DateTime  $since  Only gists updated at or after this time are returned.
+     * @param   integer     $page   The page number from which to get items.
+     * @param   integer     $limit  The number of items on a page.
+     * @param   ?\DateTime  $since  Only gists updated at or after this time are returned.
      *
      * @return  array
      *
@@ -272,9 +272,9 @@ class Gists extends AbstractPackage
     /**
      * List starred gists.
      *
-     * @param   integer    $page   The page number from which to get items.
-     * @param   integer    $limit  The number of items on a page.
-     * @param   \DateTime  $since  Only gists updated at or after this time are returned.
+     * @param   integer     $page   The page number from which to get items.
+     * @param   integer     $limit  The number of items on a page.
+     * @param   ?\DateTime  $since  Only gists updated at or after this time are returned.
      *
      * @return  array
      *

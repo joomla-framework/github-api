@@ -22,8 +22,8 @@ abstract class AbstractPackage extends AbstractGithubObject
     /**
      * Constructor.
      *
-     * @param   Registry  $options  GitHub options object.
-     * @param   Http      $client   The HTTP client object.
+     * @param   ?Registry  $options  GitHub options object.
+     * @param   ?Http      $client   The HTTP client object.
      *
      * @since   1.0
      */

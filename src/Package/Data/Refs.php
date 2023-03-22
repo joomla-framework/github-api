@@ -110,7 +110,7 @@ class Refs extends AbstractPackage
      * @return  object
      *
      * @since   1.0
-     * @throws  DomainException
+     * @throws  \DomainException
      */
     public function edit($user, $repo, $ref, $sha, $force = false)
     {
