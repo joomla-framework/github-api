@@ -1,0 +1,15 @@
+name: CI Joomla Framework
+
+on:
+    push:
+    pull_request:
+    schedule:
+        - cron: 15 2 * * 1
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    framework-ci:
+        uses: joomla-framework/.github/.github/workflows/workflow-v3.yml@main
