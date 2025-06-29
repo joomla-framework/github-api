@@ -1,4 +1,4 @@
-# The GitHub Package [![Build Status](https://ci.joomla.org/api/badges/joomla-framework/github-api/status.svg?ref=refs/heads/2.0-dev)](https://ci.joomla.org/joomla-framework/github-api)
+# The GitHub Package [![Build Status](https://github.com/joomla-framework/github-api/actions/workflows/ci.yml/badge.svg?branch=3.x-dev)](https://github.com/joomla-framework/github-api)
 
 [![Latest Stable Version](https://poser.pugx.org/joomla/github/v/stable)](https://packagist.org/packages/joomla/github)
 [![Total Downloads](https://poser.pugx.org/joomla/github/downloads)](https://packagist.org/packages/joomla/github)
