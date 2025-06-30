@@ -12,4 +12,4 @@ concurrency:
 
 jobs:
     framework-ci:
-        uses: joomla-framework/.github/.github/workflows/workflow-v3.yml@main
+        uses: joomla-framework/.github/.github/workflows/workflow-v4.yml@main
