@@ -482,7 +482,7 @@ $label = $github->issues->labels->get(':owner', ':repo', ':labelName');
 $github->issues->labels->create(':owner', ':repo', ':labelName', ':labelColor');
 
 // Update a label
-$github->issues->labels->update(':owner', ':repo', ':oldLableName', ':newLabelName', ':labelColor');
+$github->issues->labels->update(':owner', ':repo', ':oldLabelName', ':newLabelName', ':labelColor');
 
 // Delete a label
 $github->issues->labels->delete(':owner', ':repo', ':labelName');
