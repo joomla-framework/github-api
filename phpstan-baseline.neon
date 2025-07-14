@@ -1,0 +1,49 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Parameter \#2 \$value of method Joomla\\Uri\\Uri\:\:setVar\(\) expects string, int\<1, max\> given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/AbstractGithubObject.php
+
+		-
+			message: '#^Class Joomla\\Github\\Github referenced with incorrect case\: Joomla\\Github\\GitHub\.$#'
+			identifier: class.nameCase
+			count: 1
+			path: src/Github.php
+
+		-
+			message: '#^Parameter \#2 \$value of method Joomla\\Uri\\Uri\:\:setVar\(\) expects string, int given\.$#'
+			identifier: argument.type
+			count: 4
+			path: src/Package/Activity/Notifications.php
+
+		-
+			message: '#^Variable \$labels in isset\(\) always exists and is not nullable\.$#'
+			identifier: isset.variable
+			count: 1
+			path: src/Package/Issues.php
+
+		-
+			message: '#^Variable \$response might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: src/Package/Issues/Assignees.php
+
+		-
+			message: '#^Parameter \#2 \$value of method Joomla\\Uri\\Uri\:\:setVar\(\) expects string, int\<min, \-1\>\|int\<1, max\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Package/Repositories.php
+
+		-
+			message: '#^Parameter \#2 \$value of method Joomla\\Uri\\Uri\:\:setVar\(\) expects string, int\<min, \-1\>\|int\<1, max\> given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Package/Search.php
+
+		-
+			message: '#^Parameter \#2 \$value of method Joomla\\Uri\\Uri\:\:setVar\(\) expects string, int\<min, \-1\>\|int\<1, max\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Package/Users.php
