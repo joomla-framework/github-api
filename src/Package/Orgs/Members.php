@@ -44,16 +44,16 @@ class Members extends AbstractPackage
 
         $response = $this->client->get($this->fetchUrl($path));
 
-        switch ($response->code) {
+        switch ($response->getStatusCode()) {
             case 302:
                 // Requester is not an organization member.
                 return false;
 
             case 200:
-                return json_decode($response->body);
+                return json_decode($response->getBody()->getContents());
 
             default:
-                throw new \UnexpectedValueException('Unexpected response code: ' . $response->code);
+                throw new \UnexpectedValueException('Unexpected response code: ' . $response->getStatusCode());
         }
     }
 
@@ -77,7 +77,7 @@ class Members extends AbstractPackage
 
         $response = $this->client->get($this->fetchUrl($path));
 
-        switch ($response->code) {
+        switch ($response->getStatusCode()) {
             case 204:
                 // Requester is an organization member and user is a member.
                 return true;
@@ -92,7 +92,7 @@ class Members extends AbstractPackage
                 return false;
 
             default:
-                throw new \UnexpectedValueException('Unexpected response code: ' . $response->code);
+                throw new \UnexpectedValueException('Unexpected response code: ' . $response->getStatusCode());
         }
     }
 
@@ -165,7 +165,7 @@ class Members extends AbstractPackage
 
         $response = $this->client->get($this->fetchUrl($path));
 
-        switch ($response->code) {
+        switch ($response->getStatusCode()) {
             case 204:
                 // Response if user is a public member.
                 return true;
@@ -175,7 +175,7 @@ class Members extends AbstractPackage
                 return false;
 
             default:
-                throw new \UnexpectedValueException('Unexpected response code: ' . $response->code);
+                throw new \UnexpectedValueException('Unexpected response code: ' . $response->getStatusCode());
         }
     }
 

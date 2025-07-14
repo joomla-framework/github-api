@@ -79,7 +79,7 @@ class Followers extends AbstractPackage
 
         $response = $this->client->get($this->fetchUrl($path));
 
-        switch ($response->code) {
+        switch ($response->getStatusCode()) {
             case '204':
                 // You are following this user
                 return true;
@@ -89,7 +89,7 @@ class Followers extends AbstractPackage
                 return false;
 
             default:
-                throw new \UnexpectedValueException('Unexpected response code: ' . $response->code);
+                throw new \UnexpectedValueException('Unexpected response code: ' . $response->getStatusCode());
         }
     }
 
@@ -111,7 +111,7 @@ class Followers extends AbstractPackage
 
         $response = $this->client->get($this->fetchUrl($path));
 
-        switch ($response->code) {
+        switch ($response->getStatusCode()) {
             case '204':
                 // User is following the target
                 return true;
@@ -121,7 +121,7 @@ class Followers extends AbstractPackage
                 return false;
 
             default:
-                throw new \UnexpectedValueException('Unexpected response code: ' . $response->code);
+                throw new \UnexpectedValueException('Unexpected response code: ' . $response->getStatusCode());
         }
     }
 

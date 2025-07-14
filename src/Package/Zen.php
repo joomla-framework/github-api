@@ -31,10 +31,10 @@ class Zen extends AbstractPackage
     {
         $response = $this->client->get($this->fetchUrl('/zen'));
 
-        if ($response->code != 200) {
+        if ($response->getStatusCode() != 200) {
             throw new \RuntimeException('Can\'t get a Zen');
         }
 
-        return $response->body;
+        return $response->getBody()->getContents();
     }
 }

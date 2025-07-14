@@ -242,19 +242,19 @@ class Authorization extends AbstractPackage
         $response = $this->client->get($this->fetchUrl($path));
 
         // Validate the response code.
-        if ($response->code != 200) {
-            if ($response->code == 404) {
+        if ($response->getStatusCode() != 200) {
+            if ($response->getStatusCode() == 404) {
                 // Unlimited rate for Github Enterprise sites and trusted users.
                 return (object) ['limit' => false, 'remaining' => null];
             }
 
             // Decode the error response and throw an exception.
-            $error = json_decode($response->body);
+            $error = json_decode($response->getBody()->getContents());
 
-            throw new UnexpectedResponseException($response, $error->message, $response->code);
+            throw new UnexpectedResponseException($response, $error->message, $response->getStatusCode());
         }
 
-        return json_decode($response->body);
+        return json_decode($response->getBody()->getContents());
     }
 
     /**

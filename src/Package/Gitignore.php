@@ -68,14 +68,14 @@ class Gitignore extends AbstractPackage
         $response = $this->client->get($this->fetchUrl($path), $headers);
 
         // Validate the response code.
-        if ($response->code != 200) {
+        if ($response->getStatusCode() != 200) {
             // Decode the error response and throw an exception.
-            $error   = json_decode($response->body);
+            $error   = json_decode($response->getBody()->getContents());
             $message = isset($error->message) ? $error->message : 'Invalid response received from GitHub.';
 
-            throw new UnexpectedResponseException($response, $message, $response->code);
+            throw new UnexpectedResponseException($response, $message, $response->getStatusCode());
         }
 
-        return ($raw) ? $response->body : json_decode($response->body);
+        return ($raw) ? $response->getBody()->getContents() : json_decode($response->getBody()->getContents());
     }
 }

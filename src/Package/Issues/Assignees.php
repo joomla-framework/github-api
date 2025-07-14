@@ -68,13 +68,13 @@ class Assignees extends AbstractPackage
         try {
             $response = $this->client->get($this->fetchUrl($path));
 
-            if ($response->code == 204) {
+            if ($response->getStatusCode() == 204) {
                 return true;
             }
 
-            throw new UnexpectedResponseException($response, 'Invalid response: ' . $response->code);
+            throw new UnexpectedResponseException($response, 'Invalid response: ' . $response->getStatusCode());
         } catch (\DomainException $e) {
-            if (isset($response->code) && $response->code == 404) {
+            if ($response->getStatusCode() == 404) {
                 return false;
             }
 

@@ -110,7 +110,7 @@ class Starring extends AbstractPackage
 
         $response = $this->client->get($this->fetchUrl($path));
 
-        switch ($response->code) {
+        switch ($response->getStatusCode()) {
             case '204':
                 // This repository is watched by you.
                 return true;
@@ -120,7 +120,7 @@ class Starring extends AbstractPackage
                 return false;
         }
 
-        throw new \UnexpectedValueException('Unexpected response code: ' . $response->code);
+        throw new \UnexpectedValueException('Unexpected response code: ' . $response->getStatusCode());
     }
 
     /**

@@ -63,7 +63,7 @@ class Collaborators extends AbstractPackage
 
         $response = $this->client->get($this->fetchUrl($path));
 
-        switch ($response->code) {
+        switch ($response->getStatusCode()) {
             case '204':
                 return true;
 
@@ -71,7 +71,7 @@ class Collaborators extends AbstractPackage
                 return false;
 
             default:
-                throw new \UnexpectedValueException('Unexpected code: ' . $response->code);
+                throw new \UnexpectedValueException('Unexpected code: ' . $response->getStatusCode());
         }
     }
 

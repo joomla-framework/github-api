@@ -163,10 +163,10 @@ class Statistics extends AbstractPackage
      */
     protected function processResponse(Response $response, $expectedCode = 200)
     {
-        if ($response->code == 202) {
+        if ($response->getStatusCode() == 202) {
             throw new \DomainException(
                 'GitHub is building the statistics data. Please try again in a few moments.',
-                $response->code
+                $response->getStatusCode()
             );
         }
 

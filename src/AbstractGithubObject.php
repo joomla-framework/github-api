@@ -161,14 +161,14 @@ abstract class AbstractGithubObject
     protected function processResponse(Response $response, $expectedCode = 200)
     {
         // Validate the response code.
-        if ($response->code != $expectedCode) {
+        if ($response->getStatusCode() != $expectedCode) {
             // Decode the error response and throw an exception.
-            $error   = json_decode($response->body);
+            $error   = json_decode($response->getBody()->getContents());
             $message = isset($error->message) ? $error->message : 'Invalid response received from GitHub.';
 
-            throw new UnexpectedResponseException($response, $message, $response->code);
+            throw new UnexpectedResponseException($response, $message, $response->getStatusCode());
         }
 
-        return json_decode($response->body);
+        return json_decode($response->getBody()->getContents());
     }
 }

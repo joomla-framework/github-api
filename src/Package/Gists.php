@@ -333,19 +333,19 @@ class Gists extends AbstractPackage
         $response = $this->client->get($this->fetchUrl($path));
 
         // Validate the response code.
-        if ($response->code == 204) {
+        if ($response->getStatusCode() == 204) {
             return true;
         }
 
-        if ($response->code == 404) {
+        if ($response->getStatusCode() == 404) {
             return false;
         }
 
         // Decode the error response and throw an exception.
-        $error   = json_decode($response->body);
+        $error   = json_decode($response->getBody()->getContents());
         $message = isset($error->message) ? $error->message : 'Invalid response received from GitHub.';
 
-        throw new UnexpectedResponseException($response, $message, $response->code);
+        throw new UnexpectedResponseException($response, $message, $response->getStatusCode());
     }
 
     /**

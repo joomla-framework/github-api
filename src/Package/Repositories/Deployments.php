@@ -126,20 +126,20 @@ class Deployments extends AbstractPackage
 
         $response = $this->client->post($this->fetchUrl($path), json_encode($data));
 
-        switch ($response->code) {
+        switch ($response->getStatusCode()) {
             case 201:
                 // The deployment was successful
-                return json_decode($response->body);
+                return json_decode($response->getBody()->getContents());
 
             case 409:
                 // There was a merge conflict or a status check failed.
-                $body    = json_decode($response->body);
+                $body    = json_decode($response->getBody()->getContents());
                 $message = isset($body->message) ? $body->message : 'Invalid response received from GitHub.';
 
-                throw new \RuntimeException($message, $response->code);
+                throw new \RuntimeException($message, $response->getStatusCode());
 
             default:
-                throw new \UnexpectedValueException('Unexpected response code: ' . $response->code);
+                throw new \UnexpectedValueException('Unexpected response code: ' . $response->getStatusCode());
         }
     }
 

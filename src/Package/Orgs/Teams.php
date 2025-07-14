@@ -209,7 +209,7 @@ class Teams extends AbstractPackage
 
         $response = $this->client->get($this->fetchUrl($path));
 
-        switch ($response->code) {
+        switch ($response->getStatusCode()) {
             case 204:
                 // Response if user is a member
                 return true;
@@ -219,7 +219,7 @@ class Teams extends AbstractPackage
                 return false;
 
             default:
-                throw new \UnexpectedValueException('Unexpected response code: ' . $response->code);
+                throw new \UnexpectedValueException('Unexpected response code: ' . $response->getStatusCode());
         }
     }
 
@@ -294,10 +294,10 @@ class Teams extends AbstractPackage
 
         $response = $this->client->get($this->fetchUrl($path));
 
-        switch ($response->code) {
+        switch ($response->getStatusCode()) {
             case 200:
                 // Response if user is an active member or pending membership
-                $body = json_decode($response->body);
+                $body = json_decode($response->getBody()->getContents());
 
                 return $body->state;
 
@@ -306,7 +306,7 @@ class Teams extends AbstractPackage
                 return false;
 
             default:
-                throw new \UnexpectedValueException('Unexpected response code: ' . $response->code);
+                throw new \UnexpectedValueException('Unexpected response code: ' . $response->getStatusCode());
         }
     }
 
@@ -403,7 +403,7 @@ class Teams extends AbstractPackage
 
         $response = $this->client->get($this->fetchUrl($path));
 
-        switch ($response->code) {
+        switch ($response->getStatusCode()) {
             case 204:
                 // Response if repo is managed by this team.
                 return true;
@@ -413,7 +413,7 @@ class Teams extends AbstractPackage
                 return false;
 
             default:
-                throw new \UnexpectedValueException('Unexpected response code: ' . $response->code);
+                throw new \UnexpectedValueException('Unexpected response code: ' . $response->getStatusCode());
         }
     }
 

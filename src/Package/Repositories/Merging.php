@@ -52,10 +52,10 @@ class Merging extends AbstractPackage
         // Send the request.
         $response = $this->client->post($this->fetchUrl($path), json_encode($data));
 
-        switch ($response->code) {
+        switch ($response->getStatusCode()) {
             case '201':
                 // Success
-                return json_decode($response->body);
+                return json_decode($response->getBody()->getContents());
 
             case '204':
                 // No-op response (base already contains the head, nothing to merge)
@@ -63,22 +63,22 @@ class Merging extends AbstractPackage
 
             case '404':
                 // Missing base or Missing head response
-                $error = json_decode($response->body);
+                $error = json_decode($response->getBody()->getContents());
 
-                $message = (isset($error->message)) ? $error->message : 'Missing base or head: ' . $response->code;
+                $message = (isset($error->message)) ? $error->message : 'Missing base or head: ' . $response->getStatusCode();
 
                 throw new \UnexpectedValueException($message);
 
             case '409':
                 // Merge conflict response
-                $error = json_decode($response->body);
+                $error = json_decode($response->getBody()->getContents());
 
-                $message = (isset($error->message)) ? $error->message : 'Merge conflict ' . $response->code;
+                $message = (isset($error->message)) ? $error->message : 'Merge conflict ' . $response->getStatusCode();
 
                 throw new \UnexpectedValueException($message);
 
             default:
-                throw new \UnexpectedValueException('Unexpected response code: ' . $response->code);
+                throw new \UnexpectedValueException('Unexpected response code: ' . $response->getStatusCode());
         }
     }
 }
