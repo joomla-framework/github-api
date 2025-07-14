@@ -47,7 +47,7 @@ class DeploymentsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/{owner}/{repo}/deployments?sha={sha}&ref={ref}&task={task}&environment={environment}')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getList('{owner}', '{repo}', '{sha}', '{ref}', '{task}', '{environment}'),
@@ -62,12 +62,12 @@ class DeploymentsTest extends GitHubTestCase
      */
     public function testCreate()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/{owner}/{repo}/deployments')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->create(
@@ -94,12 +94,12 @@ class DeploymentsTest extends GitHubTestCase
     {
         $this->expectException(\RuntimeException::class);
 
-        $this->response->code = 409;
+        $this->response = $this->getResponseObject($this->sampleString, 409);
 
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/{owner}/{repo}/deployments')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->create('{owner}', '{repo}', '{ref}'),
@@ -114,14 +114,14 @@ class DeploymentsTest extends GitHubTestCase
      */
     public function testCreateFailure()
     {
-        $this->expectException(\UnexpectedValueException::class);
+        $this->expectException(\Laminas\Diactoros\Exception\InvalidArgumentException::class);
 
-        $this->response->code = 666;
+        $this->response = $this->getResponseObject($this->sampleString, 666);
 
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/{owner}/{repo}/deployments')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->create('{owner}', '{repo}', '{ref}'),
@@ -139,7 +139,7 @@ class DeploymentsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/{owner}/{repo}/deployments/123/statuses')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getDeploymentStatuses('{owner}', '{repo}', 123),
@@ -154,12 +154,12 @@ class DeploymentsTest extends GitHubTestCase
      */
     public function testCreateStatus()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/{owner}/{repo}/deployments/123/statuses')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->createStatus('{owner}', '{repo}', 123, 'success', '{targetUrl}', '{description}'),

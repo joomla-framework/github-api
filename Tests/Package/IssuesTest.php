@@ -49,7 +49,7 @@ class IssuesTest extends GitHubTestCase
      */
     public function testCreate()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         $issue            = new \stdClass();
         $issue->title     = '{title}';
@@ -61,7 +61,7 @@ class IssuesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/{user}/{repo}/issues', json_encode($issue))
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->create('{user}', '{repo}', '{title}', '{body}', '{assignee}', '{milestone}', ['{label1}']),
@@ -78,7 +78,7 @@ class IssuesTest extends GitHubTestCase
      */
     public function testCreate2()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         $issue            = new \stdClass();
         $issue->title     = '{title}';
@@ -90,7 +90,7 @@ class IssuesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/{user}/{repo}/issues', json_encode($issue))
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->create('{user}', '{repo}', '{title}', '{body}', null, '{milestone}', ['{label1}'], ['{assignee1}']),
@@ -111,8 +111,7 @@ class IssuesTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 501;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 501);
 
         $issue            = new \stdClass();
         $issue->title     = '{title}';
@@ -124,7 +123,7 @@ class IssuesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/{user}/{repo}/issues', json_encode($issue))
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->create('{user}', '{repo}', '{title}', '{body}', '{assignee}', '{milestone}', ['{label1}']);
     }
@@ -138,7 +137,7 @@ class IssuesTest extends GitHubTestCase
      */
     public function testCreateComment()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         $issue       = new \stdClass();
         $issue->body = 'My Insightful Comment';
@@ -146,7 +145,7 @@ class IssuesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/issues/523/comments', json_encode($issue))
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->comments->create('joomla', 'joomla-platform', 523, 'My Insightful Comment'),
@@ -167,8 +166,7 @@ class IssuesTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 501;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 501);
 
         $issue       = new \stdClass();
         $issue->body = 'My Insightful Comment';
@@ -176,7 +174,7 @@ class IssuesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/issues/523/comments', json_encode($issue))
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->comments->create('joomla', 'joomla-platform', 523, 'My Insightful Comment');
     }
@@ -201,7 +199,7 @@ class IssuesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('patch')
             ->with('/repos/joomla/joomla-platform/issues/523', json_encode($issue))
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->edit(
@@ -232,8 +230,7 @@ class IssuesTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $issue        = new \stdClass();
         $issue->title = 'My issue';
@@ -243,7 +240,7 @@ class IssuesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('patch')
             ->with('/repos/joomla/joomla-platform/issues/523', json_encode($issue))
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->edit('joomla', 'joomla-platform', 523, 'Closed', 'My issue', 'These are my changes - please review them');
     }
@@ -260,7 +257,7 @@ class IssuesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/issues/523')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->get('joomla', 'joomla-platform', 523),
@@ -281,13 +278,12 @@ class IssuesTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/issues/523')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->get('joomla', 'joomla-platform', 523);
     }
@@ -304,7 +300,7 @@ class IssuesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/issues')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getList(),
@@ -326,7 +322,7 @@ class IssuesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/issues?filter={filter}&state={state}&labels={labels}&sort={sort}&direction={direction}&since=2012-01-01T12:12:12+0000')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getList('{filter}', '{state}', '{labels}', '{sort}', '{direction}', $since),
@@ -347,13 +343,12 @@ class IssuesTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/issues')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->getList();
     }
@@ -370,7 +365,7 @@ class IssuesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/issues')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getListByRepository('joomla', 'joomla-platform'),
@@ -397,7 +392,7 @@ class IssuesTest extends GitHubTestCase
                 '/repos/joomla/joomla-platform/issues?milestone=25&state=closed&assignee=none&' .
                 'mentioned=joomla-jenkins&labels=bug&sort=created&direction=asc&since=2012-01-01T12:12:12+00:00'
             )
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getListByRepository(
@@ -429,13 +424,12 @@ class IssuesTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/issues')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->getListByRepository('joomla', 'joomla-platform');
     }
@@ -449,12 +443,12 @@ class IssuesTest extends GitHubTestCase
      */
     public function testLock()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('put')
             ->with('/repos/joomla/joomla-platform/issues/523/lock')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->lock('joomla', 'joomla-platform', 523),
@@ -475,13 +469,12 @@ class IssuesTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('put')
             ->with('/repos/joomla/joomla-platform/issues/523/lock')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->lock('joomla', 'joomla-platform', 523);
     }
@@ -495,12 +488,12 @@ class IssuesTest extends GitHubTestCase
      */
     public function testUnlock()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/repos/joomla/joomla-platform/issues/523/lock')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->unlock('joomla', 'joomla-platform', 523),
@@ -521,13 +514,12 @@ class IssuesTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/repos/joomla/joomla-platform/issues/523/lock')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->unlock('joomla', 'joomla-platform', 523);
     }

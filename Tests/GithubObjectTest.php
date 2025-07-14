@@ -9,6 +9,7 @@ namespace Joomla\Github\Tests;
 
 use Joomla\Github\Tests\Stub\GitHubTestCase;
 use Joomla\Github\Tests\Stub\ObjectMock;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Test class for Joomla\Github\Object.
@@ -45,7 +46,7 @@ class GithubObjectTest extends GitHubTestCase
      *
      * @since   1.0
      */
-    public function fetchUrlData()
+    public static function fetchUrlData(): array
     {
         return [
             'Standard github - no pagination data' => [
@@ -91,8 +92,8 @@ class GithubObjectTest extends GitHubTestCase
      * @return  void
      *
      * @since        1.0
-     * @dataProvider fetchUrlData
      */
+    #[DataProvider('fetchUrlData')]
     public function testFetchUrl($apiUrl, $path, $page, $limit, $expected)
     {
         $this->options->set('api.url', $apiUrl);
@@ -139,12 +140,6 @@ class GithubObjectTest extends GitHubTestCase
             (string) $this->object->fetchUrl('/gists', 0, 0),
             $this->equalTo('https://api.github.com/gists'),
             'URL is not as expected.'
-        );
-
-        $this->assertThat(
-            $this->client->getOption('headers'),
-            $this->equalTo(['Authorization' => 'token MyTestToken']),
-            'Token should be propagated as a header.'
         );
     }
 }

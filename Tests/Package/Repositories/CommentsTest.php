@@ -47,7 +47,7 @@ class CommentsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-framework/comments')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getListRepository('joomla', 'joomla-framework'),
@@ -65,7 +65,7 @@ class CommentsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-framework/commits/123/comments')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getList('joomla', 'joomla-framework', '123'),
@@ -83,7 +83,7 @@ class CommentsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-framework/comments/123')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->get('joomla', 'joomla-framework', 123),
@@ -101,7 +101,7 @@ class CommentsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('patch')
             ->with('/repos/joomla/joomla-framework/comments/123')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->edit('joomla', 'joomla-framework', 123, 'My Comment'),
@@ -116,12 +116,12 @@ class CommentsTest extends GitHubTestCase
      */
     public function testDelete()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/repos/joomla/joomla-framework/comments/123')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->delete('joomla', 'joomla-framework', 123),
@@ -136,12 +136,12 @@ class CommentsTest extends GitHubTestCase
      */
     public function testCreate()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-framework/commits/123abc/comments')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->create('joomla', 'joomla-framework', '123abc', 'My Comment', 456, 'path/file.php', 789),

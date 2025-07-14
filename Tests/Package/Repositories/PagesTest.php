@@ -46,7 +46,7 @@ class PagesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/{owner}/{repo}/pages')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getInfo('{owner}', '{repo}'),
@@ -64,7 +64,7 @@ class PagesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/{owner}/{repo}/pages/builds')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getList('{owner}', '{repo}'),
@@ -82,7 +82,7 @@ class PagesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/{owner}/{repo}/pages/builds/latest')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getLatest('{owner}', '{repo}'),

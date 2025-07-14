@@ -46,7 +46,7 @@ class EmailsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/user/emails')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getList(),
@@ -61,12 +61,12 @@ class EmailsTest extends GitHubTestCase
      */
     public function testAdd()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         $this->client->expects($this->once())
             ->method('post')
             ->with('/user/emails')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->add('email@example.com'),
@@ -81,12 +81,12 @@ class EmailsTest extends GitHubTestCase
      */
     public function testDelete()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/user/emails')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->delete('email@example.com'),

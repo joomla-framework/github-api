@@ -8,6 +8,7 @@ namespace Joomla\Github\Tests;
 
 use Joomla\Github\Package\Users;
 use Joomla\Github\Tests\Stub\GitHubTestCase;
+use Joomla\Http\Response;
 
 /**
  * Test class for Users.
@@ -43,8 +44,7 @@ class UsersTest extends GitHubTestCase
      */
     public function testGet()
     {
-        $this->response->code = 200;
-        $this->response->body = '{
+        $body = '{
   "login": "octocat",
   "id": 1,
   "avatar_url": "https://github.com/images/error/octocat_happy.gif",
@@ -65,15 +65,19 @@ class UsersTest extends GitHubTestCase
   "created_at": "2008-01-14T04:33:35Z",
   "type": "User"
 }';
+        $this->response = new Response('data://text/plain,' . $body, 200);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/users/joomla', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->get('joomla'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->get('joomla')
         );
     }
 
@@ -86,17 +90,19 @@ class UsersTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 404;
-        $this->response->body = '{"message":"Not Found"}';
+        $this->response = new Response('data://text/plain,{"message":"Not Found"}', 404);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/users/nonexistentuser', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->get('nonexistentuser'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->get('nonexistentuser')
         );
     }
 
@@ -107,8 +113,7 @@ class UsersTest extends GitHubTestCase
      */
     public function testGetAuthenticatedUser()
     {
-        $this->response->code = 200;
-        $this->response->body = '{
+        $body = '{
   "login": "octocat",
   "id": 1,
   "avatar_url": "https://github.com/images/error/octocat_happy.gif",
@@ -140,15 +145,19 @@ class UsersTest extends GitHubTestCase
     "private_repos": 20
   }
 }';
+        $this->response = new Response('data://text/plain,' . $body, 200);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/user', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getAuthenticatedUser(),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getAuthenticatedUser()
         );
     }
 
@@ -161,17 +170,21 @@ class UsersTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 401;
-        $this->response->body = '{"message":"Requires authentication"}';
+        $body = '{"message":"Requires authentication"}';
+
+        $this->response = new Response('data://text/plain,' . $body, 401);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/user', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getAuthenticatedUser(),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getAuthenticatedUser()
         );
     }
 
@@ -182,8 +195,7 @@ class UsersTest extends GitHubTestCase
      */
     public function testGetList()
     {
-        $this->response->code = 200;
-        $this->response->body = '[
+        $body = '[
   {
     "login": "octocat",
     "id": 1,
@@ -201,14 +213,19 @@ class UsersTest extends GitHubTestCase
   }
 ]';
 
+        $this->response = new Response('data://text/plain,' . $body, 200);
+
         $this->client->expects($this->once())
             ->method('get')
             ->with('/users', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getList(),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getList()
         );
     }
 
@@ -227,8 +244,7 @@ class UsersTest extends GitHubTestCase
         $hireable = true;
         $bio      = 'There once...';
 
-        $this->response->code = 200;
-        $this->response->body = '{
+        $this->response = new Response('data://text/plain,{
   "login": "octocat",
   "id": 1,
   "avatar_url": "https://github.com/images/error/octocat_happy.gif",
@@ -259,7 +275,7 @@ class UsersTest extends GitHubTestCase
     "collaborators": 10,
     "private_repos": 20
   }
-}';
+}', 200);
 
         $input = json_encode(
             [
@@ -276,11 +292,14 @@ class UsersTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('patch')
             ->with('/user', $input, [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->edit($name, $email, $blog, $company, $location, $hireable, $bio),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->edit($name, $email, $blog, $company, $location, $hireable, $bio)
         );
     }
 
@@ -301,8 +320,7 @@ class UsersTest extends GitHubTestCase
         $hireable = true;
         $bio      = 'There once...';
 
-        $this->response->code = 404;
-        $this->response->body = $this->errorString;
+        $this->response = new Response('data://text/plain,' . $this->errorString, 404);
 
         $input = json_encode(
             [
@@ -319,13 +337,13 @@ class UsersTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('patch')
             ->with('/user', $input, [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         // $this->object->edit($name, $email, $blog, $company, $location, $hireable, $bio);
 
-        $this->assertThat(
-            $this->object->edit($name, $email, $blog, $company, $location, $hireable, $bio),
-            $this->equalTo(json_decode($this->response->body))
+        $this->assertEquals(
+            json_decode($this->response->getBody()->getContents()),
+            $this->object->edit($name, $email, $blog, $company, $location, $hireable, $bio)
         );
     }
 }

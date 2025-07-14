@@ -46,11 +46,11 @@ class SearchTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/legacy/issues/search/joomla/joomla-platform/open/github')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->issues('joomla', 'joomla-platform', 'open', 'github'),
-            $this->equalTo(json_decode($this->sampleString))
+        $this->assertEquals(
+            json_decode($this->sampleString),
+            $this->object->issues('joomla', 'joomla-platform', 'open', 'github')
         );
     }
 
@@ -76,7 +76,7 @@ class SearchTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/legacy/repos/search/joomla')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->repositories('joomla'),
@@ -94,7 +94,7 @@ class SearchTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/legacy/user/search/joomla')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->users('joomla'),
@@ -112,7 +112,7 @@ class SearchTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/legacy/user/email/email@joomla')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->email('email@joomla'),

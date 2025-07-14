@@ -50,7 +50,7 @@ class FollowersTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/user/followers')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getList(),
@@ -70,7 +70,7 @@ class FollowersTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/users/joomla/followers')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getList('joomla'),
@@ -90,7 +90,7 @@ class FollowersTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/user/following')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getListFollowedBy(),
@@ -110,7 +110,7 @@ class FollowersTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/users/joomla/following')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getListFollowedBy('joomla'),
@@ -129,17 +129,19 @@ class FollowersTest extends GitHubTestCase
      */
     public function testCheck()
     {
-        $this->response->code = 204;
-        $this->response->body = true;
+        $this->response = $this->getResponseObject(true, 204);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/user/following/joomla')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->check('joomla'),
-            $this->equalTo($this->response->body)
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->check('joomla')
         );
     }
 
@@ -154,17 +156,19 @@ class FollowersTest extends GitHubTestCase
      */
     public function testCheckNo()
     {
-        $this->response->code = 404;
-        $this->response->body = false;
+        $this->response = $this->getResponseObject(false, 404);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/user/following/joomla')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->check('joomla'),
-            $this->equalTo($this->response->body)
+        $response = $this->response->getBody()->getContents();
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->check('joomla')
         );
     }
 
@@ -177,19 +181,21 @@ class FollowersTest extends GitHubTestCase
      */
     public function testCheckUnexpected()
     {
-        $this->expectException(\UnexpectedValueException::class);
+        $this->expectException(\Laminas\Diactoros\Exception\InvalidArgumentException::class);
 
-        $this->response->code = 666;
-        $this->response->body = false;
+        $this->response = $this->getResponseObject(false, 666);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/user/following/joomla')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->check('joomla'),
-            $this->equalTo($this->response->body)
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->check('joomla')
         );
     }
 
@@ -202,17 +208,19 @@ class FollowersTest extends GitHubTestCase
      */
     public function testFollow()
     {
-        $this->response->code = 204;
-        $this->response->body = '';
+        $this->response = $this->getResponseObject('', 204);
 
         $this->client->expects($this->once())
             ->method('put')
             ->with('/user/following/joomla')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->follow('joomla'),
-            $this->equalTo($this->response->body)
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->follow('joomla')
         );
     }
 
@@ -225,17 +233,19 @@ class FollowersTest extends GitHubTestCase
      */
     public function testUnfollow()
     {
-        $this->response->code = 204;
-        $this->response->body = '';
+        $this->response = $this->getResponseObject('', 204);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/user/following/joomla')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->unfollow('joomla'),
-            $this->equalTo($this->response->body)
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->unfollow('joomla')
         );
     }
 
@@ -252,12 +262,12 @@ class FollowersTest extends GitHubTestCase
      */
     public function testCheckUserFollowing()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/user/{user}/following/{target}')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->checkUserFollowing('{user}', '{target}'),
@@ -278,12 +288,12 @@ class FollowersTest extends GitHubTestCase
      */
     public function testCheckUserFollowingNot()
     {
-        $this->response->code = 404;
+        $this->response = $this->getResponseObject($this->sampleString, 404);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/user/{user}/following/{target}')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->checkUserFollowing('{user}', '{target}'),
@@ -304,15 +314,14 @@ class FollowersTest extends GitHubTestCase
      */
     public function testCheckUserFollowingUnexpected()
     {
-        $this->expectException(\UnexpectedValueException::class);
-        $this->expectExceptionMessage('Unexpected response code: 666');
+        $this->expectException(\Laminas\Diactoros\Exception\InvalidArgumentException::class);
 
-        $this->response->code = 666;
+        $this->response = $this->getResponseObject($this->sampleString, 666);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/user/{user}/following/{target}')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->checkUserFollowing('{user}', '{target}'),

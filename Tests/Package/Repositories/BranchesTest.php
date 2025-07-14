@@ -51,7 +51,7 @@ class BranchesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/{owner}/{repo}/branches')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getList('{owner}', '{repo}'),
@@ -71,7 +71,7 @@ class BranchesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/{owner}/{repo}/branches/{branch}')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->get('{owner}', '{repo}', '{branch}'),

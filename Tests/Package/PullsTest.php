@@ -5,7 +5,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Joomla\Github\Tests;
+namespace Joomla\Github\Tests\Package;
 
 use Joomla\Github\Package\Pulls;
 use Joomla\Github\Tests\Stub\GitHubTestCase;
@@ -15,7 +15,7 @@ use Joomla\Github\Tests\Stub\GitHubTestCase;
  *
  * @since  1.0
  */
-class JGithubPackagePullsTest extends GitHubTestCase
+class PullsTest extends GitHubTestCase
 {
     /**
      * @var Pulls
@@ -44,7 +44,7 @@ class JGithubPackagePullsTest extends GitHubTestCase
      */
     public function testCreate()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         $pull        = new \stdClass();
         $pull->title = 'My Pull Request';
@@ -55,7 +55,7 @@ class JGithubPackagePullsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/pulls', json_encode($pull))
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->create(
@@ -79,8 +79,7 @@ class JGithubPackagePullsTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 501;
-        $this->response->body = $this->errorString;
+        $this->getResponseObject($this->errorString, 501);
 
         $pull        = new \stdClass();
         $pull->title = 'My Pull Request';
@@ -91,7 +90,7 @@ class JGithubPackagePullsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/pulls', json_encode($pull))
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->create(
             'joomla',
@@ -110,7 +109,7 @@ class JGithubPackagePullsTest extends GitHubTestCase
      */
     public function testCreateFromIssue()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         $pull        = new \stdClass();
         $pull->issue = 254;
@@ -120,7 +119,7 @@ class JGithubPackagePullsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/pulls', json_encode($pull))
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->createFromIssue('joomla', 'joomla-platform', 254, 'staging', 'joomla-jenkins:mychanges'),
@@ -137,8 +136,7 @@ class JGithubPackagePullsTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 501;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 501);
 
         $pull        = new \stdClass();
         $pull->issue = 254;
@@ -148,7 +146,7 @@ class JGithubPackagePullsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/pulls', json_encode($pull))
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->createFromIssue('joomla', 'joomla-platform', 254, 'staging', 'joomla-jenkins:mychanges');
     }
@@ -169,7 +167,7 @@ class JGithubPackagePullsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('patch')
             ->with('/repos/joomla/joomla-platform/pulls/523', json_encode($pull))
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->edit('joomla', 'joomla-platform', 523, 'My Pull Request', 'These are my changes - please review them', 'Closed', 'new'),
@@ -186,8 +184,7 @@ class JGithubPackagePullsTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $pull        = new \stdClass();
         $pull->title = 'My Pull Request';
@@ -196,7 +193,7 @@ class JGithubPackagePullsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('patch')
             ->with('/repos/joomla/joomla-platform/pulls/523', json_encode($pull))
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->edit('joomla', 'joomla-platform', 523, 'My Pull Request', 'These are my changes - please review them');
     }
@@ -211,7 +208,7 @@ class JGithubPackagePullsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/pulls/523')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->get('joomla', 'joomla-platform', 523),
@@ -228,13 +225,12 @@ class JGithubPackagePullsTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/pulls/523')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->get('joomla', 'joomla-platform', 523);
     }
@@ -249,7 +245,7 @@ class JGithubPackagePullsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/pulls/523/commits')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getCommits('joomla', 'joomla-platform', 523),
@@ -266,13 +262,12 @@ class JGithubPackagePullsTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/pulls/523/commits')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->getCommits('joomla', 'joomla-platform', 523);
     }
@@ -287,7 +282,7 @@ class JGithubPackagePullsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/pulls/523/files')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getFiles('joomla', 'joomla-platform', 523),
@@ -304,13 +299,12 @@ class JGithubPackagePullsTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/pulls/523/files')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->getFiles('joomla', 'joomla-platform', 523);
     }
@@ -325,7 +319,7 @@ class JGithubPackagePullsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/pulls?state=closed')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getList('joomla', 'joomla-platform', 'closed'),
@@ -342,13 +336,12 @@ class JGithubPackagePullsTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/pulls')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->getList('joomla', 'joomla-platform');
     }
@@ -360,12 +353,12 @@ class JGithubPackagePullsTest extends GitHubTestCase
      */
     public function testIsMergedTrue()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/pulls/523/merge')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->isMerged('joomla', 'joomla-platform', 523),
@@ -380,12 +373,12 @@ class JGithubPackagePullsTest extends GitHubTestCase
      */
     public function testIsMergedFalse()
     {
-        $this->response->code = 404;
+        $this->response = $this->getResponseObject($this->sampleString, 404);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/pulls/523/merge')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->isMerged('joomla', 'joomla-platform', 523),
@@ -402,13 +395,12 @@ class JGithubPackagePullsTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 504;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 504);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/pulls/523/merge')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->isMerged('joomla', 'joomla-platform', 523);
     }
@@ -423,7 +415,7 @@ class JGithubPackagePullsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('put')
             ->with('/repos/joomla/joomla-platform/pulls/523/merge')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->merge('joomla', 'joomla-platform', 523),
@@ -440,13 +432,12 @@ class JGithubPackagePullsTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('put')
             ->with('/repos/joomla/joomla-platform/pulls/523/merge')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->merge('joomla', 'joomla-platform', 523);
     }

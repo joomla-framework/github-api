@@ -8,6 +8,7 @@ namespace Joomla\Github\Tests;
 
 use Joomla\Github\Package\Repositories\Releases;
 use Joomla\Github\Tests\Stub\GitHubTestCase;
+use Joomla\Http\Response;
 
 /**
  * Test class for the GitHub API package.
@@ -47,11 +48,14 @@ class ReleasesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/releases/12345', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->get('joomla', 'joomla-platform', '12345'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->get('joomla', 'joomla-platform', '12345')
         );
     }
 
@@ -62,17 +66,20 @@ class ReleasesTest extends GitHubTestCase
      */
     public function testCreate()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         $data = '{"tag_name":"0.1","target_commitish":"targetCommitish","name":"master","body":"New release","draft":false,"prerelease":false}';
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/releases', $data, [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->create('joomla', 'joomla-platform', '0.1', 'targetCommitish', 'master', 'New release', false, false),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->create('joomla', 'joomla-platform', '0.1', 'targetCommitish', 'master', 'New release', false, false)
         );
     }
 
@@ -83,17 +90,20 @@ class ReleasesTest extends GitHubTestCase
      */
     public function testCreateFailure()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         $data = '{"tag_name":"0.1","target_commitish":"targetCommitish","name":"master","body":"New release","draft":false,"prerelease":false}';
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/releases', $data, [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->create('joomla', 'joomla-platform', '0.1', 'targetCommitish', 'master', 'New release', false, false),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->create('joomla', 'joomla-platform', '0.1', 'targetCommitish', 'master', 'New release', false, false)
         );
     }
 
@@ -111,11 +121,14 @@ class ReleasesTest extends GitHubTestCase
             ->method('patch')
             ->with('/repos/joomla/joomla-platform/releases/' . $releaseId, $data, [], 0)
 
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->edit('joomla', 'joomla-platform', $releaseId, 'tagName', 'targetCommitish', 'name', 'body', 'draft', 'preRelease'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->edit('joomla', 'joomla-platform', $releaseId, 'tagName', 'targetCommitish', 'name', 'body', 'draft', 'preRelease')
         );
     }
 
@@ -126,23 +139,25 @@ class ReleasesTest extends GitHubTestCase
      */
     public function testGetList()
     {
-        $this->response->code = 200;
-        $this->response->body = '[{"tag_name":"1"},{"tag_name":"2"}]';
+        $this->response = $this->getResponseObject('[{"tag_name":"1"},{"tag_name":"2"}]', 200);
 
         $releases = [];
 
-        foreach (json_decode($this->response->body) as $i => $release) {
+        foreach (json_decode($this->response->getBody()->getContents()) as $i => $release) {
             $releases[$i + 1] = $release;
         }
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/releases', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getList('joomla', 'joomla-platform'),
-            $this->equalTo($releases)
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $releases,
+            $this->object->getList('joomla', 'joomla-platform')
         );
     }
 
@@ -153,16 +168,19 @@ class ReleasesTest extends GitHubTestCase
      */
     public function testDelete()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/repos/joomla/joomla-platform/releases/123')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->delete('joomla', 'joomla-platform', '123'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->delete('joomla', 'joomla-platform', '123')
         );
     }
 
@@ -173,19 +191,21 @@ class ReleasesTest extends GitHubTestCase
      */
     public function testGetLatest()
     {
-        $this->response->code = 200;
-        $this->response->body = '[]';
+        $this->response = $this->getResponseObject('[]');
 
         $releases = [];
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/releases/latest', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getLatest('joomla', 'joomla-platform'),
-            $this->equalTo($releases)
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getLatest('joomla', 'joomla-platform')
         );
     }
 
@@ -199,11 +219,14 @@ class ReleasesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/releases/tags/{tag}', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getByTag('joomla', 'joomla-platform', '{tag}'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getByTag('joomla', 'joomla-platform', '{tag}')
         );
     }
 
@@ -217,11 +240,14 @@ class ReleasesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/releases/123/assets', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getListAssets('joomla', 'joomla-platform', 123),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getListAssets('joomla', 'joomla-platform', 123)
         );
     }
 
@@ -235,11 +261,14 @@ class ReleasesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/releases/assets/123', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getAsset('joomla', 'joomla-platform', 123),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getAsset('joomla', 'joomla-platform', 123)
         );
     }
 
@@ -255,11 +284,14 @@ class ReleasesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('patch')
             ->with('/repos/joomla/joomla-platform/releases/assets/123', $data, [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->editAsset('joomla', 'joomla-platform', 123, '{name}', '{label}'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->editAsset('joomla', 'joomla-platform', 123, '{name}', '{label}')
         );
     }
 
@@ -270,17 +302,16 @@ class ReleasesTest extends GitHubTestCase
      */
     public function testDeleteAsset()
     {
-        $this->response->code = 204;
-        $this->response->body = true;
+        $this->response = new Response('data://text/plain,true', 204);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/repos/joomla/joomla-platform/releases/assets/123', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->deleteAsset('joomla', 'joomla-platform', 123),
-            $this->equalTo($this->response->body)
+        $this->assertEquals(
+            'true',
+            $this->object->deleteAsset('joomla', 'joomla-platform', 123)
         );
     }
 }

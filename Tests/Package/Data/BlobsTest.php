@@ -48,11 +48,14 @@ class BlobsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/git/blobs/12345', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->get('joomla', 'joomla-platform', '12345'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->get('joomla', 'joomla-platform', '12345')
         );
     }
 
@@ -63,16 +66,19 @@ class BlobsTest extends GitHubTestCase
      */
     public function testCreate()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/git/blobs', '{"content":"Hello w\u00f6rld","encoding":"utf-8"}', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->create('joomla', 'joomla-platform', 'Hello wörld'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->create('joomla', 'joomla-platform', 'Hello wörld')
         );
     }
 }

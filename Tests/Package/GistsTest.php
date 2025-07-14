@@ -44,7 +44,7 @@ class GistsTest extends GitHubTestCase
      */
     public function testCreate()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         // Build the request data.
         $data = json_encode(
@@ -60,7 +60,7 @@ class GistsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('post')
             ->with('/gists', $data)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->create(
@@ -81,7 +81,7 @@ class GistsTest extends GitHubTestCase
      */
     public function testCreateGistFromFile()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         // Build the request data.
         $data = json_encode(
@@ -97,7 +97,7 @@ class GistsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('post')
             ->with('/gists', $data)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->create(
@@ -120,7 +120,7 @@ class GistsTest extends GitHubTestCase
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $this->response->code = 501;
+        $this->response = $this->getResponseObject($this->sampleString, 501);
 
         $this->object->create(
             [
@@ -140,8 +140,7 @@ class GistsTest extends GitHubTestCase
     {
         $exception = false;
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         // Build the request data.
         $data = json_encode(
@@ -151,7 +150,7 @@ class GistsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('post')
             ->with('/gists', $data)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         try {
             $this->object->create([], true, 'This is a gist');
@@ -174,7 +173,7 @@ class GistsTest extends GitHubTestCase
      */
     public function testCreateComment()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         $gist       = new \stdClass();
         $gist->body = 'My Insightful Comment';
@@ -182,7 +181,7 @@ class GistsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('post')
             ->with('/gists/523/comments', json_encode($gist))
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->comments->create(523, 'My Insightful Comment'),
@@ -199,8 +198,7 @@ class GistsTest extends GitHubTestCase
     {
         $exception = false;
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $gist       = new \stdClass();
         $gist->body = 'My Insightful Comment';
@@ -208,7 +206,7 @@ class GistsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('post')
             ->with('/gists/523/comments', json_encode($gist))
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         try {
             $this->object->comments->create(523, 'My Insightful Comment');
@@ -231,12 +229,12 @@ class GistsTest extends GitHubTestCase
      */
     public function testDelete()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/gists/254')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->delete(254);
     }
@@ -250,13 +248,12 @@ class GistsTest extends GitHubTestCase
     {
         $exception = false;
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/gists/254')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         try {
             $this->object->delete(254);
@@ -279,12 +276,12 @@ class GistsTest extends GitHubTestCase
      */
     public function testDeleteComment()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/gists/comments/254')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->comments->delete(254);
     }
@@ -298,13 +295,12 @@ class GistsTest extends GitHubTestCase
     {
         $exception = false;
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/gists/comments/254')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         try {
             $this->object->comments->delete(254);
@@ -342,7 +338,7 @@ class GistsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('patch')
             ->with('/gists/512', $data)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->edit(
@@ -367,8 +363,7 @@ class GistsTest extends GitHubTestCase
     {
         $exception = false;
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         // Build the request data.
         $data = json_encode(
@@ -385,7 +380,7 @@ class GistsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('patch')
             ->with('/gists/512', $data)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         try {
             $this->object->edit(
@@ -422,7 +417,7 @@ class GistsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('patch')
             ->with('/gists/comments/523', json_encode($gist))
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->comments->edit(523, 'This comment is now even more insightful'),
@@ -439,8 +434,7 @@ class GistsTest extends GitHubTestCase
     {
         $exception = false;
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $gist       = new \stdClass();
         $gist->body = 'This comment is now even more insightful';
@@ -448,7 +442,7 @@ class GistsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('patch')
             ->with('/gists/comments/523', json_encode($gist))
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         try {
             $this->object->comments->edit(523, 'This comment is now even more insightful');
@@ -471,12 +465,12 @@ class GistsTest extends GitHubTestCase
      */
     public function testFork()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         $this->client->expects($this->once())
             ->method('post')
             ->with('/gists/523/forks')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->fork(523),
@@ -493,13 +487,12 @@ class GistsTest extends GitHubTestCase
     {
         $exception = false;
 
-        $this->response->code = 501;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 501);
 
         $this->client->expects($this->once())
             ->method('post')
             ->with('/gists/523/forks')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         try {
             $this->object->fork(523);
@@ -525,7 +518,7 @@ class GistsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/gists/523')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->get(523),
@@ -542,13 +535,12 @@ class GistsTest extends GitHubTestCase
     {
         $exception = false;
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/gists/523')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         try {
             $this->object->get(523);
@@ -574,7 +566,7 @@ class GistsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/gists/comments/523')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->comments->get(523),
@@ -591,13 +583,12 @@ class GistsTest extends GitHubTestCase
     {
         $exception = false;
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/gists/comments/523')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         try {
             $this->object->comments->get(523);
@@ -623,7 +614,7 @@ class GistsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/gists/523/comments')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->comments->getList(523),
@@ -640,13 +631,12 @@ class GistsTest extends GitHubTestCase
     {
         $exception = false;
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/gists/523/comments')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         try {
             $this->object->comments->getList(523);
@@ -672,7 +662,7 @@ class GistsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/gists/523/commits')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getCommitList(523),
@@ -689,13 +679,12 @@ class GistsTest extends GitHubTestCase
     {
         $exception = false;
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/gists/523/commits')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         try {
             $this->object->getCommitList(523);
@@ -721,7 +710,7 @@ class GistsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/gists/523/forks')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getForkList(523),
@@ -738,13 +727,12 @@ class GistsTest extends GitHubTestCase
     {
         $exception = false;
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/gists/523/forks')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         try {
             $this->object->getForkList(523);
@@ -770,7 +758,7 @@ class GistsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/gists')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getList(),
@@ -787,13 +775,12 @@ class GistsTest extends GitHubTestCase
     {
         $exception = false;
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/gists')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         try {
             $this->object->getList();
@@ -819,7 +806,7 @@ class GistsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/users/joomla/gists')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getListByUser('joomla'),
@@ -836,13 +823,12 @@ class GistsTest extends GitHubTestCase
     {
         $exception = false;
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/users/joomla/gists')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         try {
             $this->object->getListByUser('joomla');
@@ -868,7 +854,7 @@ class GistsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/gists/public')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getListPublic(),
@@ -885,13 +871,12 @@ class GistsTest extends GitHubTestCase
     {
         $exception = false;
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/gists/public')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         try {
             $this->object->getListPublic();
@@ -917,7 +902,7 @@ class GistsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/gists/starred')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getListStarred(),
@@ -934,13 +919,12 @@ class GistsTest extends GitHubTestCase
     {
         $exception = false;
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/gists/starred')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         try {
             $this->object->getListStarred();
@@ -966,7 +950,7 @@ class GistsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/gists/523/a1b2c3')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getRevision(523, 'a1b2c3'),
@@ -983,13 +967,12 @@ class GistsTest extends GitHubTestCase
     {
         $exception = false;
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/gists/523/a1b2c3')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         try {
             $this->object->getRevision(523, 'a1b2c3');
@@ -1012,12 +995,12 @@ class GistsTest extends GitHubTestCase
      */
     public function testIsStarredTrue()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/gists/523/star')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->isStarred(523),
@@ -1032,12 +1015,12 @@ class GistsTest extends GitHubTestCase
      */
     public function testIsStarredFalse()
     {
-        $this->response->code = 404;
+        $this->response = $this->getResponseObject($this->sampleString, 404);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/gists/523/star')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->isStarred(523),
@@ -1054,13 +1037,12 @@ class GistsTest extends GitHubTestCase
     {
         $exception = false;
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/gists/523/star')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         try {
             $this->object->isStarred(523);
@@ -1083,12 +1065,12 @@ class GistsTest extends GitHubTestCase
      */
     public function testStar()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('put')
             ->with('/gists/523/star', '')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->star(523);
     }
@@ -1102,13 +1084,12 @@ class GistsTest extends GitHubTestCase
     {
         $exception = false;
 
-        $this->response->code = 504;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 504);
 
         $this->client->expects($this->once())
             ->method('put')
             ->with('/gists/523/star', '')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         try {
             $this->object->star(523);
@@ -1131,12 +1112,12 @@ class GistsTest extends GitHubTestCase
      */
     public function testUnstar()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/gists/523/star')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->unstar(523);
     }
@@ -1150,13 +1131,12 @@ class GistsTest extends GitHubTestCase
     {
         $exception = false;
 
-        $this->response->code = 504;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 504);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/gists/523/star')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         try {
             $this->object->unstar(523);

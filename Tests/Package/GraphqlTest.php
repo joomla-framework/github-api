@@ -44,8 +44,7 @@ class GraphqlTest extends GitHubTestCase
      */
     public function testCreate()
     {
-        $this->response->code = 200;
-        $this->response->body = $this->sampleString;
+        $this->response = $this->getResponseObject($this->sampleString);
 
         // Build the query.
         $query = 'foo';
@@ -64,7 +63,7 @@ class GraphqlTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('post')
             ->with('/graphql', json_encode($data), $headers)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->execute($query),
@@ -81,8 +80,7 @@ class GraphqlTest extends GitHubTestCase
     {
         $exception = false;
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         // Build the query.
         $query = 'foo';
@@ -101,7 +99,7 @@ class GraphqlTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('post')
             ->with('/graphql', json_encode($data), $headers)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         try {
             $this->object->execute($query);

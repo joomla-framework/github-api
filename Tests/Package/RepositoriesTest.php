@@ -46,11 +46,14 @@ class RepositoriesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/user/repos?type=all&sort=full_name&direction=asc', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getListOwn(),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getListOwn()
         );
     }
 
@@ -100,11 +103,14 @@ class RepositoriesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/users/joomla/repos?type=all&sort=full_name&direction=asc', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getListUser('joomla'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getListUser('joomla')
         );
     }
 
@@ -154,11 +160,14 @@ class RepositoriesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/orgs/joomla/repos?type=all', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getListOrg('joomla'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getListOrg('joomla')
         );
     }
 
@@ -172,11 +181,14 @@ class RepositoriesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repositories', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getList(),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getList()
         );
     }
 
@@ -187,7 +199,7 @@ class RepositoriesTest extends GitHubTestCase
      */
     public function testCreate()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         $this->client->expects($this->once())
             ->method('post')
@@ -198,11 +210,14 @@ class RepositoriesTest extends GitHubTestCase
                 [],
                 0
             )
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->create('joomla-test'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->create('joomla-test')
         );
     }
 
@@ -213,7 +228,7 @@ class RepositoriesTest extends GitHubTestCase
      */
     public function testCreateWithOrg()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         $this->client->expects($this->once())
             ->method('post')
@@ -224,11 +239,14 @@ class RepositoriesTest extends GitHubTestCase
                 [],
                 0
             )
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->create('joomla-test', 'joomla.org'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->create('joomla-test', 'joomla.org')
         );
     }
 
@@ -242,11 +260,14 @@ class RepositoriesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-cms', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->get('joomla', 'joomla-cms'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->get('joomla', 'joomla-cms')
         );
     }
 
@@ -277,11 +298,14 @@ class RepositoriesTest extends GitHubTestCase
                     . 'false,"has_issues":false,"has_wiki":false,"has_downloads":false,"default_branch":""}',
                 []
             )
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->edit('joomla', 'joomla-test', 'joomla-test-1'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->edit('joomla', 'joomla-test', 'joomla-test-1')
         );
     }
 
@@ -295,11 +319,14 @@ class RepositoriesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-cms/contributors', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getListContributors('joomla', 'joomla-cms'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getListContributors('joomla', 'joomla-cms')
         );
     }
 
@@ -313,11 +340,14 @@ class RepositoriesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-cms/languages', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getListLanguages('joomla', 'joomla-cms'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getListLanguages('joomla', 'joomla-cms')
         );
     }
 
@@ -331,11 +361,14 @@ class RepositoriesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-cms/teams', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getListTeams('joomla', 'joomla-cms'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getListTeams('joomla', 'joomla-cms')
         );
     }
 
@@ -349,11 +382,14 @@ class RepositoriesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-cms/tags', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getListTags('joomla', 'joomla-cms'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getListTags('joomla', 'joomla-cms')
         );
     }
 
@@ -367,11 +403,14 @@ class RepositoriesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/repos/joomla/joomla-cms', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->delete('joomla', 'joomla-cms'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->delete('joomla', 'joomla-cms')
         );
     }
 }

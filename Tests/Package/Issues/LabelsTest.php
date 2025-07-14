@@ -48,11 +48,14 @@ class LabelsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/labels', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getList('joomla', 'joomla-platform'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getList('joomla', 'joomla-platform')
         );
     }
 
@@ -66,11 +69,14 @@ class LabelsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/labels/1', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->get('joomla', 'joomla-platform', '1'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->get('joomla', 'joomla-platform', '1')
         );
     }
 
@@ -81,16 +87,19 @@ class LabelsTest extends GitHubTestCase
      */
     public function testCreate()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/labels', '{"name":"foobar","color":"red"}', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->create('joomla', 'joomla-platform', 'foobar', 'red'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->create('joomla', 'joomla-platform', 'foobar', 'red')
         );
     }
 
@@ -103,17 +112,19 @@ class LabelsTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 404;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 404);
 
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/labels', '{"name":"foobar","color":"red"}', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->create('joomla', 'joomla-platform', 'foobar', 'red'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->create('joomla', 'joomla-platform', 'foobar', 'red')
         );
     }
 
@@ -127,11 +138,14 @@ class LabelsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('patch')
             ->with('/repos/joomla/joomla-platform/labels/foobar', '{"name":"boofaz","color":"red"}', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->update('joomla', 'joomla-platform', 'foobar', 'boofaz', 'red'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->update('joomla', 'joomla-platform', 'foobar', 'boofaz', 'red')
         );
     }
 
@@ -142,16 +156,19 @@ class LabelsTest extends GitHubTestCase
      */
     public function testDelete()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/repos/joomla/joomla-platform/labels/foobar', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->delete('joomla', 'joomla-platform', 'foobar'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->delete('joomla', 'joomla-platform', 'foobar')
         );
     }
 
@@ -165,11 +182,14 @@ class LabelsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/issues/1/labels', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getListByIssue('joomla', 'joomla-platform', 1),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getListByIssue('joomla', 'joomla-platform', 1)
         );
     }
 
@@ -183,11 +203,14 @@ class LabelsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/issues/1/labels', '["A","B"]', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->add('joomla', 'joomla-platform', 1, ['A', 'B']),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->add('joomla', 'joomla-platform', 1, ['A', 'B'])
         );
     }
 
@@ -201,11 +224,14 @@ class LabelsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/repos/joomla/joomla-platform/issues/1/labels/foobar', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->removeFromIssue('joomla', 'joomla-platform', 1, 'foobar'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->removeFromIssue('joomla', 'joomla-platform', 1, 'foobar')
         );
     }
 
@@ -219,11 +245,14 @@ class LabelsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('put')
             ->with('/repos/joomla/joomla-platform/issues/1/labels', '["A","B"]', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->replace('joomla', 'joomla-platform', 1, ['A', 'B']),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->replace('joomla', 'joomla-platform', 1, ['A', 'B'])
         );
     }
 
@@ -234,16 +263,19 @@ class LabelsTest extends GitHubTestCase
      */
     public function testRemoveAllFromIssue()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/repos/joomla/joomla-platform/issues/1/labels', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->removeAllFromIssue('joomla', 'joomla-platform', 1),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->removeAllFromIssue('joomla', 'joomla-platform', 1)
         );
     }
 
@@ -257,11 +289,14 @@ class LabelsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/milestones/1/labels', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getListByMilestone('joomla', 'joomla-platform', 1),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getListByMilestone('joomla', 'joomla-platform', 1)
         );
     }
 }

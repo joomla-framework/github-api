@@ -60,11 +60,14 @@ class EventsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/events')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getPublic(),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getPublic()
         );
     }
 
@@ -80,11 +83,14 @@ class EventsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with($path)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getRepository($this->owner, $this->repo),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getRepository($this->owner, $this->repo)
         );
     }
 
@@ -100,11 +106,14 @@ class EventsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with($path)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getIssue($this->owner, $this->repo),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getIssue($this->owner, $this->repo)
         );
     }
 
@@ -120,11 +129,14 @@ class EventsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with($path)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getNetwork($this->owner, $this->repo),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getNetwork($this->owner, $this->repo)
         );
     }
 
@@ -140,11 +152,14 @@ class EventsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with($path)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getOrg($this->owner),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getOrg($this->owner)
         );
     }
 
@@ -160,11 +175,14 @@ class EventsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with($path)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getUser($this->owner),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getUser($this->owner)
         );
     }
 
@@ -180,11 +198,14 @@ class EventsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with($path)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getUserPublic($this->owner),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getUserPublic($this->owner)
         );
     }
 
@@ -200,11 +221,14 @@ class EventsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with($path)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getByUser($this->owner),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getByUser($this->owner)
         );
     }
 
@@ -220,11 +244,14 @@ class EventsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with($path)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getByUserPublic($this->owner),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getByUserPublic($this->owner)
         );
     }
 
@@ -240,11 +267,14 @@ class EventsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with($path)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getUserOrg($this->owner, $this->repo),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getUserOrg($this->owner, $this->repo)
         );
     }
 }

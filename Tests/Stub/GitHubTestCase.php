@@ -6,6 +6,8 @@
 
 namespace Joomla\Github\Tests\Stub;
 
+use Joomla\Http\Http;
+use Joomla\Http\Response;
 use Joomla\Registry\Registry;
 use PHPUnit\Framework\TestCase;
 
@@ -23,7 +25,7 @@ abstract class GitHubTestCase extends TestCase
     protected $options;
 
     /**
-     * @var    \PHPUnit_Framework_MockObject_MockObject  Mock client object.
+     * @var    Http  Mock client object.
      * @since  1.0
      */
     protected $client;
@@ -60,15 +62,13 @@ abstract class GitHubTestCase extends TestCase
 
         $this->options  = new Registry();
 
-        $this->client = $this->getMockBuilder('\\Joomla\\Http\\Http')
-            ->setMethods(['get', 'post', 'delete', 'patch', 'put'])
-            ->getMock();
+        $this->client = $this->createMock(Http::class);
 
-        $this->response = $this->getMockBuilder('\\Joomla\\Http\\Response')
-            ->getMock();
+        $this->response = $this->getResponseObject($this->sampleString);
+    }
 
-        // Set a default response
-        $this->response->code = 200;
-        $this->response->body = $this->sampleString;
+    protected function getResponseObject($body, $code = 200, $headers = [])
+    {
+        return new Response('data://text/plain,' . $body, $code, $headers);
     }
 }

@@ -48,11 +48,14 @@ class FeedsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/feeds')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getFeeds(),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getFeeds()
         );
     }
 }

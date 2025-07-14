@@ -44,11 +44,11 @@ class MarkdownTest extends GitHubTestCase
      */
     public function testRender()
     {
-        $this->response->code = 200;
-        $this->response->body = '<p>Hello world <a href="http://github.com/github/linguist/issues/1" '
+        $body = '<p>Hello world <a href="http://github.com/github/linguist/issues/1" '
             . 'class="issue-link" title="This is a simple issue">github/linguist#1</a> <strong>cool</strong>, '
             . 'and <a href="http://github.com/github/gollum/issues/1" class="issue-link" '
             . 'title="This is another issue">#1</a>!</p>';
+        $this->response = $this->getResponseObject($body);
 
         $text    = 'Hello world github/linguist#1 **cool**, and #1!';
         $mode    = 'gfm';
@@ -69,11 +69,14 @@ class MarkdownTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('post')
             ->with('/markdown', $data, [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->render($text, $mode, $context),
-            $this->equalTo($this->response->body)
+        $response = $this->response->getBody()->getContents();
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->render($text, $mode, $context)
         );
     }
 
@@ -101,8 +104,7 @@ class MarkdownTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 404;
-        $this->response->body = '';
+        $this->response = $this->getResponseObject('', 404);
 
         $text    = 'Hello world github/linguist#1 **cool**, and #1!';
         $mode    = 'gfm';
@@ -123,7 +125,7 @@ class MarkdownTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('post')
             ->with('/markdown', $data, [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->render($text, $mode, $context),

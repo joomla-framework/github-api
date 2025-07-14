@@ -46,8 +46,7 @@ class GitignoreTest extends GitHubTestCase
      */
     public function testGetList()
     {
-        $this->response->code = 200;
-        $this->response->body = '[
+        $body = '[
     "Actionscript",
     "Android",
     "AppceleratorTitanium",
@@ -56,15 +55,19 @@ class GitignoreTest extends GitHubTestCase
     "C",
     "C++"
     ]';
+        $this->response = $this->getResponseObject($body);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/gitignore/templates', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getList(),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getList()
         );
     }
 
@@ -77,21 +80,24 @@ class GitignoreTest extends GitHubTestCase
      */
     public function testGet()
     {
-        $this->response->code = 200;
-        $this->response->body = '{
+        $body = '{
     "name": "C",
     "source": "# Object files\n*.o\n\n# Libraries\n*.lib\n*.a\n\n# Shared objects (inc. Windows DLLs)\n'
             . '*.dll\n*.so\n*.so.*\n*.dylib\n\n# Executables\n*.exe\n*.out\n*.app\n"
     }';
+        $this->response = $this->getResponseObject($body);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/gitignore/templates/C', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->get('C'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->get('C')
         );
     }
 
@@ -104,8 +110,7 @@ class GitignoreTest extends GitHubTestCase
      */
     public function testGetRaw()
     {
-        $this->response->code = 200;
-        $this->response->body = '# Object files
+        $body = '# Object files
      *.o
 
     # Libraries
@@ -123,15 +128,19 @@ class GitignoreTest extends GitHubTestCase
      *.out
      *.app
 ';
+        $this->response = $this->getResponseObject($body);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/gitignore/templates/C', ['Accept' => 'application/vnd.github.raw+json'], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->get('C', true),
-            $this->equalTo($this->response->body)
+        $response = $this->response->getBody()->getContents();
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->get('C', true)
         );
     }
 
@@ -145,17 +154,19 @@ class GitignoreTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 404;
-        $this->response->body = '{"message":"Not found"}';
+        $this->response = $this->getResponseObject('{"message":"Not found"}', 404);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/gitignore/templates/X', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->get('X'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->get('X')
         );
     }
 }

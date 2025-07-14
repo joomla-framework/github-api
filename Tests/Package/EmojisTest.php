@@ -47,7 +47,7 @@ class EmojisTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/emojis')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getList(),
@@ -64,13 +64,12 @@ class EmojisTest extends GitHubTestCase
     {
         $exception = false;
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/emojis')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         try {
             $this->object->getList();

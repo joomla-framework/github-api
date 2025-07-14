@@ -60,7 +60,7 @@ class MetaTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/meta')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getMeta(),
@@ -79,13 +79,12 @@ class MetaTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/meta')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->getMeta();
     }

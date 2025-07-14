@@ -47,7 +47,7 @@ class OrgsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/users/joomla/orgs')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getList('joomla'),
@@ -65,7 +65,7 @@ class OrgsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/orgs/joomla')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->get('joomla'),
@@ -83,7 +83,7 @@ class OrgsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('patch')
             ->with('/orgs/joomla')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->edit('joomla', 'email@example.com'),

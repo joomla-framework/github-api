@@ -8,6 +8,7 @@ namespace Joomla\Github\Tests;
 
 use Joomla\Github\Package\Zen;
 use Joomla\Github\Tests\Stub\GitHubTestCase;
+use Joomla\Http\Response;
 
 /**
  * Test class for the Zen package.
@@ -43,17 +44,19 @@ class ZenTest extends GitHubTestCase
      */
     public function testGet()
     {
-        $this->response->code = 200;
-        $this->response->body = 'My Zen';
+        $this->response = new Response('data://text/plain,My Zen', 200);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/zen', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->get(),
-            $this->equalTo($this->response->body)
+        $response = $this->response->getBody()->getContents();
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->get()
         );
     }
 
@@ -66,17 +69,19 @@ class ZenTest extends GitHubTestCase
     {
         $this->expectException(\RuntimeException::class);
 
-        $this->response->code = 400;
-        $this->response->body = 'My Zen';
+        $this->response = new Response('data://text/plain,My Zen', 400);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/zen', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->get(),
-            $this->equalTo($this->response->body)
+        $response = $this->response->getBody()->getContents();
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->get()
         );
     }
 }

@@ -47,7 +47,7 @@ class StatisticsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-framework/stats/contributors')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getListContributors('joomla', 'joomla-framework'),
@@ -65,7 +65,7 @@ class StatisticsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-framework/stats/commit_activity')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getActivityData('joomla', 'joomla-framework'),
@@ -83,7 +83,7 @@ class StatisticsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-framework/stats/code_frequency')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getCodeFrequency('joomla', 'joomla-framework'),
@@ -101,7 +101,7 @@ class StatisticsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-framework/stats/participation')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getParticipation('joomla', 'joomla-framework'),
@@ -119,7 +119,7 @@ class StatisticsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-framework/stats/punch_card')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getPunchCard('joomla', 'joomla-framework'),
@@ -136,12 +136,12 @@ class StatisticsTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 202;
+        $this->response = $this->getResponseObject($this->sampleString, 202);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-framework/stats/punch_card')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getPunchCard('joomla', 'joomla-framework'),

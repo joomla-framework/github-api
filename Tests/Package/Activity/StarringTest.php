@@ -52,11 +52,14 @@ class StarringTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/stargazers', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getList('joomla', 'joomla-platform'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getList('joomla', 'joomla-platform')
         );
     }
 
@@ -72,11 +75,14 @@ class StarringTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/user/starred?sort=created&direction=desc', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getRepositories(),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getRepositories()
         );
     }
 
@@ -92,11 +98,14 @@ class StarringTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/users/{user}/starred?sort=created&direction=desc', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getRepositories('{user}'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getRepositories('{user}')
         );
     }
 
@@ -141,17 +150,19 @@ class StarringTest extends GitHubTestCase
      */
     public function testCheck()
     {
-        $this->response->code = 204;
-        $this->response->body = true;
+        $this->response = $this->getResponseObject(true, 204);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/user/starred/joomla/joomla-platform', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->check('joomla', 'joomla-platform'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->check('joomla', 'joomla-platform')
         );
     }
 
@@ -164,17 +175,19 @@ class StarringTest extends GitHubTestCase
      */
     public function testCheckFalse()
     {
-        $this->response->code = 404;
-        $this->response->body = false;
+        $this->response = $this->getResponseObject(false, 404);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/user/starred/joomla/joomla-platform', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->check('joomla', 'joomla-platform'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->check('joomla', 'joomla-platform')
         );
     }
 
@@ -187,19 +200,21 @@ class StarringTest extends GitHubTestCase
      */
     public function testCheckUnexpected()
     {
-        $this->expectException(\UnexpectedValueException::class);
+        $this->expectException(\Laminas\Diactoros\Exception\InvalidArgumentException::class);
 
-        $this->response->code = 666;
-        $this->response->body = false;
+        $this->response = $this->getResponseObject(false, 666);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/user/starred/joomla/joomla-platform', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->check('joomla', 'joomla-platform'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->check('joomla', 'joomla-platform')
         );
     }
 
@@ -212,16 +227,19 @@ class StarringTest extends GitHubTestCase
      */
     public function testStar()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('put')
             ->with('/user/starred/joomla/joomla-platform', '', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->star('joomla', 'joomla-platform'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->star('joomla', 'joomla-platform')
         );
     }
 
@@ -234,17 +252,19 @@ class StarringTest extends GitHubTestCase
      */
     public function testUnstar()
     {
-        $this->response->code = 204;
-        $this->response->body = '';
+        $this->response = $this->getResponseObject('', 204);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/user/starred/joomla/joomla-platform', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->unstar('joomla', 'joomla-platform'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->unstar('joomla', 'joomla-platform')
         );
     }
 }

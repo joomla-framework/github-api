@@ -47,7 +47,7 @@ class MilestonesTest extends GitHubTestCase
      */
     public function testCreate()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         $milestone = '{'
             . '"title":"My Milestone","state":"open","description":"This milestone is impossible","due_on":"2012-12-25T20:09:31Z"'
@@ -56,11 +56,14 @@ class MilestonesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/milestones', $milestone)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->create('joomla', 'joomla-platform', 'My Milestone', 'open', 'This milestone is impossible', '2012-12-25T20:09:31Z'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->create('joomla', 'joomla-platform', 'My Milestone', 'open', 'This milestone is impossible', '2012-12-25T20:09:31Z')
         );
     }
 
@@ -75,8 +78,7 @@ class MilestonesTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 501;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 501);
 
         $milestone = '{'
             . '"title":"My Milestone","state":"open","description":"This milestone is impossible","due_on":"2012-12-25T20:09:31Z"'
@@ -85,7 +87,7 @@ class MilestonesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/milestones', $milestone)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->create('joomla', 'joomla-platform', 'My Milestone', 'open', 'This milestone is impossible', '2012-12-25T20:09:31Z');
     }
@@ -105,11 +107,14 @@ class MilestonesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('patch')
             ->with('/repos/joomla/joomla-platform/milestones/523', json_encode($milestone))
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->edit('joomla', 'joomla-platform', 523, null, 'closed'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->edit('joomla', 'joomla-platform', 523, null, 'closed')
         );
     }
 
@@ -129,7 +134,7 @@ class MilestonesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('patch')
             ->with('/repos/{user}/{repo}/milestones/523', $milestone)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->edit(
@@ -156,8 +161,7 @@ class MilestonesTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $milestone        = new \stdClass();
         $milestone->state = 'closed';
@@ -165,7 +169,7 @@ class MilestonesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('patch')
             ->with('/repos/joomla/joomla-platform/milestones/523', json_encode($milestone))
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->edit('joomla', 'joomla-platform', 523, null, 'closed');
     }
@@ -182,7 +186,7 @@ class MilestonesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/milestones/523')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->get('joomla', 'joomla-platform', 523),
@@ -201,13 +205,12 @@ class MilestonesTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/milestones/523')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->get('joomla', 'joomla-platform', 523);
     }
@@ -224,7 +227,7 @@ class MilestonesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/milestones?state=open&sort=due_date&direction=desc')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getList('joomla', 'joomla-platform'),
@@ -243,13 +246,12 @@ class MilestonesTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/milestones?state=open&sort=due_date&direction=desc')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->getList('joomla', 'joomla-platform');
     }
@@ -263,12 +265,12 @@ class MilestonesTest extends GitHubTestCase
      */
     public function testDelete()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/repos/joomla/joomla-platform/milestones/254')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->delete('joomla', 'joomla-platform', 254);
     }
@@ -284,13 +286,12 @@ class MilestonesTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 504;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 504);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/repos/joomla/joomla-platform/milestones/254')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->delete('joomla', 'joomla-platform', 254);
     }

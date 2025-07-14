@@ -51,7 +51,7 @@ class HooksTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/orgs/joomla/hooks')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getList('joomla'),
@@ -71,7 +71,7 @@ class HooksTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/orgs/joomla/hooks/123')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->get('joomla', 123),
@@ -88,12 +88,12 @@ class HooksTest extends GitHubTestCase
      */
     public function testCreate()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         $this->client->expects($this->once())
             ->method('post')
             ->with('/orgs/joomla/hooks')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->create('joomla', '{url}', 'json', '{secret}'),
@@ -140,12 +140,12 @@ class HooksTest extends GitHubTestCase
      */
     public function testEdit()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         $this->client->expects($this->once())
             ->method('post')
             ->with('/orgs/{org}/hooks')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->edit('{org}', '{url}', 'json', '{secret}', 1, ['create'], true),
@@ -190,12 +190,12 @@ class HooksTest extends GitHubTestCase
      */
     public function testPing()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('post')
             ->with('/orgs/{org}/hooks/123/pings')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->ping('{org}', 123),
@@ -212,12 +212,12 @@ class HooksTest extends GitHubTestCase
      */
     public function testDelete()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/orgs/joomla/hooks/123')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->delete('joomla', 123),

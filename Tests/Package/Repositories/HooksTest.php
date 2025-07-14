@@ -51,7 +51,7 @@ class HooksTest extends GitHubTestCase
      */
     public function testCreate()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         $hook         = new \stdClass();
         $hook->name   = 'acunote';
@@ -62,7 +62,7 @@ class HooksTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/hooks', json_encode($hook))
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->create('joomla', 'joomla-platform', 'acunote', ['token' => '123456789'], ['push', 'public']),
@@ -83,8 +83,7 @@ class HooksTest extends GitHubTestCase
     {
         $exception = false;
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $hook         = new \stdClass();
         $hook->name   = 'acunote';
@@ -95,7 +94,7 @@ class HooksTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/hooks', json_encode($hook))
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         try {
             $this->object->create('joomla', 'joomla-platform', 'acunote', ['token' => '123456789'], ['push', 'public']);
@@ -140,12 +139,12 @@ class HooksTest extends GitHubTestCase
      */
     public function testDelete()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/repos/joomla/joomla-platform/hooks/42')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->delete('joomla', 'joomla-platform', 42),
@@ -168,13 +167,12 @@ class HooksTest extends GitHubTestCase
     {
         $exception = false;
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/repos/joomla/joomla-platform/hooks/42')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         try {
             $this->object->delete('joomla', 'joomla-platform', 42);
@@ -209,7 +207,7 @@ class HooksTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('patch')
             ->with('/repos/joomla/joomla-platform/hooks/42', $hook)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->edit(
@@ -241,8 +239,7 @@ class HooksTest extends GitHubTestCase
     {
         $exception = false;
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $hook = '{'
             . '"name":"acunote","config":{"token":"123456789"},"events":["push","public"],'
@@ -252,7 +249,7 @@ class HooksTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('patch')
             ->with('/repos/joomla/joomla-platform/hooks/42', $hook)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         try {
             $this->object->edit(
@@ -354,7 +351,7 @@ class HooksTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/hooks/42')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->get('joomla', 'joomla-platform', 42),
@@ -377,13 +374,12 @@ class HooksTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/hooks/42')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->get('joomla', 'joomla-platform', 42);
     }
@@ -402,7 +398,7 @@ class HooksTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/hooks')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getList('joomla', 'joomla-platform'),
@@ -425,13 +421,12 @@ class HooksTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/hooks')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->getList('joomla', 'joomla-platform');
     }
@@ -447,12 +442,12 @@ class HooksTest extends GitHubTestCase
      */
     public function testTest()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/hooks/42/test')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->test('joomla', 'joomla-platform', 42),
@@ -475,13 +470,12 @@ class HooksTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/hooks/42/test')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->test('joomla', 'joomla-platform', 42);
     }
@@ -497,12 +491,12 @@ class HooksTest extends GitHubTestCase
      */
     public function testPing()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/{user}/{repo}/hooks/42/pings')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->ping('{user}', '{repo}', 42),

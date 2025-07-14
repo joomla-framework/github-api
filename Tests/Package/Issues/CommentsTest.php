@@ -48,11 +48,14 @@ class CommentsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/issues/1/comments', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getList('joomla', 'joomla-platform', '1'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getList('joomla', 'joomla-platform', '1')
         );
     }
 
@@ -66,11 +69,14 @@ class CommentsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/issues/comments?sort=created&direction=asc', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getRepositoryList('joomla', 'joomla-platform'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getRepositoryList('joomla', 'joomla-platform')
         );
     }
 
@@ -110,11 +116,14 @@ class CommentsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/issues/comments?sort=created&direction=asc&since=1966-09-15T12:34:56+00:00', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getRepositoryList('joomla', 'joomla-platform', 'created', 'asc', $date),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getRepositoryList('joomla', 'joomla-platform', 'created', 'asc', $date)
         );
     }
 
@@ -128,11 +137,14 @@ class CommentsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/issues/comments/1', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->get('joomla', 'joomla-platform', 1),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->get('joomla', 'joomla-platform', 1)
         );
     }
 
@@ -146,11 +158,14 @@ class CommentsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('patch')
             ->with('/repos/joomla/joomla-platform/issues/comments/1', '{"body":"Hello"}', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->edit('joomla', 'joomla-platform', 1, 'Hello'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->edit('joomla', 'joomla-platform', 1, 'Hello')
         );
     }
 
@@ -161,16 +176,19 @@ class CommentsTest extends GitHubTestCase
      */
     public function testCreate()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/issues/1/comments', '{"body":"Hello"}', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->create('joomla', 'joomla-platform', 1, 'Hello'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->create('joomla', 'joomla-platform', 1, 'Hello')
         );
     }
 
@@ -181,13 +199,12 @@ class CommentsTest extends GitHubTestCase
      */
     public function testDelete()
     {
-        $this->response->code = 204;
-        $this->response->body = '';
+        $this->response = $this->getResponseObject('', 204);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/repos/joomla/joomla-platform/issues/comments/1', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->delete('joomla', 'joomla-platform', 1),

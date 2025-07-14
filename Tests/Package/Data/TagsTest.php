@@ -48,11 +48,14 @@ class TagsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/git/tags/12345', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->get('joomla', 'joomla-platform', '12345'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->get('joomla', 'joomla-platform', '12345')
         );
     }
 
@@ -63,18 +66,21 @@ class TagsTest extends GitHubTestCase
      */
     public function testCreate()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         $data = '{"tag":"0.1","message":"Message","object":"12345","type":"commit","tagger":'
         . '{"name":"elkuku","email":"email@example.com","date":"123456789"}}';
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/git/tags', $data, [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->create('joomla', 'joomla-platform', '0.1', 'Message', '12345', 'commit', 'elkuku', 'email@example.com', '123456789'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->create('joomla', 'joomla-platform', '0.1', 'Message', '12345', 'commit', 'elkuku', 'email@example.com', '123456789')
         );
     }
 }

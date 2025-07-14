@@ -48,7 +48,7 @@ class StatusesTest extends GitHubTestCase
      */
     public function testCreate()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         // Build the request data.
         $data = json_encode(
@@ -63,7 +63,7 @@ class StatusesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/statuses/6dcb09b5b57875f334f61aebed695e2e4193db5e', $data)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->create(
@@ -92,8 +92,7 @@ class StatusesTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 501;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 501);
 
         // Build the request data.
         $data = json_encode(
@@ -105,7 +104,7 @@ class StatusesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/statuses/6dcb09b5b57875f334f61aebed695e2e4193db5e', $data)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->create('joomla', 'joomla-platform', '6dcb09b5b57875f334f61aebed695e2e4193db5e', 'pending');
     }
@@ -123,8 +122,7 @@ class StatusesTest extends GitHubTestCase
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $this->response->code = 501;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 501);
 
         $this->object->create('joomla', 'joomla-platform', '6dcb09b5b57875f334f61aebed695e2e4193db5e', 'INVALID');
     }
@@ -141,7 +139,7 @@ class StatusesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/statuses/6dcb09b5b57875f334f61aebed695e2e4193db5e')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getList('joomla', 'joomla-platform', '6dcb09b5b57875f334f61aebed695e2e4193db5e'),
@@ -162,13 +160,12 @@ class StatusesTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/statuses/6dcb09b5b57875f334f61aebed695e2e4193db5e')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->getList('joomla', 'joomla-platform', '6dcb09b5b57875f334f61aebed695e2e4193db5e');
     }
@@ -187,7 +184,7 @@ class StatusesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/{user}/{repo}/commits/{sha}/status')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getCombinedStatus('{user}', '{repo}', '{sha}'),

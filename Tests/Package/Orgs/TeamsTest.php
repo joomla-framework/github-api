@@ -51,7 +51,7 @@ class TeamsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/orgs/joomla/teams')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getList('joomla'),
@@ -71,7 +71,7 @@ class TeamsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/teams/123')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->get(123),
@@ -88,12 +88,12 @@ class TeamsTest extends GitHubTestCase
      */
     public function testCreate()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         $this->client->expects($this->once())
             ->method('post')
             ->with('/orgs/joomla/teams')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->create('joomla', 'TheTeam', ['joomla-platform'], 'admin'),
@@ -112,7 +112,7 @@ class TeamsTest extends GitHubTestCase
     {
         $this->expectException(\UnexpectedValueException::class);
 
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         $this->object->create('joomla', 'TheTeam', ['joomla-platform'], 'invalid');
     }
@@ -129,7 +129,7 @@ class TeamsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('patch')
             ->with('/teams/123')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->edit(123, 'TheTeam', 'admin'),
@@ -160,12 +160,12 @@ class TeamsTest extends GitHubTestCase
      */
     public function testDelete()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/teams/123')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->delete(123),
@@ -185,7 +185,7 @@ class TeamsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/teams/123/members')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getListMembers(123),
@@ -204,12 +204,12 @@ class TeamsTest extends GitHubTestCase
      */
     public function testIsMember()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/teams/123/members/elkuku')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->isMember(123, 'elkuku'),
@@ -228,12 +228,12 @@ class TeamsTest extends GitHubTestCase
      */
     public function testIsMemberNo()
     {
-        $this->response->code = 404;
+        $this->response = $this->getResponseObject($this->sampleString, 404);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/teams/123/members/elkuku')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->isMember(123, 'elkuku'),
@@ -252,14 +252,14 @@ class TeamsTest extends GitHubTestCase
      */
     public function testIsMemberUnexpected()
     {
-        $this->expectException(\UnexpectedValueException::class);
+        $this->expectException(\Laminas\Diactoros\Exception\InvalidArgumentException::class);
 
-        $this->response->code = 666;
+        $this->response = $this->getResponseObject($this->sampleString, 666);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/teams/123/members/elkuku')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->isMember(123, 'elkuku'),
@@ -278,12 +278,12 @@ class TeamsTest extends GitHubTestCase
      */
     public function testAddMember()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('put')
             ->with('/teams/123/members/elkuku')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->addMember(123, 'elkuku'),
@@ -302,12 +302,12 @@ class TeamsTest extends GitHubTestCase
      */
     public function testRemoveMember()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/teams/123/members/elkuku')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->removeMember(123, 'elkuku'),
@@ -327,7 +327,7 @@ class TeamsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/teams/123/repos')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getListRepos(123),
@@ -344,12 +344,12 @@ class TeamsTest extends GitHubTestCase
      */
     public function testCheckRepo()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/teams/123/repos/joomla/cms')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->checkRepo(123, 'joomla', 'cms'),
@@ -366,12 +366,12 @@ class TeamsTest extends GitHubTestCase
      */
     public function testCheckRepoNo()
     {
-        $this->response->code = 404;
+        $this->response = $this->getResponseObject($this->sampleString, 404);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/teams/123/repos/joomla/cms')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->checkRepo(123, 'joomla', 'cms'),
@@ -388,14 +388,14 @@ class TeamsTest extends GitHubTestCase
      */
     public function testCheckRepoUnexpected()
     {
-        $this->expectException(\UnexpectedValueException::class);
+        $this->expectException(\Laminas\Diactoros\Exception\InvalidArgumentException::class);
 
-        $this->response->code = 666;
+        $this->response = $this->getResponseObject($this->sampleString, 666);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/teams/123/repos/joomla/cms')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->checkRepo(123, 'joomla', 'cms'),
@@ -412,12 +412,12 @@ class TeamsTest extends GitHubTestCase
      */
     public function testAddRepo()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('put')
             ->with('/teams/123/repos/joomla/joomla-platform')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->addRepo(123, 'joomla', 'joomla-platform'),
@@ -434,12 +434,12 @@ class TeamsTest extends GitHubTestCase
      */
     public function testRemoveRepo()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/teams/123/repos/joomla/joomla-platform')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->removeRepo(123, 'joomla', 'joomla-platform'),
@@ -456,13 +456,13 @@ class TeamsTest extends GitHubTestCase
      */
     public function testGetTeamMemberships()
     {
-        $this->response->code = 200;
-        $this->response->body = '{"state":"TEST"}';
+        $body = '{"state":"TEST"}';
+        $this->response = $this->getResponseObject($body);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/teams/123/memberships/{user}')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getTeamMembership(123, '{user}'),
@@ -481,13 +481,13 @@ class TeamsTest extends GitHubTestCase
      */
     public function testGetTeamMembershipsFailure1()
     {
-        $this->response->code = 404;
-        $this->response->body = '{"state":"TEST"}';
+        $body = '{"state":"TEST"}';
+        $this->response = $this->getResponseObject($body, 404);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/teams/123/memberships/{user}')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getTeamMembership(123, '{user}'),
@@ -506,16 +506,14 @@ class TeamsTest extends GitHubTestCase
      */
     public function testGetTeamMembershipsFailure2()
     {
-        $this->expectException(\UnexpectedValueException::class);
-        $this->expectExceptionMessage('Unexpected response code: 666');
+        $this->expectException(\Laminas\Diactoros\Exception\InvalidArgumentException::class);
 
-        $this->response->code = 666;
-        $this->response->body = '{"state":"TEST"}';
+        $this->response = $this->getResponseObject('{"state":"TEST"}', 666);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/teams/123/memberships/{user}')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getTeamMembership(123, '{user}'),
@@ -535,7 +533,7 @@ class TeamsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('put')
             ->with('/teams/123/memberships/{user}')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->addTeamMembership(123, '{user}'),
@@ -569,12 +567,12 @@ class TeamsTest extends GitHubTestCase
      */
     public function testRemoveTeamMemberships()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/teams/123/memberships/{user}')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->removeTeamMembership(123, '{user}'),
@@ -594,7 +592,7 @@ class TeamsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/user/teams')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getUserTeams(),

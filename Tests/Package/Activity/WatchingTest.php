@@ -48,11 +48,14 @@ class WatchingTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/subscribers', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getList('joomla', 'joomla-platform'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getList('joomla', 'joomla-platform')
         );
     }
 
@@ -66,11 +69,14 @@ class WatchingTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/user/subscriptions', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getRepositories(),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getRepositories()
         );
     }
 
@@ -84,11 +90,14 @@ class WatchingTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/users/joomla/subscriptions', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getRepositories('joomla'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getRepositories('joomla')
         );
     }
 
@@ -102,11 +111,14 @@ class WatchingTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/subscription', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getSubscription('joomla', 'joomla-platform'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getSubscription('joomla', 'joomla-platform')
         );
     }
 
@@ -120,11 +132,14 @@ class WatchingTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('put')
             ->with('/repos/joomla/joomla-platform/subscription', '{"subscribed":true,"ignored":false}', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->setSubscription('joomla', 'joomla-platform', true, false),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->setSubscription('joomla', 'joomla-platform', true, false)
         );
     }
 
@@ -135,17 +150,19 @@ class WatchingTest extends GitHubTestCase
      */
     public function testDeleteSubscription()
     {
-        $this->response->code = 204;
-        $this->response->body = '';
+        $this->response = $this->getResponseObject('', 204);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/repos/joomla/joomla-platform/subscription', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->deleteSubscription('joomla', 'joomla-platform'),
-            $this->equalTo($this->response->body)
+        $response = $this->response->getBody()->getContents();
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->deleteSubscription('joomla', 'joomla-platform')
         );
     }
 
@@ -156,13 +173,12 @@ class WatchingTest extends GitHubTestCase
      */
     public function testCheck()
     {
-        $this->response->code = 204;
-        $this->response->body = '';
+        $this->response = $this->getResponseObject('', 204);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/user/subscriptions/joomla/joomla-platform', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->check('joomla', 'joomla-platform'),
@@ -177,13 +193,12 @@ class WatchingTest extends GitHubTestCase
      */
     public function testCheckFalse()
     {
-        $this->response->code = 404;
-        $this->response->body = '';
+        $this->response = $this->getResponseObject('', 404);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/user/subscriptions/joomla/joomla-platform', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->check('joomla', 'joomla-platform'),
@@ -198,15 +213,14 @@ class WatchingTest extends GitHubTestCase
      */
     public function testCheckUnexpected()
     {
-        $this->expectException(\UnexpectedValueException::class);
+        $this->expectException(\Laminas\Diactoros\Exception\InvalidArgumentException::class);
 
-        $this->response->code = 666;
-        $this->response->body = '';
+        $this->response = $this->getResponseObject(false, 666);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/user/subscriptions/joomla/joomla-platform', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->check('joomla', 'joomla-platform');
     }
@@ -218,17 +232,19 @@ class WatchingTest extends GitHubTestCase
      */
     public function testWatch()
     {
-        $this->response->code = 204;
-        $this->response->body = '';
+        $this->response = $this->getResponseObject('', 204);
 
         $this->client->expects($this->once())
             ->method('put')
             ->with('/user/subscriptions/joomla/joomla-platform', '', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->watch('joomla', 'joomla-platform'),
-            $this->equalTo($this->response->body)
+        $response = $this->response->getBody()->getContents();
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->watch('joomla', 'joomla-platform')
         );
     }
 
@@ -239,17 +255,19 @@ class WatchingTest extends GitHubTestCase
      */
     public function testUnwatch()
     {
-        $this->response->code = 204;
-        $this->response->body = '';
+        $this->response = $this->getResponseObject('', 204);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/user/subscriptions/joomla/joomla-platform', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->unwatch('joomla', 'joomla-platform'),
-            $this->equalTo($this->response->body)
+        $response = $this->response->getBody()->getContents();
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->unwatch('joomla', 'joomla-platform')
         );
     }
 }

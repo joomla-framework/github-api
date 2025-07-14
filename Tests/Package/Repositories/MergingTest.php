@@ -45,12 +45,12 @@ class MergingTest extends GitHubTestCase
      */
     public function testPerform()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/merges')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->perform('joomla', 'joomla-platform', '123', '456', 'My Message'),
@@ -67,12 +67,12 @@ class MergingTest extends GitHubTestCase
     {
         $this->expectException(\UnexpectedValueException::class);
 
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/merges')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->perform('joomla', 'joomla-platform', '123', '456', 'My Message'),
@@ -89,12 +89,12 @@ class MergingTest extends GitHubTestCase
     {
         $this->expectException(\UnexpectedValueException::class);
 
-        $this->response->code = 404;
+        $this->response = $this->getResponseObject($this->sampleString, 404);
 
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/merges')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->perform('joomla', 'joomla-platform', '123', '456', 'My Message'),
@@ -111,12 +111,12 @@ class MergingTest extends GitHubTestCase
     {
         $this->expectException(\UnexpectedValueException::class);
 
-        $this->response->code = 409;
+        $this->response = $this->getResponseObject($this->sampleString, 409);
 
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/merges')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->perform('joomla', 'joomla-platform', '123', '456', 'My Message'),
@@ -131,14 +131,14 @@ class MergingTest extends GitHubTestCase
      */
     public function testPerformUnexpected()
     {
-        $this->expectException(\UnexpectedValueException::class);
+        $this->expectException(\Laminas\Diactoros\Exception\InvalidArgumentException::class);
 
-        $this->response->code = 666;
+        $this->response = $this->getResponseObject($this->sampleString, 666);
 
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/merges')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->perform('joomla', 'joomla-platform', '123', '456', 'My Message'),

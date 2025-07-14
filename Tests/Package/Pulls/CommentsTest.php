@@ -48,17 +48,20 @@ class CommentsTest extends GitHubTestCase
      */
     public function testCreate()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
         $data                 = '{"body":"The Body","commit_id":"123abc","path":"a\/b\/c","position":456}';
 
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/pulls/1/comments', $data, [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->create('joomla', 'joomla-platform', 1, 'The Body', '123abc', 'a/b/c', 456),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->create('joomla', 'joomla-platform', 1, 'The Body', '123abc', 'a/b/c', 456)
         );
     }
 
@@ -71,16 +74,19 @@ class CommentsTest extends GitHubTestCase
      */
     public function testCreateReply()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/pulls/1/comments', '{"body":"The Body","in_reply_to":456}', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->createReply('joomla', 'joomla-platform', 1, 'The Body', 456),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->createReply('joomla', 'joomla-platform', 1, 'The Body', 456)
         );
     }
 
@@ -93,17 +99,19 @@ class CommentsTest extends GitHubTestCase
      */
     public function testDelete()
     {
-        $this->response->code = 204;
-        $this->response->body = '';
+        $this->response = $this->getResponseObject('', 204);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/repos/joomla/joomla-platform/pulls/comments/456', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->delete('joomla', 'joomla-platform', 456),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->delete('joomla', 'joomla-platform', 456)
         );
     }
 
@@ -116,17 +124,19 @@ class CommentsTest extends GitHubTestCase
      */
     public function testEdit()
     {
-        $this->response->code = 200;
-        $this->response->body = '';
+        $this->response = $this->getResponseObject('');
 
         $this->client->expects($this->once())
             ->method('patch')
             ->with('/repos/joomla/joomla-platform/pulls/comments/456', '{"body":"Hello"}', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->edit('joomla', 'joomla-platform', 456, 'Hello'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->edit('joomla', 'joomla-platform', 456, 'Hello')
         );
     }
 
@@ -142,11 +152,14 @@ class CommentsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/pulls/comments/456', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->get('joomla', 'joomla-platform', 456),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->get('joomla', 'joomla-platform', 456)
         );
     }
 
@@ -162,11 +175,14 @@ class CommentsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/pulls/456/comments', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getList('joomla', 'joomla-platform', 456),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getList('joomla', 'joomla-platform', 456)
         );
     }
 
@@ -182,11 +198,14 @@ class CommentsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/{user}/{repo}/pulls/comments', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getListForRepo('{user}', '{repo}'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getListForRepo('{user}', '{repo}')
         );
     }
 }

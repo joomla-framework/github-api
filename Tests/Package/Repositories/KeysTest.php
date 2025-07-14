@@ -47,7 +47,7 @@ class KeysTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/keys')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getList('joomla', 'joomla-platform'),
@@ -65,7 +65,7 @@ class KeysTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/keys/1')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->get('joomla', 'joomla-platform', 1),
@@ -80,12 +80,12 @@ class KeysTest extends GitHubTestCase
      */
     public function testCreate()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/keys')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->create('joomla', 'joomla-platform', 'email@example.com', '123abc'),
@@ -103,7 +103,7 @@ class KeysTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('patch')
             ->with('/repos/joomla/joomla-platform/keys/1')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->edit('joomla', 'joomla-platform', 1, 'email@example.com', '123abc'),
@@ -118,17 +118,16 @@ class KeysTest extends GitHubTestCase
      */
     public function testDelete()
     {
-        $this->response->code = 204;
-        $this->response->body = true;
+        $this->response = $this->getResponseObject(true, 204);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/repos/joomla/joomla-platform/keys/1')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->delete('joomla', 'joomla-platform', 1),
-            $this->equalTo($this->response->body)
+        $this->assertEquals(
+            true,
+            $this->object->delete('joomla', 'joomla-platform', 1)
         );
     }
 }

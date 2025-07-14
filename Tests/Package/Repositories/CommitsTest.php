@@ -55,7 +55,7 @@ class CommitsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/commits/abc1234')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->get('joomla', 'joomla-platform', 'abc1234'),
@@ -77,13 +77,12 @@ class CommitsTest extends GitHubTestCase
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('Generic Error');
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/commits/abc1234')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->get('joomla', 'joomla-platform', 'abc1234');
     }
@@ -102,7 +101,7 @@ class CommitsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/commits')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getList('joomla', 'joomla-platform'),
@@ -124,13 +123,12 @@ class CommitsTest extends GitHubTestCase
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('Generic Error');
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/commits')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->getList('joomla', 'joomla-platform');
     }
@@ -149,7 +147,7 @@ class CommitsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/compare/123abc...456def')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->compare('joomla', 'joomla-platform', '123abc', '456def'),
@@ -171,7 +169,7 @@ class CommitsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/{user}/{repo}/commits/{ref}')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getSha('{user}', '{repo}', '{ref}'),
@@ -190,15 +188,14 @@ class CommitsTest extends GitHubTestCase
      */
     public function testgetShaFailure()
     {
-        $this->expectException(UnexpectedResponseException::class);
-        $this->expectExceptionMessage('Invalid response received from GitHub.');
+        $this->expectException(\Laminas\Diactoros\Exception\InvalidArgumentException::class);
 
-        $this->response->code = 666;
+        $this->response = $this->getResponseObject($this->sampleString, 666);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/{user}/{repo}/commits/{ref}')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getSha('{user}', '{repo}', '{ref}'),

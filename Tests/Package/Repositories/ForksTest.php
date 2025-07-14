@@ -45,7 +45,7 @@ class ForksTest extends GitHubTestCase
      */
     public function testCreate()
     {
-        $this->response->code = 202;
+        $this->response = $this->getResponseObject($this->sampleString, 202);
 
         // Build the request data.
         $data = json_encode(
@@ -57,7 +57,7 @@ class ForksTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/forks', $data)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->create('joomla', 'joomla-platform', 'jenkins-jools'),
@@ -74,8 +74,7 @@ class ForksTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         // Build the request data.
         $data = json_encode(
@@ -85,7 +84,7 @@ class ForksTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/forks', $data)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->create('joomla', 'joomla-platform', '');
     }
@@ -100,11 +99,14 @@ class ForksTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/forks')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getList('joomla', 'joomla-platform'),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getList('joomla', 'joomla-platform')
         );
     }
 
@@ -117,13 +119,12 @@ class ForksTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/forks')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->getList('joomla', 'joomla-platform');
     }

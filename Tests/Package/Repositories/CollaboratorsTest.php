@@ -47,7 +47,7 @@ class CollaboratorsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-framework/collaborators')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getList('joomla', 'joomla-framework'),
@@ -62,17 +62,19 @@ class CollaboratorsTest extends GitHubTestCase
      */
     public function testGet()
     {
-        $this->response->code = 204;
-        $this->response->body = true;
+        $this->response = $this->getResponseObject(true, 204);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-framework/collaborators/elkuku')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->get('joomla', 'joomla-framework', 'elkuku'),
-            $this->equalTo($this->response->body)
+        $response = $this->response->getBody()->getContents();
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->get('joomla', 'joomla-framework', 'elkuku')
         );
     }
 
@@ -83,17 +85,19 @@ class CollaboratorsTest extends GitHubTestCase
      */
     public function testGetNegative()
     {
-        $this->response->code = 404;
-        $this->response->body = false;
+        $this->response = $this->getResponseObject(false, 404);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-framework/collaborators/elkuku')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->get('joomla', 'joomla-framework', 'elkuku'),
-            $this->equalTo($this->response->body)
+        $response = $this->response->getBody()->getContents();
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->get('joomla', 'joomla-framework', 'elkuku')
         );
     }
 
@@ -104,19 +108,21 @@ class CollaboratorsTest extends GitHubTestCase
      */
     public function testGetUnexpected()
     {
-        $this->expectException(\UnexpectedValueException::class);
+        $this->expectException(\Laminas\Diactoros\Exception\InvalidArgumentException::class);
 
-        $this->response->code = 666;
-        $this->response->body = null;
+        $this->response = $this->getResponseObject(null, 666);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-framework/collaborators/elkuku')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->get('joomla', 'joomla-framework', 'elkuku'),
-            $this->equalTo($this->response->body)
+        $response = $this->response->getBody()->getContents();
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->get('joomla', 'joomla-framework', 'elkuku')
         );
     }
 
@@ -127,12 +133,12 @@ class CollaboratorsTest extends GitHubTestCase
      */
     public function testAdd()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('put')
             ->with('/repos/joomla/joomla-framework/collaborators/elkuku')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->add('joomla', 'joomla-framework', 'elkuku'),
@@ -147,12 +153,12 @@ class CollaboratorsTest extends GitHubTestCase
      */
     public function testRemove()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/repos/joomla/joomla-framework/collaborators/elkuku')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->remove('joomla', 'joomla-framework', 'elkuku'),

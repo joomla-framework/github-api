@@ -47,7 +47,7 @@ class ContentsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/readme')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getReadme('joomla', 'joomla-platform'),
@@ -65,7 +65,7 @@ class ContentsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/readme?ref=123abc')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getReadme('joomla', 'joomla-platform', '123abc'),
@@ -83,7 +83,7 @@ class ContentsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/contents/path/to/file.php')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->get('joomla', 'joomla-platform', 'path/to/file.php'),
@@ -101,7 +101,7 @@ class ContentsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/contents/path/to/file.php?ref=123abc')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->get('joomla', 'joomla-platform', 'path/to/file.php', '123abc'),
@@ -116,12 +116,12 @@ class ContentsTest extends GitHubTestCase
      */
     public function testGetArchiveLink()
     {
-        $this->response->code = 302;
+        $this->response = $this->getResponseObject($this->sampleString, 302);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/zipball')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getArchiveLink('joomla', 'joomla-platform'),
@@ -136,12 +136,12 @@ class ContentsTest extends GitHubTestCase
      */
     public function testGetArchiveLinkRef()
     {
-        $this->response->code = 302;
+        $this->response = $this->getResponseObject($this->sampleString, 302);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/zipball?ref=123abc')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getArchiveLink('joomla', 'joomla-platform', 'zipball', '123abc'),
@@ -158,7 +158,7 @@ class ContentsTest extends GitHubTestCase
     {
         $this->expectException(\UnexpectedValueException::class);
 
-        $this->response->code = 302;
+        $this->response = $this->getResponseObject($this->sampleString, 302);
 
         $this->object->getArchiveLink('joomla', 'joomla-platform', 'invalid');
     }
@@ -170,12 +170,12 @@ class ContentsTest extends GitHubTestCase
      */
     public function testCreate()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         $this->client->expects($this->once())
             ->method('put')
             ->with('/repos/joomla/joomla-platform/contents/src/foo')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->create(
@@ -250,7 +250,7 @@ class ContentsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('put')
             ->with('/repos/joomla/joomla-platform/contents/src/foo')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->update(
@@ -328,7 +328,7 @@ class ContentsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/repos/joomla/joomla-platform/contents/src/foo')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->delete(

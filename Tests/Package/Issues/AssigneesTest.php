@@ -57,8 +57,7 @@ class AssigneesTest extends GitHubTestCase
      */
     public function testGetList()
     {
-        $this->response->code = 200;
-        $this->response->body = '[
+        $body = '[
 	{
 	"login": "octocat",
 	"id": 1,
@@ -67,15 +66,19 @@ class AssigneesTest extends GitHubTestCase
 	"url": "https://api.github.com/users/octocat"
 	}
 	]';
+        $this->response = $this->getResponseObject($body);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/' . $this->owner . '/' . $this->repo . '/assignees', [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getList($this->owner, $this->repo),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getList($this->owner, $this->repo)
         );
     }
 
@@ -90,15 +93,14 @@ class AssigneesTest extends GitHubTestCase
      */
     public function testCheck()
     {
-        $this->response->code = 204;
-        $this->response->body = '';
+        $this->response = $this->getResponseObject('', 204);
 
         $assignee = 'elkuku';
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/' . $this->owner . '/' . $this->repo . '/assignees/' . $assignee, [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->check($this->owner, $this->repo, $assignee),
@@ -117,15 +119,14 @@ class AssigneesTest extends GitHubTestCase
      */
     public function testCheckNo()
     {
-        $this->response->code = 404;
-        $this->response->body = '';
+        $this->response = $this->getResponseObject('', 404);
 
         $assignee = 'elkuku';
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/' . $this->owner . '/' . $this->repo . '/assignees/' . $assignee, [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->check($this->owner, $this->repo, $assignee),
@@ -144,17 +145,16 @@ class AssigneesTest extends GitHubTestCase
      */
     public function testCheckException()
     {
-        $this->expectException(\DomainException::class);
+        $this->expectException(\Laminas\Diactoros\Exception\InvalidArgumentException::class);
 
-        $this->response->code = 666;
-        $this->response->body = '';
+        $this->response = $this->getResponseObject(false, 666);
 
         $assignee = 'elkuku';
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/' . $this->owner . '/' . $this->repo . '/assignees/' . $assignee, [], 0)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->check($this->owner, $this->repo, $assignee),
@@ -169,8 +169,7 @@ class AssigneesTest extends GitHubTestCase
      */
     public function testAdd()
     {
-        $this->response->code = 201;
-        $this->response->body = '[
+        $body = '[
 	{
 	"login": "octocat",
 	"id": 1,
@@ -179,15 +178,19 @@ class AssigneesTest extends GitHubTestCase
 	"url": "https://api.github.com/users/octocat"
 	}
 	]';
+        $this->response = $this->getResponseObject($body, 201);
 
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/' . $this->owner . '/' . $this->repo . '/issues/123/assignees', json_encode(['assignees' => ['joomla']]))
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->add($this->owner, $this->repo, 123, ['joomla']),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->add($this->owner, $this->repo, 123, ['joomla'])
         );
     }
 
@@ -198,8 +201,7 @@ class AssigneesTest extends GitHubTestCase
      */
     public function testRemove()
     {
-        $this->response->code = 200;
-        $this->response->body = '[
+        $body = '[
 	{
 	"login": "octocat",
 	"id": 1,
@@ -208,15 +210,19 @@ class AssigneesTest extends GitHubTestCase
 	"url": "https://api.github.com/users/octocat"
 	}
 	]';
+        $this->response = $this->getResponseObject($body);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/repos/' . $this->owner . '/' . $this->repo . '/issues/123/assignees', [], null, json_encode(['assignees' => ['joomla']]))
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->remove($this->owner, $this->repo, 123, ['joomla']),
-            $this->equalTo(json_decode($this->response->body))
+        $response = json_decode($this->response->getBody()->getContents());
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->remove($this->owner, $this->repo, 123, ['joomla'])
         );
     }
 }

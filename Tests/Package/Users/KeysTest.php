@@ -46,7 +46,7 @@ class KeysTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/users/joomla/keys')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getListUser('joomla'),
@@ -64,7 +64,7 @@ class KeysTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/users/keys')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getList(),
@@ -82,7 +82,7 @@ class KeysTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/users/keys/1')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->get(1),
@@ -97,12 +97,12 @@ class KeysTest extends GitHubTestCase
      */
     public function testCreate()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         $this->client->expects($this->once())
             ->method('post')
             ->with('/users/keys')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->create('email@example.com', '12345'),
@@ -120,7 +120,7 @@ class KeysTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('patch')
             ->with('/users/keys/1')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->edit(1, 'email@example.com', '12345'),
@@ -135,16 +135,15 @@ class KeysTest extends GitHubTestCase
      */
     public function testDelete()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/users/keys/1')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->delete(1),
-            $this->equalTo(json_decode($this->sampleString))
+        $this->assertEquals(json_decode($this->sampleString),
+            $this->object->delete(1)
         );
     }
 }

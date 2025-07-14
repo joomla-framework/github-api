@@ -48,7 +48,7 @@ class RefsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/git/refs/heads/master')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->get('joomla', 'joomla-platform', 'heads/master'),
@@ -65,13 +65,12 @@ class RefsTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/git/refs/heads/master')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->get('joomla', 'joomla-platform', 'heads/master');
     }
@@ -83,7 +82,7 @@ class RefsTest extends GitHubTestCase
      */
     public function testCreate()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         // Build the request data.
         $data = json_encode(
@@ -96,7 +95,7 @@ class RefsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/git/refs', $data)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->create('joomla', 'joomla-platform', '/ref/heads/myhead', 'This is the sha'),
@@ -113,8 +112,7 @@ class RefsTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 501;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 501);
 
         // Build the request data.
         $data = json_encode(
@@ -127,7 +125,7 @@ class RefsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('post')
             ->with('/repos/joomla/joomla-platform/git/refs', $data)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->create('joomla', 'joomla-platform', '/ref/heads/myhead', 'This is the sha');
     }
@@ -150,7 +148,7 @@ class RefsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('patch')
             ->with('/repos/joomla/joomla-platform/git/refs/heads/master', $data)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->edit('joomla', 'joomla-platform', 'heads/master', 'This is the sha', true),
@@ -167,8 +165,7 @@ class RefsTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         // Build the request data.
         $data = json_encode(
@@ -180,7 +177,7 @@ class RefsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('patch')
             ->with('/repos/joomla/joomla-platform/git/refs/heads/master', $data)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->edit('joomla', 'joomla-platform', 'heads/master', 'This is the sha');
     }
@@ -195,7 +192,7 @@ class RefsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/git/refs')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getList('joomla', 'joomla-platform'),
@@ -213,7 +210,7 @@ class RefsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/git/refs/tags')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getList('joomla', 'joomla-platform', 'tags'),
@@ -230,13 +227,12 @@ class RefsTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/git/refs')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->getList('joomla', 'joomla-platform');
     }
@@ -248,15 +244,14 @@ class RefsTest extends GitHubTestCase
      */
     public function testDelete()
     {
-        $this->response->code = 204;
-        $this->response->body = '';
+        $this->response = $this->getResponseObject('', 204);
 
         $ref = 'refs/heads/sc/featureA';
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/repos/joomla/joomla-platform/git/refs/' . $ref)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->delete('joomla', 'joomla-platform', $ref),
@@ -273,15 +268,14 @@ class RefsTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $ref = 'refs/heads/sc/featureA';
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/repos/joomla/joomla-platform/git/refs/' . $ref)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->delete('joomla', 'joomla-platform', $ref);
     }

@@ -51,7 +51,7 @@ class MembersTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/orgs/joomla/members')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getList('joomla'),
@@ -68,12 +68,12 @@ class MembersTest extends GitHubTestCase
      */
     public function testGetListNotAMember()
     {
-        $this->response->code = 302;
+        $this->response = $this->getResponseObject($this->sampleString, 302);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/orgs/joomla/members')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getList('joomla'),
@@ -90,14 +90,14 @@ class MembersTest extends GitHubTestCase
      */
     public function testGetListUnexpected()
     {
-        $this->expectException(\UnexpectedValueException::class);
+        $this->expectException(\Laminas\Diactoros\Exception\InvalidArgumentException::class);
 
-        $this->response->code = 666;
+        $this->response = $this->getResponseObject($this->sampleString, 666);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/orgs/joomla/members')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getList('joomla'),
@@ -114,12 +114,12 @@ class MembersTest extends GitHubTestCase
      */
     public function testCheck()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/orgs/joomla/members/elkuku')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->check('joomla', 'elkuku'),
@@ -136,12 +136,12 @@ class MembersTest extends GitHubTestCase
      */
     public function testCheckNoMember()
     {
-        $this->response->code = 404;
+        $this->response = $this->getResponseObject($this->sampleString, 404);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/orgs/joomla/members/elkuku')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->check('joomla', 'elkuku'),
@@ -158,12 +158,12 @@ class MembersTest extends GitHubTestCase
      */
     public function testCheckRequesterNoMember()
     {
-        $this->response->code = 302;
+        $this->response = $this->getResponseObject($this->sampleString, 302);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/orgs/joomla/members/elkuku')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->check('joomla', 'elkuku'),
@@ -180,14 +180,14 @@ class MembersTest extends GitHubTestCase
      */
     public function testCheckUnexpectedr()
     {
-        $this->expectException(\UnexpectedValueException::class);
+        $this->expectException(\Laminas\Diactoros\Exception\InvalidArgumentException::class);
 
-        $this->response->code = 666;
+        $this->response = $this->getResponseObject($this->sampleString, 666);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/orgs/joomla/members/elkuku')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->check('joomla', 'elkuku'),
@@ -204,12 +204,12 @@ class MembersTest extends GitHubTestCase
      */
     public function testRemove()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/orgs/joomla/members/elkuku')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->remove('joomla', 'elkuku'),
@@ -229,7 +229,7 @@ class MembersTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/orgs/joomla/public_members')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getListPublic('joomla'),
@@ -246,12 +246,12 @@ class MembersTest extends GitHubTestCase
      */
     public function testCheckPublic()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/orgs/joomla/public_members/elkuku')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->checkPublic('joomla', 'elkuku'),
@@ -268,12 +268,12 @@ class MembersTest extends GitHubTestCase
      */
     public function testCheckPublicNo()
     {
-        $this->response->code = 404;
+        $this->response = $this->getResponseObject($this->sampleString, 404);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/orgs/joomla/public_members/elkuku')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->checkPublic('joomla', 'elkuku'),
@@ -290,14 +290,14 @@ class MembersTest extends GitHubTestCase
      */
     public function testCheckPublicUnexpected()
     {
-        $this->expectException(\UnexpectedValueException::class);
+        $this->expectException(\Laminas\Diactoros\Exception\InvalidArgumentException::class);
 
-        $this->response->code = 666;
+        $this->response = $this->getResponseObject($this->sampleString, 666);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/orgs/joomla/public_members/elkuku')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->checkPublic('joomla', 'elkuku'),
@@ -314,12 +314,12 @@ class MembersTest extends GitHubTestCase
      */
     public function testPublicize()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('put')
             ->with('/orgs/joomla/public_members/elkuku')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->publicize('joomla', 'elkuku'),
@@ -336,12 +336,12 @@ class MembersTest extends GitHubTestCase
      */
     public function testConceal()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/orgs/joomla/public_members/elkuku')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->conceal('joomla', 'elkuku'),
@@ -361,7 +361,7 @@ class MembersTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/orgs/{org}/memberships/{user}')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getMembership('{org}', '{user}'),
@@ -381,7 +381,7 @@ class MembersTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('put')
             ->with('/orgs/{org}/memberships/{user}')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->updateMembership('{org}', '{user}'),
@@ -413,12 +413,12 @@ class MembersTest extends GitHubTestCase
      */
     public function testRemoveMembership()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/orgs/{org}/memberships/{user}')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->removeMembership('{org}', '{user}'),
@@ -438,7 +438,7 @@ class MembersTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/user/memberships/orgs')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->listMemberships(),
@@ -458,7 +458,7 @@ class MembersTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/user/memberships/orgs/{org}')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->listOrganizationMembership('{org}'),
@@ -478,7 +478,7 @@ class MembersTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('patch')
             ->with('/user/memberships/orgs/{org}')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->editOrganizationMembership('{org}', 'active'),

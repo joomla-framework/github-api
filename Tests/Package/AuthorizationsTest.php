@@ -46,7 +46,7 @@ class AuthorizationsTest extends GitHubTestCase
      */
     public function testCreate()
     {
-        $this->response->code = 201;
+        $this->response = $this->getResponseObject($this->sampleString, 201);
 
         $authorisation = '{'
             . '"scopes":["public_repo"],'
@@ -57,7 +57,7 @@ class AuthorizationsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('post')
             ->with('/authorizations', $authorisation)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->create(['public_repo'], 'My test app', 'http://www.joomla.org'),
@@ -76,8 +76,7 @@ class AuthorizationsTest extends GitHubTestCase
     {
         $exception = false;
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $authorisation = '{'
             . '"scopes":["public_repo"],'
@@ -88,7 +87,7 @@ class AuthorizationsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('post')
             ->with('/authorizations', $authorisation)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         try {
             $this->object->create(['public_repo'], 'My test app', 'http://www.joomla.org');
@@ -113,12 +112,12 @@ class AuthorizationsTest extends GitHubTestCase
      */
     public function testDelete()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/authorizations/42')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->delete(42),
@@ -137,13 +136,12 @@ class AuthorizationsTest extends GitHubTestCase
     {
         $exception = false;
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/authorizations/42')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         try {
             $this->object->delete(42);
@@ -168,12 +166,12 @@ class AuthorizationsTest extends GitHubTestCase
      */
     public function testDeleteGrant()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/authorizations/grants/42')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->deleteGrant(42),
@@ -192,13 +190,12 @@ class AuthorizationsTest extends GitHubTestCase
     {
         $exception = false;
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/authorizations/grants/42')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         try {
             $this->object->deleteGrant(42);
@@ -232,7 +229,7 @@ class AuthorizationsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('patch')
             ->with('/authorizations/42', $authorisation)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->edit(42, [], ['public_repo', 'gist'], [], 'My test app', 'http://www.joomla.org'),
@@ -258,7 +255,7 @@ class AuthorizationsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('patch')
             ->with('/authorizations/42', $authorisation)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->edit(42, [], [], ['public_repo', 'gist'], 'My test app', 'http://www.joomla.org'),
@@ -284,7 +281,7 @@ class AuthorizationsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('patch')
             ->with('/authorizations/42', $authorisation)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->edit(42, ['public_repo', 'gist'], [], [], 'My test app', 'http://www.joomla.org'),
@@ -303,8 +300,7 @@ class AuthorizationsTest extends GitHubTestCase
     {
         $exception = false;
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $authorisation = '{'
             . '"add_scopes":["public_repo","gist"],'
@@ -315,7 +311,7 @@ class AuthorizationsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('patch')
             ->with('/authorizations/42', $authorisation)
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         try {
             $this->object->edit(42, [], ['public_repo', 'gist'], [], 'My test app', 'http://www.joomla.org');
@@ -357,7 +353,7 @@ class AuthorizationsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/authorizations/42')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->get(42),
@@ -376,13 +372,12 @@ class AuthorizationsTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/authorizations/42')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->get(42);
     }
@@ -399,7 +394,7 @@ class AuthorizationsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/authorizations/grants/42')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getGrant(42),
@@ -418,13 +413,12 @@ class AuthorizationsTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/authorizations/grants/42')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->getGrant(42);
     }
@@ -441,7 +435,7 @@ class AuthorizationsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/authorizations')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getList(),
@@ -460,13 +454,12 @@ class AuthorizationsTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/authorizations')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->getList();
     }
@@ -483,7 +476,7 @@ class AuthorizationsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/authorizations/grants')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getListGrants(),
@@ -502,13 +495,12 @@ class AuthorizationsTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/authorizations/grants')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->getListGrants();
     }
@@ -525,7 +517,7 @@ class AuthorizationsTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('get')
             ->with('/rate_limit')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->getRateLimit(),
@@ -542,13 +534,12 @@ class AuthorizationsTest extends GitHubTestCase
      */
     public function testGetRateLimitUnlimited()
     {
-        $this->response->code = 404;
-        $this->response->body = '';
+        $this->response = $this->getResponseObject('', 404);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/rate_limit')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertFalse($this->object->getRateLimit()->limit, 'The limit should be false for unlimited');
     }
@@ -564,13 +555,12 @@ class AuthorizationsTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/rate_limit')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->getRateLimit();
     }
@@ -582,13 +572,15 @@ class AuthorizationsTest extends GitHubTestCase
      */
     public function testGetAuthorizationLink()
     {
-        $this->response->code = 200;
-        $this->response->body = 'https://github.com/login/oauth/authorize?client_id=12345'
-            . '&redirect_uri=aaa&scope=bbb&state=ccc';
+        $this->response = $this->getResponseObject('https://github.com/login/oauth/authorize?client_id=12345'
+            . '&redirect_uri=aaa&scope=bbb&state=ccc', 200);
 
-        $this->assertThat(
-            $this->object->getAuthorizationLink('12345', 'aaa', 'bbb', 'ccc'),
-            $this->equalTo($this->response->body)
+        $response = $this->response->getBody()->getContents();
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->getAuthorizationLink('12345', 'aaa', 'bbb', 'ccc')
         );
     }
 
@@ -599,17 +591,19 @@ class AuthorizationsTest extends GitHubTestCase
      */
     public function testRequestToken()
     {
-        $this->response->code = 200;
-        $this->response->body = '';
+        $this->response = $this->getResponseObject('');
 
         $this->client->expects($this->once())
             ->method('post')
             ->with('https://github.com/login/oauth/access_token')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->requestToken('12345', 'aaa', 'bbb', 'ccc'),
-            $this->equalTo($this->response->body)
+        $response = $this->response->getBody()->getContents();
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->requestToken('12345', 'aaa', 'bbb', 'ccc')
         );
     }
 
@@ -620,17 +614,19 @@ class AuthorizationsTest extends GitHubTestCase
      */
     public function testRequestTokenJson()
     {
-        $this->response->code = 200;
-        $this->response->body = '';
+        $this->response = $this->getResponseObject('');
 
         $this->client->expects($this->once())
             ->method('post')
             ->with('https://github.com/login/oauth/access_token')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->requestToken('12345', 'aaa', 'bbb', 'ccc', 'json'),
-            $this->equalTo($this->response->body)
+        $response = $this->response->getBody()->getContents();
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->requestToken('12345', 'aaa', 'bbb', 'ccc', 'json')
         );
     }
 
@@ -641,17 +637,19 @@ class AuthorizationsTest extends GitHubTestCase
      */
     public function testRequestTokenXml()
     {
-        $this->response->code = 200;
-        $this->response->body = '';
+        $this->response = $this->getResponseObject('');
 
         $this->client->expects($this->once())
             ->method('post')
             ->with('https://github.com/login/oauth/access_token')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->requestToken('12345', 'aaa', 'bbb', 'ccc', 'xml'),
-            $this->equalTo($this->response->body)
+        $response = $this->response->getBody()->getContents();
+        $this->response->getBody()->rewind();
+
+        $this->assertEquals(
+            $response,
+            $this->object->requestToken('12345', 'aaa', 'bbb', 'ccc', 'xml')
         );
     }
 
@@ -664,8 +662,7 @@ class AuthorizationsTest extends GitHubTestCase
     {
         $this->expectException(\UnexpectedValueException::class);
 
-        $this->response->code = 200;
-        $this->response->body = '';
+        $this->response = $this->getResponseObject('');
 
         $this->object->requestToken('12345', 'aaa', 'bbb', 'ccc', 'invalid');
     }
@@ -679,12 +676,12 @@ class AuthorizationsTest extends GitHubTestCase
      */
     public function testRevokeGrantForApplication()
     {
-        $this->response->code = 204;
+        $this->response = $this->getResponseObject($this->sampleString, 204);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/applications/42/grants/1a2b3c')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->revokeGrantForApplication(42, '1a2b3c'),
@@ -703,13 +700,12 @@ class AuthorizationsTest extends GitHubTestCase
     {
         $this->expectException(\DomainException::class);
 
-        $this->response->code = 500;
-        $this->response->body = $this->errorString;
+        $this->response = $this->getResponseObject($this->errorString, 500);
 
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/applications/42/grants/1a2b3c')
-            ->will($this->returnValue($this->response));
+            ->willReturn($this->response);
 
         $this->object->revokeGrantForApplication(42, '1a2b3c');
     }
