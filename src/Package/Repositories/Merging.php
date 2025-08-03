@@ -55,7 +55,7 @@ class Merging extends AbstractPackage
         switch ($response->getStatusCode()) {
             case '201':
                 // Success
-                return json_decode($response->getBody()->getContents());
+                return json_decode((string) $response->getBody());
 
             case '204':
                 // No-op response (base already contains the head, nothing to merge)
@@ -63,7 +63,7 @@ class Merging extends AbstractPackage
 
             case '404':
                 // Missing base or Missing head response
-                $error = json_decode($response->getBody()->getContents());
+                $error = json_decode((string) $response->getBody());
 
                 $message = (isset($error->message)) ? $error->message : 'Missing base or head: ' . $response->getStatusCode();
 
@@ -71,7 +71,7 @@ class Merging extends AbstractPackage
 
             case '409':
                 // Merge conflict response
-                $error = json_decode($response->getBody()->getContents());
+                $error = json_decode((string) $response->getBody());
 
                 $message = (isset($error->message)) ? $error->message : 'Merge conflict ' . $response->getStatusCode();
 

@@ -50,8 +50,7 @@ class ReleasesTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/releases/12345', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -74,8 +73,7 @@ class ReleasesTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/releases', $data, [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -99,7 +97,6 @@ class ReleasesTest extends GitHubTestCase
             ->willReturn($this->response);
 
         $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
 
         $this->assertEquals(
             $response,
@@ -124,7 +121,6 @@ class ReleasesTest extends GitHubTestCase
             ->willReturn($this->response);
 
         $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
 
         $this->assertEquals(
             $response,
@@ -153,7 +149,6 @@ class ReleasesTest extends GitHubTestCase
             ->willReturn($this->response);
 
         $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
 
         $this->assertEquals(
             $releases,
@@ -176,7 +171,6 @@ class ReleasesTest extends GitHubTestCase
             ->willReturn($this->response);
 
         $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
 
         $this->assertEquals(
             $response,
@@ -201,7 +195,6 @@ class ReleasesTest extends GitHubTestCase
             ->willReturn($this->response);
 
         $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
 
         $this->assertEquals(
             $response,
@@ -222,7 +215,6 @@ class ReleasesTest extends GitHubTestCase
             ->willReturn($this->response);
 
         $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
 
         $this->assertEquals(
             $response,
@@ -243,7 +235,6 @@ class ReleasesTest extends GitHubTestCase
             ->willReturn($this->response);
 
         $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
 
         $this->assertEquals(
             $response,
@@ -264,7 +255,6 @@ class ReleasesTest extends GitHubTestCase
             ->willReturn($this->response);
 
         $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
 
         $this->assertEquals(
             $response,
@@ -287,7 +277,6 @@ class ReleasesTest extends GitHubTestCase
             ->willReturn($this->response);
 
         $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
 
         $this->assertEquals(
             $response,

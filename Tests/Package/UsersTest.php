@@ -72,8 +72,7 @@ class UsersTest extends GitHubTestCase
             ->with('/users/joomla', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -97,8 +96,7 @@ class UsersTest extends GitHubTestCase
             ->with('/users/nonexistentuser', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -152,8 +150,7 @@ class UsersTest extends GitHubTestCase
             ->with('/user', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -180,7 +177,6 @@ class UsersTest extends GitHubTestCase
             ->willReturn($this->response);
 
         $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
 
         $this->assertEquals(
             $response,
@@ -221,7 +217,6 @@ class UsersTest extends GitHubTestCase
             ->willReturn($this->response);
 
         $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
 
         $this->assertEquals(
             $response,
@@ -295,7 +290,6 @@ class UsersTest extends GitHubTestCase
             ->willReturn($this->response);
 
         $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
 
         $this->assertEquals(
             $response,

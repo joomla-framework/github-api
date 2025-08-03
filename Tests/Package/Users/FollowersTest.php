@@ -136,8 +136,7 @@ class FollowersTest extends GitHubTestCase
             ->with('/user/following/joomla')
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -163,8 +162,7 @@ class FollowersTest extends GitHubTestCase
             ->with('/user/following/joomla')
             ->willReturn($this->response);
 
-        $response = $this->response->getBody()->getContents();
-        $this->response->getBody()->rewind();
+        $response = (string) $this->response->getBody();
 
         $this->assertEquals(
             $response,
@@ -190,8 +188,7 @@ class FollowersTest extends GitHubTestCase
             ->with('/user/following/joomla')
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -215,8 +212,7 @@ class FollowersTest extends GitHubTestCase
             ->with('/user/following/joomla')
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -240,8 +236,7 @@ class FollowersTest extends GitHubTestCase
             ->with('/user/following/joomla')
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,

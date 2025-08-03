@@ -54,8 +54,7 @@ class StarringTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/stargazers', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -77,8 +76,7 @@ class StarringTest extends GitHubTestCase
             ->with('/user/starred?sort=created&direction=desc', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -100,8 +98,7 @@ class StarringTest extends GitHubTestCase
             ->with('/users/{user}/starred?sort=created&direction=desc', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -157,8 +154,7 @@ class StarringTest extends GitHubTestCase
             ->with('/user/starred/joomla/joomla-platform', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -183,7 +179,6 @@ class StarringTest extends GitHubTestCase
             ->willReturn($this->response);
 
         $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
 
         $this->assertEquals(
             $response,
@@ -210,7 +205,6 @@ class StarringTest extends GitHubTestCase
             ->willReturn($this->response);
 
         $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
 
         $this->assertEquals(
             $response,
@@ -235,7 +229,6 @@ class StarringTest extends GitHubTestCase
             ->willReturn($this->response);
 
         $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
 
         $this->assertEquals(
             $response,
@@ -260,7 +253,6 @@ class StarringTest extends GitHubTestCase
             ->willReturn($this->response);
 
         $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
 
         $this->assertEquals(
             $response,

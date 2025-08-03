@@ -297,7 +297,7 @@ class Teams extends AbstractPackage
         switch ($response->getStatusCode()) {
             case 200:
                 // Response if user is an active member or pending membership
-                $body = json_decode($response->getBody()->getContents());
+                $body = json_decode((string) $response->getBody());
 
                 return $body->state;
 

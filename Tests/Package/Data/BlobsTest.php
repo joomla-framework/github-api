@@ -50,8 +50,7 @@ class BlobsTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/git/blobs/12345', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -73,8 +72,7 @@ class BlobsTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/git/blobs', '{"content":"Hello w\u00f6rld","encoding":"utf-8"}', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,

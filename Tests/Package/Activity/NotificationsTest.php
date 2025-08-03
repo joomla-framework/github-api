@@ -54,8 +54,7 @@ class NotificationsTest extends GitHubTestCase
             ->with('/notifications?all=1&participating=1&since=2005-08-17T00:00:00+00:00&before=2005-08-17T00:00:00+00:00', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -79,8 +78,7 @@ class NotificationsTest extends GitHubTestCase
             ->with('/repos/{owner}/{repo}/notifications?' . $args, [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -111,8 +109,7 @@ class NotificationsTest extends GitHubTestCase
             ->with('/notifications', '{"unread":true,"read":true}', [], 0)
             ->willReturn($this->response);
 
-        $response = $this->response->getBody()->getContents();
-        $this->response->getBody()->rewind();
+        $response = (string) $this->response->getBody();
 
         $this->assertEquals(
             $response,
@@ -139,8 +136,7 @@ class NotificationsTest extends GitHubTestCase
             ->with('/notifications', $data, [], 0)
             ->willReturn($this->response);
 
-        $response = $this->response->getBody()->getContents();
-        $this->response->getBody()->rewind();
+        $response = (string) $this->response->getBody();
 
         $this->assertEquals(
             $response,
@@ -166,8 +162,7 @@ class NotificationsTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/notifications', $data, [], 0)
             ->willReturn($this->response);
 
-        $response = $this->response->getBody()->getContents();
-        $this->response->getBody()->rewind();
+        $response = (string) $this->response->getBody();
 
         $this->assertEquals(
             $response,
@@ -195,7 +190,6 @@ class NotificationsTest extends GitHubTestCase
             ->willReturn($this->response);
 
         $response = $this->response->getBody()->getContents();
-        $this->response->getBody()->rewind();
 
         $this->assertEquals(
             $response,
@@ -218,7 +212,6 @@ class NotificationsTest extends GitHubTestCase
             ->willReturn($this->response);
 
         $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
 
         $this->assertEquals(
             $response,
@@ -243,7 +236,6 @@ class NotificationsTest extends GitHubTestCase
             ->willReturn($this->response);
 
         $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
 
         $this->assertEquals(
             $response,
@@ -266,7 +258,6 @@ class NotificationsTest extends GitHubTestCase
             ->willReturn($this->response);
 
         $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
 
         $this->assertEquals(
             $response,
@@ -289,7 +280,6 @@ class NotificationsTest extends GitHubTestCase
             ->willReturn($this->response);
 
         $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
 
         $this->assertEquals(
             $response,
@@ -314,7 +304,6 @@ class NotificationsTest extends GitHubTestCase
             ->willReturn($this->response);
 
         $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
 
         $this->assertEquals(
             $response,

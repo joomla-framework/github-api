@@ -62,8 +62,7 @@ class GitignoreTest extends GitHubTestCase
             ->with('/gitignore/templates', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -92,8 +91,7 @@ class GitignoreTest extends GitHubTestCase
             ->with('/gitignore/templates/C', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -135,8 +133,7 @@ class GitignoreTest extends GitHubTestCase
             ->with('/gitignore/templates/C', ['Accept' => 'application/vnd.github.raw+json'], 0)
             ->willReturn($this->response);
 
-        $response = $this->response->getBody()->getContents();
-        $this->response->getBody()->rewind();
+        $response = (string) $this->response->getBody();
 
         $this->assertEquals(
             $response,
@@ -161,8 +158,7 @@ class GitignoreTest extends GitHubTestCase
             ->with('/gitignore/templates/X', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,

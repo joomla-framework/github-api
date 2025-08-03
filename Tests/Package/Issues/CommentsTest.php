@@ -50,8 +50,7 @@ class CommentsTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/issues/1/comments', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -71,8 +70,7 @@ class CommentsTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/issues/comments?sort=created&direction=asc', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -118,8 +116,7 @@ class CommentsTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/issues/comments?sort=created&direction=asc&since=1966-09-15T12:34:56+00:00', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -139,8 +136,7 @@ class CommentsTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/issues/comments/1', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -160,8 +156,7 @@ class CommentsTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/issues/comments/1', '{"body":"Hello"}', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -183,8 +178,7 @@ class CommentsTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/issues/1/comments', '{"body":"Hello"}', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,

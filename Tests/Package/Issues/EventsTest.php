@@ -50,8 +50,7 @@ class EventsTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/issues/1/events', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -71,8 +70,7 @@ class EventsTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/issues/1/comments', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -92,8 +90,7 @@ class EventsTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/issues/events/1', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
