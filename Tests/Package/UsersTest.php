@@ -4,7 +4,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Joomla\Github\Tests;
+namespace Joomla\Github\Tests\Package;
 
 use Joomla\Github\Package\Users;
 use Joomla\Github\Tests\Stub\GitHubTestCase;
@@ -176,7 +176,7 @@ class UsersTest extends GitHubTestCase
             ->with('/user', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -216,7 +216,7 @@ class UsersTest extends GitHubTestCase
             ->with('/users', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -289,7 +289,7 @@ class UsersTest extends GitHubTestCase
             ->with('/user', $input, [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -336,7 +336,7 @@ class UsersTest extends GitHubTestCase
         // $this->object->edit($name, $email, $blog, $company, $location, $hireable, $bio);
 
         $this->assertEquals(
-            json_decode($this->response->getBody()->getContents()),
+            json_decode((string) $this->response->getBody()),
             $this->object->edit($name, $email, $blog, $company, $location, $hireable, $bio)
         );
     }

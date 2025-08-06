@@ -4,7 +4,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Joomla\Github\Tests;
+namespace Joomla\Github\Tests\Package\Repositories;
 
 use Joomla\Github\Package\Repositories\Releases;
 use Joomla\Github\Tests\Stub\GitHubTestCase;
@@ -96,7 +96,7 @@ class ReleasesTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/releases', $data, [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -120,7 +120,7 @@ class ReleasesTest extends GitHubTestCase
 
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -139,7 +139,7 @@ class ReleasesTest extends GitHubTestCase
 
         $releases = [];
 
-        foreach (json_decode($this->response->getBody()->getContents()) as $i => $release) {
+        foreach (json_decode((string) $this->response->getBody()) as $i => $release) {
             $releases[$i + 1] = $release;
         }
 
@@ -148,7 +148,7 @@ class ReleasesTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/releases', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $releases,
@@ -170,7 +170,7 @@ class ReleasesTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/releases/123')
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -194,7 +194,7 @@ class ReleasesTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/releases/latest', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -214,7 +214,7 @@ class ReleasesTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/releases/tags/{tag}', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -234,7 +234,7 @@ class ReleasesTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/releases/123/assets', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -254,7 +254,7 @@ class ReleasesTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/releases/assets/123', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -276,7 +276,7 @@ class ReleasesTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/releases/assets/123', $data, [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,

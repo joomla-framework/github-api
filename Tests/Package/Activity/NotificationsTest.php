@@ -5,7 +5,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Joomla\Github\Tests;
+namespace Joomla\Github\Tests\Package\Activity;
 
 use Joomla\Github\Package\Activity\Notifications;
 use Joomla\Github\Tests\Stub\GitHubTestCase;
@@ -189,7 +189,7 @@ class NotificationsTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/notifications', $data, [], 0)
             ->willReturn($this->response);
 
-        $response = $this->response->getBody()->getContents();
+        $response = (string) $this->response->getBody();
 
         $this->assertEquals(
             $response,
@@ -211,7 +211,7 @@ class NotificationsTest extends GitHubTestCase
             ->with('/notifications/threads/1', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -235,7 +235,7 @@ class NotificationsTest extends GitHubTestCase
             ->with('/notifications/threads/1', '{"unread":true,"read":true}', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -257,7 +257,7 @@ class NotificationsTest extends GitHubTestCase
             ->with('/notifications/threads/1/subscription', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -279,7 +279,7 @@ class NotificationsTest extends GitHubTestCase
             ->with('/notifications/threads/1/subscription', '{"subscribed":true,"ignored":false}', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -303,7 +303,7 @@ class NotificationsTest extends GitHubTestCase
             ->with('/notifications/threads/1/subscription', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
