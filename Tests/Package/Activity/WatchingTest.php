@@ -50,8 +50,7 @@ class WatchingTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/subscribers', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -71,8 +70,7 @@ class WatchingTest extends GitHubTestCase
             ->with('/user/subscriptions', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -92,8 +90,7 @@ class WatchingTest extends GitHubTestCase
             ->with('/users/joomla/subscriptions', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -113,8 +110,7 @@ class WatchingTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/subscription', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -134,8 +130,7 @@ class WatchingTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/subscription', '{"subscribed":true,"ignored":false}', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -157,8 +152,7 @@ class WatchingTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/subscription', [], 0)
             ->willReturn($this->response);
 
-        $response = $this->response->getBody()->getContents();
-        $this->response->getBody()->rewind();
+        $response = (string) $this->response->getBody();
 
         $this->assertEquals(
             $response,
@@ -239,8 +233,7 @@ class WatchingTest extends GitHubTestCase
             ->with('/user/subscriptions/joomla/joomla-platform', '', [], 0)
             ->willReturn($this->response);
 
-        $response = $this->response->getBody()->getContents();
-        $this->response->getBody()->rewind();
+        $response = (string) $this->response->getBody();
 
         $this->assertEquals(
             $response,
@@ -262,8 +255,7 @@ class WatchingTest extends GitHubTestCase
             ->with('/user/subscriptions/joomla/joomla-platform', [], 0)
             ->willReturn($this->response);
 
-        $response = $this->response->getBody()->getContents();
-        $this->response->getBody()->rewind();
+        $response = (string) $this->response->getBody();
 
         $this->assertEquals(
             $response,

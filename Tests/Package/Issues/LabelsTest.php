@@ -50,8 +50,7 @@ class LabelsTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/labels', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -71,8 +70,7 @@ class LabelsTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/labels/1', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -94,8 +92,7 @@ class LabelsTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/labels', '{"name":"foobar","color":"red"}', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -119,8 +116,7 @@ class LabelsTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/labels', '{"name":"foobar","color":"red"}', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -140,8 +136,7 @@ class LabelsTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/labels/foobar', '{"name":"boofaz","color":"red"}', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -163,8 +158,7 @@ class LabelsTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/labels/foobar', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -184,8 +178,7 @@ class LabelsTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/issues/1/labels', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -205,8 +198,7 @@ class LabelsTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/issues/1/labels', '["A","B"]', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -226,8 +218,7 @@ class LabelsTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/issues/1/labels/foobar', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -247,8 +238,7 @@ class LabelsTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/issues/1/labels', '["A","B"]', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -270,8 +260,7 @@ class LabelsTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/issues/1/labels', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -291,8 +280,7 @@ class LabelsTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/milestones/1/labels', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,

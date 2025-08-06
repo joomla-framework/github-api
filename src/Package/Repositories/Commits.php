@@ -117,13 +117,13 @@ class Commits extends AbstractPackage
         // Validate the response code.
         if ($response->getStatusCode() != 200) {
             // Decode the error response and throw an exception.
-            $error   = json_decode($response->getBody()->getContents());
+            $error   = json_decode((string) $response->getBody());
             $message = isset($error->message) ? $error->message : 'Invalid response received from GitHub.';
 
             throw new UnexpectedResponseException($response, $message, $response->getStatusCode());
         }
 
-        return $response->getBody()->getContents();
+        return (string) $response->getBody();
     }
 
     /**

@@ -50,7 +50,7 @@ class Members extends AbstractPackage
                 return false;
 
             case 200:
-                return json_decode($response->getBody()->getContents());
+                return json_decode((string) $response->getBody());
 
             default:
                 throw new \UnexpectedValueException('Unexpected response code: ' . $response->getStatusCode());

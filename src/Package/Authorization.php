@@ -249,12 +249,12 @@ class Authorization extends AbstractPackage
             }
 
             // Decode the error response and throw an exception.
-            $error = json_decode($response->getBody()->getContents());
+            $error = json_decode((string) $response->getBody());
 
             throw new UnexpectedResponseException($response, $error->message, $response->getStatusCode());
         }
 
-        return json_decode($response->getBody()->getContents());
+        return json_decode((string) $response->getBody());
     }
 
     /**

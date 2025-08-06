@@ -129,11 +129,11 @@ class Deployments extends AbstractPackage
         switch ($response->getStatusCode()) {
             case 201:
                 // The deployment was successful
-                return json_decode($response->getBody()->getContents());
+                return json_decode((string) $response->getBody());
 
             case 409:
                 // There was a merge conflict or a status check failed.
-                $body    = json_decode($response->getBody()->getContents());
+                $body    = json_decode((string) $response->getBody());
                 $message = isset($body->message) ? $body->message : 'Invalid response received from GitHub.';
 
                 throw new \RuntimeException($message, $response->getStatusCode());

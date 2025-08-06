@@ -5,7 +5,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Joomla\Github\Tests;
+namespace Joomla\Github\Tests\Package\Activity;
 
 use Joomla\Github\Package\Activity\Starring;
 use Joomla\Github\Tests\Stub\GitHubTestCase;
@@ -54,8 +54,7 @@ class StarringTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/stargazers', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -77,8 +76,7 @@ class StarringTest extends GitHubTestCase
             ->with('/user/starred?sort=created&direction=desc', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -100,8 +98,7 @@ class StarringTest extends GitHubTestCase
             ->with('/users/{user}/starred?sort=created&direction=desc', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -157,8 +154,7 @@ class StarringTest extends GitHubTestCase
             ->with('/user/starred/joomla/joomla-platform', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -182,8 +178,7 @@ class StarringTest extends GitHubTestCase
             ->with('/user/starred/joomla/joomla-platform', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -209,8 +204,7 @@ class StarringTest extends GitHubTestCase
             ->with('/user/starred/joomla/joomla-platform', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -234,8 +228,7 @@ class StarringTest extends GitHubTestCase
             ->with('/user/starred/joomla/joomla-platform', '', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -259,8 +252,7 @@ class StarringTest extends GitHubTestCase
             ->with('/user/starred/joomla/joomla-platform', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,

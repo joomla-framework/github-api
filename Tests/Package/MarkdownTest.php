@@ -71,8 +71,7 @@ class MarkdownTest extends GitHubTestCase
             ->with('/markdown', $data, [], 0)
             ->willReturn($this->response);
 
-        $response = $this->response->getBody()->getContents();
-        $this->response->getBody()->rewind();
+        $response = (string) $this->response->getBody();
 
         $this->assertEquals(
             $response,

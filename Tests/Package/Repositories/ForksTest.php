@@ -101,8 +101,7 @@ class ForksTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/forks')
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
