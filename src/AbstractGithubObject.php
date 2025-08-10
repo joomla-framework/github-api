@@ -88,7 +88,7 @@ abstract class AbstractGithubObject
      *
      * @since   1.0
      */
-    public function __construct(Registry $options = null, BaseHttp $client = null)
+    public function __construct(?Registry $options = null, ?BaseHttp $client = null)
     {
         $this->options = $options ?: new Registry();
         $this->client  = $client ?: (new HttpFactory())->getHttp($this->options);

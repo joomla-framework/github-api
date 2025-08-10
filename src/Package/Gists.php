@@ -231,7 +231,7 @@ class Gists extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function getListByUser($user, $page = 0, $limit = 0, \DateTime $since = null)
+    public function getListByUser($user, $page = 0, $limit = 0, ?\DateTime $since = null)
     {
         // Build the request path.
         $uri = $this->fetchUrl('/users/' . $user . '/gists', $page, $limit);
@@ -256,7 +256,7 @@ class Gists extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function getListPublic($page = 0, $limit = 0, \DateTime $since = null)
+    public function getListPublic($page = 0, $limit = 0, ?\DateTime $since = null)
     {
         // Build the request path.
         $uri = $this->fetchUrl('/gists/public', $page, $limit);
@@ -281,7 +281,7 @@ class Gists extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function getListStarred($page = 0, $limit = 0, \DateTime $since = null)
+    public function getListStarred($page = 0, $limit = 0, ?\DateTime $since = null)
     {
         // Build the request path.
         $uri = $this->fetchUrl('/gists/starred', $page, $limit);

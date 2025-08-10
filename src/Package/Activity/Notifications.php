@@ -34,7 +34,7 @@ class Notifications extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getList($all = true, $participating = true, \DateTimeInterface $since = null, \DateTimeInterface $before = null)
+    public function getList($all = true, $participating = true, ?\DateTimeInterface $since = null, ?\DateTimeInterface $before = null)
     {
         // Build the request path.
         $path = '/notifications';
@@ -81,8 +81,8 @@ class Notifications extends AbstractPackage
         $repo,
         $all = true,
         $participating = true,
-        \DateTimeInterface $since = null,
-        \DateTimeInterface $before = null
+        ?\DateTimeInterface $since = null,
+        ?\DateTimeInterface $before = null
     ) {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/notifications';
@@ -116,13 +116,13 @@ class Notifications extends AbstractPackage
      * @param   boolean              $unread      Changes the unread status of the threads.
      * @param   boolean              $read        Inverse of “unread”.
      * @param   ?\DateTimeInterface  $lastReadAt  Describes the last point that notifications were checked.
-     *                                           Anything updated since this time will not be updated. Default: Now. Expected in ISO 8601 format.
+     *                                            Anything updated since this time will not be updated. Default: Now. Expected in ISO 8601 format.
      *
      * @return  object
      *
      * @since   1.0
      */
-    public function markRead($unread = true, $read = true, \DateTimeInterface $lastReadAt = null)
+    public function markRead($unread = true, $read = true, ?\DateTimeInterface $lastReadAt = null)
     {
         // Build the request path.
         $path = '/notifications';
@@ -152,13 +152,13 @@ class Notifications extends AbstractPackage
      * @param   boolean              $unread      Changes the unread status of the threads.
      * @param   boolean              $read        Inverse of “unread”.
      * @param   ?\DateTimeInterface  $lastReadAt  Describes the last point that notifications were checked.
-     *                                           Anything updated since this time will not be updated. Default: Now. Expected in ISO 8601 format.
+     *                                            Anything updated since this time will not be updated. Default: Now. Expected in ISO 8601 format.
      *
      * @return  object
      *
      * @since   1.0
      */
-    public function markReadRepository($owner, $repo, $unread, $read, \DateTimeInterface $lastReadAt = null)
+    public function markReadRepository($owner, $repo, $unread, $read, ?\DateTimeInterface $lastReadAt = null)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/notifications';

@@ -27,7 +27,7 @@ abstract class AbstractPackage extends AbstractGithubObject
      *
      * @since   1.0
      */
-    public function __construct(Registry $options = null, Http $client = null)
+    public function __construct(?Registry $options = null, ?Http $client = null)
     {
         parent::__construct($options, $client);
 

@@ -61,7 +61,7 @@ class Github
      *
      * @since   1.0
      */
-    public function __construct(Registry $options = null, Http $client = null)
+    public function __construct(?Registry $options = null, ?Http $client = null)
     {
         $this->options = $options ?: new Registry();
 
