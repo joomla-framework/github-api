@@ -78,14 +78,14 @@ class Teams extends AbstractPackage
 	 * @since   1.0
 	 * @throws  \UnexpectedValueException
 	 */
-	public function create($org, $name, array $repoNames = array(), $permission = '')
+	public function create($org, $name, array $repoNames = [], $permission = '')
 	{
 		// Build the request path.
 		$path = '/orgs/' . $org . '/teams';
 
-		$data = array(
+		$data = [
 			'name' => $name,
-		);
+		];
 
 		if ($repoNames)
 		{
@@ -94,7 +94,7 @@ class Teams extends AbstractPackage
 
 		if ($permission)
 		{
-			if (\in_array($permission, array('pull', 'push', 'admin')) == false)
+			if (\in_array($permission, ['pull', 'push', 'admin']) == false)
 			{
 				throw new \UnexpectedValueException('Permissions must be either "pull", "push", or "admin".');
 			}
@@ -130,13 +130,13 @@ class Teams extends AbstractPackage
 		// Build the request path.
 		$path = '/teams/' . (int) $id;
 
-		$data = array(
+		$data = [
 			'name' => $name,
-		);
+		];
 
 		if ($permission)
 		{
-			if (\in_array($permission, array('pull', 'push', 'admin')) == false)
+			if (\in_array($permission, ['pull', 'push', 'admin']) == false)
 			{
 				throw new \UnexpectedValueException('Permissions must be either "pull", "push", or "admin".');
 			}
@@ -337,14 +337,14 @@ class Teams extends AbstractPackage
 		// Build the request path.
 		$path = "/teams/$id/memberships/$user";
 
-		if (\in_array($role, array('member', 'maintainer')) == false)
+		if (\in_array($role, ['member', 'maintainer']) == false)
 		{
 			throw new \UnexpectedValueException('Roles must be either "member" or "maintainer".');
 		}
 
-		$data = array(
+		$data = [
 			'role' => $role,
-		);
+		];
 
 		return $this->processResponse($this->client->put($this->fetchUrl($path), $data));
 	}

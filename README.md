@@ -1,4 +1,4 @@
-# The Github Package [![Build Status](https://ci.joomla.org/api/badges/joomla-framework/github-api/status.svg)](https://ci.joomla.org/joomla-framework/github-api)
+# The Github Package [![Build Status](https://ci.joomla.org/api/badges/joomla-framework/github-api/status.svg?ref=refs/heads/2.0-dev)](https://ci.joomla.org/joomla-framework/github-api)
 
 ## Using the Github Package
 

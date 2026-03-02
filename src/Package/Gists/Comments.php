@@ -37,9 +37,9 @@ class Comments extends AbstractPackage
 
 		// Build the request data.
 		$data = json_encode(
-			array(
+			[
 				'body' => $body,
-			)
+			]
 		);
 
 		// Send the request.
@@ -83,9 +83,9 @@ class Comments extends AbstractPackage
 
 		// Build the request data.
 		$data = json_encode(
-			array(
+			[
 				'body' => $body,
-			)
+			]
 		);
 
 		// Send the request.

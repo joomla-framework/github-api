@@ -30,7 +30,7 @@ class StatisticsTest extends GitHubTestCase
 	 *
 	 * @return void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -44,9 +44,6 @@ class StatisticsTest extends GitHubTestCase
 	 */
 	public function testContributors()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-framework/stats/contributors')
@@ -65,9 +62,6 @@ class StatisticsTest extends GitHubTestCase
 	 */
 	public function testActivity()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-framework/stats/commit_activity')
@@ -86,9 +80,6 @@ class StatisticsTest extends GitHubTestCase
 	 */
 	public function testFrequency()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-framework/stats/code_frequency')
@@ -107,9 +98,6 @@ class StatisticsTest extends GitHubTestCase
 	 */
 	public function testParticipation()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-framework/stats/participation')
@@ -128,9 +116,6 @@ class StatisticsTest extends GitHubTestCase
 	 */
 	public function testPunchCard()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-framework/stats/punch_card')
@@ -145,13 +130,13 @@ class StatisticsTest extends GitHubTestCase
 	/**
 	 * Tests the ProcessResponse method with failure.
 	 *
-	 * @expectedException \DomainException
 	 * @return  void
 	 */
 	public function testProcessResponse202()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 202;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('get')

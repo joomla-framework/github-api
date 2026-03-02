@@ -9,7 +9,6 @@
 namespace Joomla\Github\Package\Issues;
 
 use Joomla\Github\AbstractPackage;
-use Joomla\Uri\Uri;
 
 /**
  * GitHub API Comments class for the Joomla Framework.
@@ -26,24 +25,24 @@ class Comments extends AbstractPackage
 	/**
 	 * List comments on an issue.
 	 *
-	 * @param   string     $owner    The name of the owner of the GitHub repository.
-	 * @param   string     $repo     The name of the GitHub repository.
-	 * @param   integer    $issueId  The issue number.
-	 * @param   integer    $page     The page number from which to get items.
-	 * @param   integer    $limit    The number of items on a page.
-	 * @param   \DateTime  $since    Only comments updated at or after this time are returned.
+	 * @param   string              $owner    The name of the owner of the GitHub repository.
+	 * @param   string              $repo     The name of the GitHub repository.
+	 * @param   integer             $issueId  The issue number.
+	 * @param   integer             $page     The page number from which to get items.
+	 * @param   integer             $limit    The number of items on a page.
+	 * @param   \DateTimeInterface  $since    Only comments updated at or after this time are returned.
 	 *
 	 * @return  object
 	 *
 	 * @since   1.0
 	 * @throws  \DomainException
 	 */
-	public function getList($owner, $repo, $issueId, $page = 0, $limit = 0, \DateTime $since = null)
+	public function getList($owner, $repo, $issueId, $page = 0, $limit = 0, \DateTimeInterface $since = null)
 	{
 		// Build the request path.
 		$path = '/repos/' . $owner . '/' . $repo . '/issues/' . (int) $issueId . '/comments';
 
-		$uri = new Uri($this->fetchUrl($path, $page, $limit));
+		$uri = $this->fetchUrl($path, $page, $limit);
 
 		if ($since)
 		{
@@ -57,11 +56,11 @@ class Comments extends AbstractPackage
 	/**
 	 * List comments in a repository.
 	 *
-	 * @param   string     $owner      The name of the owner of the GitHub repository.
-	 * @param   string     $repo       The name of the GitHub repository.
-	 * @param   string     $sort       The sort field - created or updated.
-	 * @param   string     $direction  The sort order- asc or desc. Ignored without sort parameter.
-	 * @param   \DateTime  $since      Only comments updated at or after this time are returned.
+	 * @param   string              $owner      The name of the owner of the GitHub repository.
+	 * @param   string              $repo       The name of the GitHub repository.
+	 * @param   string              $sort       The sort field - created or updated.
+	 * @param   string              $direction  The sort order- asc or desc. Ignored without sort parameter.
+	 * @param   \DateTimeInterface  $since      Only comments updated at or after this time are returned.
 	 *
 	 * @return  object
 	 *
@@ -69,12 +68,12 @@ class Comments extends AbstractPackage
 	 * @throws  \UnexpectedValueException
 	 * @throws  \DomainException
 	 */
-	public function getRepositoryList($owner, $repo, $sort = 'created', $direction = 'asc', \DateTime $since = null)
+	public function getRepositoryList($owner, $repo, $sort = 'created', $direction = 'asc', \DateTimeInterface $since = null)
 	{
 		// Build the request path.
 		$path = '/repos/' . $owner . '/' . $repo . '/issues/comments';
 
-		if (\in_array($sort, array('created', 'updated')) == false)
+		if (\in_array($sort, ['created', 'updated']) == false)
 		{
 			throw new \UnexpectedValueException(
 				sprintf(
@@ -83,7 +82,7 @@ class Comments extends AbstractPackage
 			);
 		}
 
-		if (\in_array($direction, array('asc', 'desc')) == false)
+		if (\in_array($direction, ['asc', 'desc']) == false)
 		{
 			throw new \UnexpectedValueException(
 				sprintf(
@@ -92,7 +91,7 @@ class Comments extends AbstractPackage
 			);
 		}
 
-		$uri = new Uri($this->fetchUrl($path));
+		$uri = $this->fetchUrl($path);
 		$uri->setVar('sort', $sort);
 		$uri->setVar('direction', $direction);
 
@@ -148,9 +147,9 @@ class Comments extends AbstractPackage
 
 		// Build the request data.
 		$data = json_encode(
-			array(
+			[
 				'body' => $body,
-			)
+			]
 		);
 
 		// Send the request.
@@ -179,9 +178,9 @@ class Comments extends AbstractPackage
 
 		// Build the request data.
 		$data = json_encode(
-			array(
+			[
 				'body' => $body,
-			)
+			]
 		);
 
 		// Send the request.

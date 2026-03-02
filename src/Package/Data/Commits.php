@@ -54,13 +54,13 @@ class Commits extends AbstractPackage
 	 *
 	 * @return  object
 	 */
-	public function create($owner, $repo, $message, $tree, array $parents = array())
+	public function create($owner, $repo, $message, $tree, array $parents = [])
 	{
 		// Build the request path.
 		$path = '/repos/' . $owner . '/' . $repo . '/git/commits';
 
 		$data = json_encode(
-			array('message' => $message, 'tree' => $tree, 'parents' => $parents)
+			['message' => $message, 'tree' => $tree, 'parents' => $parents]
 		);
 
 		// Send the request.

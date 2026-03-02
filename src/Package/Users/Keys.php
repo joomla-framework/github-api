@@ -95,10 +95,10 @@ class Keys extends AbstractPackage
 		// Build the request path.
 		$path = '/users/keys';
 
-		$data = array(
+		$data = [
 			'title' => $title,
 			'key'   => $key,
-		);
+		];
 
 		return $this->processResponse(
 			$this->client->post($this->fetchUrl($path), json_encode($data)),
@@ -122,10 +122,10 @@ class Keys extends AbstractPackage
 		// Build the request path.
 		$path = '/users/keys/' . $id;
 
-		$data = array(
+		$data = [
 			'title' => $title,
 			'key'   => $key,
-		);
+		];
 
 		return $this->processResponse(
 			$this->client->patch($this->fetchUrl($path), json_encode($data))

@@ -35,13 +35,13 @@ class Authorization extends AbstractPackage
 	 * @since   1.0
 	 * @throws  \DomainException
 	 */
-	public function create(array $scopes = array(), $note = '', $url = '')
+	public function create(array $scopes = [], $note = '', $url = '')
 	{
 		// Build the request path.
 		$path = '/authorizations';
 
 		$data = json_encode(
-			array('scopes' => $scopes, 'note' => $note, 'note_url' => $url)
+			['scopes' => $scopes, 'note' => $note, 'note_url' => $url]
 		);
 
 		// Send the request.
@@ -104,7 +104,7 @@ class Authorization extends AbstractPackage
 	 * @throws  \DomainException
 	 * @throws  \RuntimeException
 	 */
-	public function edit($id, array $scopes = array(), array $addScopes = array(), array $removeScopes = array(), $note = '', $url = '')
+	public function edit($id, array $scopes = [], array $addScopes = [], array $removeScopes = [], $note = '', $url = '')
 	{
 		// Check if more than one scopes array contains data
 		$scopesCount = 0;
@@ -142,11 +142,11 @@ class Authorization extends AbstractPackage
 		$path = '/authorizations/' . $id;
 
 		$data = json_encode(
-			array(
+			[
 				$scope     => $scopeData,
 				'note'     => $note,
 				'note_url' => $url,
-			)
+			]
 		);
 
 		// Send the request.
@@ -250,7 +250,7 @@ class Authorization extends AbstractPackage
 			if ($response->code == 404)
 			{
 				// Unlimited rate for Github Enterprise sites and trusted users.
-				return (object) array('limit' => false, 'remaining' => null);
+				return (object) ['limit' => false, 'remaining' => null];
 			}
 
 			// Decode the error response and throw an exception.
@@ -316,18 +316,18 @@ class Authorization extends AbstractPackage
 	{
 		$uri = 'https://github.com/login/oauth/access_token';
 
-		$data = array(
+		$data = [
 			'client_id'     => $clientId,
 			'client_secret' => $clientSecret,
 			'code'          => $code,
-		);
+		];
 
 		if ($redirectUri)
 		{
 			$data['redirect_uri'] = $redirectUri;
 		}
 
-		$headers = array();
+		$headers = [];
 
 		switch ($format)
 		{

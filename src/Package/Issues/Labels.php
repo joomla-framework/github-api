@@ -82,10 +82,10 @@ class Labels extends AbstractPackage
 
 		// Build the request data.
 		$data = json_encode(
-			array(
+			[
 				'name'  => $name,
 				'color' => $color,
-			)
+			]
 		);
 
 		// Send the request.
@@ -135,10 +135,10 @@ class Labels extends AbstractPackage
 
 		// Build the request data.
 		$data = json_encode(
-			array(
+			[
 				'name'  => $name,
 				'color' => $color,
-			)
+			]
 		);
 
 		// Send the request.

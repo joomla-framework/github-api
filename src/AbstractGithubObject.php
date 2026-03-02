@@ -53,7 +53,7 @@ abstract class AbstractGithubObject
 	 * @link   https://developer.github.com/webhooks/#events
 	 * @note   From 1.4.0 to 1.5.1 this was named $events, it was renamed due to naming conflicts with package subclasses
 	 */
-	protected $hookEvents = array(
+	protected $hookEvents = [
 		'*',
 		'commit_comment',
 		'create',
@@ -76,7 +76,7 @@ abstract class AbstractGithubObject
 		'status',
 		'team_add',
 		'watch',
-	);
+	];
 
 	/**
 	 * Constructor.
@@ -89,19 +89,7 @@ abstract class AbstractGithubObject
 	public function __construct(Registry $options = null, BaseHttp $client = null)
 	{
 		$this->options = $options ?: new Registry;
-		$this->client  = $client ?: new BaseHttp($this->options);
-
-		// Make sure the user agent string is defined.
-		if (!isset($this->options['userAgent']))
-		{
-			$this->options['userAgent'] = 'JGitHub/2.0';
-		}
-
-		// Set the default timeout to 120 seconds.
-		if (!isset($this->options['timeout']))
-		{
-			$this->options['timeout'] = 120;
-		}
+		$this->client  = $client ?: (new HttpFactory)->getHttp($this->options);
 
 		$this->package = \get_class($this);
 		$this->package = substr($this->package, strrpos($this->package, '\\') + 1);
@@ -116,10 +104,9 @@ abstract class AbstractGithubObject
 	 * @param   integer  $page   Page to request
 	 * @param   integer  $limit  Number of results to return per page
 	 *
-	 * @return  string   The request URL.
+	 * @return  Uri
 	 *
 	 * @since   1.0
-	 * @note    As of 2.0 this method will return a Joomla\Uri\Uri object
 	 */
 	protected function fetchUrl($path, $page = 0, $limit = 0)
 	{
@@ -163,7 +150,7 @@ abstract class AbstractGithubObject
 			$uri->setVar('per_page', (int) $limit);
 		}
 
-		return (string) $uri;
+		return $uri;
 	}
 
 	/**
@@ -172,7 +159,7 @@ abstract class AbstractGithubObject
 	 * @param   Response  $response      The response.
 	 * @param   integer   $expectedCode  The expected "good" code.
 	 *
-	 * @return  mixed
+	 * @return  Response
 	 *
 	 * @since   1.0
 	 * @throws  UnexpectedResponseException
@@ -180,13 +167,13 @@ abstract class AbstractGithubObject
 	protected function processResponse(Response $response, $expectedCode = 200)
 	{
 		// Validate the response code.
-		if ($response->code != $expectedCode)
+		if ($response->getStatusCode() != $expectedCode)
 		{
 			// Decode the error response and throw an exception.
 			$error   = json_decode($response->body);
 			$message = isset($error->message) ? $error->message : 'Invalid response received from GitHub.';
 
-			throw new UnexpectedResponseException($response, $message, $response->code);
+			throw new UnexpectedResponseException($response, $message, $response->getStatusCode());
 		}
 
 		return json_decode($response->body);

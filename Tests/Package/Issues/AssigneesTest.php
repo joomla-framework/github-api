@@ -42,7 +42,7 @@ class AssigneesTest extends GitHubTestCase
 	 *
 	 * @return  void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -139,12 +139,12 @@ class AssigneesTest extends GitHubTestCase
 	 * a 204 header with no content is returned.
 	 * Otherwise a 404 status code is returned.
 	 *
-	 * @expectedException \DomainException
-	 *
 	 * @return void
 	 */
 	public function testCheckException()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 666;
 		$this->response->body = '';
 
@@ -210,7 +210,7 @@ class AssigneesTest extends GitHubTestCase
 
 		$this->client->expects($this->once())
 			->method('delete')
-			->with('/repos/' . $this->owner . '/' . $this->repo . '/issues/123/assignees', array(), null, json_encode(array('assignees' => array('joomla'))))
+			->with('/repos/' . $this->owner . '/' . $this->repo . '/issues/123/assignees', [], null, json_encode(['assignees' => ['joomla']]))
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(

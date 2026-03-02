@@ -29,7 +29,7 @@ class GitignoreTest extends GitHubTestCase
 	 *
 	 * @return  void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -79,7 +79,8 @@ class GitignoreTest extends GitHubTestCase
 		$this->response->code = 200;
 		$this->response->body = '{
     "name": "C",
-    "source": "# Object files\n*.o\n\n# Libraries\n*.lib\n*.a\n\n# Shared objects (inc. Windows DLLs)\n*.dll\n*.so\n*.so.*\n*.dylib\n\n# Executables\n*.exe\n*.out\n*.app\n"
+    "source": "# Object files\n*.o\n\n# Libraries\n*.lib\n*.a\n\n# Shared objects (inc. Windows DLLs)\n'
+			. '*.dll\n*.so\n*.so.*\n*.dylib\n\n# Executables\n*.exe\n*.out\n*.app\n"
     }';
 
 		$this->client->expects($this->once())
@@ -136,13 +137,13 @@ class GitignoreTest extends GitHubTestCase
 	/**
 	 * Tests the get method with failure.
 	 *
-	 * @expectedException \DomainException
-	 *
 	 * @since   1.0
 	 * @return  void
 	 */
 	public function testGetFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 404;
 		$this->response->body = '{"message":"Not found"}';
 

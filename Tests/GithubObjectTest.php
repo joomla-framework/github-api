@@ -6,11 +6,8 @@
 
 namespace Joomla\Github\Tests;
 
-use Joomla\Github\AbstractGithubObject;
 use Joomla\Github\Tests\Stub\GitHubTestCase;
 use Joomla\Github\Tests\Stub\ObjectMock;
-use Joomla\Http\Http;
-use Joomla\Http\Transport\Curl;
 
 /**
  * Test class for Joomla\Github\Object.
@@ -20,16 +17,10 @@ use Joomla\Http\Transport\Curl;
 class GithubObjectTest extends GitHubTestCase
 {
 	/**
-	 * @var    AbstractGithubObject  Object under test.
+	 * @var    ObjectMock  Object under test.
 	 * @since  1.0
 	 */
 	protected $object;
-
-	/**
-	 * @var    Http  The HTTP client
-	 * @since  __DEPLOY_VERSION__
-	 */
-	protected $client;
 
 	/**
 	 * Sets up the fixture, for example, opens a network connection.
@@ -39,12 +30,10 @@ class GithubObjectTest extends GitHubTestCase
 	 *
 	 * @since   1.0
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
-		$transport    = new Curl(array());
-		$this->client = new Http(array(), $transport);
 		$this->object = new ObjectMock($this->options, $this->client);
 	}
 
@@ -107,10 +96,9 @@ class GithubObjectTest extends GitHubTestCase
 	{
 		$this->options->set('api.url', $apiUrl);
 
-		self::assertEquals(
-			$expected,
+		$this->assertThat(
 			$this->object->fetchUrl($path, $page, $limit),
-			'URL is not as expected.'
+			$this->equalTo($expected)
 		);
 	}
 
@@ -128,9 +116,9 @@ class GithubObjectTest extends GitHubTestCase
 		$this->options->set('api.username', 'MyTestUser');
 		$this->options->set('api.password', 'MyTestPass');
 
-		self::assertEquals(
-			'https://MyTestUser:MyTestPass@api.github.com/gists',
+		$this->assertThat(
 			$this->object->fetchUrl('/gists', 0, 0),
+			$this->equalTo('https://MyTestUser:MyTestPass@api.github.com/gists'),
 			'URL is not as expected.'
 		);
 	}
@@ -146,15 +134,15 @@ class GithubObjectTest extends GitHubTestCase
 
 		$this->options->set('gh.token', 'MyTestToken');
 
-		self::assertEquals(
-			'https://api.github.com/gists',
+		$this->assertThat(
 			(string) $this->object->fetchUrl('/gists', 0, 0),
+			$this->equalTo('https://api.github.com/gists'),
 			'URL is not as expected.'
 		);
 
-		self::assertEquals(
-			array('Authorization' => 'token MyTestToken'),
+		$this->assertThat(
 			$this->client->getOption('headers'),
+			$this->equalTo(['Authorization' => 'token MyTestToken']),
 			'Token should be propagated as a header.'
 		);
 	}

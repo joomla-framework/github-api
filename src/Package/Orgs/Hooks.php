@@ -80,32 +80,32 @@ class Hooks extends AbstractPackage
 	 * @since   1.4.0
 	 * @throws  \UnexpectedValueException
 	 */
-	public function create($org, $url, $contentType = 'form', $secret = null, $insecureSsl = false, array $events = array('push'), $active = true)
+	public function create($org, $url, $contentType = 'form', $secret = null, $insecureSsl = false, array $events = ['push'], $active = true)
 	{
 		// Build the request path.
 		$path = "/orgs/$org/hooks";
 
-		if (\in_array($contentType, array('form', 'json')) == false)
+		if (\in_array($contentType, ['form', 'json']) == false)
 		{
 			throw new \UnexpectedValueException('Content type must be either "form" or "json".');
 		}
 
-		$config = array(
+		$config = [
 			'url'          => $url,
 			'content_type' => $contentType,
 			'insecure_ssl' => (int) $insecureSsl,
-		);
+		];
 
 		if ($secret)
 		{
 			$config['secret'] = $secret;
 		}
 
-		$data = array(
+		$data = [
 			'name'   => 'web',
 			'active' => $active,
 			'config' => (object) $config,
-		);
+		];
 
 		if (!empty($events))
 		{
@@ -146,18 +146,18 @@ class Hooks extends AbstractPackage
 	 * @since   1.4.0
 	 * @throws  \UnexpectedValueException
 	 */
-	public function edit($org, $url, $contentType = null, $secret = null, $insecureSsl = null, array $events = array(), $active = null)
+	public function edit($org, $url, $contentType = null, $secret = null, $insecureSsl = null, array $events = [], $active = null)
 	{
 		// Build the request path.
 		$path = "/orgs/$org/hooks";
 
-		$config = array(
+		$config = [
 			'url' => $url,
-		);
+		];
 
 		if ($contentType)
 		{
-			if (\in_array($contentType, array('form', 'json')) == false)
+			if (\in_array($contentType, ['form', 'json']) == false)
 			{
 				throw new \UnexpectedValueException('Content type must be either "form" or "json".');
 			}
@@ -175,9 +175,9 @@ class Hooks extends AbstractPackage
 			$config['secret'] = $secret;
 		}
 
-		$data = array(
+		$data = [
 			'config' => (object) $config,
-		);
+		];
 
 		if ($active !== null)
 		{

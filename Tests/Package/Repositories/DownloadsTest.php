@@ -29,7 +29,7 @@ class DownloadsTest extends GitHubTestCase
 	 *
 	 * @return  void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -43,9 +43,6 @@ class DownloadsTest extends GitHubTestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/downloads')
@@ -64,9 +61,6 @@ class DownloadsTest extends GitHubTestCase
 	 */
 	public function testGet()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-platform/downloads/123abc')
@@ -82,12 +76,12 @@ class DownloadsTest extends GitHubTestCase
 	 * Tests the Create method.
 	 *
 	 * @return  void
-	 *
-	 * @expectedException  \RuntimeException
-	 * @expectedExceptionMessage  The GitHub API no longer supports creating downloads. The Releases API should be used instead.
 	 */
 	public function testCreate()
 	{
+		$this->expectException(\RuntimeException::class);
+		$this->expectExceptionMessage('The GitHub API no longer supports creating downloads. The Releases API should be used instead.');
+
 		$this->object->create('joomla', 'joomla-platform', 'aaa.zip', 1234, 'Description', 'content_type');
 	}
 
@@ -95,12 +89,12 @@ class DownloadsTest extends GitHubTestCase
 	 * Tests the Upload method.
 	 *
 	 * @return  void
-	 *
-	 * @expectedException  \RuntimeException
-	 * @expectedExceptionMessage  The GitHub API no longer supports creating downloads. The Releases API should be used instead.
 	 */
 	public function testUpload()
 	{
+		$this->expectException(\RuntimeException::class);
+		$this->expectExceptionMessage('The GitHub API no longer supports creating downloads. The Releases API should be used instead.');
+
 		$this->object->upload(
 			'joomla', 'joomla-platform', 123, 'a/b/aaa.zip', 'acl', 201, 'aaa.zip', '123abc', '123abc', '123abc', 'content_type', '@aaa.zip'
 		);
@@ -114,7 +108,6 @@ class DownloadsTest extends GitHubTestCase
 	public function testDelete()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('delete')
