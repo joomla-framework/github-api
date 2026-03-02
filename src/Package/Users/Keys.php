@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2022 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -95,10 +95,10 @@ class Keys extends AbstractPackage
 		// Build the request path.
 		$path = '/users/keys';
 
-		$data = array(
+		$data = [
 			'title' => $title,
 			'key'   => $key,
-		);
+		];
 
 		return $this->processResponse(
 			$this->client->post($this->fetchUrl($path), json_encode($data)),
@@ -122,10 +122,10 @@ class Keys extends AbstractPackage
 		// Build the request path.
 		$path = '/users/keys/' . $id;
 
-		$data = array(
+		$data = [
 			'title' => $title,
 			'key'   => $key,
-		);
+		];
 
 		return $this->processResponse(
 			$this->client->patch($this->fetchUrl($path), json_encode($data))

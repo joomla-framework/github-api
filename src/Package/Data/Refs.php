@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2022 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -88,10 +88,10 @@ class Refs extends AbstractPackage
 
 		// Build the request data.
 		$data = json_encode(
-			array(
+			[
 				'ref' => $ref,
 				'sha' => $sha,
-			)
+			]
 		);
 
 		// Send the request.

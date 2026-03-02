@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2022 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -41,12 +41,12 @@ class Comments extends AbstractPackage
 
 		// Build the request data.
 		$data = json_encode(
-			array(
+			[
 				'body'      => $body,
 				'commit_id' => $commitId,
 				'path'      => $filePath,
 				'position'  => $position,
-			)
+			]
 		);
 
 		// Send the request.
@@ -76,10 +76,10 @@ class Comments extends AbstractPackage
 
 		// Build the request data.
 		$data = json_encode(
-			array(
+			[
 				'body'        => $body,
 				'in_reply_to' => (int) $inReplyTo,
-			)
+			]
 		);
 
 		// Send the request.
@@ -131,9 +131,9 @@ class Comments extends AbstractPackage
 
 		// Build the request data.
 		$data = json_encode(
-			array(
+			[
 				'body' => $body,
-			)
+			]
 		);
 
 		// Send the request.

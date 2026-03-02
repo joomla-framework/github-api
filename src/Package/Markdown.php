@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2022 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -36,7 +36,7 @@ class Markdown extends AbstractPackage
 	public function render($text, $mode = 'gfm', $context = null)
 	{
 		// The valid modes
-		$validModes = array('gfm', 'markdown');
+		$validModes = ['gfm', 'markdown'];
 
 		// Make sure the scope is valid
 		if (!\in_array($mode, $validModes))
@@ -52,11 +52,11 @@ class Markdown extends AbstractPackage
 			'\\/',
 			'/',
 			json_encode(
-				array(
+				[
 					'text'    => $text,
 					'mode'    => $mode,
 					'context' => $context,
-				)
+				]
 			)
 		);
 

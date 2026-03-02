@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2022 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -30,7 +30,7 @@ class PackageTest extends GitHubTestCase
 	 *
 	 * @since   1.0
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -44,7 +44,7 @@ class PackageTest extends GitHubTestCase
 	 *
 	 * @since   1.0
 	 */
-	public function test__Get()
+	public function testGet()
 	{
 		$this->assertThat(
 			$this->object->repositories->forks,
@@ -58,11 +58,11 @@ class PackageTest extends GitHubTestCase
 	 * @return  void
 	 *
 	 * @since   1.0
-	 *
-	 * @expectedException \InvalidArgumentException
 	 */
-	public function test__GetInvalid()
+	public function testGetInvalid()
 	{
+		$this->expectException(\InvalidArgumentException::class);
+
 		$this->object->repositories->INVALID;
 	}
 }

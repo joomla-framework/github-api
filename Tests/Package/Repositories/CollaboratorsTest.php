@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2022 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -29,7 +29,7 @@ class CollaboratorsTest extends GitHubTestCase
 	 *
 	 * @return  void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -43,9 +43,6 @@ class CollaboratorsTest extends GitHubTestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/joomla/joomla-framework/collaborators')
@@ -103,11 +100,11 @@ class CollaboratorsTest extends GitHubTestCase
 	 * Tests the GetUnexpected method.
 	 *
 	 * @return  void
-	 *
-	 * @expectedException \UnexpectedValueException
 	 */
 	public function testGetUnexpected()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->response->code = 666;
 		$this->response->body = null;
 
@@ -130,7 +127,6 @@ class CollaboratorsTest extends GitHubTestCase
 	public function testAdd()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('put')
@@ -151,7 +147,6 @@ class CollaboratorsTest extends GitHubTestCase
 	public function testRemove()
 	{
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('delete')

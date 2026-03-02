@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2022 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -30,7 +30,7 @@ class GithubTest extends GitHubTestCase
 	 *
 	 * @since   1.0
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -44,7 +44,7 @@ class GithubTest extends GitHubTestCase
 	 *
 	 * @since   1.0
 	 */
-	public function test__GetForks()
+	public function testGetForks()
 	{
 		$this->assertThat(
 			$this->object->repositories->forks,
@@ -59,7 +59,7 @@ class GithubTest extends GitHubTestCase
 	 *
 	 * @since   1.0
 	 */
-	public function test__GetCommits()
+	public function testGetCommits()
 	{
 		$this->assertThat(
 			$this->object->repositories->commits,
@@ -74,7 +74,7 @@ class GithubTest extends GitHubTestCase
 	 *
 	 * @since   1.0
 	 */
-	public function test__GetStatuses()
+	public function testGetStatuses()
 	{
 		$this->assertThat(
 			$this->object->repositories->statuses,
@@ -89,7 +89,7 @@ class GithubTest extends GitHubTestCase
 	 *
 	 * @since   1.0
 	 */
-	public function test__GetHooks()
+	public function testGetHooks()
 	{
 		$this->assertThat(
 			$this->object->repositories->hooks,
@@ -102,11 +102,12 @@ class GithubTest extends GitHubTestCase
 	 *
 	 * @return  void
 	 *
-	 * @since              1.0
-	 * @expectedException  \InvalidArgumentException
+	 * @since   1.0
 	 */
-	public function test__GetFailure()
+	public function testGetFailure()
 	{
+		$this->expectException(\InvalidArgumentException::class);
+
 		$this->object->other;
 	}
 

@@ -2,14 +2,13 @@
 /**
  * Part of the Joomla Framework GitHub Package
  *
- * @copyright  Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2022 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Github\Package\Repositories;
 
 use Joomla\Github\AbstractPackage;
-use Joomla\Uri\Uri;
 
 /**
  * GitHub API Deployments class for the Joomla Framework.
@@ -41,7 +40,7 @@ class Deployments extends AbstractPackage
 		// Build the request path.
 		$path = "/repos/$owner/$repo/deployments";
 
-		$uri = new Uri($this->fetchUrl($path, $page, $limit));
+		$uri = $this->fetchUrl($path, $page, $limit);
 
 		if ($sha)
 		{
@@ -73,10 +72,13 @@ class Deployments extends AbstractPackage
 	 * @param   string      $repo              The name of the GitHub repository.
 	 * @param   string      $ref               The ref to deploy. This can be a branch, tag, or SHA.
 	 * @param   string      $task              Optional parameter to specify a task to execute.
-	 * @param   boolean     $autoMerge         Optional parameter to merge the default branch into the requested ref if behind the default branch.
-	 * @param   array|null  $requiredContexts  Optional array of status contexts verified against commit status checks. If this parameter is omitted
-	 *                                         from the parameters then all unique contexts will be verified before a deployment is created. To bypass
-	 *                                         checking entirely pass an empty array. Defaults to all unique contexts.
+	 * @param   boolean     $autoMerge         Optional parameter to merge the default branch into the requested ref if
+	 *                                         it is behind the default branch.
+	 * @param   array|null  $requiredContexts  Optional array of status contexts verified against commit status checks.
+	 *                                         If this parameter is omitted
+	 *                                         from the parameters then all unique contexts will be verified before a
+	 *                                         deployment is created. To bypass checking entirely pass an empty array.
+	 *                                         Defaults to all unique contexts.
 	 * @param   string      $payload           Optional JSON payload with extra information about the deployment.
 	 * @param   string      $environment       Optional name for the target deployment environment.
 	 * @param   string      $description       Optional short description.
@@ -93,10 +95,10 @@ class Deployments extends AbstractPackage
 		// Build the request path.
 		$path = "/repos/$owner/$repo/deployments";
 
-		$data = array(
+		$data = [
 			'ref'        => $ref,
 			'auto_merge' => $autoMerge,
-		);
+		];
 
 		if ($task)
 		{
@@ -184,7 +186,7 @@ class Deployments extends AbstractPackage
 	 */
 	public function createStatus($owner, $repo, $id, $state, $targetUrl = '', $description = '')
 	{
-		$allowedStates = array('pending', 'success', 'error', 'failure');
+		$allowedStates = ['pending', 'success', 'error', 'failure'];
 
 		// Build the request path.
 		$path = "/repos/$owner/$repo/deployments/" . (int) $id . '/statuses';
@@ -194,9 +196,9 @@ class Deployments extends AbstractPackage
 			throw new \InvalidArgumentException(sprintf('The deployment state must be: %s', implode(', ', $allowedStates)));
 		}
 
-		$data = array(
+		$data = [
 			'state' => $state,
-		);
+		];
 
 		if ($targetUrl)
 		{

@@ -1,23 +1,25 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2022 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2017 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Github\Tests;
 
-use Joomla\Github\Package\Repositories\Pages;
+use Joomla\Github\Package\Repositories\Branches;
 use Joomla\Github\Tests\Stub\GitHubTestCase;
 
 /**
- * Test class for Pages.
+ * Test class.
+ *
+ * @covers \Joomla\Github\Package\Repositories\Branches
  *
  * @since  1.0
  */
-class PagesTest extends GitHubTestCase
+class BranchesTest extends GitHubTestCase
 {
 	/**
-	 * @var Pages
+	 * @var Branches
 	 */
 	protected $object;
 
@@ -33,29 +35,13 @@ class PagesTest extends GitHubTestCase
 	{
 		parent::setUp();
 
-		$this->object = new Pages($this->options, $this->client);
-	}
-
-	/**
-	 * Tests the GetInfo method.
-	 *
-	 * @return  void
-	 */
-	public function testGetInfo()
-	{
-		$this->client->expects($this->once())
-			->method('get')
-			->with('/repos/{owner}/{repo}/pages')
-			->will($this->returnValue($this->response));
-
-		$this->assertThat(
-			$this->object->getInfo('{owner}', '{repo}'),
-			$this->equalTo(json_decode($this->sampleString))
-		);
+		$this->object = new Branches($this->options, $this->client);
 	}
 
 	/**
 	 * Tests the GetList method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Branches::getList()
 	 *
 	 * @return  void
 	 */
@@ -63,7 +49,7 @@ class PagesTest extends GitHubTestCase
 	{
 		$this->client->expects($this->once())
 			->method('get')
-			->with('/repos/{owner}/{repo}/pages/builds')
+			->with('/repos/{owner}/{repo}/branches')
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
@@ -73,19 +59,21 @@ class PagesTest extends GitHubTestCase
 	}
 
 	/**
-	 * Tests the GetLatest method.
+	 * Tests the Get method.
+	 *
+	 * @covers \Joomla\Github\Package\Repositories\Branches::get()
 	 *
 	 * @return  void
 	 */
-	public function testGetLatest()
+	public function testGet()
 	{
 		$this->client->expects($this->once())
 			->method('get')
-			->with('/repos/{owner}/{repo}/pages/builds/latest')
+			->with('/repos/{owner}/{repo}/branches/{branch}')
 			->will($this->returnValue($this->response));
 
 		$this->assertThat(
-			$this->object->getLatest('{owner}', '{repo}'),
+			$this->object->get('{owner}', '{repo}', '{branch}'),
 			$this->equalTo(json_decode($this->sampleString))
 		);
 	}

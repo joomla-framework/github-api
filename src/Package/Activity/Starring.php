@@ -2,14 +2,13 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2022 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Github\Package\Activity;
 
 use Joomla\Github\AbstractPackage;
-use Joomla\Uri\Uri;
 
 /**
  * GitHub API Activity Events class for the Joomla Framework.
@@ -56,8 +55,8 @@ class Starring extends AbstractPackage
 	 */
 	public function getRepositories($user = '', $sort = 'created', $direction = 'desc')
 	{
-		$allowedSort = array('created', 'updated');
-		$allowedDir  = array('asc', 'desc');
+		$allowedSort = ['created', 'updated'];
+		$allowedDir  = ['asc', 'desc'];
 
 		if (!\in_array($sort, $allowedSort))
 		{
@@ -81,10 +80,10 @@ class Starring extends AbstractPackage
 
 		// Build the request path.
 		$path = ($user)
-			? '/users' . $user . '/starred'
+			? '/users/' . $user . '/starred'
 			: '/user/starred';
 
-		$uri = new Uri($this->fetchUrl($path));
+		$uri = $this->fetchUrl($path);
 		$uri->setVar('sort', $sort);
 		$uri->setVar('direction', $direction);
 

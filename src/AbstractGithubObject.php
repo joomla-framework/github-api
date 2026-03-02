@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2022 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -10,6 +10,7 @@ namespace Joomla\Github;
 
 use Joomla\Http\Exception\UnexpectedResponseException;
 use Joomla\Http\Http as BaseHttp;
+use Joomla\Http\HttpFactory;
 use Joomla\Http\Response;
 use Joomla\Registry\Registry;
 use Joomla\Uri\Uri;
@@ -53,7 +54,7 @@ abstract class AbstractGithubObject
 	 * @link   https://developer.github.com/webhooks/#events
 	 * @note   From 1.4.0 to 1.5.1 this was named $events, it was renamed due to naming conflicts with package subclasses
 	 */
-	protected $hookEvents = array(
+	protected $hookEvents = [
 		'*',
 		'commit_comment',
 		'create',
@@ -76,7 +77,7 @@ abstract class AbstractGithubObject
 		'status',
 		'team_add',
 		'watch',
-	);
+	];
 
 	/**
 	 * Constructor.
@@ -89,19 +90,7 @@ abstract class AbstractGithubObject
 	public function __construct(Registry $options = null, BaseHttp $client = null)
 	{
 		$this->options = $options ?: new Registry;
-		$this->client  = $client ?: new BaseHttp($this->options);
-
-		// Make sure the user agent string is defined.
-		if (!isset($this->options['userAgent']))
-		{
-			$this->options['userAgent'] = 'JGitHub/2.0';
-		}
-
-		// Set the default timeout to 120 seconds.
-		if (!isset($this->options['timeout']))
-		{
-			$this->options['timeout'] = 120;
-		}
+		$this->client  = $client ?: (new HttpFactory)->getHttp($this->options);
 
 		$this->package = \get_class($this);
 		$this->package = substr($this->package, strrpos($this->package, '\\') + 1);
@@ -116,10 +105,9 @@ abstract class AbstractGithubObject
 	 * @param   integer  $page   Page to request
 	 * @param   integer  $limit  Number of results to return per page
 	 *
-	 * @return  string   The request URL.
+	 * @return  Uri
 	 *
 	 * @since   1.0
-	 * @note    As of 2.0 this method will return a Joomla\Uri\Uri object
 	 */
 	protected function fetchUrl($path, $page = 0, $limit = 0)
 	{
@@ -163,7 +151,7 @@ abstract class AbstractGithubObject
 			$uri->setVar('per_page', (int) $limit);
 		}
 
-		return (string) $uri;
+		return $uri;
 	}
 
 	/**

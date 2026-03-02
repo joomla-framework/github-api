@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2022 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -47,12 +47,12 @@ class Pulls extends AbstractPackage
 
 		// Build the request data.
 		$data = json_encode(
-			array(
+			[
 				'title' => $title,
 				'base'  => $base,
 				'head'  => $head,
 				'body'  => $body,
-			)
+			]
 		);
 
 		// Send the request.
@@ -83,11 +83,11 @@ class Pulls extends AbstractPackage
 
 		// Build the request data.
 		$data = json_encode(
-			array(
+			[
 				'issue' => (int) $issueId,
 				'base'  => $base,
 				'head'  => $head,
-			)
+			]
 		);
 
 		// Send the request.
@@ -303,9 +303,9 @@ class Pulls extends AbstractPackage
 
 		// Build the request data.
 		$data = json_encode(
-			array(
+			[
 				'commit_message' => $message,
-			)
+			]
 		);
 
 		// Send the request.

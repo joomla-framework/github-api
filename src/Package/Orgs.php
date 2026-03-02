@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2022 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -86,9 +86,9 @@ class Orgs extends AbstractPackage
 		// Build the request path.
 		$path = '/orgs/' . $org;
 
-		$args = array('billing_email', 'company', 'email', 'location', 'name');
+		$args = ['billing_email', 'company', 'email', 'location', 'name'];
 
-		$data = array();
+		$data = [];
 
 		$fArgs = \func_get_args();
 

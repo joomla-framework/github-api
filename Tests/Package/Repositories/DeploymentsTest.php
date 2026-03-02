@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2022 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -29,7 +29,7 @@ class DeploymentsTest extends GitHubTestCase
 	 *
 	 * @return  void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -43,9 +43,6 @@ class DeploymentsTest extends GitHubTestCase
 	 */
 	public function testGetList()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/{owner}/{repo}/deployments?sha={sha}&ref={ref}&task={task}&environment={environment}')
@@ -65,7 +62,6 @@ class DeploymentsTest extends GitHubTestCase
 	public function testCreate()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')
@@ -84,14 +80,13 @@ class DeploymentsTest extends GitHubTestCase
 	/**
 	 * Tests the Create method.
 	 *
-	 * @expectedException \RuntimeException
-	 *
 	 * @return  void
 	 */
 	public function testCreateMergeConflict()
 	{
+		$this->expectException(\RuntimeException::class);
+
 		$this->response->code = 409;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')
@@ -107,14 +102,13 @@ class DeploymentsTest extends GitHubTestCase
 	/**
 	 * Tests the Create method.
 	 *
-	 * @expectedException \UnexpectedValueException
-	 *
 	 * @return  void
 	 */
 	public function testCreateFailure()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->response->code = 666;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')
@@ -134,9 +128,6 @@ class DeploymentsTest extends GitHubTestCase
 	 */
 	public function testGetDeploymentStatuses()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$this->client->expects($this->once())
 			->method('get')
 			->with('/repos/{owner}/{repo}/deployments/123/statuses')
@@ -156,7 +147,6 @@ class DeploymentsTest extends GitHubTestCase
 	public function testCreateStatus()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')
@@ -172,12 +162,12 @@ class DeploymentsTest extends GitHubTestCase
 	/**
 	 * Tests the CreateStatus method.
 	 *
-	 * @expectedException \InvalidArgumentException
-	 *
 	 * @return  void
 	 */
 	public function testCreateStatusFailure()
 	{
+		$this->expectException(\InvalidArgumentException::class);
+
 		$this->object->createStatus('{owner}', '{repo}', 123, '{invalid}');
 	}
 }

@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2022 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -43,14 +43,14 @@ class Releases extends AbstractPackage
 
 		// Build the request data.
 		$data = json_encode(
-			array(
+			[
 				'tag_name'         => $tagName,
 				'target_commitish' => $targetCommitish,
 				'name'             => $name,
 				'body'             => $body,
 				'draft'            => (boolean) $draft,
 				'prerelease'       => (boolean) $preRelease,
-			)
+			]
 		);
 
 		// Send the request.
@@ -225,7 +225,7 @@ class Releases extends AbstractPackage
 		// Send the request.
 		$response = $this->processResponse($this->client->get($this->fetchUrl($path, $page, $limit)));
 
-		$releases = array();
+		$releases = [];
 
 		if (\is_array($response))
 		{
@@ -298,9 +298,9 @@ class Releases extends AbstractPackage
 		// Build the request path.
 		$path = '/repos/' . $user . '/' . $repo . '/releases/assets/' . (int) $assetId;
 
-		$data = array(
+		$data = [
 			'name' => $name,
-		);
+		];
 
 		if ($label)
 		{

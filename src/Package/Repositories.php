@@ -2,14 +2,13 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2022 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Github\Package;
 
 use Joomla\Github\AbstractPackage;
-use Joomla\Uri\Uri;
 
 /**
  * GitHub API Activity class for the Joomla Framework.
@@ -52,12 +51,12 @@ class Repositories extends AbstractPackage
 	 */
 	public function getListOwn($type = 'all', $sort = 'full_name', $direction = '')
 	{
-		if (\in_array($type, array('all', 'owner', 'public', 'private', 'member')) == false)
+		if (\in_array($type, ['all', 'owner', 'public', 'private', 'member']) == false)
 		{
 			throw new \RuntimeException('Invalid type');
 		}
 
-		if (\in_array($sort, array('created', 'updated', 'pushed', 'full_name')) == false)
+		if (\in_array($sort, ['created', 'updated', 'pushed', 'full_name']) == false)
 		{
 			throw new \RuntimeException('Invalid sort field');
 		}
@@ -65,13 +64,13 @@ class Repositories extends AbstractPackage
 		// Sort direction default: when using full_name: asc, otherwise desc.
 		$direction = ($direction) ? : (($sort == 'full_name') ? 'asc' : 'desc');
 
-		if (\in_array($direction, array('asc', 'desc')) == false)
+		if (\in_array($direction, ['asc', 'desc']) == false)
 		{
 			throw new \RuntimeException('Invalid sort order');
 		}
 
 		// Build the request path.
-		$uri = new Uri($this->fetchUrl('/user/repos'));
+		$uri = $this->fetchUrl('/user/repos');
 		$uri->setVar('type', $type);
 		$uri->setVar('sort', $sort);
 		$uri->setVar('direction', $direction);
@@ -97,12 +96,12 @@ class Repositories extends AbstractPackage
 	 */
 	public function getListUser($user, $type = 'all', $sort = 'full_name', $direction = '')
 	{
-		if (\in_array($type, array('all', 'owner', 'member')) == false)
+		if (\in_array($type, ['all', 'owner', 'member']) == false)
 		{
 			throw new \RuntimeException('Invalid type');
 		}
 
-		if (\in_array($sort, array('created', 'updated', 'pushed', 'full_name')) == false)
+		if (\in_array($sort, ['created', 'updated', 'pushed', 'full_name']) == false)
 		{
 			throw new \RuntimeException('Invalid sort field');
 		}
@@ -110,13 +109,13 @@ class Repositories extends AbstractPackage
 		// Sort direction default: when using full_name: asc, otherwise desc.
 		$direction = $direction ?: ($sort == 'full_name' ? 'asc' : 'desc');
 
-		if (\in_array($direction, array('asc', 'desc')) == false)
+		if (\in_array($direction, ['asc', 'desc']) == false)
 		{
 			throw new \RuntimeException('Invalid sort order');
 		}
 
 		// Build the request path.
-		$uri = new Uri($this->fetchUrl('/users/' . $user . '/repos'));
+		$uri = $this->fetchUrl('/users/' . $user . '/repos');
 		$uri->setVar('type', $type);
 		$uri->setVar('sort', $sort);
 		$uri->setVar('direction', $direction);
@@ -140,13 +139,13 @@ class Repositories extends AbstractPackage
 	 */
 	public function getListOrg($org, $type = 'all')
 	{
-		if (\in_array($type, array('all', 'public', 'private', 'forks', 'sources', 'member')) == false)
+		if (\in_array($type, ['all', 'public', 'private', 'forks', 'sources', 'member']) == false)
 		{
 			throw new \RuntimeException('Invalid type');
 		}
 
 		// Build the request path.
-		$uri = new Uri($this->fetchUrl('/orgs/' . $org . '/repos'));
+		$uri = $this->fetchUrl('/orgs/' . $org . '/repos');
 		$uri->setVar('type', $type);
 
 		// Send the request.
@@ -168,7 +167,7 @@ class Repositories extends AbstractPackage
 	public function getList($id = 0)
 	{
 		// Build the request path.
-		$uri = new Uri($this->fetchUrl('/repositories'));
+		$uri = $this->fetchUrl('/repositories');
 
 		if ($id)
 		{
@@ -213,7 +212,7 @@ class Repositories extends AbstractPackage
 			// Create a repository for a user
 			: '/user/repos';
 
-		$data = array(
+		$data = [
 			'name'               => $name,
 			'description'        => $description,
 			'homepage'           => $homepage,
@@ -224,7 +223,7 @@ class Repositories extends AbstractPackage
 			'team_id'            => $teamId,
 			'auto_init'          => $autoInit,
 			'gitignore_template' => $gitignoreTemplate,
-		);
+		];
 
 		// Send the request.
 		return $this->processResponse(
@@ -279,7 +278,7 @@ class Repositories extends AbstractPackage
 	{
 		$path = '/repos/' . $owner . '/' . $repo;
 
-		$data = array(
+		$data = [
 			'name'           => $name,
 			'description'    => $description,
 			'homepage'       => $homepage,
@@ -288,7 +287,7 @@ class Repositories extends AbstractPackage
 			'has_wiki'       => $hasWiki,
 			'has_downloads'  => $hasDownloads,
 			'default_branch' => $defaultBranch,
-		);
+		];
 
 		// Send the request.
 		return $this->processResponse(
@@ -310,7 +309,7 @@ class Repositories extends AbstractPackage
 	public function getListContributors($owner, $repo, $anon = false)
 	{
 		// Build the request path.
-		$uri = new Uri($this->fetchUrl('/repos/' . $owner . '/' . $repo . '/contributors'));
+		$uri = $this->fetchUrl('/repos/' . $owner . '/' . $repo . '/contributors');
 
 		if ($anon)
 		{
@@ -385,39 +384,6 @@ class Repositories extends AbstractPackage
 		return $this->processResponse(
 			$this->client->get($this->fetchUrl($path))
 		);
-	}
-
-	/**
-	 * List Branches.
-	 *
-	 * @param   string  $owner  Repository owner.
-	 * @param   string  $repo   Repository name.
-	 *
-	 * @return  object
-	 *
-	 * @since   1.0
-	 * @deprecated  2.0  Use Joomla\Github\Package\Repositories\Branches::getList() instead
-	 */
-	public function getListBranches($owner, $repo)
-	{
-		return $this->branches->getList($owner, $repo);
-	}
-
-	/**
-	 * Get a Branch.
-	 *
-	 * @param   string  $owner   Repository owner.
-	 * @param   string  $repo    Repository name.
-	 * @param   string  $branch  Branch name.
-	 *
-	 * @return  object
-	 *
-	 * @since   1.0
-	 * @deprecated  2.0  Use Joomla\Github\Package\Repositories\Branches::get() instead
-	 */
-	public function getBranch($owner, $repo, $branch)
-	{
-		return $this->branches->get($owner, $repo, $branch);
 	}
 
 	/**

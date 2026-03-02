@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2022 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -69,17 +69,17 @@ class Tags extends AbstractPackage
 		// Build the request path.
 		$path = '/repos/' . $owner . '/' . $repo . '/git/tags';
 
-		$data = array(
+		$data = [
 			'tag'     => $tag,
 			'message' => $message,
 			'object'  => $object,
 			'type'    => $type,
-			'tagger'  => array(
+			'tagger'  => [
 				'name'  => $taggerName,
 				'email' => $taggerEmail,
 				'date'  => $taggerDate,
-			),
-		);
+			],
+		];
 
 		return $this->processResponse(
 			$this->client->post($this->fetchUrl($path), json_encode($data)),

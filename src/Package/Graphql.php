@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2022 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -29,19 +29,19 @@ class Graphql extends AbstractPackage
 	 *
 	 * @since   1.6.0
 	 */
-	public function execute($query, array $variables = array())
+	public function execute($query, array $variables = [])
 	{
 		// Build the request path.
 		$path = '/graphql';
 
-		$headers = array(
+		$headers = [
 			'Accept'       => 'application/vnd.github.v4+json',
 			'Content-Type' => 'application/json',
-		);
+		];
 
-		$data = array(
+		$data = [
 			'query' => $query,
-		);
+		];
 
 		if (!empty($variables))
 		{

@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2022 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -43,15 +43,15 @@ class Statuses extends AbstractPackage
 		// Build the request path.
 		$path = "/repos/$user/$repo/statuses/$sha";
 
-		if (!\in_array($state, array('pending', 'success', 'error', 'failure')))
+		if (!\in_array($state, ['pending', 'success', 'error', 'failure']))
 		{
 			throw new \InvalidArgumentException('State must be one of pending, success, error or failure.');
 		}
 
 		// Build the request data.
-		$data = array(
+		$data = [
 			'state' => $state,
-		);
+		];
 
 		if ($targetUrl !== null)
 		{

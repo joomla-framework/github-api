@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2022 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -30,7 +30,7 @@ class MergingTest extends GitHubTestCase
 	 *
 	 * @return  void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -45,7 +45,6 @@ class MergingTest extends GitHubTestCase
 	public function testPerform()
 	{
 		$this->response->code = 201;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')
@@ -62,13 +61,12 @@ class MergingTest extends GitHubTestCase
 	 * Tests the Perform method.
 	 *
 	 * @return  void
-	 *
-	 * @expectedException \UnexpectedValueException
 	 */
 	public function testPerformNoOp()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->response->code = 204;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')
@@ -83,15 +81,14 @@ class MergingTest extends GitHubTestCase
 
 	/**
 	 * Tests the Perform method.
-	 *
-	 * @expectedException \UnexpectedValueException
 	 *
 	 * @return  void
 	 */
 	public function testPerformMissing()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->response->code = 404;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')
@@ -106,15 +103,14 @@ class MergingTest extends GitHubTestCase
 
 	/**
 	 * Tests the Perform method.
-	 *
-	 * @expectedException \UnexpectedValueException
 	 *
 	 * @return  void
 	 */
 	public function testPerformConflict()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->response->code = 409;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')
@@ -130,14 +126,13 @@ class MergingTest extends GitHubTestCase
 	/**
 	 * Tests the Perform method.
 	 *
-	 * @expectedException \UnexpectedValueException
-	 *
 	 * @return  void
 	 */
 	public function testPerformUnexpected()
 	{
+		$this->expectException(\UnexpectedValueException::class);
+
 		$this->response->code = 666;
-		$this->response->body = $this->sampleString;
 
 		$this->client->expects($this->once())
 			->method('post')

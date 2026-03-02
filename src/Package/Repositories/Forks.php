@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2022 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -39,12 +39,12 @@ class Forks extends AbstractPackage
 		if (\strlen($org) > 0)
 		{
 			$data = json_encode(
-				array('org' => $org)
+				['org' => $org]
 			);
 		}
 		else
 		{
-			$data = json_encode(array());
+			$data = json_encode([]);
 		}
 
 		// Send the request.

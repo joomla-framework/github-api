@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2022 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -54,17 +54,21 @@ abstract class GitHubTestCase extends TestCase
 	 *
 	 * @return  void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
 		$this->options  = new Registry;
 
-		$this->client = $this->getMockBuilder('\\Joomla\\Github\\Http')
+		$this->client = $this->getMockBuilder('\\Joomla\\Http\\Http')
 			->setMethods(array('get', 'post', 'delete', 'patch', 'put'))
 			->getMock();
 
 		$this->response = $this->getMockBuilder('\\Joomla\\Http\\Response')
 			->getMock();
+
+		// Set a default response
+		$this->response->code = 200;
+		$this->response->body = $this->sampleString;
 	}
 }

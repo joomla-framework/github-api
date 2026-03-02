@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2022 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -36,7 +36,7 @@ class MetaTest extends GitHubTestCase
 	 *
 	 * @since   1.0
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -52,9 +52,6 @@ class MetaTest extends GitHubTestCase
 	 */
 	public function testGetMeta()
 	{
-		$this->response->code = 200;
-		$this->response->body = $this->sampleString;
-
 		$decodedResponse = new \stdClass;
 		$decodedResponse->hooks = array('127.0.0.1/32', '192.168.1.1/32', '10.10.1.1/27');
 		$decodedResponse->git   = array('127.0.0.1/32');
@@ -76,11 +73,11 @@ class MetaTest extends GitHubTestCase
 	 * @return  void
 	 *
 	 * @since   1.0
-	 *
-	 * @expectedException  \DomainException
 	 */
 	public function testGetMetaFailure()
 	{
+		$this->expectException(\DomainException::class);
+
 		$this->response->code = 500;
 		$this->response->body = $this->errorString;
 

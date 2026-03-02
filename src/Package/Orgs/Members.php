@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2022 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -258,7 +258,7 @@ class Members extends AbstractPackage
 	 */
 	public function updateMembership($org, $user, $role = 'member')
 	{
-		$allowedRoles = array('member', 'admin');
+		$allowedRoles = ['member', 'admin'];
 
 		if (!\in_array($role, $allowedRoles))
 		{
@@ -268,9 +268,9 @@ class Members extends AbstractPackage
 		// Build the request path.
 		$path = "/orgs/$org/memberships/$user";
 
-		$data = array(
+		$data = [
 			'role' => $role,
-		);
+		];
 
 		return $this->processResponse($this->client->put($this->fetchUrl($path), json_encode($data)));
 	}
@@ -351,6 +351,6 @@ class Members extends AbstractPackage
 		// Build the request path.
 		$path = '/user/memberships/orgs/' . $org;
 
-		return $this->processResponse($this->client->patch($this->fetchUrl($path), array('state' => $state)));
+		return $this->processResponse($this->client->patch($this->fetchUrl($path), ['state' => $state]));
 	}
 }

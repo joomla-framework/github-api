@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2022 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -29,7 +29,7 @@ class ZenTest extends GitHubTestCase
 	 *
 	 * @return  void
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -60,12 +60,12 @@ class ZenTest extends GitHubTestCase
 	/**
 	 * Tests the Get method.
 	 *
-	 * @expectedException \RuntimeException
-	 *
 	 * @return void
 	 */
 	public function testGetFailure()
 	{
+		$this->expectException(\RuntimeException::class);
+
 		$this->response->code = 400;
 		$this->response->body = 'My Zen';
 

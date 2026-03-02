@@ -2,14 +2,13 @@
 /**
  * Part of the Joomla Framework Github Package
  *
- * @copyright  Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2022 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
 namespace Joomla\Github\Package;
 
 use Joomla\Github\AbstractPackage;
-use Joomla\Uri\Uri;
 
 /**
  * GitHub API Search class for the Joomla Framework.
@@ -36,7 +35,7 @@ class Search extends AbstractPackage
 	 */
 	public function issues($owner, $repo, $state, $keyword)
 	{
-		if (\in_array($state, array('open', 'close')) == false)
+		if (\in_array($state, ['open', 'close']) == false)
 		{
 			throw new \UnexpectedValueException('State must be either "open" or "closed"');
 		}
@@ -70,7 +69,7 @@ class Search extends AbstractPackage
 	public function repositories($keyword, $language = '', $startPage = 0)
 	{
 		// Build the request path.
-		$uri = new Uri($this->fetchUrl('/legacy/repos/search/' . $keyword));
+		$uri = $this->fetchUrl('/legacy/repos/search/' . $keyword);
 
 		if ($language)
 		{
@@ -102,7 +101,7 @@ class Search extends AbstractPackage
 	public function users($keyword, $startPage = 0)
 	{
 		// Build the request path.
-		$uri = new Uri($this->fetchUrl('/legacy/user/search/' . $keyword));
+		$uri = $this->fetchUrl('/legacy/user/search/' . $keyword);
 
 		if ($startPage)
 		{
