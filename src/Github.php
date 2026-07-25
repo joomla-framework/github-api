@@ -53,6 +53,42 @@ class Github
      */
     protected $client;
 
+    /*
+     * Lazily instantiated API package objects, declared here so PHP 8.2+ does not treat
+     * them as deprecated dynamic properties when __get() populates them.
+     */
+    private ?Package\Activity $activity = null;
+
+    private ?Package\Authorization $authorization = null;
+
+    private ?Package\Data $data = null;
+
+    private ?Package\Emojis $emojis = null;
+
+    private ?Package\Gists $gists = null;
+
+    private ?Package\Gitignore $gitignore = null;
+
+    private ?Package\Graphql $graphql = null;
+
+    private ?Package\Issues $issues = null;
+
+    private ?Package\Markdown $markdown = null;
+
+    private ?Package\Meta $meta = null;
+
+    private ?Package\Orgs $orgs = null;
+
+    private ?Package\Pulls $pulls = null;
+
+    private ?Package\Repositories $repositories = null;
+
+    private ?Package\Search $search = null;
+
+    private ?Package\Users $users = null;
+
+    private ?Package\Zen $zen = null;
+
     /**
      * Constructor.
      *
