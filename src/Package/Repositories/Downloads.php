@@ -21,7 +21,10 @@ use Joomla\Github\AbstractPackage;
  * @documentation  https://developer.github.com/v3/repos/downloads
  *
  * @since       1.0
- * @deprecated  The Releases API should be used instead
+ * @deprecated  __DEPLOY_VERSION__  GitHub removed the Repository Downloads API entirely in
+ *              2020; every method in this class now 404s against github.com. Kept only so
+ *              existing `$github->repositories->downloads` call sites don't fatal. Use
+ *              Package\Repositories\Releases (release assets) instead.
  */
 class Downloads extends AbstractPackage
 {
