@@ -19,8 +19,13 @@ use Joomla\Uri\Uri;
  * @documentation  http://developer.github.com/v3/oauth/
  * @documentation  http://developer.github.com/v3/oauth_authorizations/
  *
- * @note   The methods in this class are only accessible with Basic Authentication
- * @since  1.0
+ * @note        The methods in this class are only accessible with Basic Authentication
+ * @since       1.0
+ * @deprecated  __DEPLOY_VERSION__ will be removed in 5.0. GitHub removed the OAuth
+ *              Authorizations API (and Basic Authentication for the API) in November 2020;
+ *              every method in this class now fails against github.com. Kept only so
+ *              existing `$github->authorization` call sites don't fatal. Use GitHub Apps / OAuth
+ *              device flow (Package\Apps) or a personal access token via the `gh.token` option instead.
  */
 class Authorization extends AbstractPackage
 {

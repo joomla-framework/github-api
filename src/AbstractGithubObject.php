@@ -109,22 +109,42 @@ abstract class AbstractGithubObject
      * @return  Uri
      *
      * @since   1.0
+     * @since   __DEPLOY_VERSION__  Sets a default `Accept: application/vnd.github+json` header and pins
+     *                              `X-GitHub-Api-Version` (overridable via the `api.version` option, or by
+     *                              setting either header on the HTTP client before the request). The
+     *                              `gh.token.scheme` option (default `token`, unchanged) may be set to
+     *                              `Bearer` for fine-grained PATs / GitHub App installation tokens.
      */
     protected function fetchUrl($path, $page = 0, $limit = 0)
     {
         // Get a new Uri object focusing the api url and given path.
         $uri = new Uri($this->options->get('api.url') . $path);
 
+        $headers = $this->client->getOption('headers', []);
+
+        // Pin the REST API media type and version unless the consumer already set their own.
+        if (!isset($headers['Accept'])) {
+            $headers['Accept'] = 'application/vnd.github+json';
+        }
+
+        if (!isset($headers['X-GitHub-Api-Version'])) {
+            $headers['X-GitHub-Api-Version'] = $this->options->get('api.version', '2022-11-28');
+        }
+
         if ($this->options->get('gh.token', false)) {
             // Use oAuth authentication
-            $headers = $this->client->getOption('headers', []);
-
             if (!isset($headers['Authorization'])) {
-                $headers['Authorization'] = 'token ' . $this->options->get('gh.token');
-                $this->client->setOption('headers', $headers);
+                // 'token' is the classic scheme; set gh.token.scheme to 'Bearer' for fine-grained
+                // PATs or GitHub App installation tokens, both of which GitHub also accepts as 'token'.
+                $scheme = $this->options->get('gh.token.scheme', 'token');
+
+                $headers['Authorization'] = $scheme . ' ' . $this->options->get('gh.token');
             }
         } else {
             // Use basic authentication
+            // Note: GitHub removed username/password Basic authentication for the API in
+            // November 2020; this path is kept only for compatibility with Enterprise Server
+            // instances that may still accept it. Use gh.token for github.com.
             if ($this->options->get('api.username', false)) {
                 $uri->setUser($this->options->get('api.username'));
             }
@@ -133,6 +153,8 @@ abstract class AbstractGithubObject
                 $uri->setPass($this->options->get('api.password'));
             }
         }
+
+        $this->client->setOption('headers', $headers);
 
         // If we have a defined page number add it to the JUri object.
         if ($page > 0) {
