@@ -201,8 +201,7 @@ class RepositoriesTest extends GitHubTestCase
             ->method('post')
             ->with(
                 '/user/repos',
-                '{"name":"joomla-test","description":"","homepage":"","private":false,"has_issues":false,'
-                    . '"has_wiki":false,"has_downloads":false,"team_id":0,"auto_init":false,"gitignore_template":""}',
+                '{"name":"joomla-test"}',
                 [],
                 0
             )
@@ -229,8 +228,7 @@ class RepositoriesTest extends GitHubTestCase
             ->method('post')
             ->with(
                 '/orgs/joomla.org/repos',
-                '{"name":"joomla-test","description":"","homepage":"","private":false,"has_issues":false,'
-                    . '"has_wiki":false,"has_downloads":false,"team_id":0,"auto_init":false,"gitignore_template":""}',
+                '{"name":"joomla-test"}',
                 [],
                 0
             )
@@ -287,8 +285,7 @@ class RepositoriesTest extends GitHubTestCase
             ->method('patch')
             ->with(
                 '/repos/joomla/joomla-test',
-                '{"name":"joomla-test-1","description":"","homepage":"","private":'
-                    . 'false,"has_issues":false,"has_wiki":false,"has_downloads":false,"default_branch":""}',
+                '{"name":"joomla-test-1"}',
                 []
             )
             ->willReturn($this->response);
@@ -299,6 +296,21 @@ class RepositoriesTest extends GitHubTestCase
             $response,
             $this->object->edit('joomla', 'joomla-test', 'joomla-test-1')
         );
+    }
+
+    /**
+     * Tests that the Edit method sends only the given values
+     *
+     * @return void
+     */
+    public function testEditSendsOnlyGivenValues()
+    {
+        $this->client->expects($this->once())
+            ->method('patch')
+            ->with('/repos/joomla/joomla-test', '{"name":"joomla-test","has_wiki":false}')
+            ->willReturn($this->response);
+
+        $this->object->edit('joomla', 'joomla-test', 'joomla-test', hasWiki: false);
     }
 
     /**
