@@ -93,6 +93,9 @@ abstract class AbstractGithubObject
         $this->options = $options ?: new Registry();
         $this->client  = $client ?: (new HttpFactory())->getHttp($this->options);
 
+        // Add the GitHub headers per request instead of storing them on the (possibly shared) client.
+        $this->client = new RequestHeadersHttp($this->client, fn (): array => $this->getRequestHeaders());
+
         $this->package = \get_class($this);
         $this->package = substr($this->package, strrpos($this->package, '\\') + 1);
     }
@@ -102,6 +105,8 @@ abstract class AbstractGithubObject
      * add appropriate pagination details if necessary and also prepend the API url
      * to have a complete URL for the request.
      *
+     * When the `api.url` option is not set, `https://api.github.com` is used.
+     *
      * @param   string   $path   URL to inflect
      * @param   integer  $page   Page to request
      * @param   integer  $limit  Number of results to return per page
@@ -109,52 +114,12 @@ abstract class AbstractGithubObject
      * @return  Uri
      *
      * @since   1.0
-     * @since   __DEPLOY_VERSION__  Sets a default `Accept: application/vnd.github+json` header and pins
-     *                              `X-GitHub-Api-Version` (overridable via the `api.version` option, or by
-     *                              setting either header on the HTTP client before the request). The
-     *                              `gh.token.scheme` option (default `token`, unchanged) may be set to
-     *                              `Bearer` for fine-grained PATs / GitHub App installation tokens.
      */
     protected function fetchUrl($path, $page = 0, $limit = 0)
     {
         // Get a new Uri object focusing the api url and given path.
-        $uri = new Uri($this->options->get('api.url') . $path);
-
-        $headers = $this->client->getOption('headers', []);
-
-        // Pin the REST API media type and version unless the consumer already set their own.
-        if (!isset($headers['Accept'])) {
-            $headers['Accept'] = 'application/vnd.github+json';
-        }
-
-        if (!isset($headers['X-GitHub-Api-Version'])) {
-            $headers['X-GitHub-Api-Version'] = $this->options->get('api.version', '2022-11-28');
-        }
-
-        if ($this->options->get('gh.token', false)) {
-            // Use oAuth authentication
-            if (!isset($headers['Authorization'])) {
-                // 'token' is the classic scheme; set gh.token.scheme to 'Bearer' for fine-grained
-                // PATs or GitHub App installation tokens, both of which GitHub also accepts as 'token'.
-                $scheme = $this->options->get('gh.token.scheme', 'token');
-
-                $headers['Authorization'] = $scheme . ' ' . $this->options->get('gh.token');
-            }
-        } else {
-            // Use basic authentication
-            // Note: GitHub removed username/password Basic authentication for the API in
-            // November 2020; this path is kept only for compatibility with Enterprise Server
-            // instances that may still accept it. Use gh.token for github.com.
-            if ($this->options->get('api.username', false)) {
-                $uri->setUser($this->options->get('api.username'));
-            }
-
-            if ($this->options->get('api.password', false)) {
-                $uri->setPass($this->options->get('api.password'));
-            }
-        }
-
-        $this->client->setOption('headers', $headers);
+        $apiUrl = $this->options->exists('api.url') ? $this->options->get('api.url', '') : 'https://api.github.com';
+        $uri    = new Uri($apiUrl . $path);
 
         // If we have a defined page number add it to the JUri object.
         if ($page > 0) {
@@ -167,6 +132,40 @@ abstract class AbstractGithubObject
         }
 
         return $uri;
+    }
+
+    /**
+     * Get the headers to send with each request.
+     *
+     * The options are read on every request, so a changed token is used on the next request. The headers are added
+     * to the request only; headers set on the HTTP client or passed with a request take precedence.
+     *
+     * - `Accept: application/vnd.github+json`
+     * - `X-GitHub-Api-Version`, set with the `api.version` option (default `2022-11-28`)
+     * - `Authorization: token <gh.token>`; the scheme can be changed with the `gh.token_scheme` option, e.g. to `Bearer`
+     * - Without a token, `Authorization: Basic` from the `api.username` and `api.password` options. GitHub removed
+     *   password authentication for the API in November 2020; it is kept only for GitHub Enterprise Server.
+     *
+     * @return  array<string, string>
+     *
+     * @since   __DEPLOY_VERSION__
+     */
+    protected function getRequestHeaders(): array
+    {
+        $headers = [
+            'Accept'               => 'application/vnd.github+json',
+            'X-GitHub-Api-Version' => (string) $this->options->get('api.version', '2022-11-28'),
+        ];
+
+        if ($this->options->get('gh.token', false)) {
+            $headers['Authorization'] = $this->options->get('gh.token_scheme', 'token') . ' ' . $this->options->get('gh.token');
+        } elseif ($this->options->get('api.username', false)) {
+            $headers['Authorization'] = 'Basic ' . base64_encode(
+                $this->options->get('api.username') . ':' . $this->options->get('api.password', '')
+            );
+        }
+
+        return $headers;
     }
 
     /**
