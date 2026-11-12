@@ -190,7 +190,7 @@ class Issues extends AbstractPackage
         $labels = null,
         $sort = null,
         $direction = null,
-        \DateTimeInterface $since = null,
+        ?\DateTimeInterface $since = null,
         $page = 0,
         $limit = 0
     ) {
@@ -256,7 +256,7 @@ class Issues extends AbstractPackage
         $labels = null,
         $sort = null,
         $direction = null,
-        \DateTimeInterface $since = null,
+        ?\DateTimeInterface $since = null,
         $page = 0,
         $limit = 0
     ) {
