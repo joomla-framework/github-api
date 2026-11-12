@@ -50,17 +50,18 @@ class Comments extends AbstractPackage
     /**
      * Delete a comment.
      *
-     * @param   integer  $commentId  The id of the comment to delete.
+     * @param   integer      $commentId  The id of the comment to delete.
+     * @param   string|null  $gistId     The ID of the gist. Deprecated to leave out, it will be required in 5.0.
      *
      * @return  void
      *
      * @since   1.0
      * @throws  \DomainException
      */
-    public function delete($commentId)
+    public function delete($commentId, $gistId = null)
     {
         // Build the request path.
-        $path = '/gists/comments/' . (int) $commentId;
+        $path = $this->commentPath($commentId, $gistId, __METHOD__);
 
         // Send the request.
         $this->processResponse($this->client->delete($this->fetchUrl($path)), 204);
@@ -69,18 +70,19 @@ class Comments extends AbstractPackage
     /**
      * Edit a comment.
      *
-     * @param   integer  $commentId  The id of the comment to update.
-     * @param   string   $body       The new body text for the comment.
+     * @param   integer      $commentId  The id of the comment to update.
+     * @param   string       $body       The new body text for the comment.
+     * @param   string|null  $gistId     The ID of the gist. Deprecated to leave out, it will be required in 5.0.
      *
      * @return  object
      *
      * @since   1.0
      * @throws  \DomainException
      */
-    public function edit($commentId, $body)
+    public function edit($commentId, $body, $gistId = null)
     {
         // Build the request path.
-        $path = '/gists/comments/' . (int) $commentId;
+        $path = $this->commentPath($commentId, $gistId, __METHOD__);
 
         // Build the request data.
         $data = json_encode(
@@ -96,17 +98,18 @@ class Comments extends AbstractPackage
     /**
      * Get a single comment.
      *
-     * @param   integer  $commentId  The comment id to get.
+     * @param   integer      $commentId  The comment id to get.
+     * @param   string|null  $gistId     The ID of the gist. Deprecated to leave out, it will be required in 5.0.
      *
      * @return  object
      *
      * @since   1.0
      * @throws  \DomainException
      */
-    public function get($commentId)
+    public function get($commentId, $gistId = null)
     {
         // Build the request path.
-        $path = '/gists/comments/' . (int) $commentId;
+        $path = $this->commentPath($commentId, $gistId, __METHOD__);
 
         // Send the request.
         return $this->processResponse($this->client->get($this->fetchUrl($path)));
@@ -131,5 +134,34 @@ class Comments extends AbstractPackage
 
         // Send the request.
         return $this->processResponse($this->client->get($this->fetchUrl($path, $page, $limit)));
+    }
+
+    /**
+     * Build the path of a gist comment.
+     *
+     * GitHub has replaced /gists/comments/{comment_id} with /gists/{gist_id}/comments/{comment_id}.
+     *
+     * @param   integer      $commentId  The id of the comment.
+     * @param   string|null  $gistId     The ID of the gist.
+     * @param   string       $method     The calling method, for the deprecation message.
+     *
+     * @return  string
+     *
+     * @since   __DEPLOY_VERSION__
+     */
+    private function commentPath($commentId, $gistId, string $method): string
+    {
+        if ($gistId === null) {
+            trigger_deprecation(
+                'joomla/github',
+                '__DEPLOY_VERSION__',
+                'Calling %s() without the gist ID is deprecated, the gist ID will be required in 5.0.',
+                $method
+            );
+
+            return '/gists/comments/' . (int) $commentId;
+        }
+
+        return '/gists/' . rawurlencode($gistId) . '/comments/' . (int) $commentId;
     }
 }
