@@ -111,8 +111,8 @@ class Commits extends AbstractPackage
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/commits/' . $ref;
 
-        // Send the request.
-        $response = $this->client->get($this->fetchUrl($path));
+        // Send the request. This media type makes GitHub answer with the SHA only.
+        $response = $this->client->get($this->fetchUrl($path), ['Accept' => 'application/vnd.github.sha']);
 
         // Validate the response code.
         if ($response->getStatusCode() != 200) {
