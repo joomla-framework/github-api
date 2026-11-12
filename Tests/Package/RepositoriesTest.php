@@ -391,13 +391,8 @@ class RepositoriesTest extends GitHubTestCase
         $this->client->expects($this->once())
             ->method('delete')
             ->with('/repos/joomla/joomla-cms', [], 0)
-            ->willReturn($this->response);
+            ->willReturn($this->getResponseObject('', 204));
 
-        $response = json_decode((string) $this->response->getBody());
-
-        $this->assertEquals(
-            $response,
-            $this->object->delete('joomla', 'joomla-cms')
-        );
+        $this->assertNull($this->object->delete('joomla', 'joomla-cms'));
     }
 }

@@ -136,9 +136,10 @@ class Notifications extends AbstractPackage
             $data['last_read_at'] = $lastReadAt->format(\DateTime::RFC3339);
         }
 
+        // GitHub answers 202 when it marks the notifications asynchronously.
         return $this->processResponse(
             $this->client->put($this->fetchUrl($path), json_encode($data)),
-            205
+            [202, 205]
         );
     }
 
@@ -172,9 +173,10 @@ class Notifications extends AbstractPackage
             $data['last_read_at'] = $lastReadAt->format(\DateTime::RFC3339);
         }
 
+        // GitHub answers 202 when it marks the notifications asynchronously.
         return $this->processResponse(
             $this->client->put($this->fetchUrl($path), json_encode($data)),
-            205
+            [202, 205]
         );
     }
 

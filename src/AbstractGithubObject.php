@@ -150,18 +150,19 @@ abstract class AbstractGithubObject
     /**
      * Process the response and decode it.
      *
-     * @param   Response  $response      The response.
-     * @param   integer   $expectedCode  The expected "good" code.
+     * @param   Response         $response      The response.
+     * @param   integer|int[]    $expectedCode  The expected "good" code, or a list of them.
      *
-     * @return  mixed
+     * @return  mixed  The decoded JSON body, or null if the body is empty (e.g. for 204 No Content).
      *
      * @since   1.0
+     * @since   __DEPLOY_VERSION__  Accepts a list of expected codes and throws on a body that is not valid JSON.
      * @throws  UnexpectedResponseException
      */
     protected function processResponse(Response $response, $expectedCode = 200)
     {
         // Validate the response code.
-        if ($response->getStatusCode() != $expectedCode) {
+        if (!\in_array($response->getStatusCode(), (array) $expectedCode)) {
             // Decode the error response and throw an exception.
             $error   = json_decode((string) $response->getBody());
             $message = isset($error->message) ? $error->message : 'Invalid response received from GitHub.';
@@ -169,6 +170,21 @@ abstract class AbstractGithubObject
             throw new UnexpectedResponseException($response, $message, $response->getStatusCode());
         }
 
-        return json_decode((string) $response->getBody());
+        $body = (string) $response->getBody();
+
+        if ($body === '') {
+            return null;
+        }
+
+        try {
+            return json_decode($body, false, 512, \JSON_THROW_ON_ERROR);
+        } catch (\JsonException $e) {
+            throw new UnexpectedResponseException(
+                $response,
+                'Invalid JSON received from GitHub: ' . $e->getMessage(),
+                $response->getStatusCode(),
+                $e
+            );
+        }
     }
 }

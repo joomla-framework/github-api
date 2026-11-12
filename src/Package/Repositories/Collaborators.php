@@ -91,9 +91,10 @@ class Collaborators extends AbstractPackage
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/collaborators/' . $user;
 
+        // 201 when an invitation was created, 204 when the user already is a collaborator
         return $this->processResponse(
             $this->client->put($this->fetchUrl($path), ''),
-            204
+            [201, 204]
         );
     }
 

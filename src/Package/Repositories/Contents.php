@@ -10,6 +10,7 @@
 namespace Joomla\Github\Package\Repositories;
 
 use Joomla\Github\AbstractPackage;
+use Joomla\Http\Exception\UnexpectedResponseException;
 
 /**
  * GitHub API Repositories Contents class for the Joomla Framework.
@@ -84,9 +85,9 @@ class Contents extends AbstractPackage
     /**
      * Get archive link.
      *
-     * This method will return a 302 to a URL to download a tarball or zipball archive for a repository.
-     * Please make sure your HTTP framework is configured to follow redirects or you will need to use the
-     * Location header to make a second GET request.
+     * GitHub answers with a 302 redirect to a URL to download a tarball or zipball archive for a repository; this
+     * method returns that URL. The HTTP transport must not follow redirects for this (option `follow_location` set
+     * to false), otherwise it downloads the archive and an UnexpectedResponseException is thrown.
      *
      * Note: For private repositories, these links are temporary and expire quickly.
      *
@@ -98,10 +99,11 @@ class Contents extends AbstractPackage
      * @param   string  $archiveFormat  Either tarball or zipball.
      * @param   string  $ref            The String name of the Commit/Branch/Tag. Defaults to master.
      *
-     * @return  object
+     * @return  string  The URL of the archive.
      *
      * @since   1.0
      * @throws  \UnexpectedValueException
+     * @throws  UnexpectedResponseException
      */
     public function getArchiveLink($owner, $repo, $archiveFormat = 'zipball', $ref = '')
     {
@@ -118,7 +120,21 @@ class Contents extends AbstractPackage
         }
 
         // Send the request.
-        return $this->processResponse($this->client->get($uri), 302);
+        $response = $this->client->get($uri);
+
+        if ($response->getStatusCode() == 302) {
+            return $response->getHeaderLine('Location');
+        }
+
+        if ($response->getStatusCode() == 200) {
+            throw new UnexpectedResponseException(
+                $response,
+                'The HTTP client followed the redirect and downloaded the archive; set the follow_location option to false to get the link.',
+                200
+            );
+        }
+
+        return $this->processResponse($response, 302);
     }
 
     /**

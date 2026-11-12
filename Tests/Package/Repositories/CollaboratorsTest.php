@@ -144,6 +144,24 @@ class CollaboratorsTest extends GitHubTestCase
     }
 
     /**
+     * Tests that add() accepts 201 Created, which GitHub answers when it sends an invitation
+     *
+     * @return  void
+     */
+    public function testAddInvitation()
+    {
+        $this->client->expects($this->once())
+            ->method('put')
+            ->with('/repos/joomla/joomla-framework/collaborators/elkuku')
+            ->willReturn($this->getResponseObject($this->sampleString, 201));
+
+        $this->assertThat(
+            $this->object->add('joomla', 'joomla-framework', 'elkuku'),
+            $this->equalTo(json_decode($this->sampleString))
+        );
+    }
+
+    /**
      * Tests the Remove method.
      *
      * @return  void

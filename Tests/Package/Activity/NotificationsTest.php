@@ -118,6 +118,21 @@ class NotificationsTest extends GitHubTestCase
     }
 
     /**
+     * Tests that markRead() accepts 202 Accepted (asynchronous processing)
+     *
+     * @return  void
+     */
+    public function testMarkReadAccepted()
+    {
+        $this->client->expects($this->once())
+            ->method('put')
+            ->with('/notifications', '{"unread":true,"read":true}', [], 0)
+            ->willReturn($this->getResponseObject('{"message":"Marking notifications as read."}', 202));
+
+        $this->assertIsObject($this->object->markRead());
+    }
+
+    /**
      * Test method.
      *
      * @covers \Joomla\Github\Package\Activity\Notifications::markRead()

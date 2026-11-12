@@ -198,8 +198,7 @@ class UsersTest extends GitHubTestCase
     "avatar_url": "https://github.com/images/error/octocat_happy.gif",
     "gravatar_id": "somehexcode",
     "url": "https://api.github.com/users/octocat"
-  }
-],
+  },
   {
     "login": "elkuku",
     "id": 33978,

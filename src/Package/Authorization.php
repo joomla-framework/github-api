@@ -251,7 +251,9 @@ class Authorization extends AbstractPackage
             // Decode the error response and throw an exception.
             $error = json_decode((string) $response->getBody());
 
-            throw new UnexpectedResponseException($response, $error->message, $response->getStatusCode());
+            $message = $error->message ?? 'Invalid response received from GitHub.';
+
+            throw new UnexpectedResponseException($response, $message, $response->getStatusCode());
         }
 
         return json_decode((string) $response->getBody());

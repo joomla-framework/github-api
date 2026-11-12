@@ -566,6 +566,24 @@ class AuthorizationsTest extends GitHubTestCase
     }
 
     /**
+     * Tests the getRateLimit method with an error response that is not JSON
+     *
+     * @return  void
+     */
+    public function testGetRateLimitFailureWithoutJson()
+    {
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('Invalid response received from GitHub.');
+
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/rate_limit')
+            ->willReturn($this->getResponseObject('<html>Bad gateway</html>', 502));
+
+        $this->object->getRateLimit();
+    }
+
+    /**
      * Tests the getAuthorizationLink method
      *
      * @return  void
