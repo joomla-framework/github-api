@@ -132,7 +132,7 @@ class Labels extends AbstractPackage
     public function update($user, $repo, $label, $name, $color)
     {
         // Build the request path.
-        $path = '/repos/' . $user . '/' . $repo . '/labels/' . $label;
+        $path = '/repos/' . $user . '/' . $repo . '/labels/' . rawurlencode($label);
 
         // Build the request data.
         $data = json_encode(

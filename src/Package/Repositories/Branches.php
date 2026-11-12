@@ -55,7 +55,7 @@ class Branches extends AbstractPackage
     public function get($owner, $repo, $branch)
     {
         // Build the request path.
-        $path = "/repos/$owner/$repo/branches/$branch";
+        $path = "/repos/$owner/$repo/branches/" . self::encodePath($branch);
 
         // Send the request.
         return $this->processResponse(

@@ -34,7 +34,7 @@ class Trees extends AbstractPackage
     public function get($owner, $repo, $sha)
     {
         // Build the request path.
-        $path = '/repos/' . $owner . '/' . $repo . '/git/trees/' . $sha;
+        $path = '/repos/' . $owner . '/' . $repo . '/git/trees/' . self::encodePath($sha);
 
         return $this->processResponse(
             $this->client->get($this->fetchUrl($path))
@@ -55,7 +55,7 @@ class Trees extends AbstractPackage
     public function getRecursively($owner, $repo, $sha)
     {
         // Build the request path.
-        $path = '/repos/' . $owner . '/' . $repo . '/git/trees/' . $sha . '?recursive=1';
+        $path = '/repos/' . $owner . '/' . $repo . '/git/trees/' . self::encodePath($sha) . '?recursive=1';
 
         return $this->processResponse(
             $this->client->get($this->fetchUrl($path))

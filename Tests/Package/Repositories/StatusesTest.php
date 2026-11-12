@@ -183,7 +183,7 @@ class StatusesTest extends GitHubTestCase
     {
         $this->client->expects($this->once())
             ->method('get')
-            ->with('/repos/{user}/{repo}/commits/{sha}/status')
+            ->with('/repos/{user}/{repo}/commits/%7Bsha%7D/status')
             ->willReturn($this->response);
 
         $this->assertThat(

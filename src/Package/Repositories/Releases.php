@@ -152,7 +152,7 @@ class Releases extends AbstractPackage
     public function get($user, $repo, $ref)
     {
         // Build the request path.
-        $path = '/repos/' . $user . '/' . $repo . '/releases/' . $ref;
+        $path = '/repos/' . $user . '/' . $repo . '/releases/' . self::encodePath($ref);
 
         // Send the request.
         return $this->processResponse($this->client->get($this->fetchUrl($path)));
@@ -194,7 +194,7 @@ class Releases extends AbstractPackage
     public function getByTag($user, $repo, $tag)
     {
         // Build the request path.
-        $path = "/repos/$user/$repo/releases/tags/$tag";
+        $path = "/repos/$user/$repo/releases/tags/" . self::encodePath($tag);
 
         // Send the request.
         return $this->processResponse($this->client->get($this->fetchUrl($path)));

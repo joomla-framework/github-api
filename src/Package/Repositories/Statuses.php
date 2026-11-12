@@ -42,7 +42,7 @@ class Statuses extends AbstractPackage
     public function create($user, $repo, $sha, $state, $targetUrl = null, $description = null, $context = null)
     {
         // Build the request path.
-        $path = "/repos/$user/$repo/statuses/$sha";
+        $path = "/repos/$user/$repo/statuses/" . self::encodePath($sha);
 
         if (!\in_array($state, ['pending', 'success', 'error', 'failure'])) {
             throw new \InvalidArgumentException('State must be one of pending, success, error or failure.');
@@ -86,7 +86,7 @@ class Statuses extends AbstractPackage
     public function getList($user, $repo, $sha)
     {
         // Build the request path.
-        $path = "/repos/$user/$repo/statuses/$sha";
+        $path = "/repos/$user/$repo/statuses/" . self::encodePath($sha);
 
         // Send the request.
         return $this->processResponse($this->client->get($this->fetchUrl($path)));
@@ -106,7 +106,7 @@ class Statuses extends AbstractPackage
     public function getCombinedStatus($user, $repo, $sha)
     {
         // Build the request path.
-        $path = "/repos/$user/$repo/commits/$sha/status";
+        $path = "/repos/$user/$repo/commits/" . self::encodePath($sha) . '/status';
 
         // Send the request.
         return $this->processResponse($this->client->get($this->fetchUrl($path)));

@@ -211,7 +211,7 @@ class ReleasesTest extends GitHubTestCase
     {
         $this->client->expects($this->once())
             ->method('get')
-            ->with('/repos/joomla/joomla-platform/releases/tags/{tag}', [], 0)
+            ->with('/repos/joomla/joomla-platform/releases/tags/%7Btag%7D', [], 0)
             ->willReturn($this->response);
 
         $response = json_decode((string) $this->response->getBody());

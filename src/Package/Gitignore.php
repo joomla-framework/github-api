@@ -57,7 +57,7 @@ class Gitignore extends AbstractPackage
     public function get($name, $raw = false)
     {
         // Build the request path.
-        $path = '/gitignore/templates/' . $name;
+        $path = '/gitignore/templates/' . rawurlencode($name);
 
         $headers = [];
 

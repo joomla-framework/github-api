@@ -232,13 +232,15 @@ class Pulls extends AbstractPackage
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/pulls';
 
+        $uri = $this->fetchUrl($path, $page, $limit);
+
         // If a state exists append it as an option.
         if ($state != 'open') {
-            $path .= '?state=' . $state;
+            $uri->setVar('state', $state);
         }
 
         // Send the request.
-        return $this->processResponse($this->client->get($this->fetchUrl($path, $page, $limit)));
+        return $this->processResponse($this->client->get($uri));
     }
 
     /**

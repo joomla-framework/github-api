@@ -41,7 +41,7 @@ class Search extends AbstractPackage
         }
 
         // Build the request path.
-        $path = '/legacy/issues/search/' . $owner . '/' . $repo . '/' . $state . '/' . $keyword;
+        $path = '/legacy/issues/search/' . $owner . '/' . $repo . '/' . $state . '/' . rawurlencode($keyword);
 
         // Send the request.
         return $this->processResponse(
@@ -69,7 +69,7 @@ class Search extends AbstractPackage
     public function repositories($keyword, $language = '', $startPage = 0)
     {
         // Build the request path.
-        $uri = $this->fetchUrl('/legacy/repos/search/' . $keyword);
+        $uri = $this->fetchUrl('/legacy/repos/search/' . rawurlencode($keyword));
 
         if ($language) {
             $uri->setVar('language', $language);
@@ -99,7 +99,7 @@ class Search extends AbstractPackage
     public function users($keyword, $startPage = 0)
     {
         // Build the request path.
-        $uri = $this->fetchUrl('/legacy/user/search/' . $keyword);
+        $uri = $this->fetchUrl('/legacy/user/search/' . rawurlencode($keyword));
 
         if ($startPage) {
             $uri->setVar('start_page', $startPage);

@@ -51,7 +51,7 @@ class NotificationsTest extends GitHubTestCase
     {
         $this->client->expects($this->once())
             ->method('get')
-            ->with('/notifications?all=1&participating=1&since=2005-08-17T00:00:00+00:00&before=2005-08-17T00:00:00+00:00', [], 0)
+            ->with('/notifications?all=1&participating=1&since=2005-08-17T00%3A00%3A00%2B00%3A00&before=2005-08-17T00%3A00%3A00%2B00%3A00', [], 0)
             ->willReturn($this->response);
 
         $response = json_decode((string) $this->response->getBody());
@@ -71,7 +71,7 @@ class NotificationsTest extends GitHubTestCase
      */
     public function testGetListRepository()
     {
-        $args = 'all=1&participating=1&since=2005-08-17T00:00:00+00:00&before=2005-08-17T00:00:00+00:00';
+        $args = 'all=1&participating=1&since=2005-08-17T00%3A00%3A00%2B00%3A00&before=2005-08-17T00%3A00%3A00%2B00%3A00';
 
         $this->client->expects($this->once())
             ->method('get')

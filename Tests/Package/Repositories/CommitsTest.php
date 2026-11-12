@@ -168,7 +168,7 @@ class CommitsTest extends GitHubTestCase
     {
         $this->client->expects($this->once())
             ->method('get')
-            ->with('/repos/{user}/{repo}/commits/{ref}')
+            ->with('/repos/{user}/{repo}/commits/%7Bref%7D')
             ->willReturn($this->response);
 
         $this->assertThat(
@@ -194,7 +194,7 @@ class CommitsTest extends GitHubTestCase
 
         $this->client->expects($this->once())
             ->method('get')
-            ->with('/repos/{user}/{repo}/commits/{ref}')
+            ->with('/repos/{user}/{repo}/commits/%7Bref%7D')
             ->willReturn($this->response);
 
         $this->assertThat(

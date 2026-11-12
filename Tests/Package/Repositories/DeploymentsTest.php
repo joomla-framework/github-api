@@ -46,7 +46,7 @@ class DeploymentsTest extends GitHubTestCase
     {
         $this->client->expects($this->once())
             ->method('get')
-            ->with('/repos/{owner}/{repo}/deployments?sha={sha}&ref={ref}&task={task}&environment={environment}')
+            ->with('/repos/{owner}/{repo}/deployments?sha=%7Bsha%7D&ref=%7Bref%7D&task=%7Btask%7D&environment=%7Benvironment%7D')
             ->willReturn($this->response);
 
         $this->assertThat(

@@ -321,7 +321,7 @@ class IssuesTest extends GitHubTestCase
 
         $this->client->expects($this->once())
             ->method('get')
-            ->with('/issues?filter={filter}&state={state}&labels={labels}&sort={sort}&direction={direction}&since=2012-01-01T12:12:12+0000')
+            ->with('/issues?filter=%7Bfilter%7D&state=%7Bstate%7D&labels=%7Blabels%7D&sort=%7Bsort%7D&direction=%7Bdirection%7D&since=2012-01-01T12%3A12%3A12%2B0000')
             ->willReturn($this->response);
 
         $this->assertThat(
@@ -390,7 +390,7 @@ class IssuesTest extends GitHubTestCase
             ->method('get')
             ->with(
                 '/repos/joomla/joomla-platform/issues?milestone=25&state=closed&assignee=none&' .
-                'mentioned=joomla-jenkins&labels=bug&sort=created&direction=asc&since=2012-01-01T12:12:12+00:00'
+                'mentioned=joomla-jenkins&labels=bug&sort=created&direction=asc&since=2012-01-01T12%3A12%3A12%2B00%3A00'
             )
             ->willReturn($this->response);
 

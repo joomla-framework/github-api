@@ -59,7 +59,7 @@ class Comments extends AbstractPackage
     public function getList($user, $repo, $sha, $page = 0, $limit = 0)
     {
         // Build the request path.
-        $path = '/repos/' . $user . '/' . $repo . '/commits/' . $sha . '/comments';
+        $path = '/repos/' . $user . '/' . $repo . '/commits/' . self::encodePath($sha) . '/comments';
 
         // Send the request.
         return $this->processResponse(
@@ -159,7 +159,7 @@ class Comments extends AbstractPackage
     public function create($user, $repo, $sha, $comment, $line, $filepath, $position)
     {
         // Build the request path.
-        $path = '/repos/' . $user . '/' . $repo . '/commits/' . $sha . '/comments';
+        $path = '/repos/' . $user . '/' . $repo . '/commits/' . self::encodePath($sha) . '/comments';
 
         $data = json_encode(
             [

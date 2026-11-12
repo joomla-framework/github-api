@@ -70,7 +70,7 @@ class BranchesTest extends GitHubTestCase
     {
         $this->client->expects($this->once())
             ->method('get')
-            ->with('/repos/{owner}/{repo}/branches/{branch}')
+            ->with('/repos/{owner}/{repo}/branches/%7Bbranch%7D')
             ->willReturn($this->response);
 
         $this->assertThat(

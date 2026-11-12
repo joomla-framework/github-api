@@ -35,7 +35,7 @@ class Refs extends AbstractPackage
     public function get($user, $repo, $ref)
     {
         // Build the request path.
-        $path = '/repos/' . $user . '/' . $repo . '/git/refs/' . $ref;
+        $path = '/repos/' . $user . '/' . $repo . '/git/refs/' . self::encodePath($ref);
 
         // Send the request.
         return $this->processResponse($this->client->get($this->fetchUrl($path)));
@@ -61,7 +61,7 @@ class Refs extends AbstractPackage
         $path = '/repos/' . $user . '/' . $repo . '/git/refs';
 
         if (!empty($namespace)) {
-            $path .= '/' . $namespace;
+            $path .= '/' . self::encodePath($namespace);
         }
 
         // Send the request.
@@ -115,7 +115,7 @@ class Refs extends AbstractPackage
     public function edit($user, $repo, $ref, $sha, $force = false)
     {
         // Build the request path.
-        $path = '/repos/' . $user . '/' . $repo . '/git/refs/' . $ref;
+        $path = '/repos/' . $user . '/' . $repo . '/git/refs/' . self::encodePath($ref);
 
         // Create the data object.
         $data = new \stdClass();
@@ -148,7 +148,7 @@ class Refs extends AbstractPackage
     public function delete($owner, $repo, $ref)
     {
         // Build the request path.
-        $path = '/repos/' . $owner . '/' . $repo . '/git/refs/' . $ref;
+        $path = '/repos/' . $owner . '/' . $repo . '/git/refs/' . self::encodePath($ref);
 
         return $this->processResponse(
             $this->client->delete($this->fetchUrl($path)),

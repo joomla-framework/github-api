@@ -144,7 +144,24 @@ abstract class AbstractGithubObject
             $uri->setVar('per_page', (int) $limit);
         }
 
-        return $uri;
+        // Percent-encode the query values that the packages add.
+        return new EncodedQueryUri((string) $uri);
+    }
+
+    /**
+     * Percent-encode each segment of a path value, e.g. a file path, a branch or a Git reference.
+     *
+     * The slashes between the segments are kept.
+     *
+     * @param   string  $path  The path value.
+     *
+     * @return  string
+     *
+     * @since   __DEPLOY_VERSION__
+     */
+    protected static function encodePath($path)
+    {
+        return implode('/', array_map('rawurlencode', explode('/', (string) $path)));
     }
 
     /**

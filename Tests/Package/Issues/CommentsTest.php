@@ -113,7 +113,7 @@ class CommentsTest extends GitHubTestCase
 
         $this->client->expects($this->once())
             ->method('get')
-            ->with('/repos/joomla/joomla-platform/issues/comments?sort=created&direction=asc&since=1966-09-15T12:34:56+00:00', [], 0)
+            ->with('/repos/joomla/joomla-platform/issues/comments?sort=created&direction=asc&since=1966-09-15T12%3A34%3A56%2B00%3A00', [], 0)
             ->willReturn($this->response);
 
         $response = json_decode((string) $this->response->getBody());

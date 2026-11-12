@@ -88,7 +88,7 @@ class Commits extends AbstractPackage
     public function get($user, $repo, $sha)
     {
         // Build the request path.
-        $path = '/repos/' . $user . '/' . $repo . '/commits/' . $sha;
+        $path = '/repos/' . $user . '/' . $repo . '/commits/' . self::encodePath($sha);
 
         // Send the request.
         return $this->processResponse($this->client->get($this->fetchUrl($path)));
@@ -109,7 +109,7 @@ class Commits extends AbstractPackage
     public function getSha($user, $repo, $ref)
     {
         // Build the request path.
-        $path = '/repos/' . $user . '/' . $repo . '/commits/' . $ref;
+        $path = '/repos/' . $user . '/' . $repo . '/commits/' . self::encodePath($ref);
 
         // Send the request.
         $response = $this->client->get($this->fetchUrl($path));
@@ -141,7 +141,7 @@ class Commits extends AbstractPackage
     public function compare($user, $repo, $base, $head)
     {
         // Build the request path.
-        $path = '/repos/' . $user . '/' . $repo . '/compare/' . $base . '...' . $head;
+        $path = '/repos/' . $user . '/' . $repo . '/compare/' . self::encodePath($base) . '...' . self::encodePath($head);
 
         // Send the request.
         return $this->processResponse(

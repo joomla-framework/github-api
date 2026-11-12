@@ -69,7 +69,7 @@ class Contents extends AbstractPackage
     public function get($owner, $repo, $path, $ref = '')
     {
         // Build the request path.
-        $rPath = '/repos/' . $owner . '/' . $repo . '/contents/' . $path;
+        $rPath = '/repos/' . $owner . '/' . $repo . '/contents/' . self::encodePath($path);
 
         $uri = $this->fetchUrl($rPath);
 
@@ -162,7 +162,7 @@ class Contents extends AbstractPackage
         $committerEmail = ''
     ) {
         // Build the request path.
-        $route = '/repos/' . $owner . '/' . $repo . '/contents/' . $path;
+        $route = '/repos/' . $owner . '/' . $repo . '/contents/' . self::encodePath($path);
 
         $data = [
             'message' => $message,
@@ -238,7 +238,7 @@ class Contents extends AbstractPackage
         $committerEmail = ''
     ) {
         // Build the request path.
-        $route = '/repos/' . $owner . '/' . $repo . '/contents/' . $path;
+        $route = '/repos/' . $owner . '/' . $repo . '/contents/' . self::encodePath($path);
 
         $data = [
             'message' => $message,
@@ -306,7 +306,7 @@ class Contents extends AbstractPackage
         $committerEmail = ''
     ) {
         // Build the request path.
-        $route = '/repos/' . $owner . '/' . $repo . '/contents/' . $path;
+        $route = '/repos/' . $owner . '/' . $repo . '/contents/' . self::encodePath($path);
 
         $data = [
             'message' => $message,
