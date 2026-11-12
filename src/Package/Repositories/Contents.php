@@ -138,7 +138,7 @@ class Contents extends AbstractPackage
      * @param   string  $path            The content path.
      * @param   string  $message         The commit message.
      * @param   string  $content         The new file content, Base64 encoded.
-     * @param   string  $branch          The branch name. If not provided, uses the repository’s default branch (usually master).
+     * @param   string  $branch          The branch name. If not provided, uses the repository’s default branch.
      * @param   string  $authorName      The name of the author of the commit
      * @param   string  $authorEmail     The email of the author of the commit
      * @param   string  $committerName   The name of the committer of the commit
@@ -155,7 +155,7 @@ class Contents extends AbstractPackage
         $path,
         $message,
         $content,
-        $branch = 'master',
+        $branch = null,
         $authorName = '',
         $authorEmail = '',
         $committerName = '',
@@ -167,8 +167,11 @@ class Contents extends AbstractPackage
         $data = [
             'message' => $message,
             'content' => $content,
-            'branch'  => $branch,
         ];
+
+        if ($branch) {
+            $data['branch'] = $branch;
+        }
 
         if ($authorName) {
             if (!$authorEmail) {
@@ -213,7 +216,7 @@ class Contents extends AbstractPackage
      * @param   string  $message         The commit message.
      * @param   string  $content         The new file content, Base64 encoded.
      * @param   string  $sha             The blob SHA of the file being replaced.
-     * @param   string  $branch          The branch name. If not provided, uses the repository’s default branch (usually master).
+     * @param   string  $branch          The branch name. If not provided, uses the repository’s default branch.
      * @param   string  $authorName      The name of the author of the commit
      * @param   string  $authorEmail     The email of the author of the commit
      * @param   string  $committerName   The name of the committer of the commit
@@ -231,7 +234,7 @@ class Contents extends AbstractPackage
         $message,
         $content,
         $sha,
-        $branch = 'master',
+        $branch = null,
         $authorName = '',
         $authorEmail = '',
         $committerName = '',
@@ -244,8 +247,11 @@ class Contents extends AbstractPackage
             'message' => $message,
             'content' => $content,
             'sha'     => $sha,
-            'branch'  => $branch,
         ];
+
+        if ($branch) {
+            $data['branch'] = $branch;
+        }
 
         if ($authorName) {
             if (!$authorEmail) {
@@ -282,7 +288,7 @@ class Contents extends AbstractPackage
      * @param   string  $path            The content path.
      * @param   string  $message         The commit message.
      * @param   string  $sha             The blob SHA of the file being replaced.
-     * @param   string  $branch          The branch name. If not provided, uses the repository’s default branch (usually master).
+     * @param   string  $branch          The branch name. If not provided, uses the repository’s default branch.
      * @param   string  $authorName      The name of the author of the commit
      * @param   string  $authorEmail     The email of the author of the commit
      * @param   string  $committerName   The name of the committer of the commit
@@ -299,7 +305,7 @@ class Contents extends AbstractPackage
         $path,
         $message,
         $sha,
-        $branch = 'master',
+        $branch = null,
         $authorName = '',
         $authorEmail = '',
         $committerName = '',
@@ -311,8 +317,11 @@ class Contents extends AbstractPackage
         $data = [
             'message' => $message,
             'sha'     => $sha,
-            'branch'  => $branch,
         ];
+
+        if ($branch) {
+            $data['branch'] = $branch;
+        }
 
         if ($authorName) {
             if (!$authorEmail) {
