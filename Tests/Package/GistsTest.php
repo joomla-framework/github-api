@@ -180,11 +180,11 @@ class GistsTest extends GitHubTestCase
 
         $this->client->expects($this->once())
             ->method('post')
-            ->with('/gists/523/comments', json_encode($gist))
+            ->with('/gists/aa5a315d61ae9438b18d/comments', json_encode($gist))
             ->willReturn($this->response);
 
         $this->assertThat(
-            $this->object->comments->create(523, 'My Insightful Comment'),
+            $this->object->comments->create('aa5a315d61ae9438b18d', 'My Insightful Comment'),
             $this->equalTo(json_decode($this->sampleString))
         );
     }
@@ -205,11 +205,11 @@ class GistsTest extends GitHubTestCase
 
         $this->client->expects($this->once())
             ->method('post')
-            ->with('/gists/523/comments', json_encode($gist))
+            ->with('/gists/aa5a315d61ae9438b18d/comments', json_encode($gist))
             ->willReturn($this->response);
 
         try {
-            $this->object->comments->create(523, 'My Insightful Comment');
+            $this->object->comments->create('aa5a315d61ae9438b18d', 'My Insightful Comment');
         } catch (\DomainException $e) {
             $exception = true;
 
@@ -233,10 +233,10 @@ class GistsTest extends GitHubTestCase
 
         $this->client->expects($this->once())
             ->method('delete')
-            ->with('/gists/254')
+            ->with('/gists/bb5a315d61ae9438b18d')
             ->willReturn($this->response);
 
-        $this->object->delete(254);
+        $this->object->delete('bb5a315d61ae9438b18d');
     }
 
     /**
@@ -252,11 +252,11 @@ class GistsTest extends GitHubTestCase
 
         $this->client->expects($this->once())
             ->method('delete')
-            ->with('/gists/254')
+            ->with('/gists/bb5a315d61ae9438b18d')
             ->willReturn($this->response);
 
         try {
-            $this->object->delete(254);
+            $this->object->delete('bb5a315d61ae9438b18d');
         } catch (\DomainException $e) {
             $exception = true;
 
@@ -337,12 +337,12 @@ class GistsTest extends GitHubTestCase
 
         $this->client->expects($this->once())
             ->method('patch')
-            ->with('/gists/512', $data)
+            ->with('/gists/cc5a315d61ae9438b18d', $data)
             ->willReturn($this->response);
 
         $this->assertThat(
             $this->object->edit(
-                512,
+                'cc5a315d61ae9438b18d',
                 [
                     'file1.txt' => 'This is the first file',
                     'file2.txt' => 'This is the second file',
@@ -379,12 +379,12 @@ class GistsTest extends GitHubTestCase
 
         $this->client->expects($this->once())
             ->method('patch')
-            ->with('/gists/512', $data)
+            ->with('/gists/cc5a315d61ae9438b18d', $data)
             ->willReturn($this->response);
 
         try {
             $this->object->edit(
-                512,
+                'cc5a315d61ae9438b18d',
                 [
                     'file1.txt' => 'This is the first file',
                     'file2.txt' => 'This is the second file',
@@ -469,11 +469,11 @@ class GistsTest extends GitHubTestCase
 
         $this->client->expects($this->once())
             ->method('post')
-            ->with('/gists/523/forks')
+            ->with('/gists/aa5a315d61ae9438b18d/forks')
             ->willReturn($this->response);
 
         $this->assertThat(
-            $this->object->fork(523),
+            $this->object->fork('aa5a315d61ae9438b18d'),
             $this->equalTo(json_decode($this->sampleString))
         );
     }
@@ -491,11 +491,11 @@ class GistsTest extends GitHubTestCase
 
         $this->client->expects($this->once())
             ->method('post')
-            ->with('/gists/523/forks')
+            ->with('/gists/aa5a315d61ae9438b18d/forks')
             ->willReturn($this->response);
 
         try {
-            $this->object->fork(523);
+            $this->object->fork('aa5a315d61ae9438b18d');
         } catch (\DomainException $e) {
             $exception = true;
 
@@ -517,11 +517,11 @@ class GistsTest extends GitHubTestCase
     {
         $this->client->expects($this->once())
             ->method('get')
-            ->with('/gists/523')
+            ->with('/gists/aa5a315d61ae9438b18d')
             ->willReturn($this->response);
 
         $this->assertThat(
-            $this->object->get(523),
+            $this->object->get('aa5a315d61ae9438b18d'),
             $this->equalTo(json_decode($this->sampleString))
         );
     }
@@ -539,11 +539,11 @@ class GistsTest extends GitHubTestCase
 
         $this->client->expects($this->once())
             ->method('get')
-            ->with('/gists/523')
+            ->with('/gists/aa5a315d61ae9438b18d')
             ->willReturn($this->response);
 
         try {
-            $this->object->get(523);
+            $this->object->get('aa5a315d61ae9438b18d');
         } catch (\DomainException $e) {
             $exception = true;
 
@@ -613,11 +613,11 @@ class GistsTest extends GitHubTestCase
     {
         $this->client->expects($this->once())
             ->method('get')
-            ->with('/gists/523/comments')
+            ->with('/gists/aa5a315d61ae9438b18d/comments')
             ->willReturn($this->response);
 
         $this->assertThat(
-            $this->object->comments->getList(523),
+            $this->object->comments->getList('aa5a315d61ae9438b18d'),
             $this->equalTo(json_decode($this->sampleString))
         );
     }
@@ -635,11 +635,11 @@ class GistsTest extends GitHubTestCase
 
         $this->client->expects($this->once())
             ->method('get')
-            ->with('/gists/523/comments')
+            ->with('/gists/aa5a315d61ae9438b18d/comments')
             ->willReturn($this->response);
 
         try {
-            $this->object->comments->getList(523);
+            $this->object->comments->getList('aa5a315d61ae9438b18d');
         } catch (\DomainException $e) {
             $exception = true;
 
@@ -661,11 +661,11 @@ class GistsTest extends GitHubTestCase
     {
         $this->client->expects($this->once())
             ->method('get')
-            ->with('/gists/523/commits')
+            ->with('/gists/aa5a315d61ae9438b18d/commits')
             ->willReturn($this->response);
 
         $this->assertThat(
-            $this->object->getCommitList(523),
+            $this->object->getCommitList('aa5a315d61ae9438b18d'),
             $this->equalTo(json_decode($this->sampleString))
         );
     }
@@ -683,11 +683,11 @@ class GistsTest extends GitHubTestCase
 
         $this->client->expects($this->once())
             ->method('get')
-            ->with('/gists/523/commits')
+            ->with('/gists/aa5a315d61ae9438b18d/commits')
             ->willReturn($this->response);
 
         try {
-            $this->object->getCommitList(523);
+            $this->object->getCommitList('aa5a315d61ae9438b18d');
         } catch (\DomainException $e) {
             $exception = true;
 
@@ -709,11 +709,11 @@ class GistsTest extends GitHubTestCase
     {
         $this->client->expects($this->once())
             ->method('get')
-            ->with('/gists/523/forks')
+            ->with('/gists/aa5a315d61ae9438b18d/forks')
             ->willReturn($this->response);
 
         $this->assertThat(
-            $this->object->getForkList(523),
+            $this->object->getForkList('aa5a315d61ae9438b18d'),
             $this->equalTo(json_decode($this->sampleString))
         );
     }
@@ -731,11 +731,11 @@ class GistsTest extends GitHubTestCase
 
         $this->client->expects($this->once())
             ->method('get')
-            ->with('/gists/523/forks')
+            ->with('/gists/aa5a315d61ae9438b18d/forks')
             ->willReturn($this->response);
 
         try {
-            $this->object->getForkList(523);
+            $this->object->getForkList('aa5a315d61ae9438b18d');
         } catch (\DomainException $e) {
             $exception = true;
 
@@ -949,11 +949,11 @@ class GistsTest extends GitHubTestCase
     {
         $this->client->expects($this->once())
             ->method('get')
-            ->with('/gists/523/a1b2c3')
+            ->with('/gists/aa5a315d61ae9438b18d/a1b2c3')
             ->willReturn($this->response);
 
         $this->assertThat(
-            $this->object->getRevision(523, 'a1b2c3'),
+            $this->object->getRevision('aa5a315d61ae9438b18d', 'a1b2c3'),
             $this->equalTo(json_decode($this->sampleString))
         );
     }
@@ -971,11 +971,11 @@ class GistsTest extends GitHubTestCase
 
         $this->client->expects($this->once())
             ->method('get')
-            ->with('/gists/523/a1b2c3')
+            ->with('/gists/aa5a315d61ae9438b18d/a1b2c3')
             ->willReturn($this->response);
 
         try {
-            $this->object->getRevision(523, 'a1b2c3');
+            $this->object->getRevision('aa5a315d61ae9438b18d', 'a1b2c3');
         } catch (\DomainException $e) {
             $exception = true;
 
@@ -999,11 +999,11 @@ class GistsTest extends GitHubTestCase
 
         $this->client->expects($this->once())
             ->method('get')
-            ->with('/gists/523/star')
+            ->with('/gists/aa5a315d61ae9438b18d/star')
             ->willReturn($this->response);
 
         $this->assertThat(
-            $this->object->isStarred(523),
+            $this->object->isStarred('aa5a315d61ae9438b18d'),
             $this->equalTo(true)
         );
     }
@@ -1019,11 +1019,11 @@ class GistsTest extends GitHubTestCase
 
         $this->client->expects($this->once())
             ->method('get')
-            ->with('/gists/523/star')
+            ->with('/gists/aa5a315d61ae9438b18d/star')
             ->willReturn($this->response);
 
         $this->assertThat(
-            $this->object->isStarred(523),
+            $this->object->isStarred('aa5a315d61ae9438b18d'),
             $this->equalTo(false)
         );
     }
@@ -1041,11 +1041,11 @@ class GistsTest extends GitHubTestCase
 
         $this->client->expects($this->once())
             ->method('get')
-            ->with('/gists/523/star')
+            ->with('/gists/aa5a315d61ae9438b18d/star')
             ->willReturn($this->response);
 
         try {
-            $this->object->isStarred(523);
+            $this->object->isStarred('aa5a315d61ae9438b18d');
         } catch (\DomainException $e) {
             $exception = true;
 
@@ -1069,10 +1069,10 @@ class GistsTest extends GitHubTestCase
 
         $this->client->expects($this->once())
             ->method('put')
-            ->with('/gists/523/star', '')
+            ->with('/gists/aa5a315d61ae9438b18d/star', '')
             ->willReturn($this->response);
 
-        $this->object->star(523);
+        $this->object->star('aa5a315d61ae9438b18d');
     }
 
     /**
@@ -1088,11 +1088,11 @@ class GistsTest extends GitHubTestCase
 
         $this->client->expects($this->once())
             ->method('put')
-            ->with('/gists/523/star', '')
+            ->with('/gists/aa5a315d61ae9438b18d/star', '')
             ->willReturn($this->response);
 
         try {
-            $this->object->star(523);
+            $this->object->star('aa5a315d61ae9438b18d');
         } catch (\DomainException $e) {
             $exception = true;
 
@@ -1116,10 +1116,10 @@ class GistsTest extends GitHubTestCase
 
         $this->client->expects($this->once())
             ->method('delete')
-            ->with('/gists/523/star')
+            ->with('/gists/aa5a315d61ae9438b18d/star')
             ->willReturn($this->response);
 
-        $this->object->unstar(523);
+        $this->object->unstar('aa5a315d61ae9438b18d');
     }
 
     /**
@@ -1135,11 +1135,11 @@ class GistsTest extends GitHubTestCase
 
         $this->client->expects($this->once())
             ->method('delete')
-            ->with('/gists/523/star')
+            ->with('/gists/aa5a315d61ae9438b18d/star')
             ->willReturn($this->response);
 
         try {
-            $this->object->unstar(523);
+            $this->object->unstar('aa5a315d61ae9438b18d');
         } catch (\DomainException $e) {
             $exception = true;
 
