@@ -9,6 +9,8 @@ namespace Joomla\Github\Tests;
 
 use Joomla\Github\Package\Orgs\Teams;
 use Joomla\Github\Tests\Stub\GitHubTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 
 /**
  * Test method.
@@ -598,5 +600,122 @@ class TeamsTest extends GitHubTestCase
             $this->object->getUserTeams(),
             $this->equalTo(json_decode($this->sampleString))
         );
+    }
+
+    /**
+     * Data provider for the team methods addressing a team by organization and slug
+     *
+     * @return  \Generator
+     */
+    public static function slugMethodsProvider(): \Generator
+    {
+        yield 'getBySlug' => ['get', 'getBySlug', ['joomla', 'cms-maintainers'], ['/orgs/joomla/teams/cms-maintainers'], 200];
+        yield 'editBySlug' => [
+            'patch',
+            'editBySlug',
+            ['joomla', 'cms-maintainers', null, 'Maintainers of the CMS'],
+            ['/orgs/joomla/teams/cms-maintainers', '{"description":"Maintainers of the CMS"}'],
+            200,
+        ];
+        yield 'deleteBySlug' => ['delete', 'deleteBySlug', ['joomla', 'cms-maintainers'], ['/orgs/joomla/teams/cms-maintainers'], 204];
+        yield 'getListMembersBySlug' => [
+            'get',
+            'getListMembersBySlug',
+            ['joomla', 'cms-maintainers', 2, 50],
+            ['/orgs/joomla/teams/cms-maintainers/members?page=2&per_page=50'],
+            200,
+        ];
+        yield 'addMembershipBySlug' => [
+            'put',
+            'addMembershipBySlug',
+            ['joomla', 'cms-maintainers', 'octocat', 'maintainer'],
+            ['/orgs/joomla/teams/cms-maintainers/memberships/octocat', '{"role":"maintainer"}'],
+            200,
+        ];
+        yield 'removeMembershipBySlug' => [
+            'delete',
+            'removeMembershipBySlug',
+            ['joomla', 'cms-maintainers', 'octocat'],
+            ['/orgs/joomla/teams/cms-maintainers/memberships/octocat'],
+            204,
+        ];
+        yield 'getListReposBySlug' => [
+            'get',
+            'getListReposBySlug',
+            ['joomla', 'cms-maintainers'],
+            ['/orgs/joomla/teams/cms-maintainers/repos'],
+            200,
+        ];
+        yield 'addRepoBySlug' => [
+            'put',
+            'addRepoBySlug',
+            ['joomla', 'cms-maintainers', 'joomla', 'joomla-cms', 'maintain'],
+            ['/orgs/joomla/teams/cms-maintainers/repos/joomla/joomla-cms', '{"permission":"maintain"}'],
+            204,
+        ];
+        yield 'removeRepoBySlug' => [
+            'delete',
+            'removeRepoBySlug',
+            ['joomla', 'cms-maintainers', 'joomla', 'joomla-cms'],
+            ['/orgs/joomla/teams/cms-maintainers/repos/joomla/joomla-cms'],
+            204,
+        ];
+    }
+
+    /**
+     * Tests the team methods addressing a team by organization and slug
+     *
+     * @param   string   $httpMethod  The expected HTTP method
+     * @param   string   $method      The method to call
+     * @param   array    $arguments   The arguments
+     * @param   array    $request     The expected request arguments
+     * @param   integer  $code        The response code
+     *
+     * @return  void
+     */
+    #[DataProvider('slugMethodsProvider')]
+    public function testSlugMethods(string $httpMethod, string $method, array $arguments, array $request, int $code)
+    {
+        $this->client->expects($this->once())
+            ->method($httpMethod)
+            ->with(...$request)
+            ->willReturn($this->getResponseObject($code === 204 ? '' : $this->sampleString, $code));
+
+        $this->object->$method(...$arguments);
+    }
+
+    /**
+     * Tests getMembershipBySlug and checkRepoBySlug
+     *
+     * @return  void
+     */
+    public function testMembershipAndRepoChecksBySlug()
+    {
+        $this->client->expects($this->exactly(3))
+            ->method('get')
+            ->willReturnOnConsecutiveCalls(
+                $this->getResponseObject('{"state":"active","role":"member"}', 200),
+                $this->getResponseObject('', 404),
+                $this->getResponseObject('', 204)
+            );
+
+        $this->assertSame('active', $this->object->getMembershipBySlug('joomla', 'cms-maintainers', 'octocat'));
+        $this->assertFalse($this->object->getMembershipBySlug('joomla', 'cms-maintainers', 'nobody'));
+        $this->assertTrue($this->object->checkRepoBySlug('joomla', 'cms-maintainers', 'joomla', 'joomla-cms'));
+    }
+
+    /**
+     * Tests that the methods using the legacy /teams/{team_id} routes are deprecated
+     *
+     * @return  void
+     */
+    #[IgnoreDeprecations]
+    public function testLegacyRoutesAreDeprecated()
+    {
+        $this->expectUserDeprecationMessageMatches('/Teams::get\(\) is deprecated and will be removed in 5\.0.*getBySlug\(\)/');
+
+        $this->client->method('get')->willReturn($this->response);
+
+        $this->object->get(123);
     }
 }

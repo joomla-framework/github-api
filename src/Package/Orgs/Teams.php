@@ -50,9 +50,17 @@ class Teams extends AbstractPackage
      * @return  object
      *
      * @since   1.0
+     * @deprecated  5.0 GitHub has replaced the /teams/{team_id} routes. Use getBySlug() instead.
      */
     public function get($id)
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, GitHub has replaced the /teams/{team_id} routes. Use getBySlug() instead.',
+            __METHOD__
+        );
+
         // Build the request path.
         $path = '/teams/' . (int) $id;
 
@@ -122,9 +130,17 @@ class Teams extends AbstractPackage
      *
      * @since   1.0
      * @throws  \UnexpectedValueException
+     * @deprecated  5.0 GitHub has replaced the /teams/{team_id} routes. Use editBySlug() instead.
      */
     public function edit($id, $name, $permission = '')
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, GitHub has replaced the /teams/{team_id} routes. Use editBySlug() instead.',
+            __METHOD__
+        );
+
         // Build the request path.
         $path = '/teams/' . (int) $id;
 
@@ -155,9 +171,17 @@ class Teams extends AbstractPackage
      * @return  object
      *
      * @since   1.0
+     * @deprecated  5.0 GitHub has replaced the /teams/{team_id} routes. Use deleteBySlug() instead.
      */
     public function delete($id)
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, GitHub has replaced the /teams/{team_id} routes. Use deleteBySlug() instead.',
+            __METHOD__
+        );
+
         // Build the request path.
         $path = '/teams/' . $id;
 
@@ -177,9 +201,17 @@ class Teams extends AbstractPackage
      * @return  object
      *
      * @since   1.0
+     * @deprecated  5.0 GitHub has replaced the /teams/{team_id} routes. Use getListMembersBySlug() instead.
      */
     public function getListMembers($id)
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, GitHub has replaced the /teams/{team_id} routes. Use getListMembersBySlug() instead.',
+            __METHOD__
+        );
+
         // Build the request path.
         $path = '/teams/' . $id . '/members';
 
@@ -200,10 +232,17 @@ class Teams extends AbstractPackage
      *
      * @since   1.0
      * @throws  \UnexpectedValueException
-     * @deprecated  Use getTeamMembership() instead
+     * @deprecated  5.0 GitHub has replaced the /teams/{team_id} routes. Use getMembershipBySlug() instead.
      */
     public function isMember($id, $user)
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, GitHub has replaced the /teams/{team_id} routes. Use getMembershipBySlug() instead.',
+            __METHOD__
+        );
+
         // Build the request path.
         $path = '/teams/' . $id . '/members/' . $user;
 
@@ -235,10 +274,17 @@ class Teams extends AbstractPackage
      * @return  object
      *
      * @since   1.0
-     * @deprecated  Use addTeamMembership() instead
+     * @deprecated  5.0 GitHub has replaced the /teams/{team_id} routes. Use addMembershipBySlug() instead.
      */
     public function addMember($id, $user)
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, GitHub has replaced the /teams/{team_id} routes. Use addMembershipBySlug() instead.',
+            __METHOD__
+        );
+
         // Build the request path.
         $path = '/teams/' . $id . '/members/' . $user;
 
@@ -261,10 +307,17 @@ class Teams extends AbstractPackage
      * @return  object
      *
      * @since   1.0
-     * @deprecated  Use removeTeamMembership() instead
+     * @deprecated  5.0 GitHub has replaced the /teams/{team_id} routes. Use removeMembershipBySlug() instead.
      */
     public function removeMember($id, $user)
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, GitHub has replaced the /teams/{team_id} routes. Use removeMembershipBySlug() instead.',
+            __METHOD__
+        );
+
         // Build the request path.
         $path = '/teams/' . $id . '/members/' . $user;
 
@@ -286,9 +339,17 @@ class Teams extends AbstractPackage
      *
      * @since   1.4.0
      * @throws  \UnexpectedValueException
+     * @deprecated  5.0 GitHub has replaced the /teams/{team_id} routes. Use getMembershipBySlug() instead.
      */
     public function getTeamMembership($id, $user)
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, GitHub has replaced the /teams/{team_id} routes. Use getMembershipBySlug() instead.',
+            __METHOD__
+        );
+
         // Build the request path.
         $path = "/teams/$id/memberships/$user";
 
@@ -325,9 +386,17 @@ class Teams extends AbstractPackage
      *
      * @since   1.4.0
      * @throws  \UnexpectedValueException
+     * @deprecated  5.0 GitHub has replaced the /teams/{team_id} routes. Use addMembershipBySlug() instead.
      */
     public function addTeamMembership($id, $user, $role = 'member')
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, GitHub has replaced the /teams/{team_id} routes. Use addMembershipBySlug() instead.',
+            __METHOD__
+        );
+
         // Build the request path.
         $path = "/teams/$id/memberships/$user";
 
@@ -356,9 +425,17 @@ class Teams extends AbstractPackage
      *
      * @since   1.4.0
      * @throws  \UnexpectedValueException
+     * @deprecated  5.0 GitHub has replaced the /teams/{team_id} routes. Use removeMembershipBySlug() instead.
      */
     public function removeTeamMembership($id, $user)
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, GitHub has replaced the /teams/{team_id} routes. Use removeMembershipBySlug() instead.',
+            __METHOD__
+        );
+
         // Build the request path.
         $path = "/teams/$id/memberships/$user";
 
@@ -373,9 +450,17 @@ class Teams extends AbstractPackage
      * @return  object
      *
      * @since   1.0
+     * @deprecated  5.0 GitHub has replaced the /teams/{team_id} routes. Use getListReposBySlug() instead.
      */
     public function getListRepos($id)
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, GitHub has replaced the /teams/{team_id} routes. Use getListReposBySlug() instead.',
+            __METHOD__
+        );
+
         // Build the request path.
         $path = '/teams/' . $id . '/repos';
 
@@ -395,9 +480,17 @@ class Teams extends AbstractPackage
      *
      * @since   1.0
      * @throws  \UnexpectedValueException
+     * @deprecated  5.0 GitHub has replaced the /teams/{team_id} routes. Use checkRepoBySlug() instead.
      */
     public function checkRepo($id, $owner, $repo)
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, GitHub has replaced the /teams/{team_id} routes. Use checkRepoBySlug() instead.',
+            __METHOD__
+        );
+
         // Build the request path.
         $path = '/teams/' . $id . '/repos/' . $owner . '/' . $repo;
 
@@ -434,9 +527,17 @@ class Teams extends AbstractPackage
      * @return  object
      *
      * @since   1.0
+     * @deprecated  5.0 GitHub has replaced the /teams/{team_id} routes. Use addRepoBySlug() instead.
      */
     public function addRepo($id, $org, $repo)
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, GitHub has replaced the /teams/{team_id} routes. Use addRepoBySlug() instead.',
+            __METHOD__
+        );
+
         // Build the request path.
         $path = '/teams/' . $id . '/repos/' . $org . '/' . $repo;
 
@@ -460,9 +561,17 @@ class Teams extends AbstractPackage
      * @return  object
      *
      * @since   1.0
+     * @deprecated  5.0 GitHub has replaced the /teams/{team_id} routes. Use removeRepoBySlug() instead.
      */
     public function removeRepo($id, $owner, $repo)
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, GitHub has replaced the /teams/{team_id} routes. Use removeRepoBySlug() instead.',
+            __METHOD__
+        );
+
         // Build the request path.
         $path = '/teams/' . (int) $id . '/repos/' . $owner . '/' . $repo;
 
@@ -493,5 +602,271 @@ class Teams extends AbstractPackage
         return $this->processResponse(
             $this->client->get($this->fetchUrl($path, $page, $limit))
         );
+    }
+
+    /**
+     * Get a team by its slug.
+     *
+     * @param   string  $org   The name of the organization.
+     * @param   string  $slug  The slug of the team name.
+     *
+     * @return  object
+     *
+     * @link    https://docs.github.com/en/rest/teams/teams#get-a-team-by-name
+     * @since   __DEPLOY_VERSION__
+     */
+    public function getBySlug(string $org, string $slug)
+    {
+        return $this->processResponse($this->client->get($this->fetchUrl($this->slugPath($org, $slug))));
+    }
+
+    /**
+     * Edit a team. Only the given values are changed.
+     *
+     * @param   string       $org          The name of the organization.
+     * @param   string       $slug         The slug of the team name.
+     * @param   string|null  $name         The name of the team.
+     * @param   string|null  $description  The description of the team.
+     * @param   string|null  $privacy      The privacy level of the team, `secret` or `closed`.
+     *
+     * @return  object
+     *
+     * @link    https://docs.github.com/en/rest/teams/teams#update-a-team
+     * @since   __DEPLOY_VERSION__
+     */
+    public function editBySlug(string $org, string $slug, ?string $name = null, ?string $description = null, ?string $privacy = null)
+    {
+        $data = array_filter(
+            ['name' => $name, 'description' => $description, 'privacy' => $privacy],
+            static fn ($value) => $value !== null
+        );
+
+        return $this->processResponse(
+            $this->client->patch($this->fetchUrl($this->slugPath($org, $slug)), json_encode($data))
+        );
+    }
+
+    /**
+     * Delete a team.
+     *
+     * @param   string  $org   The name of the organization.
+     * @param   string  $slug  The slug of the team name.
+     *
+     * @return  object
+     *
+     * @link    https://docs.github.com/en/rest/teams/teams#delete-a-team
+     * @since   __DEPLOY_VERSION__
+     */
+    public function deleteBySlug(string $org, string $slug)
+    {
+        return $this->processResponse($this->client->delete($this->fetchUrl($this->slugPath($org, $slug))), 204);
+    }
+
+    /**
+     * List the members of a team.
+     *
+     * @param   string   $org    The name of the organization.
+     * @param   string   $slug   The slug of the team name.
+     * @param   integer  $page   The page number from which to get items.
+     * @param   integer  $limit  The number of items on a page.
+     *
+     * @return  array
+     *
+     * @link    https://docs.github.com/en/rest/teams/members#list-team-members
+     * @since   __DEPLOY_VERSION__
+     */
+    public function getListMembersBySlug(string $org, string $slug, int $page = 0, int $limit = 0)
+    {
+        return $this->processResponse(
+            $this->client->get($this->fetchUrl($this->slugPath($org, $slug) . '/members', $page, $limit))
+        );
+    }
+
+    /**
+     * Get the team membership of a user.
+     *
+     * @param   string  $org   The name of the organization.
+     * @param   string  $slug  The slug of the team name.
+     * @param   string  $user  The name of the user.
+     *
+     * @return  string|boolean  The state of the membership (`active` or `pending`), or false if the user is not a member.
+     *
+     * @link    https://docs.github.com/en/rest/teams/members#get-team-membership-for-a-user
+     * @since   __DEPLOY_VERSION__
+     * @throws  \UnexpectedValueException
+     */
+    public function getMembershipBySlug(string $org, string $slug, string $user)
+    {
+        $response = $this->client->get($this->fetchUrl($this->slugPath($org, $slug) . '/memberships/' . $user));
+
+        switch ($response->getStatusCode()) {
+            case 200:
+                return json_decode((string) $response->getBody())->state;
+
+            case 404:
+                return false;
+
+            default:
+                throw new \UnexpectedValueException('Unexpected response code: ' . $response->getStatusCode());
+        }
+    }
+
+    /**
+     * Add or update the team membership of a user.
+     *
+     * @param   string  $org   The name of the organization.
+     * @param   string  $slug  The slug of the team name.
+     * @param   string  $user  The name of the user.
+     * @param   string  $role  The role of the user in the team, `member` or `maintainer`.
+     *
+     * @return  object
+     *
+     * @link    https://docs.github.com/en/rest/teams/members#add-or-update-team-membership-for-a-user
+     * @since   __DEPLOY_VERSION__
+     * @throws  \UnexpectedValueException
+     */
+    public function addMembershipBySlug(string $org, string $slug, string $user, string $role = 'member')
+    {
+        if (\in_array($role, ['member', 'maintainer']) == false) {
+            throw new \UnexpectedValueException('Roles must be either "member" or "maintainer".');
+        }
+
+        return $this->processResponse(
+            $this->client->put(
+                $this->fetchUrl($this->slugPath($org, $slug) . '/memberships/' . $user),
+                json_encode(['role' => $role])
+            )
+        );
+    }
+
+    /**
+     * Remove the team membership of a user.
+     *
+     * @param   string  $org   The name of the organization.
+     * @param   string  $slug  The slug of the team name.
+     * @param   string  $user  The name of the user.
+     *
+     * @return  object
+     *
+     * @link    https://docs.github.com/en/rest/teams/members#remove-team-membership-for-a-user
+     * @since   __DEPLOY_VERSION__
+     */
+    public function removeMembershipBySlug(string $org, string $slug, string $user)
+    {
+        return $this->processResponse(
+            $this->client->delete($this->fetchUrl($this->slugPath($org, $slug) . '/memberships/' . $user)),
+            204
+        );
+    }
+
+    /**
+     * List the repositories of a team.
+     *
+     * @param   string   $org    The name of the organization.
+     * @param   string   $slug   The slug of the team name.
+     * @param   integer  $page   The page number from which to get items.
+     * @param   integer  $limit  The number of items on a page.
+     *
+     * @return  array
+     *
+     * @link    https://docs.github.com/en/rest/teams/teams#list-team-repositories
+     * @since   __DEPLOY_VERSION__
+     */
+    public function getListReposBySlug(string $org, string $slug, int $page = 0, int $limit = 0)
+    {
+        return $this->processResponse(
+            $this->client->get($this->fetchUrl($this->slugPath($org, $slug) . '/repos', $page, $limit))
+        );
+    }
+
+    /**
+     * Check whether a team has access to a repository.
+     *
+     * @param   string  $org    The name of the organization.
+     * @param   string  $slug   The slug of the team name.
+     * @param   string  $owner  The owner of the repository.
+     * @param   string  $repo   The name of the repository.
+     *
+     * @return  boolean
+     *
+     * @link    https://docs.github.com/en/rest/teams/teams#check-team-permissions-for-a-repository
+     * @since   __DEPLOY_VERSION__
+     * @throws  \UnexpectedValueException
+     */
+    public function checkRepoBySlug(string $org, string $slug, string $owner, string $repo)
+    {
+        $response = $this->client->get($this->fetchUrl($this->slugPath($org, $slug) . '/repos/' . $owner . '/' . $repo));
+
+        switch ($response->getStatusCode()) {
+            case 200:
+            case 204:
+                return true;
+
+            case 404:
+                return false;
+
+            default:
+                throw new \UnexpectedValueException('Unexpected response code: ' . $response->getStatusCode());
+        }
+    }
+
+    /**
+     * Add a repository to a team or update the team's permission on it.
+     *
+     * @param   string       $org         The name of the organization.
+     * @param   string       $slug        The slug of the team name.
+     * @param   string       $owner       The owner of the repository.
+     * @param   string       $repo        The name of the repository.
+     * @param   string|null  $permission  The permission, e.g. `pull`, `triage`, `push`, `maintain` or `admin`.
+     *
+     * @return  object
+     *
+     * @link    https://docs.github.com/en/rest/teams/teams#add-or-update-team-repository-permissions
+     * @since   __DEPLOY_VERSION__
+     */
+    public function addRepoBySlug(string $org, string $slug, string $owner, string $repo, ?string $permission = null)
+    {
+        $data = $permission === null ? '' : json_encode(['permission' => $permission]);
+
+        return $this->processResponse(
+            $this->client->put($this->fetchUrl($this->slugPath($org, $slug) . '/repos/' . $owner . '/' . $repo), $data),
+            204
+        );
+    }
+
+    /**
+     * Remove a repository from a team.
+     *
+     * @param   string  $org    The name of the organization.
+     * @param   string  $slug   The slug of the team name.
+     * @param   string  $owner  The owner of the repository.
+     * @param   string  $repo   The name of the repository.
+     *
+     * @return  object
+     *
+     * @link    https://docs.github.com/en/rest/teams/teams#remove-a-repository-from-a-team
+     * @since   __DEPLOY_VERSION__
+     */
+    public function removeRepoBySlug(string $org, string $slug, string $owner, string $repo)
+    {
+        return $this->processResponse(
+            $this->client->delete($this->fetchUrl($this->slugPath($org, $slug) . '/repos/' . $owner . '/' . $repo)),
+            204
+        );
+    }
+
+    /**
+     * Build the path of a team in an organization.
+     *
+     * @param   string  $org   The name of the organization.
+     * @param   string  $slug  The slug of the team name.
+     *
+     * @return  string
+     *
+     * @since   __DEPLOY_VERSION__
+     */
+    private function slugPath(string $org, string $slug): string
+    {
+        return '/orgs/' . $org . '/teams/' . rawurlencode($slug);
     }
 }
