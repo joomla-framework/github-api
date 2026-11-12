@@ -9,6 +9,7 @@ namespace Joomla\Github\Tests;
 
 use Joomla\Github\Tests\Stub\GitHubTestCase;
 use Joomla\Github\Tests\Stub\ObjectMock;
+use Joomla\Http\Exception\UnexpectedResponseException;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
@@ -126,6 +127,42 @@ class GithubObjectTest extends GitHubTestCase
     }
 
     /**
+     * Tests that processResponse() accepts one of several expected codes
+     *
+     * @return  void
+     */
+    public function testProcessResponseWithSeveralExpectedCodes()
+    {
+        $this->assertEquals(
+            json_decode($this->sampleString),
+            $this->processResponse($this->getResponseObject($this->sampleString, 202), [202, 205])
+        );
+    }
+
+    /**
+     * Tests that processResponse() returns null for an empty body
+     *
+     * @return  void
+     */
+    public function testProcessResponseWithEmptyBody()
+    {
+        $this->assertNull($this->processResponse($this->getResponseObject('', 204), 204));
+    }
+
+    /**
+     * Tests that processResponse() throws on a body that is not JSON
+     *
+     * @return  void
+     */
+    public function testProcessResponseWithInvalidJson()
+    {
+        $this->expectException(UnexpectedResponseException::class);
+        $this->expectExceptionMessage('Invalid JSON received from GitHub');
+
+        $this->processResponse($this->getResponseObject('<html>Maintenance</html>', 200));
+    }
+
+    /**
      * Tests the fetchUrl method using an oAuth token.
      *
      * @return void
@@ -141,5 +178,17 @@ class GithubObjectTest extends GitHubTestCase
             $this->equalTo('https://api.github.com/gists'),
             'URL is not as expected.'
         );
+    }
+
+    /**
+     * Calls the protected processResponse() method of the object under test.
+     *
+     * @param   mixed  ...$arguments  The arguments.
+     *
+     * @return  mixed
+     */
+    private function processResponse(...$arguments)
+    {
+        return (new \ReflectionMethod($this->object, 'processResponse'))->invoke($this->object, ...$arguments);
     }
 }

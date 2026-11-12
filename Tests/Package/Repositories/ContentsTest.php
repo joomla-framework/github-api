@@ -9,6 +9,7 @@ namespace Joomla\Github\Tests;
 
 use Joomla\Github\Package\Repositories\Contents;
 use Joomla\Github\Tests\Stub\GitHubTestCase;
+use Joomla\Http\Exception\UnexpectedResponseException;
 
 /**
  * Test class for Contents.
@@ -116,17 +117,35 @@ class ContentsTest extends GitHubTestCase
      */
     public function testGetArchiveLink()
     {
-        $this->response = $this->getResponseObject($this->sampleString, 302);
+        $this->response = $this->getResponseObject('', 302, ['Location' => 'https://codeload.github.com/joomla/joomla-platform/legacy.zip/main']);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/zipball')
             ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getArchiveLink('joomla', 'joomla-platform'),
-            $this->equalTo(json_decode($this->sampleString))
+        $this->assertSame(
+            'https://codeload.github.com/joomla/joomla-platform/legacy.zip/main',
+            $this->object->getArchiveLink('joomla', 'joomla-platform')
         );
+    }
+
+    /**
+     * Tests the GetArchiveLink method when the HTTP client followed the redirect.
+     *
+     * @return  void
+     */
+    public function testGetArchiveLinkRedirectFollowed()
+    {
+        $this->expectException(UnexpectedResponseException::class);
+        $this->expectExceptionMessage('follow_location');
+
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/repos/joomla/joomla-platform/zipball')
+            ->willReturn($this->getResponseObject('PK', 200));
+
+        $this->object->getArchiveLink('joomla', 'joomla-platform');
     }
 
     /**
@@ -136,16 +155,16 @@ class ContentsTest extends GitHubTestCase
      */
     public function testGetArchiveLinkRef()
     {
-        $this->response = $this->getResponseObject($this->sampleString, 302);
+        $this->response = $this->getResponseObject('', 302, ['Location' => 'https://codeload.github.com/joomla/joomla-platform/legacy.zip/123abc']);
 
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/zipball?ref=123abc')
             ->willReturn($this->response);
 
-        $this->assertThat(
-            $this->object->getArchiveLink('joomla', 'joomla-platform', 'zipball', '123abc'),
-            $this->equalTo(json_decode($this->sampleString))
+        $this->assertSame(
+            'https://codeload.github.com/joomla/joomla-platform/legacy.zip/123abc',
+            $this->object->getArchiveLink('joomla', 'joomla-platform', 'zipball', '123abc')
         );
     }
 

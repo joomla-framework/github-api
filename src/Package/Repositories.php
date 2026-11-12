@@ -414,7 +414,8 @@ class Repositories extends AbstractPackage
 
         // Send the request.
         return $this->processResponse(
-            $this->client->delete($this->fetchUrl($path))
+            $this->client->delete($this->fetchUrl($path)),
+            204
         );
     }
 }
