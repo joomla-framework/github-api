@@ -107,7 +107,7 @@ class Followers extends AbstractPackage
     public function checkUserFollowing($user, $target)
     {
         // Build the request path.
-        $path = "/user/$user/following/$target";
+        $path = "/users/$user/following/$target";
 
         $response = $this->client->get($this->fetchUrl($path));
 

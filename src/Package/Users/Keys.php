@@ -55,7 +55,7 @@ class Keys extends AbstractPackage
     public function getList()
     {
         // Build the request path.
-        $path = '/users/keys';
+        $path = '/user/keys';
 
         return $this->processResponse(
             $this->client->get($this->fetchUrl($path))
@@ -74,7 +74,7 @@ class Keys extends AbstractPackage
     public function get($id)
     {
         // Build the request path.
-        $path = '/users/keys/' . $id;
+        $path = '/user/keys/' . $id;
 
         return $this->processResponse(
             $this->client->get($this->fetchUrl($path))
@@ -94,7 +94,7 @@ class Keys extends AbstractPackage
     public function create($title, $key)
     {
         // Build the request path.
-        $path = '/users/keys';
+        $path = '/user/keys';
 
         $data = [
             'title' => $title,
@@ -117,11 +117,19 @@ class Keys extends AbstractPackage
      * @return  object
      *
      * @since   1.0
+     * @deprecated  5.0 GitHub has no endpoint to update a key. Delete the key and create a new one instead.
      */
     public function edit($id, $title, $key)
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, GitHub has no endpoint to update a key. Delete the key and create a new one instead.',
+            __METHOD__
+        );
+
         // Build the request path.
-        $path = '/users/keys/' . $id;
+        $path = '/user/keys/' . $id;
 
         $data = [
             'title' => $title,
@@ -145,7 +153,7 @@ class Keys extends AbstractPackage
     public function delete($id)
     {
         // Build the request path.
-        $path = '/users/keys/' . (int) $id;
+        $path = '/user/keys/' . (int) $id;
 
         return $this->processResponse(
             $this->client->delete($this->fetchUrl($path)),

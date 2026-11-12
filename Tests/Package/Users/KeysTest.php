@@ -8,6 +8,7 @@ namespace Joomla\Github\Tests\Users;
 
 use Joomla\Github\Package\Users\Keys;
 use Joomla\Github\Tests\Stub\GitHubTestCase;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 
 /**
  * Test class for Keys.
@@ -63,7 +64,7 @@ class KeysTest extends GitHubTestCase
     {
         $this->client->expects($this->once())
             ->method('get')
-            ->with('/users/keys')
+            ->with('/user/keys')
             ->willReturn($this->response);
 
         $this->assertThat(
@@ -81,7 +82,7 @@ class KeysTest extends GitHubTestCase
     {
         $this->client->expects($this->once())
             ->method('get')
-            ->with('/users/keys/1')
+            ->with('/user/keys/1')
             ->willReturn($this->response);
 
         $this->assertThat(
@@ -101,7 +102,7 @@ class KeysTest extends GitHubTestCase
 
         $this->client->expects($this->once())
             ->method('post')
-            ->with('/users/keys')
+            ->with('/user/keys')
             ->willReturn($this->response);
 
         $this->assertThat(
@@ -115,11 +116,14 @@ class KeysTest extends GitHubTestCase
      *
      * @return  void
      */
+    #[IgnoreDeprecations]
     public function testEdit()
     {
+        $this->expectUserDeprecationMessageMatches('/' . preg_quote('Joomla\Github\Package\Users\Keys::edit() is deprecated and will be removed in 5.0', '/') . '/');
+
         $this->client->expects($this->once())
             ->method('patch')
-            ->with('/users/keys/1')
+            ->with('/user/keys/1')
             ->willReturn($this->response);
 
         $this->assertThat(
@@ -139,7 +143,7 @@ class KeysTest extends GitHubTestCase
 
         $this->client->expects($this->once())
             ->method('delete')
-            ->with('/users/keys/1')
+            ->with('/user/keys/1')
             ->willReturn($this->response);
 
         $this->assertEquals(json_decode($this->sampleString),
