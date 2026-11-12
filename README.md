@@ -204,16 +204,6 @@ $subscription = $github->activity->watching->setSubscription(':owner', ':repo', 
 
 // Delete a Repository Subscription.
 $github->activity->watching->deleteSubscription(':owner', ':repo');
-
-// Check if you are watching a repository (LEGACY).
-// @return  boolean  True for a 204 response, False for a 404.
-$github->activity->watching->check(':owner', ':repo');
-
-// Watch a repository (LEGACY).
-$github->activity->watching->watch(':owner', ':repo');
-
-// Stop watching a repository (LEGACY).
-$github->activity->watching->unwatch(':owner', ':repo');
 ```
 
 ### Gists
@@ -629,43 +619,10 @@ See http://developer.github.com/v3/orgs/teams/.
 // List teams
 $teams = $github->orgs->teams->getList(':org');
 
-// Get team
-$team = $github->orgs->teams->get(':teamId');
-
 // Create team
 $repos = array(':repoName');
 $permission = 'pull|push|admin';
 $github->orgs->teams->create(':org', ':name', $repos, $permission);
-
-// Edit team
-$github->orgs->teams->edit(':teamId', ':name', $permission);
-
-// Delete team
-$github->orgs->teams->delete(':teamId');
-
-// List team members
-$members = $github->orgs->teams->getListMembers(':teamId');
-
-// Get team member
-$isUserMember = $github->orgs->teams->isMember(':teamId', ':user');
-
-// Add team member
-$github->orgs->teams->addMember(':teamId', ':user');
-
-// Remove team member
-$github->orgs->teams->removeMember(':teamId', ':user');
-
-// List team repos
-$repos = $github->orgs->teams->getListRepos(':teamId');
-
-// Get team repo
-$isRepoManagedByTeam = $github->orgs->teams->checkRepo(':teamId', ':repo');
-
-// Add team repo
-$github->orgs->teams->addRepo(':teamId', ':org', ':repo');
-
-// Remove team repo
-$github->orgs->teams->removeRepo(':teamId', ':owner', ':repo');
 
 // List user teams - TODO
 ```

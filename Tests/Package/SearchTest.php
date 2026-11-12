@@ -37,86 +37,14 @@ class SearchTest extends GitHubTestCase
     }
 
     /**
-     * Tests the issues method
+     * Tests that the methods for the removed legacy search API are gone
      *
      * @return  void
      */
-    public function testIssues()
+    public function testLegacyMethodsAreRemoved()
     {
-        $this->client->expects($this->once())
-            ->method('get')
-            ->with('/legacy/issues/search/joomla/joomla-platform/open/github')
-            ->willReturn($this->response);
-
-        $this->assertEquals(
-            json_decode($this->sampleString),
-            $this->object->issues('joomla', 'joomla-platform', 'open', 'github')
-        );
-    }
-
-    /**
-     * Tests the issuesInvalidState method
-     *
-     * @return  void
-     */
-    public function testIssuesInvalidState()
-    {
-        $this->expectException(\UnexpectedValueException::class);
-
-        $this->object->issues('joomla', 'joomla-platform', 'invalid', 'github');
-    }
-
-    /**
-     * Tests the repositories method
-     *
-     * @return  void
-     */
-    public function testRepositories()
-    {
-        $this->client->expects($this->once())
-            ->method('get')
-            ->with('/legacy/repos/search/joomla')
-            ->willReturn($this->response);
-
-        $this->assertThat(
-            $this->object->repositories('joomla'),
-            $this->equalTo(json_decode($this->sampleString))
-        );
-    }
-
-    /**
-     * Tests the users method
-     *
-     * @return  void
-     */
-    public function testUsers()
-    {
-        $this->client->expects($this->once())
-            ->method('get')
-            ->with('/legacy/user/search/joomla')
-            ->willReturn($this->response);
-
-        $this->assertThat(
-            $this->object->users('joomla'),
-            $this->equalTo(json_decode($this->sampleString))
-        );
-    }
-
-    /**
-     * Tests the email method
-     *
-     * @return  void
-     */
-    public function testEmail()
-    {
-        $this->client->expects($this->once())
-            ->method('get')
-            ->with('/legacy/user/email/email@joomla')
-            ->willReturn($this->response);
-
-        $this->assertThat(
-            $this->object->email('email@joomla'),
-            $this->equalTo(json_decode($this->sampleString))
-        );
+        foreach (['issues', 'repositories', 'users', 'email'] as $method) {
+            $this->assertFalse(method_exists($this->object, $method), $method);
+        }
     }
 }
