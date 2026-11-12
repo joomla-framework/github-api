@@ -42,7 +42,7 @@ class Commits extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function getList($user, $repo, $sha = '', $path = '', $author = '', \DateTimeInterface $since = null, \DateTimeInterface $until = null)
+    public function getList($user, $repo, $sha = '', $path = '', $author = '', ?\DateTimeInterface $since = null, ?\DateTimeInterface $until = null)
     {
         // Build the request path.
         $rPath = '/repos/' . $user . '/' . $repo . '/commits';

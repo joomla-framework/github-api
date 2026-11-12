@@ -34,7 +34,7 @@ class Notifications extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getList($all = true, $participating = true, \DateTimeInterface $since = null, \DateTimeInterface $before = null)
+    public function getList($all = true, $participating = true, ?\DateTimeInterface $since = null, ?\DateTimeInterface $before = null)
     {
         // Build the request path.
         $path = '/notifications';
@@ -81,8 +81,8 @@ class Notifications extends AbstractPackage
         $repo,
         $all = true,
         $participating = true,
-        \DateTimeInterface $since = null,
-        \DateTimeInterface $before = null
+        ?\DateTimeInterface $since = null,
+        ?\DateTimeInterface $before = null
     ) {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/notifications';
@@ -122,7 +122,7 @@ class Notifications extends AbstractPackage
      *
      * @since   1.0
      */
-    public function markRead($unread = true, $read = true, \DateTimeInterface $lastReadAt = null)
+    public function markRead($unread = true, $read = true, ?\DateTimeInterface $lastReadAt = null)
     {
         // Build the request path.
         $path = '/notifications';
@@ -158,7 +158,7 @@ class Notifications extends AbstractPackage
      *
      * @since   1.0
      */
-    public function markReadRepository($owner, $repo, $unread, $read, \DateTimeInterface $lastReadAt = null)
+    public function markReadRepository($owner, $repo, $unread, $read, ?\DateTimeInterface $lastReadAt = null)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/notifications';
