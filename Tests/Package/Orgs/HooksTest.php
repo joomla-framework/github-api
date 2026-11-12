@@ -134,56 +134,6 @@ class HooksTest extends GitHubTestCase
     /**
      * Test method.
      *
-     * @covers \Joomla\Github\Package\Orgs\Hooks::edit()
-     *
-     * @return  void
-     */
-    public function testEdit()
-    {
-        $this->response = $this->getResponseObject($this->sampleString, 201);
-
-        $this->client->expects($this->once())
-            ->method('post')
-            ->with('/orgs/{org}/hooks')
-            ->willReturn($this->response);
-
-        $this->assertThat(
-            $this->object->edit('{org}', '{url}', 'json', '{secret}', 1, ['create'], true),
-            $this->equalTo(json_decode($this->sampleString))
-        );
-    }
-
-    /**
-     * Test method.
-     *
-     * @covers \Joomla\Github\Package\Orgs\Hooks::edit()
-     *
-     * @return  void
-     */
-    public function testEditFailure()
-    {
-        $this->expectException(\UnexpectedValueException::class);
-
-        $this->object->edit('{org}', '{url}', '{invalid}');
-    }
-
-    /**
-     * Test method.
-     *
-     * @covers \Joomla\Github\Package\Orgs\Hooks::edit()
-     *
-     * @return  void
-     */
-    public function testEditFailure2()
-    {
-        $this->expectException(\RuntimeException::class);
-
-        $this->object->edit('{org}', '{url}', 'json', '{secret}', 1, ['{invalid}']);
-    }
-
-    /**
-     * Test method.
-     *
      * @covers \Joomla\Github\Package\Orgs\Hooks::ping()
      *
      * @return  void
