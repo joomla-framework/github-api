@@ -26,38 +26,43 @@ $github = new Github;
 
 This creates a basic GitHub object that can be used to access publicly available resources on [github.com](https://github.com).
 
-Sometimes it is necessary to specify additional options. This can be done by injecting in a Registry object with your
-preferred options. Support is available for optionally providing a custom GitHub account username and password,
-as well as a custom URL for the GitHub server (as would be the case for using a local instance of [GitHub Enterprise](https://enterprise.github.com)).
+Most API calls need authentication. Inject a Registry object with your options; the `gh.token` option takes a
+personal access token (or a GitHub App installation token), which is sent in the `Authorization` header:
 
 ```php
 use Joomla\Github\Github;
 use Joomla\Registry\Registry;
 
 $options = new Registry;
-$options->set('api.username', 'github_username');
-$options->set('api.password', 'github_password');
-$options->set('api.url', 'http://github.enterprise.example.com');
+$options->set('gh.token', getenv('GITHUB_TOKEN'));
 
 $github = new Github($options);
 ```
 
-A `gh.token` option is also available.
+For a [GitHub Enterprise Server](https://docs.github.com/en/enterprise-server) instance, also set `api.url` to the
+instance's API root, which ends in `/api/v3`:
 
-Here is an example demonstrating more of the GitHub package:
+```php
+$options->set('api.url', 'https://github.example.com/api/v3');
+```
+
+GitHub removed username/password authentication for the API on github.com in November 2020. The `api.username` and
+`api.password` options only work against GitHub Enterprise Server instances that still accept it; use a token
+wherever you can.
+
+Here is an example demonstrating more of the GitHub package. Listing "your" issues requires authentication, because
+GitHub returns the issues assigned to the authenticated user:
 
 ```php
 use Joomla\Github\Github;
 use Joomla\Registry\Registry;
 
 $options = new Registry;
-$options->set('api.username', 'github_username');
-$options->set('api.password', 'github_password');
-$options->set('api.url', 'http://myhostedgithub.example.com');
+$options->set('gh.token', getenv('GITHUB_TOKEN'));
 
 $github = new Github($options);
 
-// get a list of all the user's issues
+// get a list of all the authenticated user's issues
 $issues = $github->issues->getList();
 
 $issueSummary = array();
