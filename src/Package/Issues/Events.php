@@ -49,18 +49,27 @@ class Events extends AbstractPackage
     /**
      * List events for a repository.
      *
-     * @param   string   $owner    The name of the owner of the GitHub repository.
-     * @param   string   $repo     The name of the GitHub repository.
-     * @param   integer  $issueId  The issue number.
-     * @param   integer  $page     The page number from which to get items.
-     * @param   integer  $limit    The number of items on a page.
+     * @param   string        $owner    The name of the owner of the GitHub repository.
+     * @param   string        $repo     The name of the GitHub repository.
+     * @param   integer|null  $issueId  Ignored. Deprecated, will be removed in 5.0.
+     * @param   integer       $page     The page number from which to get items.
+     * @param   integer       $limit    The number of items on a page.
      *
      * @return object
      */
-    public function getListRepository($owner, $repo, $issueId, $page = 0, $limit = 0)
+    public function getListRepository($owner, $repo, $issueId = null, $page = 0, $limit = 0)
     {
+        if ($issueId !== null) {
+            trigger_deprecation(
+                'joomla/github',
+                '__DEPLOY_VERSION__',
+                'The $issueId parameter of %s() is ignored and will be removed in 5.0.',
+                __METHOD__
+            );
+        }
+
         // Build the request path.
-        $path = '/repos/' . $owner . '/' . $repo . '/issues/' . (int) $issueId . '/comments';
+        $path = '/repos/' . $owner . '/' . $repo . '/issues/events';
 
         // Send the request.
         return $this->processResponse(
