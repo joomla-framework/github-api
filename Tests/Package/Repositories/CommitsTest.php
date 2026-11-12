@@ -168,12 +168,12 @@ class CommitsTest extends GitHubTestCase
     {
         $this->client->expects($this->once())
             ->method('get')
-            ->with('/repos/{user}/{repo}/commits/{ref}')
-            ->willReturn($this->response);
+            ->with('/repos/{user}/{repo}/commits/{ref}', ['Accept' => 'application/vnd.github.sha'])
+            ->willReturn($this->getResponseObject('6dcb09b5b57875f334f61aebed695e2e4193db5e'));
 
-        $this->assertThat(
-            $this->object->getSha('{user}', '{repo}', '{ref}'),
-            $this->equalTo($this->sampleString)
+        $this->assertSame(
+            '6dcb09b5b57875f334f61aebed695e2e4193db5e',
+            $this->object->getSha('{user}', '{repo}', '{ref}')
         );
     }
 
