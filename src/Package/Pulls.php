@@ -20,6 +20,8 @@ use Joomla\Http\Exception\UnexpectedResponseException;
  * @since  1.0
  *
  * @property-read  Pulls\Comments  $comments  GitHub API object for comments.
+ * @property-read  Pulls\Reviews  $reviews  GitHub API object for pull request reviews.
+ * @property-read  Pulls\ReviewRequests  $reviewRequests  GitHub API object for pull request review requests.
  */
 class Pulls extends AbstractPackage
 {
