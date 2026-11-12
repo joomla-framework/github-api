@@ -584,23 +584,39 @@ class AuthorizationsTest extends GitHubTestCase
     }
 
     /**
+     * Tests that the getAuthorizationLink method encodes the query values
+     *
+     * @return  void
+     */
+    public function testGetAuthorizationLinkEncodesValues()
+    {
+        $this->assertSame(
+            'https://github.com/login/oauth/authorize?client_id=12345'
+                . '&redirect_uri=https%3A%2F%2Fexample.com%2Fcallback%3Fa%3D1&scope=repo%20user&state=st%26scope%3Dadmin',
+            $this->object->getAuthorizationLink('12345', 'https://example.com/callback?a=1', 'repo user', 'st&scope=admin')
+        );
+    }
+
+    /**
      * Tests the requestToken method
      *
      * @return  void
      */
     public function testRequestToken()
     {
-        $this->response = $this->getResponseObject('');
+        $this->response = $this->getResponseObject('{"access_token":"gho_abc","scope":"repo","token_type":"bearer"}');
 
         $this->client->expects($this->once())
             ->method('post')
-            ->with('https://github.com/login/oauth/access_token')
+            ->with(
+                'https://github.com/login/oauth/access_token',
+                ['client_id' => '12345', 'client_secret' => 'aaa', 'code' => 'bbb', 'redirect_uri' => 'ccc'],
+                ['Accept' => 'application/json']
+            )
             ->willReturn($this->response);
 
-        $response = (string) $this->response->getBody();
-
         $this->assertEquals(
-            $response,
+            (object) ['access_token' => 'gho_abc', 'scope' => 'repo', 'token_type' => 'bearer'],
             $this->object->requestToken('12345', 'aaa', 'bbb', 'ccc')
         );
     }
