@@ -342,7 +342,7 @@ class Gists extends AbstractPackage
         }
 
         // Decode the error response and throw an exception.
-        $error   = json_decode($response->getBody()->getContents());
+        $error   = json_decode((string) $response->getBody());
         $message = isset($error->message) ? $error->message : 'Invalid response received from GitHub.';
 
         throw new UnexpectedResponseException($response, $message, $response->getStatusCode());

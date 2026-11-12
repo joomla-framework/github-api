@@ -35,6 +35,6 @@ class Zen extends AbstractPackage
             throw new \RuntimeException('Can\'t get a Zen');
         }
 
-        return $response->getBody()->getContents();
+        return (string) $response->getBody();
     }
 }

@@ -58,8 +58,7 @@ class MilestonesTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/milestones', $milestone)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -109,8 +108,7 @@ class MilestonesTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/milestones/523', json_encode($milestone))
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
