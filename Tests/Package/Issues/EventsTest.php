@@ -9,6 +9,7 @@ namespace Joomla\Github\Tests\Issues;
 
 use Joomla\Github\Package\Issues\Events;
 use Joomla\Github\Tests\Stub\GitHubTestCase;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 
 /**
  * Test class for the GitHub API package.
@@ -67,15 +68,33 @@ class EventsTest extends GitHubTestCase
     {
         $this->client->expects($this->once())
             ->method('get')
-            ->with('/repos/joomla/joomla-platform/issues/1/comments', [], 0)
+            ->with('/repos/joomla/joomla-platform/issues/events?page=2&per_page=50', [], 0)
             ->willReturn($this->response);
 
         $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
-            $this->object->getListRepository('joomla', 'joomla-platform', '1')
+            $this->object->getListRepository('joomla', 'joomla-platform', page: 2, limit: 50)
         );
+    }
+
+    /**
+     * Tests that the ignored issue ID of the getListRepository method is deprecated
+     *
+     * @return  void
+     */
+    #[IgnoreDeprecations]
+    public function testGetListRepositoryWithIssueId()
+    {
+        $this->expectUserDeprecationMessageMatches('/The \$issueId parameter of .*getListRepository\(\) is ignored/');
+
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with('/repos/joomla/joomla-platform/issues/events', [], 0)
+            ->willReturn($this->response);
+
+        $this->object->getListRepository('joomla', 'joomla-platform', '1');
     }
 
     /**
