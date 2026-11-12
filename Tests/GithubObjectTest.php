@@ -312,4 +312,23 @@ class GithubObjectTest extends GitHubTestCase
         $this->assertSame('https://api.github.com/repos/joomla/joomla-framework/forks', $transport->requests[0]['uri']);
         $this->assertSame('token MyTestToken', $transport->requests[0]['headers']['Authorization']);
     }
+
+    /**
+     * Tests that a JSON body is sent as application/json, and a form body keeps the transport's content type
+     *
+     * @return  void
+     */
+    public function testJsonBodyContentType()
+    {
+        $transport = new RecordingTransport();
+        $client    = new Http([], $transport);
+        $github    = new Github($this->options, $client);
+
+        $github->markdown->render('Hello');
+        $github->authorization->requestToken('{id}', '{secret}', '{code}', '', 'json');
+
+        $this->assertSame('application/json', $transport->requests[0]['headers']['Content-Type']);
+        $this->assertArrayNotHasKey('Content-Type', $transport->requests[1]['headers']);
+        $this->assertNull($client->getOption('headers'));
+    }
 }

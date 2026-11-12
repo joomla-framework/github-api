@@ -135,7 +135,7 @@ final class RequestHeadersHttp extends Http
      */
     public function post($url, $data, array $headers = [], $timeout = null)
     {
-        return $this->withHeaders(fn () => $this->client->post($url, $data, $headers, $timeout));
+        return $this->withHeaders(fn () => $this->client->post($url, $data, $headers, $timeout), $data);
     }
 
     /**
@@ -143,7 +143,7 @@ final class RequestHeadersHttp extends Http
      */
     public function put($url, $data, array $headers = [], $timeout = null)
     {
-        return $this->withHeaders(fn () => $this->client->put($url, $data, $headers, $timeout));
+        return $this->withHeaders(fn () => $this->client->put($url, $data, $headers, $timeout), $data);
     }
 
     /**
@@ -151,7 +151,7 @@ final class RequestHeadersHttp extends Http
      */
     public function delete($url, array $headers = [], $timeout = null, $data = null)
     {
-        return $this->withHeaders(fn () => $this->client->delete($url, $headers, $timeout, $data));
+        return $this->withHeaders(fn () => $this->client->delete($url, $headers, $timeout, $data), $data);
     }
 
     /**
@@ -167,7 +167,7 @@ final class RequestHeadersHttp extends Http
      */
     public function patch($url, $data, array $headers = [], $timeout = null)
     {
-        return $this->withHeaders(fn () => $this->client->patch($url, $data, $headers, $timeout));
+        return $this->withHeaders(fn () => $this->client->patch($url, $data, $headers, $timeout), $data);
     }
 
     /**
@@ -182,21 +182,28 @@ final class RequestHeadersHttp extends Http
      * Run a request with the GitHub headers added to the wrapped client, and restore its headers afterwards.
      *
      * The headers are put on the client's options rather than passed with the request, so that request headers
-     * passed by the caller keep precedence, as they do for the client's own headers.
+     * passed by the caller keep precedence, as they do for the client's own headers. A string body is sent as JSON
+     * unless a content type is given.
      *
      * @param   callable  $request  Callback sending the request.
+     * @param   mixed     $data     The request body.
      *
      * @return  mixed  The response.
      *
      * @since   __DEPLOY_VERSION__
      */
-    private function withHeaders(callable $request)
+    private function withHeaders(callable $request, $data = null)
     {
         $original = $this->client->getOption('headers');
         $headers  = (array) ($original ?? []);
         $existing = array_change_key_case($headers, \CASE_LOWER);
+        $added    = ($this->headers)();
 
-        foreach (($this->headers)() as $name => $value) {
+        if (\is_string($data)) {
+            $added['Content-Type'] = 'application/json';
+        }
+
+        foreach ($added as $name => $value) {
             if (!isset($existing[strtolower($name)])) {
                 $headers[$name] = $value;
             }

@@ -24,8 +24,9 @@ $options->set('gh.token_scheme', 'Bearer');
 $github = new Github($options);
 ```
 
-Every request also sends `Accept: application/vnd.github+json`. A header set on the HTTP client (its `headers`
-option) or passed with a request takes precedence over these defaults.
+Every request also sends `Accept: application/vnd.github+json`, and a JSON request body is sent with
+`Content-Type: application/json`. A header set on the HTTP client (its `headers` option) or passed with a request
+takes precedence over these defaults.
 
 GitHub removed password authentication for the API in November 2020; `api.username` and `api.password` only work
 against GitHub Enterprise Server instances that still accept it. They are sent in the `Authorization` header, not in
