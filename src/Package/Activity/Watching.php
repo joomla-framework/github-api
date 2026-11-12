@@ -143,9 +143,17 @@ class Watching extends AbstractPackage
      *
      * @since   1.0
      * @throws  \UnexpectedValueException
+     * @deprecated  5.0 GitHub has replaced the legacy /user/subscriptions routes. Use getSubscription() instead.
      */
     public function check($owner, $repo)
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, use getSubscription() instead.',
+            __METHOD__
+        );
+
         // Build the request path.
         $path = '/user/subscriptions/' . $owner . '/' . $repo;
 
@@ -175,9 +183,17 @@ class Watching extends AbstractPackage
      * @return  object
      *
      * @since   1.0
+     * @deprecated  5.0 GitHub has replaced the legacy /user/subscriptions routes. Use setSubscription() instead.
      */
     public function watch($owner, $repo)
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, use setSubscription() instead.',
+            __METHOD__
+        );
+
         // Build the request path.
         $path = '/user/subscriptions/' . $owner . '/' . $repo;
 
@@ -198,9 +214,17 @@ class Watching extends AbstractPackage
      * @return  object
      *
      * @since   1.0
+     * @deprecated  5.0 GitHub has replaced the legacy /user/subscriptions routes. Use deleteSubscription() instead.
      */
     public function unwatch($owner, $repo)
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, use deleteSubscription() instead.',
+            __METHOD__
+        );
+
         // Build the request path.
         $path = '/user/subscriptions/' . $owner . '/' . $repo;
 
