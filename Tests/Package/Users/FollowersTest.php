@@ -261,7 +261,7 @@ class FollowersTest extends GitHubTestCase
 
         $this->client->expects($this->once())
             ->method('get')
-            ->with('/user/{user}/following/{target}')
+            ->with('/users/{user}/following/{target}')
             ->willReturn($this->response);
 
         $this->assertThat(
@@ -287,7 +287,7 @@ class FollowersTest extends GitHubTestCase
 
         $this->client->expects($this->once())
             ->method('get')
-            ->with('/user/{user}/following/{target}')
+            ->with('/users/{user}/following/{target}')
             ->willReturn($this->response);
 
         $this->assertThat(
@@ -315,7 +315,7 @@ class FollowersTest extends GitHubTestCase
 
         $this->client->expects($this->once())
             ->method('get')
-            ->with('/user/{user}/following/{target}')
+            ->with('/users/{user}/following/{target}')
             ->willReturn($this->response);
 
         $this->assertThat(
