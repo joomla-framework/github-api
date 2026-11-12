@@ -92,7 +92,10 @@ class HooksTest extends GitHubTestCase
 
         $this->client->expects($this->once())
             ->method('post')
-            ->with('/orgs/joomla/hooks')
+            ->with(
+                '/orgs/joomla/hooks',
+                '{"name":"web","active":true,"config":{"url":"{url}","content_type":"json","insecure_ssl":0,"secret":"{secret}"},"events":["push"]}'
+            )
             ->willReturn($this->response);
 
         $this->assertThat(
