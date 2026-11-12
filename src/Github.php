@@ -53,41 +53,15 @@ class Github
      */
     protected $client;
 
-    /*
-     * Lazily instantiated API package objects, declared here so PHP 8.2+ does not treat
-     * them as deprecated dynamic properties when __get() populates them.
+    /**
+     * The lazily created API objects, keyed by name.
+     *
+     * Kept in an array instead of dynamic properties, which are deprecated since PHP 8.2.
+     *
+     * @var    array<string, mixed>
+     * @since  __DEPLOY_VERSION__
      */
-    private ?Package\Activity $activity = null;
-
-    private ?Package\Authorization $authorization = null;
-
-    private ?Package\Data $data = null;
-
-    private ?Package\Emojis $emojis = null;
-
-    private ?Package\Gists $gists = null;
-
-    private ?Package\Gitignore $gitignore = null;
-
-    private ?Package\Graphql $graphql = null;
-
-    private ?Package\Issues $issues = null;
-
-    private ?Package\Markdown $markdown = null;
-
-    private ?Package\Meta $meta = null;
-
-    private ?Package\Orgs $orgs = null;
-
-    private ?Package\Pulls $pulls = null;
-
-    private ?Package\Repositories $repositories = null;
-
-    private ?Package\Search $search = null;
-
-    private ?Package\Users $users = null;
-
-    private ?Package\Zen $zen = null;
+    private array $packages = [];
 
     /**
      * Constructor.
@@ -126,17 +100,60 @@ class Github
      */
     public function __get($name)
     {
+        if (isset($this->packages[$name])) {
+            return $this->packages[$name];
+        }
+
         $class = 'Joomla\\Github\\Package\\' . ucfirst($name);
 
         if (class_exists($class)) {
-            if (isset($this->$name) == false) {
-                $this->$name = new $class($this->options, $this->client);
-            }
-
-            return $this->$name;
+            return $this->packages[$name] = new $class($this->options, $this->client);
         }
 
         throw new \InvalidArgumentException(sprintf('Argument %s produced an invalid class name: %s', $name, $class));
+    }
+
+    /**
+     * Magic method to replace an API object, e.g. with a mock in tests
+     *
+     * @param   string  $name   Name of the property
+     * @param   mixed   $value  The object to use
+     *
+     * @return  void
+     *
+     * @since   __DEPLOY_VERSION__
+     */
+    public function __set($name, $value)
+    {
+        $this->packages[$name] = $value;
+    }
+
+    /**
+     * Magic method to check whether an API object has been created or set
+     *
+     * @param   string  $name  Name of the property
+     *
+     * @return  boolean
+     *
+     * @since   __DEPLOY_VERSION__
+     */
+    public function __isset($name)
+    {
+        return isset($this->packages[$name]);
+    }
+
+    /**
+     * Magic method to remove an API object, so that it is created again on the next access
+     *
+     * @param   string  $name  Name of the property
+     *
+     * @return  void
+     *
+     * @since   __DEPLOY_VERSION__
+     */
+    public function __unset($name)
+    {
+        unset($this->packages[$name]);
     }
 
     /**
