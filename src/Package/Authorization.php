@@ -19,7 +19,8 @@ use Joomla\Uri\Uri;
  * @documentation  http://developer.github.com/v3/oauth/
  * @documentation  http://developer.github.com/v3/oauth_authorizations/
  *
- * @note   The methods in this class are only accessible with Basic Authentication
+ * @note   GitHub has removed the OAuth Authorizations API and password authentication for the API. Only
+ *         getRateLimit(), getAuthorizationLink() and requestToken() still work; the other methods are deprecated.
  * @since  1.0
  */
 class Authorization extends AbstractPackage
@@ -35,9 +36,17 @@ class Authorization extends AbstractPackage
      *
      * @since   1.0
      * @throws  \DomainException
+     * @deprecated  5.0 GitHub has removed the OAuth Authorizations API. Use a token (gh.token) instead.
      */
     public function create(array $scopes = [], $note = '', $url = '')
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, GitHub has removed the OAuth Authorizations API. Use a token (gh.token) instead.',
+            __METHOD__
+        );
+
         // Build the request path.
         $path = '/authorizations';
 
@@ -58,9 +67,17 @@ class Authorization extends AbstractPackage
      *
      * @since   1.0
      * @throws  \DomainException
+     * @deprecated  5.0 GitHub has removed the OAuth Authorizations API. Use a token (gh.token) instead.
      */
     public function delete($id)
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, GitHub has removed the OAuth Authorizations API. Use a token (gh.token) instead.',
+            __METHOD__
+        );
+
         // Build the request path.
         $path = '/authorizations/' . $id;
 
@@ -79,9 +96,17 @@ class Authorization extends AbstractPackage
      *
      * @since   1.5.0
      * @throws  \DomainException
+     * @deprecated  5.0 GitHub has removed the OAuth Authorizations API. Use a token (gh.token) instead.
      */
     public function deleteGrant($id)
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, GitHub has removed the OAuth Authorizations API. Use a token (gh.token) instead.',
+            __METHOD__
+        );
+
         // Build the request path.
         $path = '/authorizations/grants/' . $id;
 
@@ -104,9 +129,17 @@ class Authorization extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      * @throws  \RuntimeException
+     * @deprecated  5.0 GitHub has removed the OAuth Authorizations API. Use a token (gh.token) instead.
      */
     public function edit($id, array $scopes = [], array $addScopes = [], array $removeScopes = [], $note = '', $url = '')
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, GitHub has removed the OAuth Authorizations API. Use a token (gh.token) instead.',
+            __METHOD__
+        );
+
         // Check if more than one scopes array contains data
         $scopesCount = 0;
         $scope       = '';
@@ -159,9 +192,17 @@ class Authorization extends AbstractPackage
      *
      * @since   1.0
      * @throws  \DomainException
+     * @deprecated  5.0 GitHub has removed the OAuth Authorizations API. Use a token (gh.token) instead.
      */
     public function get($id)
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, GitHub has removed the OAuth Authorizations API. Use a token (gh.token) instead.',
+            __METHOD__
+        );
+
         // Build the request path.
         $path = '/authorizations/' . $id;
 
@@ -178,9 +219,17 @@ class Authorization extends AbstractPackage
      *
      * @since   1.5.0
      * @throws  \DomainException
+     * @deprecated  5.0 GitHub has removed the OAuth Authorizations API. Use a token (gh.token) instead.
      */
     public function getGrant($id)
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, GitHub has removed the OAuth Authorizations API. Use a token (gh.token) instead.',
+            __METHOD__
+        );
+
         // Build the request path.
         $path = '/authorizations/grants/' . $id;
 
@@ -195,9 +244,17 @@ class Authorization extends AbstractPackage
      *
      * @since   1.0
      * @throws  \DomainException
+     * @deprecated  5.0 GitHub has removed the OAuth Authorizations API. Use a token (gh.token) instead.
      */
     public function getList()
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, GitHub has removed the OAuth Authorizations API. Use a token (gh.token) instead.',
+            __METHOD__
+        );
+
         // Build the request path.
         $path = '/authorizations';
 
@@ -214,9 +271,17 @@ class Authorization extends AbstractPackage
      *
      * @since   1.5.0
      * @throws  \DomainException
+     * @deprecated  5.0 GitHub has removed the OAuth Authorizations API. Use a token (gh.token) instead.
      */
     public function getListGrants()
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, GitHub has removed the OAuth Authorizations API. Use a token (gh.token) instead.',
+            __METHOD__
+        );
+
         // Build the request path.
         $path = '/authorizations/grants';
 
@@ -358,9 +423,17 @@ class Authorization extends AbstractPackage
      *
      * @since   1.5.0
      * @throws  \DomainException
+     * @deprecated  5.0 GitHub has removed this endpoint. Use DELETE /applications/{client_id}/grant instead.
      */
     public function revokeGrantForApplication($clientId, $accessToken)
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, GitHub has removed this endpoint. Use DELETE /applications/{client_id}/grant instead.',
+            __METHOD__
+        );
+
         // Build the request path.
         $path = "/applications/$clientId/grants/$accessToken";
 

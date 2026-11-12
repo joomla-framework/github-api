@@ -9,6 +9,7 @@ namespace Joomla\Github\Tests;
 
 use Joomla\Github\Package\Repositories\Downloads;
 use Joomla\Github\Tests\Stub\GitHubTestCase;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 
 /**
  * Test class for Downloads.
@@ -42,8 +43,11 @@ class DownloadsTest extends GitHubTestCase
      *
      * @return  void
      */
+    #[IgnoreDeprecations]
     public function testGetList()
     {
+        $this->expectUserDeprecationMessageMatches('/' . preg_quote('Joomla\Github\Package\Repositories\Downloads::getList() is deprecated and will be removed in 5.0', '/') . '/');
+
         $this->client->expects($this->once())
             ->method('get')
             ->with('/repos/joomla/joomla-platform/downloads')

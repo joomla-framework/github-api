@@ -21,7 +21,7 @@ use Joomla\Github\AbstractPackage;
  * @documentation  https://developer.github.com/v3/repos/downloads
  *
  * @since       1.0
- * @deprecated  The Releases API should be used instead
+ * @deprecated  5.0 GitHub has removed the Downloads API. Use the Releases API instead.
  */
 class Downloads extends AbstractPackage
 {
@@ -34,10 +34,17 @@ class Downloads extends AbstractPackage
      * @return  object
      *
      * @since   1.0
-     * @deprecated  The Releases API should be used instead
+     * @deprecated  5.0 GitHub has removed the Downloads API. Use the Releases API instead.
      */
     public function getList($owner, $repo)
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, GitHub has removed the Downloads API. Use the Releases API instead.',
+            __METHOD__
+        );
+
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/downloads';
 
@@ -57,10 +64,17 @@ class Downloads extends AbstractPackage
      * @return  object
      *
      * @since   1.0
-     * @deprecated  The Releases API should be used instead
+     * @deprecated  5.0 GitHub has removed the Downloads API. Use the Releases API instead.
      */
     public function get($owner, $repo, $id)
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, GitHub has removed the Downloads API. Use the Releases API instead.',
+            __METHOD__
+        );
+
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/downloads/' . $id;
 
@@ -87,10 +101,17 @@ class Downloads extends AbstractPackage
      * @note    This API endpoint no longer exists at GitHub
      * @since   1.0
      * @throws  \RuntimeException
-     * @deprecated  The Releases API should be used instead
+     * @deprecated  5.0 GitHub has removed the Downloads API. Use the Releases API instead.
      */
     public function create($owner, $repo, $name, $size, $description = '', $contentType = '')
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, GitHub has removed the Downloads API. Use the Releases API instead.',
+            __METHOD__
+        );
+
         throw new \RuntimeException('The GitHub API no longer supports creating downloads. The Releases API should be used instead.');
     }
 
@@ -137,10 +158,17 @@ class Downloads extends AbstractPackage
      * @note    This API endpoint no longer exists at GitHub
      * @since   1.0
      * @throws  \RuntimeException
-     * @deprecated  The Releases API should be used instead
+     * @deprecated  5.0 GitHub has removed the Downloads API. Use the Releases API instead.
      */
     public function upload($key, $acl, $successActionStatus, $filename, $awsAccessKeyId, $policy, $signature, $contentType, $file)
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, GitHub has removed the Downloads API. Use the Releases API instead.',
+            __METHOD__
+        );
+
         throw new \RuntimeException('The GitHub API no longer supports creating downloads. The Releases API should be used instead.');
     }
 
@@ -154,10 +182,17 @@ class Downloads extends AbstractPackage
      * @return  object
      *
      * @since   1.0
-     * @deprecated  The Releases API should be used instead
+     * @deprecated  5.0 GitHub has removed the Downloads API. Use the Releases API instead.
      */
     public function delete($owner, $repo, $id)
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, GitHub has removed the Downloads API. Use the Releases API instead.',
+            __METHOD__
+        );
+
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/downloads/' . (int) $id;
 

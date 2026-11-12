@@ -33,5 +33,17 @@ class ObjectMock extends AbstractGithubObject
     {
         return parent::fetchUrl($path, $page, $limit);
     }
+
+    /**
+     * Send a GET request for the given path.
+     *
+     * @param   string  $path  The API path.
+     *
+     * @return  mixed
+     */
+    public function request($path)
+    {
+        return $this->processResponse($this->client->get($this->fetchUrl($path)));
+    }
     // @codingStandardsIgnoreEnd
 }

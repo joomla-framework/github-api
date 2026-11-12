@@ -9,7 +9,8 @@
         "php": "^8.3.0",
         "joomla/http": "^4.0",
         "joomla/registry": "^4.0",
-        "joomla/uri": "^4.0"
+        "joomla/uri": "^4.0",
+        "symfony/deprecation-contracts": "^2|^3"
     },
     "require-dev": {
         "phpunit/phpunit": "^12.2.7",

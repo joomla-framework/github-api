@@ -9,6 +9,7 @@ namespace Joomla\Github\Tests;
 
 use Joomla\Github\Package\Authorization;
 use Joomla\Github\Tests\Stub\GitHubTestCase;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 
 /**
  * Test class for Authorization.
@@ -430,8 +431,11 @@ class AuthorizationsTest extends GitHubTestCase
      *
      * @since   1.0
      */
+    #[IgnoreDeprecations]
     public function testGetList()
     {
+        $this->expectUserDeprecationMessageMatches('/' . preg_quote('Joomla\Github\Package\Authorization::getList() is deprecated and will be removed in 5.0', '/') . '/');
+
         $this->client->expects($this->once())
             ->method('get')
             ->with('/authorizations')

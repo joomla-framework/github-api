@@ -62,6 +62,9 @@ abstract class GitHubTestCase extends TestCase
 
         $this->options  = new Registry();
 
+        // An empty API URL keeps the request paths relative, so the tests can assert on the path alone.
+        $this->options->set('api.url', '');
+
         $this->client = $this->createMock(Http::class);
 
         $this->response = $this->getResponseObject($this->sampleString);
