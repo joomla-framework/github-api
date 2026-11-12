@@ -87,7 +87,7 @@ class GistsTest extends GitHubTestCase
         $data = json_encode(
             [
                 'files' => [
-                    'gittest' => ['content' => 'GistContent' . PHP_EOL],
+                    'gittest' => ['content' => file_get_contents(__DIR__ . '/../data/gittest')],
                 ],
                 'public'      => true,
                 'description' => 'This is a gist',
