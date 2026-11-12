@@ -16,22 +16,38 @@ use Joomla\Registry\Registry;
 /**
  * Joomla Framework class for interacting with a GitHub server instance.
  *
- * @property-read  Package\Activity       $activity       GitHub API object for the activity package.
- * @property-read  Package\Authorization  $authorization  GitHub API object for the authorizations package.
- * @property-read  Package\Data           $data           GitHub API object for the data package.
- * @property-read  Package\Emojis         $emojis         GitHub API object for the emojis package.
- * @property-read  Package\Gists          $gists          GitHub API object for the gists package.
- * @property-read  Package\Gitignore      $gitignore      GitHub API object for the gitignore package.
- * @property-read  Package\Graphql        $graphql        GitHub API object for the GraphQL v4 API.
- * @property-read  Package\Issues         $issues         GitHub API object for the issues package.
- * @property-read  Package\Markdown       $markdown       GitHub API object for the markdown package.
- * @property-read  Package\Meta           $meta           GitHub API object for the meta package.
- * @property-read  Package\Orgs           $orgs           GitHub API object for the orgs package.
- * @property-read  Package\Pulls          $pulls          GitHub API object for the pulls package.
- * @property-read  Package\Repositories   $repositories   GitHub API object for the repositories package.
- * @property-read  Package\Search         $search         GitHub API object for the search package.
- * @property-read  Package\Users          $users          GitHub API object for the users package.
- * @property-read  Package\Zen            $zen            GitHub API object for the zen package.
+ * @property-read  Package\Actions          $actions          GitHub API object for the actions package.
+ * @property-read  Package\Activity         $activity         GitHub API object for the activity package.
+ * @property-read  Package\Apps             $apps             GitHub API object for the apps package.
+ * @property-read  Package\Authorization    $authorization    GitHub API object for the authorizations package.
+ * @property-read  Package\Billing          $billing          GitHub API object for the billing package.
+ * @property-read  Package\Checks           $checks           GitHub API object for the checks package.
+ * @property-read  Package\CodeScanning     $codeScanning     GitHub API object for the code scanning package.
+ * @property-read  Package\Codespaces       $codespaces       GitHub API object for the codespaces package.
+ * @property-read  Package\Copilot          $copilot          GitHub API object for the Copilot package.
+ * @property-read  Package\Data             $data             GitHub API object for the data package.
+ * @property-read  Package\Dependabot       $dependabot       GitHub API object for the Dependabot package.
+ * @property-read  Package\DependencyGraph  $dependencyGraph  GitHub API object for the dependency graph package.
+ * @property-read  Package\Emojis           $emojis           GitHub API object for the emojis package.
+ * @property-read  Package\Gists            $gists            GitHub API object for the gists package.
+ * @property-read  Package\Gitignore        $gitignore        GitHub API object for the gitignore package.
+ * @property-read  Package\Graphql          $graphql          GitHub API object for the GraphQL v4 API.
+ * @property-read  Package\Interactions     $interactions     GitHub API object for the interactions package.
+ * @property-read  Package\Issues           $issues           GitHub API object for the issues package.
+ * @property-read  Package\Licenses         $licenses         GitHub API object for the licenses package.
+ * @property-read  Package\Markdown         $markdown         GitHub API object for the markdown package.
+ * @property-read  Package\Meta             $meta             GitHub API object for the meta package.
+ * @property-read  Package\Migrations       $migrations       GitHub API object for the migrations package.
+ * @property-read  Package\Orgs             $orgs             GitHub API object for the orgs package.
+ * @property-read  Package\Packages         $packages         GitHub API object for the packages package.
+ * @property-read  Package\Projects         $projects         GitHub API object for the projects (v2) package.
+ * @property-read  Package\Pulls            $pulls            GitHub API object for the pulls package.
+ * @property-read  Package\Reactions        $reactions        GitHub API object for the reactions package.
+ * @property-read  Package\Repositories     $repositories     GitHub API object for the repositories package.
+ * @property-read  Package\Search           $search           GitHub API object for the search package.
+ * @property-read  Package\SecretScanning   $secretScanning   GitHub API object for the secret scanning package.
+ * @property-read  Package\Users            $users            GitHub API object for the users package.
+ * @property-read  Package\Zen              $zen              GitHub API object for the zen package.
  *
  * @since  1.0
  */
