@@ -31,7 +31,7 @@ class Keys extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getListUser($user)
+    public function getListUser(string $user)
     {
         // Build the request path.
         $path = '/users/' . $user . '/keys';
@@ -71,7 +71,7 @@ class Keys extends AbstractPackage
      *
      * @since   1.0
      */
-    public function get($id)
+    public function get(int $id)
     {
         // Build the request path.
         $path = '/users/keys/' . $id;
@@ -91,7 +91,7 @@ class Keys extends AbstractPackage
      *
      * @since   1.0
      */
-    public function create($title, $key)
+    public function create(string $title, string $key)
     {
         // Build the request path.
         $path = '/users/keys';
@@ -116,7 +116,7 @@ class Keys extends AbstractPackage
      *
      * @since   1.0
      */
-    public function delete($id)
+    public function delete(int $id)
     {
         // Build the request path.
         $path = '/users/keys/' . (int) $id;

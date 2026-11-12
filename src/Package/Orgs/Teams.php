@@ -32,7 +32,7 @@ class Teams extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getList($org)
+    public function getList(string $org)
     {
         // Build the request path.
         $path = '/orgs/' . $org . '/teams';
@@ -60,7 +60,7 @@ class Teams extends AbstractPackage
      * @since   1.0
      * @throws  \UnexpectedValueException
      */
-    public function create($org, $name, array $repoNames = [], $permission = '')
+    public function create(string $org, string $name, array $repoNames = [], string $permission = '')
     {
         // Build the request path.
         $path = '/orgs/' . $org . '/teams';
@@ -100,7 +100,7 @@ class Teams extends AbstractPackage
      *
      * @since   1.4.0
      */
-    public function getUserTeams($page = 0, $limit = 0)
+    public function getUserTeams(int $page = 0, int $limit = 0)
     {
         // Build the request path.
         $path = '/user/teams';

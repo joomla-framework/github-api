@@ -49,7 +49,7 @@ class Repositories extends AbstractPackage
      * @since   1.0
      * @throws  \RuntimeException
      */
-    public function getListOwn($type = 'all', $sort = 'full_name', $direction = '')
+    public function getListOwn(string $type = 'all', string $sort = 'full_name', string $direction = '')
     {
         if (\in_array($type, ['all', 'owner', 'public', 'private', 'member']) == false) {
             throw new \RuntimeException('Invalid type');
@@ -91,7 +91,7 @@ class Repositories extends AbstractPackage
      * @since   1.0
      * @throws  \RuntimeException
      */
-    public function getListUser($user, $type = 'all', $sort = 'full_name', $direction = '')
+    public function getListUser(string $user, string $type = 'all', string $sort = 'full_name', string $direction = '')
     {
         if (\in_array($type, ['all', 'owner', 'member']) == false) {
             throw new \RuntimeException('Invalid type');
@@ -131,7 +131,7 @@ class Repositories extends AbstractPackage
      * @since   1.0
      * @throws  \RuntimeException
      */
-    public function getListOrg($org, $type = 'all')
+    public function getListOrg(string $org, string $type = 'all')
     {
         if (\in_array($type, ['all', 'public', 'private', 'forks', 'sources', 'member']) == false) {
             throw new \RuntimeException('Invalid type');
@@ -157,7 +157,7 @@ class Repositories extends AbstractPackage
      * @since   1.0
      * @throws  \RuntimeException
      */
-    public function getList($id = 0)
+    public function getList(int $id = 0)
     {
         // Build the request path.
         $uri = $this->fetchUrl('/repositories');
@@ -195,17 +195,17 @@ class Repositories extends AbstractPackage
      * @since   1.0
      */
     public function create(
-        $name,
-        $org = '',
-        $description = '',
-        $homepage = '',
-        $private = false,
-        $hasIssues = false,
-        $hasWiki = false,
-        $hasDownloads = false,
-        $teamId = 0,
-        $autoInit = false,
-        $gitignoreTemplate = ''
+        string $name,
+        string $org = '',
+        string $description = '',
+        string $homepage = '',
+        bool $private = false,
+        bool $hasIssues = false,
+        bool $hasWiki = false,
+        bool $hasDownloads = false,
+        int $teamId = 0,
+        bool $autoInit = false,
+        string $gitignoreTemplate = ''
     ) {
         $path = ($org)
             // Create a repository for an organization
@@ -243,7 +243,7 @@ class Repositories extends AbstractPackage
      *
      * @since   1.0
      */
-    public function get($owner, $repo)
+    public function get(string $owner, string $repo)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo;
@@ -274,16 +274,16 @@ class Repositories extends AbstractPackage
      * @since   1.0
      */
     public function edit(
-        $owner,
-        $repo,
-        $name,
-        $description = '',
-        $homepage = '',
-        $private = false,
-        $hasIssues = false,
-        $hasWiki = false,
-        $hasDownloads = false,
-        $defaultBranch = ''
+        string $owner,
+        string $repo,
+        string $name,
+        string $description = '',
+        string $homepage = '',
+        bool $private = false,
+        bool $hasIssues = false,
+        bool $hasWiki = false,
+        bool $hasDownloads = false,
+        string $defaultBranch = ''
     ) {
         $path = '/repos/' . $owner . '/' . $repo;
 
@@ -315,7 +315,7 @@ class Repositories extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getListContributors($owner, $repo, $anon = false)
+    public function getListContributors(string $owner, string $repo, bool $anon = false)
     {
         // Build the request path.
         $uri = $this->fetchUrl('/repos/' . $owner . '/' . $repo . '/contributors');
@@ -341,7 +341,7 @@ class Repositories extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getListLanguages($owner, $repo)
+    public function getListLanguages(string $owner, string $repo)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/languages';
@@ -362,7 +362,7 @@ class Repositories extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getListTeams($owner, $repo)
+    public function getListTeams(string $owner, string $repo)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/teams';
@@ -383,7 +383,7 @@ class Repositories extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getListTags($owner, $repo)
+    public function getListTags(string $owner, string $repo)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/tags';
@@ -406,7 +406,7 @@ class Repositories extends AbstractPackage
      *
      * @since   1.0
      */
-    public function delete($owner, $repo)
+    public function delete(string $owner, string $repo)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo;

@@ -32,7 +32,7 @@ class Forks extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function create($owner, $repo, $org = '')
+    public function create(string $owner, string $repo, string $org = '')
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/forks';
@@ -62,7 +62,7 @@ class Forks extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function getList($owner, $repo, $page = 0, $limit = 0)
+    public function getList(string $owner, string $repo, int $page = 0, int $limit = 0)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/forks';

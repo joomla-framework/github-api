@@ -37,7 +37,7 @@ class Contents extends AbstractPackage
      * @since   1.0
      * @throws  \UnexpectedValueException
      */
-    public function getReadme($owner, $repo, $ref = '')
+    public function getReadme(string $owner, string $repo, string $ref = '')
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/readme';
@@ -66,7 +66,7 @@ class Contents extends AbstractPackage
      *
      * @since   1.0
      */
-    public function get($owner, $repo, $path, $ref = '')
+    public function get(string $owner, string $repo, string $path, string $ref = '')
     {
         // Build the request path.
         $rPath = '/repos/' . $owner . '/' . $repo . '/contents/' . $path;
@@ -103,7 +103,7 @@ class Contents extends AbstractPackage
      * @since   1.0
      * @throws  \UnexpectedValueException
      */
-    public function getArchiveLink($owner, $repo, $archiveFormat = 'zipball', $ref = '')
+    public function getArchiveLink(string $owner, string $repo, string $archiveFormat = 'zipball', string $ref = '')
     {
         if (\in_array($archiveFormat, ['tarball', 'zipball']) == false) {
             throw new \UnexpectedValueException('Archive format must be either "tarball" or "zipball".');
@@ -150,16 +150,16 @@ class Contents extends AbstractPackage
      * @throws  \UnexpectedValueException
      */
     public function create(
-        $owner,
-        $repo,
-        $path,
-        $message,
-        $content,
-        $branch = 'master',
-        $authorName = '',
-        $authorEmail = '',
-        $committerName = '',
-        $committerEmail = ''
+        string $owner,
+        string $repo,
+        string $path,
+        string $message,
+        string $content,
+        string $branch = 'master',
+        string $authorName = '',
+        string $authorEmail = '',
+        string $committerName = '',
+        string $committerEmail = ''
     ) {
         // Build the request path.
         $route = '/repos/' . $owner . '/' . $repo . '/contents/' . $path;
@@ -225,17 +225,17 @@ class Contents extends AbstractPackage
      * @throws  \UnexpectedValueException
      */
     public function update(
-        $owner,
-        $repo,
-        $path,
-        $message,
-        $content,
-        $sha,
-        $branch = 'master',
-        $authorName = '',
-        $authorEmail = '',
-        $committerName = '',
-        $committerEmail = ''
+        string $owner,
+        string $repo,
+        string $path,
+        string $message,
+        string $content,
+        string $sha,
+        string $branch = 'master',
+        string $authorName = '',
+        string $authorEmail = '',
+        string $committerName = '',
+        string $committerEmail = ''
     ) {
         // Build the request path.
         $route = '/repos/' . $owner . '/' . $repo . '/contents/' . $path;
@@ -294,16 +294,16 @@ class Contents extends AbstractPackage
      * @throws  \UnexpectedValueException
      */
     public function delete(
-        $owner,
-        $repo,
-        $path,
-        $message,
-        $sha,
-        $branch = 'master',
-        $authorName = '',
-        $authorEmail = '',
-        $committerName = '',
-        $committerEmail = ''
+        string $owner,
+        string $repo,
+        string $path,
+        string $message,
+        string $sha,
+        string $branch = 'master',
+        string $authorName = '',
+        string $authorEmail = '',
+        string $committerName = '',
+        string $committerEmail = ''
     ) {
         // Build the request path.
         $route = '/repos/' . $owner . '/' . $repo . '/contents/' . $path;

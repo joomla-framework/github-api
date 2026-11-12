@@ -44,7 +44,7 @@ class Statistics extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getListContributors($owner, $repo)
+    public function getListContributors(string $owner, string $repo)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/stats/contributors';
@@ -66,7 +66,7 @@ class Statistics extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getActivityData($owner, $repo)
+    public function getActivityData(string $owner, string $repo)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/stats/commit_activity';
@@ -87,7 +87,7 @@ class Statistics extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getCodeFrequency($owner, $repo)
+    public function getCodeFrequency(string $owner, string $repo)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/stats/code_frequency';
@@ -112,7 +112,7 @@ class Statistics extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getParticipation($owner, $repo)
+    public function getParticipation(string $owner, string $repo)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/stats/participation';
@@ -141,7 +141,7 @@ class Statistics extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getPunchCard($owner, $repo)
+    public function getPunchCard(string $owner, string $repo)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/stats/punch_card';
@@ -161,7 +161,7 @@ class Statistics extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    protected function processResponse(Response $response, $expectedCode = 200)
+    protected function processResponse(Response $response, $expectedCode = 200): mixed
     {
         if ($response->getStatusCode() == 202) {
             throw new \DomainException(

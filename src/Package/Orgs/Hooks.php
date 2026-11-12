@@ -32,7 +32,7 @@ class Hooks extends AbstractPackage
      *
      * @since   1.4.0
      */
-    public function getList($org)
+    public function getList(string $org)
     {
         // Build the request path.
         $path = "/orgs/$org/hooks";
@@ -52,7 +52,7 @@ class Hooks extends AbstractPackage
      *
      * @since   1.4.0
      */
-    public function get($org, $id)
+    public function get(string $org, int $id)
     {
         // Build the request path.
         $path = "/orgs/$org/hooks/" . (int) $id;
@@ -81,7 +81,7 @@ class Hooks extends AbstractPackage
      * @since   1.4.0
      * @throws  \UnexpectedValueException
      */
-    public function create($org, $url, $contentType = 'form', $secret = null, $insecureSsl = false, array $events = ['push'], $active = true)
+    public function create(string $org, string $url, string $contentType = 'form', ?string $secret = null, bool $insecureSsl = false, array $events = ['push'], bool $active = true)
     {
         // Build the request path.
         $path = "/orgs/$org/hooks";
@@ -134,7 +134,7 @@ class Hooks extends AbstractPackage
      * @since   1.4.0
      * @throws  \DomainException
      */
-    public function ping($org, $id)
+    public function ping(string $org, int $id)
     {
         // Build the request path.
         $path = "/orgs/$org/hooks/$id/pings";
@@ -155,7 +155,7 @@ class Hooks extends AbstractPackage
      *
      * @since   1.4.0
      */
-    public function delete($org, $id)
+    public function delete(string $org, int $id)
     {
         // Build the request path.
         $path = "/orgs/$org/hooks/$id";

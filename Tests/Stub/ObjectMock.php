@@ -29,7 +29,7 @@ class ObjectMock extends AbstractGithubObject
      *
      * @since   1.0
      */
-    public function fetchUrl($path, $page = 0, $limit = 0)
+    public function fetchUrl(string $path, int $page = 0, int $limit = 0): \Joomla\Uri\Uri
     {
         return parent::fetchUrl($path, $page, $limit);
     }

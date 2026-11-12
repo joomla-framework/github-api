@@ -30,7 +30,7 @@ class Keys extends AbstractPackage
      *
      * @return object
      */
-    public function getList($owner, $repo)
+    public function getList(string $owner, string $repo)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/keys';
@@ -51,7 +51,7 @@ class Keys extends AbstractPackage
      *
      * @return object
      */
-    public function get($owner, $repo, $id)
+    public function get(string $owner, string $repo, int $id)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/keys/' . (int) $id;
@@ -73,7 +73,7 @@ class Keys extends AbstractPackage
      *
      * @return object
      */
-    public function create($owner, $repo, $title, $key)
+    public function create(string $owner, string $repo, string $title, string $key)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/keys';
@@ -102,7 +102,7 @@ class Keys extends AbstractPackage
      *
      * @return object
      */
-    public function edit($owner, $repo, $id, $title, $key)
+    public function edit(string $owner, string $repo, int $id, string $title, string $key)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/keys/' . (int) $id;
@@ -128,7 +128,7 @@ class Keys extends AbstractPackage
      *
      * @return boolean
      */
-    public function delete($owner, $repo, $id)
+    public function delete(string $owner, string $repo, int $id)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/keys/' . (int) $id;

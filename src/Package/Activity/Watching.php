@@ -30,7 +30,7 @@ class Watching extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getList($owner, $repo)
+    public function getList(string $owner, string $repo)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/subscribers';
@@ -51,7 +51,7 @@ class Watching extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getRepositories($user = '')
+    public function getRepositories(string $user = '')
     {
         // Build the request path.
         $path = ($user)
@@ -73,7 +73,7 @@ class Watching extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getSubscription($owner, $repo)
+    public function getSubscription(string $owner, string $repo)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/subscription';
@@ -95,7 +95,7 @@ class Watching extends AbstractPackage
      *
      * @since   1.0
      */
-    public function setSubscription($owner, $repo, $subscribed, $ignored)
+    public function setSubscription(string $owner, string $repo, bool $subscribed, bool $ignored)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/subscription';
@@ -120,7 +120,7 @@ class Watching extends AbstractPackage
      *
      * @since   1.0
      */
-    public function deleteSubscription($owner, $repo)
+    public function deleteSubscription(string $owner, string $repo)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/subscription';

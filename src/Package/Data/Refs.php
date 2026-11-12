@@ -32,7 +32,7 @@ class Refs extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function get($user, $repo, $ref)
+    public function get(string $user, string $repo, string $ref)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/git/refs/' . $ref;
@@ -55,7 +55,7 @@ class Refs extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function getList($user, $repo, $namespace = '', $page = 0, $limit = 0)
+    public function getList(string $user, string $repo, string $namespace = '', int $page = 0, int $limit = 0)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/git/refs';
@@ -81,7 +81,7 @@ class Refs extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function create($user, $repo, $ref, $sha)
+    public function create(string $user, string $repo, string $ref, string $sha)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/git/refs';
@@ -112,7 +112,7 @@ class Refs extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function edit($user, $repo, $ref, $sha, $force = false)
+    public function edit(string $user, string $repo, string $ref, string $sha, bool $force = false)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/git/refs/' . $ref;
@@ -145,7 +145,7 @@ class Refs extends AbstractPackage
      *
      * @since   1.0
      */
-    public function delete($owner, $repo, $ref)
+    public function delete(string $owner, string $repo, string $ref)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/git/refs/' . $ref;

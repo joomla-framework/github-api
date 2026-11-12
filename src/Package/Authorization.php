@@ -69,7 +69,7 @@ class Authorization extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getAuthorizationLink($clientId, $redirectUri = '', $scope = '', $state = '')
+    public function getAuthorizationLink(string $clientId, string $redirectUri = '', string $scope = '', string $state = ''): string
     {
         $uri = new Uri('https://github.com/login/oauth/authorize');
 
@@ -104,7 +104,7 @@ class Authorization extends AbstractPackage
      * @since   1.0
      * @throws  \UnexpectedValueException
      */
-    public function requestToken($clientId, $clientSecret, $code, $redirectUri = '', $format = '')
+    public function requestToken(string $clientId, string $clientSecret, string $code, string $redirectUri = '', string $format = '')
     {
         $uri = 'https://github.com/login/oauth/access_token';
 

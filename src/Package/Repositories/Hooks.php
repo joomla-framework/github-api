@@ -36,7 +36,7 @@ class Hooks extends AbstractPackage
      * @throws  \DomainException
      * @throws  \RuntimeException
      */
-    public function create($user, $repo, $name, $config, array $events = ['push'], $active = true)
+    public function create(string $user, string $repo, string $name, array $config, array $events = ['push'], bool $active = true)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/hooks';
@@ -70,7 +70,7 @@ class Hooks extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function delete($user, $repo, $id)
+    public function delete(string $user, string $repo, int $id)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/hooks/' . $id;
@@ -100,7 +100,7 @@ class Hooks extends AbstractPackage
      * @throws  \DomainException
      * @throws  \RuntimeException
      */
-    public function edit($user, $repo, $id, $name, $config, array $events = ['push'], array $addEvents = [], array $removeEvents = [], $active = true)
+    public function edit(string $user, string $repo, int $id, string $name, array $config, array $events = ['push'], array $addEvents = [], array $removeEvents = [], bool $active = true)
     {
         // Check to ensure all events are in the allowed list
         foreach ($events as $event) {
@@ -152,7 +152,7 @@ class Hooks extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function get($user, $repo, $id)
+    public function get(string $user, string $repo, int $id)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/hooks/' . $id;
@@ -173,7 +173,7 @@ class Hooks extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function getList($user, $repo)
+    public function getList(string $user, string $repo)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/hooks';
@@ -195,7 +195,7 @@ class Hooks extends AbstractPackage
      * @since   1.4.0
      * @throws  \DomainException
      */
-    public function ping($user, $repo, $id)
+    public function ping(string $user, string $repo, int $id)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/hooks/' . $id . '/pings';
@@ -218,7 +218,7 @@ class Hooks extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function test($user, $repo, $id)
+    public function test(string $user, string $repo, int $id)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/hooks/' . $id . '/test';

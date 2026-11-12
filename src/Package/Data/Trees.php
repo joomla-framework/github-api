@@ -31,7 +31,7 @@ class Trees extends AbstractPackage
      *
      * @return object
      */
-    public function get($owner, $repo, $sha)
+    public function get(string $owner, string $repo, string $sha)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/git/trees/' . $sha;
@@ -52,7 +52,7 @@ class Trees extends AbstractPackage
      *
      * @return object
      */
-    public function getRecursively($owner, $repo, $sha)
+    public function getRecursively(string $owner, string $repo, string $sha)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/git/trees/' . $sha . '?recursive=1';
@@ -94,7 +94,7 @@ class Trees extends AbstractPackage
      *
      * @since   1.0
      */
-    public function create($owner, $repo, $tree, $baseTree = '')
+    public function create(string $owner, string $repo, array $tree, string $baseTree = '')
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/git/trees';

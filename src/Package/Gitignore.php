@@ -54,7 +54,7 @@ class Gitignore extends AbstractPackage
      * @since   1.0
      * @throws  UnexpectedResponseException
      */
-    public function get($name, $raw = false)
+    public function get(string $name, bool $raw = false)
     {
         // Build the request path.
         $path = '/gitignore/templates/' . $name;

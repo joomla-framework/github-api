@@ -38,7 +38,7 @@ class Comments extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function getList($owner, $repo, $issueId, $page = 0, $limit = 0, \DateTimeInterface $since = null)
+    public function getList(string $owner, string $repo, int $issueId, int $page = 0, int $limit = 0, \DateTimeInterface $since = null)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/issues/' . (int) $issueId . '/comments';
@@ -68,7 +68,7 @@ class Comments extends AbstractPackage
      * @throws  \UnexpectedValueException
      * @throws  \DomainException
      */
-    public function getRepositoryList($owner, $repo, $sort = 'created', $direction = 'asc', \DateTimeInterface $since = null)
+    public function getRepositoryList(string $owner, string $repo, string $sort = 'created', string $direction = 'asc', \DateTimeInterface $since = null)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/issues/comments';
@@ -115,7 +115,7 @@ class Comments extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function get($owner, $repo, $id)
+    public function get(string $owner, string $repo, int $id)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/issues/comments/' . (int) $id;
@@ -139,7 +139,7 @@ class Comments extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function edit($user, $repo, $commentId, $body)
+    public function edit(string $user, string $repo, int $commentId, string $body)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/issues/comments/' . (int) $commentId;
@@ -170,7 +170,7 @@ class Comments extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function create($user, $repo, $issueId, $body)
+    public function create(string $user, string $repo, int $issueId, string $body)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/issues/' . (int) $issueId . '/comments';
@@ -201,7 +201,7 @@ class Comments extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function delete($user, $repo, $commentId)
+    public function delete(string $user, string $repo, int $commentId)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/issues/comments/' . (int) $commentId;

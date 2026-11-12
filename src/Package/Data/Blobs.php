@@ -35,7 +35,7 @@ class Blobs extends AbstractPackage
      *
      * @since   1.0
      */
-    public function get($owner, $repo, $sha)
+    public function get(string $owner, string $repo, string $sha)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/git/blobs/' . $sha;
@@ -57,7 +57,7 @@ class Blobs extends AbstractPackage
      *
      * @since   1.0
      */
-    public function create($owner, $repo, $content, $encoding = 'utf-8')
+    public function create(string $owner, string $repo, string $content, string $encoding = 'utf-8')
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/git/blobs';

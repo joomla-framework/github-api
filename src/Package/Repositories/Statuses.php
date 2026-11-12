@@ -39,7 +39,7 @@ class Statuses extends AbstractPackage
      *
      * @since   1.0
      */
-    public function create($user, $repo, $sha, $state, $targetUrl = null, $description = null, $context = null)
+    public function create(string $user, string $repo, string $sha, string $state, ?string $targetUrl = null, ?string $description = null, ?string $context = null)
     {
         // Build the request path.
         $path = "/repos/$user/$repo/statuses/$sha";
@@ -83,7 +83,7 @@ class Statuses extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getList($user, $repo, $sha)
+    public function getList(string $user, string $repo, string $sha)
     {
         // Build the request path.
         $path = "/repos/$user/$repo/statuses/$sha";
@@ -103,7 +103,7 @@ class Statuses extends AbstractPackage
      *
      * @since   1.4.0
      */
-    public function getCombinedStatus($user, $repo, $sha)
+    public function getCombinedStatus(string $user, string $repo, string $sha)
     {
         // Build the request path.
         $path = "/repos/$user/$repo/commits/$sha/status";

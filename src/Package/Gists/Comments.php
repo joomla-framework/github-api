@@ -23,7 +23,7 @@ class Comments extends AbstractPackage
     /**
      * Create a comment.
      *
-     * @param   integer  $gistId  The gist number.
+     * @param   string   $gistId  The gist ID.
      * @param   string   $body    The comment body text.
      *
      * @return  object
@@ -31,7 +31,7 @@ class Comments extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function create($gistId, $body)
+    public function create(string $gistId, string $body)
     {
         // Build the request path.
         $path = '/gists/' . (int) $gistId . '/comments';
@@ -57,7 +57,7 @@ class Comments extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function delete($commentId)
+    public function delete(int $commentId): void
     {
         // Build the request path.
         $path = '/gists/comments/' . (int) $commentId;
@@ -77,7 +77,7 @@ class Comments extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function edit($commentId, $body)
+    public function edit(int $commentId, string $body)
     {
         // Build the request path.
         $path = '/gists/comments/' . (int) $commentId;
@@ -103,7 +103,7 @@ class Comments extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function get($commentId)
+    public function get(int $commentId)
     {
         // Build the request path.
         $path = '/gists/comments/' . (int) $commentId;
@@ -115,7 +115,7 @@ class Comments extends AbstractPackage
     /**
      * List comments on a gist.
      *
-     * @param   integer  $gistId  The gist number.
+     * @param   string   $gistId  The gist ID.
      * @param   integer  $page    The page number from which to get items.
      * @param   integer  $limit   The number of items on a page.
      *
@@ -124,7 +124,7 @@ class Comments extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function getList($gistId, $page = 0, $limit = 0)
+    public function getList(string $gistId, int $page = 0, int $limit = 0)
     {
         // Build the request path.
         $path = '/gists/' . (int) $gistId . '/comments';

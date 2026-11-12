@@ -49,7 +49,7 @@ class Emails extends AbstractPackage
      *
      * @since   1.0
      */
-    public function add($email)
+    public function add(string|array $email)
     {
         // Build the request path.
         $path = '/user/emails';
@@ -69,7 +69,7 @@ class Emails extends AbstractPackage
      *
      * @since   1.0
      */
-    public function delete($email)
+    public function delete(string|array $email)
     {
         // Build the request path.
         $path = '/user/emails';

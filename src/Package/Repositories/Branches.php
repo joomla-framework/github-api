@@ -30,7 +30,7 @@ class Branches extends AbstractPackage
      *
      * @since   1.4.0
      */
-    public function getList($owner, $repo)
+    public function getList(string $owner, string $repo)
     {
         // Build the request path.
         $path = "/repos/$owner/$repo/branches";
@@ -52,7 +52,7 @@ class Branches extends AbstractPackage
      *
      * @since   1.4.0
      */
-    public function get($owner, $repo, $branch)
+    public function get(string $owner, string $repo, string $branch)
     {
         // Build the request path.
         $path = "/repos/$owner/$repo/branches/$branch";

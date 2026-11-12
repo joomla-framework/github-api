@@ -20,3 +20,27 @@ against the live API. They were deprecated in 4.x and are removed.
 | `Package\Users\Keys::edit()` (GitHub has no endpoint to update a key) | Delete the key and create a new one |
 
 `Authorization::getRateLimit()`, `getAuthorizationLink()` and `requestToken()` are kept.
+
+### Native parameter, return and property types
+
+The public and protected methods now declare native parameter types, taken from their doc blocks: names, paths
+and SHAs are `string`, IDs and page numbers are `int`, flags are `bool`. Code that calls the methods with
+`declare(strict_types=1)` must pass matching types, e.g. `(int) $id` instead of a numeric string. Classes that extend
+a package class and override one of its methods must declare compatible signatures.
+
+Some doc blocks were wrong and have been corrected along the way, so the types follow GitHub's API:
+
+* Gist IDs are `string` (they are hex strings such as `aa5a315d61ae9438b18d`).
+* `Issues::create()` and `edit()` take the milestone as `int|string|null`.
+* `Issues\Milestones::create()` and `edit()` take the title as `string`.
+* `Pulls\Comments::create()` takes the position as `int`.
+* `Repositories\Releases::edit()` takes `$body` as `string` and `$draft` and `$preRelease` as `bool`.
+* `Data\Trees::create()` takes the tree as an array of entries.
+
+Return types are declared where the method always returns the same type (`bool` for the `check…()`/`is…()`
+methods, `string`, `void`), and for `AbstractGithubObject::fetchUrl(): Uri`, `processResponse(): mixed`,
+`Github::getOption(): mixed` and `Github::setOption(): static`. Methods that return the decoded JSON response have
+no return type, because it is an object, an array or `null` depending on the endpoint.
+
+The properties `$options`, `$client`, `$package` and `$hookEvents` are typed; a subclass that redeclares one of them
+must use the same type.
