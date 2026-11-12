@@ -9,6 +9,7 @@ namespace Joomla\Github\Tests;
 
 use Joomla\Github\Package\Activity\Watching;
 use Joomla\Github\Tests\Stub\GitHubTestCase;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 
 /**
  * Test class for the GitHub API package.
@@ -165,8 +166,11 @@ class WatchingTest extends GitHubTestCase
      *
      * @return  void
      */
+    #[IgnoreDeprecations]
     public function testCheck()
     {
+        $this->expectUserDeprecationMessageMatches('/' . preg_quote('Joomla\Github\Package\Activity\Watching::check() is deprecated and will be removed in 5.0', '/') . '/');
+
         $this->response = $this->getResponseObject('', 204);
 
         $this->client->expects($this->once())
@@ -224,8 +228,11 @@ class WatchingTest extends GitHubTestCase
      *
      * @return  void
      */
+    #[IgnoreDeprecations]
     public function testWatch()
     {
+        $this->expectUserDeprecationMessageMatches('/' . preg_quote('Joomla\Github\Package\Activity\Watching::watch() is deprecated and will be removed in 5.0', '/') . '/');
+
         $this->response = $this->getResponseObject('', 204);
 
         $this->client->expects($this->once())
@@ -246,8 +253,11 @@ class WatchingTest extends GitHubTestCase
      *
      * @return  void
      */
+    #[IgnoreDeprecations]
     public function testUnwatch()
     {
+        $this->expectUserDeprecationMessageMatches('/' . preg_quote('Joomla\Github\Package\Activity\Watching::unwatch() is deprecated and will be removed in 5.0', '/') . '/');
+
         $this->response = $this->getResponseObject('', 204);
 
         $this->client->expects($this->once())
