@@ -23,7 +23,7 @@ class Comments extends AbstractPackage
     /**
      * Create a comment.
      *
-     * @param   integer  $gistId  The gist number.
+     * @param   string   $gistId  The gist ID.
      * @param   string   $body    The comment body text.
      *
      * @return  object
@@ -34,7 +34,7 @@ class Comments extends AbstractPackage
     public function create($gistId, $body)
     {
         // Build the request path.
-        $path = '/gists/' . (int) $gistId . '/comments';
+        $path = '/gists/' . rawurlencode($gistId) . '/comments';
 
         // Build the request data.
         $data = json_encode(
@@ -115,7 +115,7 @@ class Comments extends AbstractPackage
     /**
      * List comments on a gist.
      *
-     * @param   integer  $gistId  The gist number.
+     * @param   string   $gistId  The gist ID.
      * @param   integer  $page    The page number from which to get items.
      * @param   integer  $limit   The number of items on a page.
      *
@@ -127,7 +127,7 @@ class Comments extends AbstractPackage
     public function getList($gistId, $page = 0, $limit = 0)
     {
         // Build the request path.
-        $path = '/gists/' . (int) $gistId . '/comments';
+        $path = '/gists/' . rawurlencode($gistId) . '/comments';
 
         // Send the request.
         return $this->processResponse($this->client->get($this->fetchUrl($path, $page, $limit)));

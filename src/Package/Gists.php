@@ -56,7 +56,7 @@ class Gists extends AbstractPackage
     /**
      * Delete a gist.
      *
-     * @param   integer  $gistId  The gist number.
+     * @param   string   $gistId  The gist ID.
      *
      * @return  void
      *
@@ -66,7 +66,7 @@ class Gists extends AbstractPackage
     public function delete($gistId)
     {
         // Build the request path.
-        $path = '/gists/' . (int) $gistId;
+        $path = '/gists/' . rawurlencode($gistId);
 
         // Send the request.
         $this->processResponse($this->client->delete($this->fetchUrl($path)), 204);
@@ -75,7 +75,7 @@ class Gists extends AbstractPackage
     /**
      * Edit a gist.
      *
-     * @param   integer  $gistId       The gist number.
+     * @param   string   $gistId       The gist ID.
      * @param   mixed    $files        Either an array of file paths or a single file path as a string.
      * @param   boolean  $public       True if the gist should be public.
      * @param   string   $description  The description of the gist.
@@ -88,7 +88,7 @@ class Gists extends AbstractPackage
     public function edit($gistId, $files = null, $public = null, $description = null)
     {
         // Build the request path.
-        $path = '/gists/' . (int) $gistId;
+        $path = '/gists/' . rawurlencode($gistId);
 
         // Create the data object.
         $data = new \stdClass();
@@ -118,7 +118,7 @@ class Gists extends AbstractPackage
     /**
      * Fork a gist.
      *
-     * @param   integer  $gistId  The gist number.
+     * @param   string   $gistId  The gist ID.
      *
      * @return  object
      *
@@ -128,7 +128,7 @@ class Gists extends AbstractPackage
     public function fork($gistId)
     {
         // Build the request path.
-        $path = '/gists/' . (int) $gistId . '/forks';
+        $path = '/gists/' . rawurlencode($gistId) . '/forks';
 
         // Send the request.
         return $this->processResponse($this->client->post($this->fetchUrl($path), ''), 201);
@@ -137,7 +137,7 @@ class Gists extends AbstractPackage
     /**
      * Get a single gist.
      *
-     * @param   integer  $gistId  The gist number.
+     * @param   string   $gistId  The gist ID.
      *
      * @return  object
      *
@@ -147,7 +147,7 @@ class Gists extends AbstractPackage
     public function get($gistId)
     {
         // Build the request path.
-        $path = '/gists/' . (int) $gistId;
+        $path = '/gists/' . rawurlencode($gistId);
 
         // Send the request.
         return $this->processResponse($this->client->get($this->fetchUrl($path)));
@@ -156,7 +156,7 @@ class Gists extends AbstractPackage
     /**
      * List gist commits.
      *
-     * @param   integer  $gistId  The gist number.
+     * @param   string   $gistId  The gist ID.
      * @param   integer  $page    The page number from which to get items.
      * @param   integer  $limit   The number of items on a page.
      *
@@ -168,7 +168,7 @@ class Gists extends AbstractPackage
     public function getCommitList($gistId, $page = 0, $limit = 0)
     {
         // Build the request path.
-        $path = '/gists/' . (int) $gistId . '/commits';
+        $path = '/gists/' . rawurlencode($gistId) . '/commits';
 
         // Send the request.
         return $this->processResponse($this->client->get($this->fetchUrl($path, $page, $limit)));
@@ -177,7 +177,7 @@ class Gists extends AbstractPackage
     /**
      * List gist forks.
      *
-     * @param   integer  $gistId  The gist number.
+     * @param   string   $gistId  The gist ID.
      * @param   integer  $page    The page number from which to get items.
      * @param   integer  $limit   The number of items on a page.
      *
@@ -189,7 +189,7 @@ class Gists extends AbstractPackage
     public function getForkList($gistId, $page = 0, $limit = 0)
     {
         // Build the request path.
-        $path = '/gists/' . (int) $gistId . '/forks';
+        $path = '/gists/' . rawurlencode($gistId) . '/forks';
 
         // Send the request.
         return $this->processResponse($this->client->get($this->fetchUrl($path, $page, $limit)));
@@ -297,7 +297,7 @@ class Gists extends AbstractPackage
     /**
      * Get a specific revision of a gist.
      *
-     * @param   integer  $gistId  The gist number.
+     * @param   string   $gistId  The gist ID.
      * @param   string   $sha     The SHA for the revision to get.
      *
      * @return  object
@@ -308,7 +308,7 @@ class Gists extends AbstractPackage
     public function getRevision($gistId, $sha)
     {
         // Build the request path.
-        $path = '/gists/' . (int) $gistId . '/' . $sha;
+        $path = '/gists/' . rawurlencode($gistId) . '/' . $sha;
 
         // Send the request.
         return $this->processResponse($this->client->get($this->fetchUrl($path)));
@@ -317,7 +317,7 @@ class Gists extends AbstractPackage
     /**
      * Check if a gist is starred.
      *
-     * @param   integer  $gistId  The gist number.
+     * @param   string   $gistId  The gist ID.
      *
      * @return  boolean  True if gist is starred
      *
@@ -327,7 +327,7 @@ class Gists extends AbstractPackage
     public function isStarred($gistId)
     {
         // Build the request path.
-        $path = '/gists/' . (int) $gistId . '/star';
+        $path = '/gists/' . rawurlencode($gistId) . '/star';
 
         // Send the request.
         $response = $this->client->get($this->fetchUrl($path));
@@ -351,7 +351,7 @@ class Gists extends AbstractPackage
     /**
      * Star a gist.
      *
-     * @param   integer  $gistId  The gist number.
+     * @param   string   $gistId  The gist ID.
      *
      * @return  void
      *
@@ -361,7 +361,7 @@ class Gists extends AbstractPackage
     public function star($gistId)
     {
         // Build the request path.
-        $path = '/gists/' . (int) $gistId . '/star';
+        $path = '/gists/' . rawurlencode($gistId) . '/star';
 
         // Send the request.
         $this->processResponse($this->client->put($this->fetchUrl($path), ''), 204);
@@ -370,7 +370,7 @@ class Gists extends AbstractPackage
     /**
      * Unstar a gist.
      *
-     * @param   integer  $gistId  The gist number.
+     * @param   string   $gistId  The gist ID.
      *
      * @return  void
      *
@@ -380,7 +380,7 @@ class Gists extends AbstractPackage
     public function unstar($gistId)
     {
         // Build the request path.
-        $path = '/gists/' . (int) $gistId . '/star';
+        $path = '/gists/' . rawurlencode($gistId) . '/star';
 
         // Send the request.
         $this->processResponse($this->client->delete($this->fetchUrl($path)), 204);
