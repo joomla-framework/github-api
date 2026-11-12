@@ -1,3 +1,25 @@
 * [Overview](overview.md)
+
+## API packages added in 4.1
+
+* [Actions](actions.md)
+* [Apps](apps.md)
+* [Billing](billing.md)
+* [Branches and branch protection](branch-protection.md)
+* [Checks](checks.md)
+* [Code scanning](code-scanning.md)
+* [Codespaces](codespaces.md)
+* [Copilot](copilot.md)
+* [Dependabot](dependabot.md)
+* [Dependency graph](dependency-graph.md)
+* [GitHub Packages](github-packages.md)
+* [Interactions](interactions.md)
+* [Licenses](licenses.md)
+* [Migrations](migrations.md)
+* [Projects (v2)](projects.md)
+* [Pull request reviews](pulls-reviews.md)
+* [Reactions](reactions.md)
+* [Secret scanning](secret-scanning.md)
+
 * [Updating from v2 to v3](v2-to-v3-update.md)
 * [Updating from v3 to v4](v3-to-v4-update.md)
