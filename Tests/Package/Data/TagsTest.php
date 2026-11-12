@@ -50,8 +50,7 @@ class TagsTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/git/tags/12345', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -75,8 +74,7 @@ class TagsTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/git/tags', $data, [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,

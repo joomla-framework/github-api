@@ -51,8 +51,7 @@ class ZenTest extends GitHubTestCase
             ->with('/zen', [], 0)
             ->willReturn($this->response);
 
-        $response = $this->response->getBody()->getContents();
-        $this->response->getBody()->rewind();
+        $response = (string) $this->response->getBody();
 
         $this->assertEquals(
             $response,
@@ -76,8 +75,7 @@ class ZenTest extends GitHubTestCase
             ->with('/zen', [], 0)
             ->willReturn($this->response);
 
-        $response = $this->response->getBody()->getContents();
-        $this->response->getBody()->rewind();
+        $response = (string) $this->response->getBody();
 
         $this->assertEquals(
             $response,

@@ -575,8 +575,7 @@ class AuthorizationsTest extends GitHubTestCase
         $this->response = $this->getResponseObject('https://github.com/login/oauth/authorize?client_id=12345'
             . '&redirect_uri=aaa&scope=bbb&state=ccc', 200);
 
-        $response = $this->response->getBody()->getContents();
-        $this->response->getBody()->rewind();
+        $response = (string) $this->response->getBody();
 
         $this->assertEquals(
             $response,
@@ -598,8 +597,7 @@ class AuthorizationsTest extends GitHubTestCase
             ->with('https://github.com/login/oauth/access_token')
             ->willReturn($this->response);
 
-        $response = $this->response->getBody()->getContents();
-        $this->response->getBody()->rewind();
+        $response = (string) $this->response->getBody();
 
         $this->assertEquals(
             $response,
@@ -621,8 +619,7 @@ class AuthorizationsTest extends GitHubTestCase
             ->with('https://github.com/login/oauth/access_token')
             ->willReturn($this->response);
 
-        $response = $this->response->getBody()->getContents();
-        $this->response->getBody()->rewind();
+        $response = (string) $this->response->getBody();
 
         $this->assertEquals(
             $response,
@@ -644,8 +641,7 @@ class AuthorizationsTest extends GitHubTestCase
             ->with('https://github.com/login/oauth/access_token')
             ->willReturn($this->response);
 
-        $response = $this->response->getBody()->getContents();
-        $this->response->getBody()->rewind();
+        $response = (string) $this->response->getBody();
 
         $this->assertEquals(
             $response,

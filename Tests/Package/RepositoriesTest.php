@@ -48,8 +48,7 @@ class RepositoriesTest extends GitHubTestCase
             ->with('/user/repos?type=all&sort=full_name&direction=asc', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -105,8 +104,7 @@ class RepositoriesTest extends GitHubTestCase
             ->with('/users/joomla/repos?type=all&sort=full_name&direction=asc', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -162,8 +160,7 @@ class RepositoriesTest extends GitHubTestCase
             ->with('/orgs/joomla/repos?type=all', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -183,8 +180,7 @@ class RepositoriesTest extends GitHubTestCase
             ->with('/repositories', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -212,8 +208,7 @@ class RepositoriesTest extends GitHubTestCase
             )
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -241,8 +236,7 @@ class RepositoriesTest extends GitHubTestCase
             )
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -262,8 +256,7 @@ class RepositoriesTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-cms', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -300,8 +293,7 @@ class RepositoriesTest extends GitHubTestCase
             )
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -321,8 +313,7 @@ class RepositoriesTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-cms/contributors', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -342,8 +333,7 @@ class RepositoriesTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-cms/languages', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -363,8 +353,7 @@ class RepositoriesTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-cms/teams', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -384,8 +373,7 @@ class RepositoriesTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-cms/tags', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -405,8 +393,7 @@ class RepositoriesTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-cms', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,

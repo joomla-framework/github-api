@@ -69,8 +69,7 @@ class CollaboratorsTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-framework/collaborators/elkuku')
             ->willReturn($this->response);
 
-        $response = $this->response->getBody()->getContents();
-        $this->response->getBody()->rewind();
+        $response = (string) $this->response->getBody();
 
         $this->assertEquals(
             $response,
@@ -92,8 +91,7 @@ class CollaboratorsTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-framework/collaborators/elkuku')
             ->willReturn($this->response);
 
-        $response = $this->response->getBody()->getContents();
-        $this->response->getBody()->rewind();
+        $response = (string) $this->response->getBody();
 
         $this->assertEquals(
             $response,
@@ -117,8 +115,7 @@ class CollaboratorsTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-framework/collaborators/elkuku')
             ->willReturn($this->response);
 
-        $response = $this->response->getBody()->getContents();
-        $this->response->getBody()->rewind();
+        $response = (string) $this->response->getBody();
 
         $this->assertEquals(
             $response,

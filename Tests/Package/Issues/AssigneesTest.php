@@ -73,8 +73,7 @@ class AssigneesTest extends GitHubTestCase
             ->with('/repos/' . $this->owner . '/' . $this->repo . '/assignees', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -185,8 +184,7 @@ class AssigneesTest extends GitHubTestCase
             ->with('/repos/' . $this->owner . '/' . $this->repo . '/issues/123/assignees', json_encode(['assignees' => ['joomla']]))
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -217,8 +215,7 @@ class AssigneesTest extends GitHubTestCase
             ->with('/repos/' . $this->owner . '/' . $this->repo . '/issues/123/assignees', [], null, json_encode(['assignees' => ['joomla']]))
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,

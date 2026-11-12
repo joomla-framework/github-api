@@ -50,8 +50,7 @@ class TreesTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/git/trees/12345', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -71,8 +70,7 @@ class TreesTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/git/trees/12345?recursive=1', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
@@ -94,8 +92,7 @@ class TreesTest extends GitHubTestCase
             ->with('/repos/joomla/joomla-platform/git/trees', '{"tree":"12345","base_tree":"678"}', [], 0)
             ->willReturn($this->response);
 
-        $response = json_decode($this->response->getBody()->getContents());
-        $this->response->getBody()->rewind();
+        $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
