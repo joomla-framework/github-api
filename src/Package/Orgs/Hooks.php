@@ -126,6 +126,9 @@ class Hooks extends AbstractPackage
     /**
      * Edit a hook.
      *
+     * This method never edited a hook: it sent the request to the endpoint that creates one, and it has no parameter
+     * for the hook ID. It now throws an exception instead of creating a duplicate hook.
+     *
      * @param   string   $org          The name of the organization.
      * @param   string   $url          The URL to which the payloads will be delivered.
      * @param   string   $contentType  The media type used to serialize the payloads. Supported values include "json" and "form".
@@ -140,18 +143,65 @@ class Hooks extends AbstractPackage
      * @return  object
      *
      * @since   1.4.0
-     * @throws  \UnexpectedValueException
+     * @throws  \BadMethodCallException
+     * @deprecated  5.0 Use editHook() instead.
      */
     public function edit($org, $url, $contentType = null, $secret = null, $insecureSsl = null, array $events = [], $active = null)
     {
+        trigger_deprecation(
+            'joomla/github',
+            '__DEPLOY_VERSION__',
+            '%s() is deprecated and will be removed in 5.0, use %s::editHook() instead.',
+            __METHOD__,
+            self::class
+        );
+
+        throw new \BadMethodCallException(
+            sprintf('%s() cannot edit a hook because it has no hook ID; use %s::editHook() instead.', __METHOD__, self::class)
+        );
+    }
+
+    /**
+     * Edit a hook.
+     *
+     * Only the given values are changed.
+     *
+     * @param   string        $org          The name of the organization.
+     * @param   integer       $id           The hook ID.
+     * @param   string|null   $url          The URL to which the payloads will be delivered.
+     * @param   string|null   $contentType  The media type used to serialize the payloads. Supported values are "json" and "form".
+     * @param   string|null   $secret       If provided, payloads will be delivered with an X-Hub-Signature header.
+     * @param   boolean|null  $insecureSsl  Determines whether the SSL certificate of the host for url will be verified when
+     *                                      delivering payloads. If false, verification is performed. If true, it is not.
+     * @param   array         $events       Determines what events the hook is triggered for. Empty to leave them unchanged.
+     * @param   boolean|null  $active       Determines whether the hook is actually triggered.
+     *
+     * @return  object
+     *
+     * @since   __DEPLOY_VERSION__
+     * @throws  \UnexpectedValueException
+     * @throws  \RuntimeException
+     */
+    public function editHook(
+        string $org,
+        int $id,
+        ?string $url = null,
+        ?string $contentType = null,
+        ?string $secret = null,
+        ?bool $insecureSsl = null,
+        array $events = [],
+        ?bool $active = null
+    ) {
         // Build the request path.
-        $path = "/orgs/$org/hooks";
+        $path = "/orgs/$org/hooks/" . $id;
 
-        $config = [
-            'url' => $url,
-        ];
+        $config = [];
 
-        if ($contentType) {
+        if ($url !== null) {
+            $config['url'] = $url;
+        }
+
+        if ($contentType !== null) {
             if (\in_array($contentType, ['form', 'json']) == false) {
                 throw new \UnexpectedValueException('Content type must be either "form" or "json".');
             }
@@ -163,16 +213,18 @@ class Hooks extends AbstractPackage
             $config['insecure_ssl'] = (int) $insecureSsl;
         }
 
-        if ($secret) {
+        if ($secret !== null) {
             $config['secret'] = $secret;
         }
 
-        $data = [
-            'config' => (object) $config,
-        ];
+        $data = [];
+
+        if ($config) {
+            $data['config'] = $config;
+        }
 
         if ($active !== null) {
-            $data['active'] = (bool) $active;
+            $data['active'] = $active;
         }
 
         if (!empty($events)) {
@@ -187,8 +239,7 @@ class Hooks extends AbstractPackage
         }
 
         return $this->processResponse(
-            $this->client->post($this->fetchUrl($path), $data),
-            201
+            $this->client->patch($this->fetchUrl($path), json_encode($data))
         );
     }
 

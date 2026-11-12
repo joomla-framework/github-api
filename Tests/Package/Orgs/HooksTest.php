@@ -9,6 +9,7 @@ namespace Joomla\Github\Tests\Orgs;
 
 use Joomla\Github\Package\Orgs\Hooks;
 use Joomla\Github\Tests\Stub\GitHubTestCase;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 
 /**
  * Test class.
@@ -132,53 +133,86 @@ class HooksTest extends GitHubTestCase
     }
 
     /**
-     * Test method.
-     *
-     * @covers \Joomla\Github\Package\Orgs\Hooks::edit()
+     * Tests that edit() no longer creates a hook
      *
      * @return  void
      */
+    #[IgnoreDeprecations]
     public function testEdit()
     {
-        $this->response = $this->getResponseObject($this->sampleString, 201);
+        $this->expectUserDeprecationMessageMatches('/' . preg_quote('Hooks::edit() is deprecated and will be removed in 5.0', '/') . '/');
+        $this->expectException(\BadMethodCallException::class);
+
+        $this->client->expects($this->never())
+            ->method('post');
+
+        $this->object->edit('{org}', '{url}', 'json', '{secret}', 1, ['create'], true);
+    }
+
+    /**
+     * Tests that editHook() patches the given hook and sends only the given values as JSON
+     *
+     * @return  void
+     */
+    public function testEditHook()
+    {
+        $this->client->expects($this->never())
+            ->method('post');
 
         $this->client->expects($this->once())
-            ->method('post')
-            ->with('/orgs/{org}/hooks')
+            ->method('patch')
+            ->with(
+                '/orgs/{org}/hooks/42',
+                '{"config":{"url":"{url}","content_type":"json","insecure_ssl":1,"secret":"{secret}"},"active":true,"events":["create"]}'
+            )
             ->willReturn($this->response);
 
         $this->assertThat(
-            $this->object->edit('{org}', '{url}', 'json', '{secret}', 1, ['create'], true),
+            $this->object->editHook('{org}', 42, '{url}', 'json', '{secret}', true, ['create'], true),
             $this->equalTo(json_decode($this->sampleString))
         );
     }
 
     /**
-     * Test method.
-     *
-     * @covers \Joomla\Github\Package\Orgs\Hooks::edit()
+     * Tests that editHook() leaves out the values that are not given
      *
      * @return  void
      */
-    public function testEditFailure()
+    public function testEditHookPartial()
     {
-        $this->expectException(\UnexpectedValueException::class);
+        $this->client->expects($this->once())
+            ->method('patch')
+            ->with('/orgs/{org}/hooks/42', '{"active":false}')
+            ->willReturn($this->response);
 
-        $this->object->edit('{org}', '{url}', '{invalid}');
+        $this->assertThat(
+            $this->object->editHook('{org}', 42, active: false),
+            $this->equalTo(json_decode($this->sampleString))
+        );
     }
 
     /**
-     * Test method.
-     *
-     * @covers \Joomla\Github\Package\Orgs\Hooks::edit()
+     * Tests editHook() with an invalid content type
      *
      * @return  void
      */
-    public function testEditFailure2()
+    public function testEditHookFailure()
+    {
+        $this->expectException(\UnexpectedValueException::class);
+
+        $this->object->editHook('{org}', 42, '{url}', '{invalid}');
+    }
+
+    /**
+     * Tests editHook() with an invalid event
+     *
+     * @return  void
+     */
+    public function testEditHookInvalidEvent()
     {
         $this->expectException(\RuntimeException::class);
 
-        $this->object->edit('{org}', '{url}', 'json', '{secret}', 1, ['{invalid}']);
+        $this->object->editHook('{org}', 42, '{url}', 'json', '{secret}', true, ['{invalid}']);
     }
 
     /**
