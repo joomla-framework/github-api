@@ -195,6 +195,21 @@ class ContentsTest extends GitHubTestCase
     }
 
     /**
+     * Tests that the Create method leaves out the branch when none is given, so GitHub uses the default branch.
+     *
+     * @return  void
+     */
+    public function testCreateWithoutBranch()
+    {
+        $this->client->expects($this->once())
+            ->method('put')
+            ->with('/repos/joomla/joomla-platform/contents/src/foo', '{"message":"my Message","content":"ABC123def"}')
+            ->willReturn($this->getResponseObject($this->sampleString, 201));
+
+        $this->object->create('joomla', 'joomla-platform', 'src/foo', 'my Message', 'ABC123def');
+    }
+
+    /**
      * Tests the create method with missing author e-mail.
      *
      * @return  void
@@ -268,6 +283,21 @@ class ContentsTest extends GitHubTestCase
             ),
             $this->equalTo(json_decode($this->sampleString))
         );
+    }
+
+    /**
+     * Tests that the Update method leaves out the branch when none is given, so GitHub uses the default branch.
+     *
+     * @return  void
+     */
+    public function testUpdateWithoutBranch()
+    {
+        $this->client->expects($this->once())
+            ->method('put')
+            ->with('/repos/joomla/joomla-platform/contents/src/foo', '{"message":"my Message","content":"ABC123def","sha":"abcd1234"}')
+            ->willReturn($this->response);
+
+        $this->object->update('joomla', 'joomla-platform', 'src/foo', 'my Message', 'ABC123def', 'abcd1234');
     }
 
     /**
@@ -345,6 +375,21 @@ class ContentsTest extends GitHubTestCase
             ),
             $this->equalTo(json_decode($this->sampleString))
         );
+    }
+
+    /**
+     * Tests that the Delete method leaves out the branch when none is given, so GitHub uses the default branch.
+     *
+     * @return  void
+     */
+    public function testDeleteWithoutBranch()
+    {
+        $this->client->expects($this->once())
+            ->method('delete')
+            ->with('/repos/joomla/joomla-platform/contents/src/foo', [], null, '{"message":"my Message","sha":"abcd1234"}')
+            ->willReturn($this->response);
+
+        $this->object->delete('joomla', 'joomla-platform', 'src/foo', 'my Message', 'abcd1234');
     }
 
     /**
