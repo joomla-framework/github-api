@@ -36,7 +36,7 @@ class Deployments extends AbstractPackage
      *
      * @since   1.4.0
      */
-    public function getList($owner, $repo, $sha = '', $ref = '', $task = '', $environment = '', $page = 0, $limit = 0)
+    public function getList(string $owner, string $repo, string $sha = '', string $ref = '', string $task = '', string $environment = '', int $page = 0, int $limit = 0)
     {
         // Build the request path.
         $path = "/repos/$owner/$repo/deployments";
@@ -86,15 +86,15 @@ class Deployments extends AbstractPackage
      * @throws  \RuntimeException
      */
     public function create(
-        $owner,
-        $repo,
-        $ref,
-        $task = '',
-        $autoMerge = true,
-        $requiredContexts = null,
-        $payload = '',
-        $environment = '',
-        $description = ''
+        string $owner,
+        string $repo,
+        string $ref,
+        string $task = '',
+        bool $autoMerge = true,
+        ?array $requiredContexts = null,
+        string $payload = '',
+        string $environment = '',
+        string $description = ''
     ) {
         // Build the request path.
         $path = "/repos/$owner/$repo/deployments";
@@ -156,7 +156,7 @@ class Deployments extends AbstractPackage
      *
      * @since   1.4.0
      */
-    public function getDeploymentStatuses($owner, $repo, $id, $page = 0, $limit = 0)
+    public function getDeploymentStatuses(string $owner, string $repo, int $id, int $page = 0, int $limit = 0)
     {
         // Build the request path.
         $path = "/repos/$owner/$repo/deployments/" . (int) $id . '/statuses';
@@ -182,7 +182,7 @@ class Deployments extends AbstractPackage
      * @since   1.4.0
      * @throws  \InvalidArgumentException
      */
-    public function createStatus($owner, $repo, $id, $state, $targetUrl = '', $description = '')
+    public function createStatus(string $owner, string $repo, int $id, string $state, string $targetUrl = '', string $description = '')
     {
         $allowedStates = ['pending', 'success', 'error', 'failure'];
 

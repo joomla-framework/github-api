@@ -36,7 +36,7 @@ class Milestones extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function getList($user, $repo, $state = 'open', $sort = 'due_date', $direction = 'desc', $page = 0, $limit = 0)
+    public function getList(string $user, string $repo, string $state = 'open', string $sort = 'due_date', string $direction = 'desc', int $page = 0, int $limit = 0)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/milestones';
@@ -62,7 +62,7 @@ class Milestones extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function get($user, $repo, $milestoneId)
+    public function get(string $user, string $repo, int $milestoneId)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/milestones/' . (int) $milestoneId;
@@ -76,7 +76,7 @@ class Milestones extends AbstractPackage
      *
      * @param   string   $user         The name of the owner of the GitHub repository.
      * @param   string   $repo         The name of the GitHub repository.
-     * @param   integer  $title        The title of the milestone.
+     * @param   string   $title        The title of the milestone.
      * @param   string   $state        Can be open (default) or closed.
      * @param   string   $description  Optional description for milestone.
      * @param   string   $dueOn        The milestone due date. This is a timestamp in ISO 8601 format.
@@ -87,7 +87,7 @@ class Milestones extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function create($user, $repo, $title, $state = null, $description = null, $dueOn = null)
+    public function create(string $user, string $repo, string $title, ?string $state = null, ?string $description = null, ?string $dueOn = null)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/milestones';
@@ -121,7 +121,7 @@ class Milestones extends AbstractPackage
      * @param   string   $user         The name of the owner of the GitHub repository.
      * @param   string   $repo         The name of the GitHub repository.
      * @param   integer  $milestoneId  The id of the comment to update.
-     * @param   integer  $title        Optional title of the milestone.
+     * @param   string   $title        Optional title of the milestone.
      * @param   string   $state        Can be open (default) or closed.
      * @param   string   $description  Optional description for milestone.
      * @param   string   $dueOn        The milestone due date. This is a timestamp in ISO 8601 format.
@@ -132,7 +132,7 @@ class Milestones extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function edit($user, $repo, $milestoneId, $title = null, $state = null, $description = null, $dueOn = null)
+    public function edit(string $user, string $repo, int $milestoneId, ?string $title = null, ?string $state = null, ?string $description = null, ?string $dueOn = null)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/milestones/' . (int) $milestoneId;
@@ -174,7 +174,7 @@ class Milestones extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function delete($user, $repo, $milestoneId)
+    public function delete(string $user, string $repo, int $milestoneId): void
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/milestones/' . (int) $milestoneId;

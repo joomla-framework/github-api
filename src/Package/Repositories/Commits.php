@@ -42,7 +42,7 @@ class Commits extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function getList($user, $repo, $sha = '', $path = '', $author = '', \DateTimeInterface $since = null, \DateTimeInterface $until = null)
+    public function getList(string $user, string $repo, string $sha = '', string $path = '', string $author = '', \DateTimeInterface $since = null, \DateTimeInterface $until = null)
     {
         // Build the request path.
         $rPath = '/repos/' . $user . '/' . $repo . '/commits';
@@ -85,7 +85,7 @@ class Commits extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function get($user, $repo, $sha)
+    public function get(string $user, string $repo, string $sha)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/commits/' . $sha;
@@ -106,7 +106,7 @@ class Commits extends AbstractPackage
      * @since   1.4.0
      * @throws  UnexpectedResponseException
      */
-    public function getSha($user, $repo, $ref)
+    public function getSha(string $user, string $repo, string $ref): string
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/commits/' . $ref;
@@ -138,7 +138,7 @@ class Commits extends AbstractPackage
      *
      * @since   1.0
      */
-    public function compare($user, $repo, $base, $head)
+    public function compare(string $user, string $repo, string $base, string $head)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/compare/' . $base . '...' . $head;

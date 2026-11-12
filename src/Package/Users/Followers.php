@@ -29,7 +29,7 @@ class Followers extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getList($user = '')
+    public function getList(string $user = '')
     {
         // Build the request path.
         $path = ($user)
@@ -50,7 +50,7 @@ class Followers extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getListFollowedBy($user = '')
+    public function getListFollowedBy(string $user = '')
     {
         // Build the request path.
         $path = ($user)
@@ -72,7 +72,7 @@ class Followers extends AbstractPackage
      * @since   1.0
      * @throws  \UnexpectedValueException
      */
-    public function check($user)
+    public function check(string $user): bool
     {
         // Build the request path.
         $path = '/user/following/' . $user;
@@ -104,7 +104,7 @@ class Followers extends AbstractPackage
      * @since   1.4.0
      * @throws  \UnexpectedValueException
      */
-    public function checkUserFollowing($user, $target)
+    public function checkUserFollowing(string $user, string $target): bool
     {
         // Build the request path.
         $path = "/user/$user/following/$target";
@@ -137,7 +137,7 @@ class Followers extends AbstractPackage
      *
      * @since   1.0
      */
-    public function follow($user)
+    public function follow(string $user)
     {
         // Build the request path.
         $path = '/user/following/' . $user;
@@ -160,7 +160,7 @@ class Followers extends AbstractPackage
      *
      * @since   1.0
      */
-    public function unfollow($user)
+    public function unfollow(string $user)
     {
         // Build the request path.
         $path = '/user/following/' . $user;

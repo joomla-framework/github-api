@@ -35,7 +35,7 @@ class Orgs extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getList($user = '')
+    public function getList(string $user = '')
     {
         // Build the request path.
         $path = ($user)
@@ -57,7 +57,7 @@ class Orgs extends AbstractPackage
      *
      * @since   1.0
      */
-    public function get($org)
+    public function get(string $org)
     {
         // Build the request path.
         $path = '/orgs/' . $org;
@@ -82,7 +82,7 @@ class Orgs extends AbstractPackage
      *
      * @since   1.0
      */
-    public function edit($org, $billingEmail = '', $company = '', $email = '', $location = '', $name = '')
+    public function edit(string $org, string $billingEmail = '', string $company = '', string $email = '', string $location = '', string $name = '')
     {
         // Build the request path.
         $path = '/orgs/' . $org;

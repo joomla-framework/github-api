@@ -34,7 +34,7 @@ class Collaborators extends AbstractPackage
      *
      * @return object
      */
-    public function getList($owner, $repo)
+    public function getList(string $owner, string $repo)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/collaborators';
@@ -56,7 +56,7 @@ class Collaborators extends AbstractPackage
      *
      * @return boolean
      */
-    public function get($owner, $repo, $user)
+    public function get(string $owner, string $repo, string $user): bool
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/collaborators/' . $user;
@@ -86,7 +86,7 @@ class Collaborators extends AbstractPackage
      *
      * @return object
      */
-    public function add($owner, $repo, $user)
+    public function add(string $owner, string $repo, string $user)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/collaborators/' . $user;
@@ -108,7 +108,7 @@ class Collaborators extends AbstractPackage
      *
      * @return object
      */
-    public function remove($owner, $repo, $user)
+    public function remove(string $owner, string $repo, string $user)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/collaborators/' . $user;

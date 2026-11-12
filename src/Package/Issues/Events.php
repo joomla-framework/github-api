@@ -35,7 +35,7 @@ class Events extends AbstractPackage
      *
      * @return object
      */
-    public function getList($owner, $repo, $issueNumber, $page = 0, $limit = 0)
+    public function getList(string $owner, string $repo, int $issueNumber, int $page = 0, int $limit = 0)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/issues/' . (int) $issueNumber . '/events';
@@ -57,7 +57,7 @@ class Events extends AbstractPackage
      *
      * @return object
      */
-    public function getListRepository($owner, $repo, $issueId, $page = 0, $limit = 0)
+    public function getListRepository(string $owner, string $repo, int $issueId, int $page = 0, int $limit = 0)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/issues/' . (int) $issueId . '/comments';
@@ -77,7 +77,7 @@ class Events extends AbstractPackage
      *
      * @return object
      */
-    public function get($owner, $repo, $id)
+    public function get(string $owner, string $repo, int $id)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/issues/events/' . (int) $id;

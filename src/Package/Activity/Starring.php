@@ -30,7 +30,7 @@ class Starring extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getList($owner, $repo)
+    public function getList(string $owner, string $repo)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/stargazers';
@@ -54,7 +54,7 @@ class Starring extends AbstractPackage
      * @since   1.0
      * @throws  \InvalidArgumentException
      */
-    public function getRepositories($user = '', $sort = 'created', $direction = 'desc')
+    public function getRepositories(string $user = '', string $sort = 'created', string $direction = 'desc')
     {
         $allowedSort = ['created', 'updated'];
         $allowedDir  = ['asc', 'desc'];
@@ -103,7 +103,7 @@ class Starring extends AbstractPackage
      * @since   1.0
      * @throws  \UnexpectedValueException
      */
-    public function check($owner, $repo)
+    public function check(string $owner, string $repo): bool
     {
         // Build the request path.
         $path = '/user/starred/' . $owner . '/' . $repo;
@@ -135,7 +135,7 @@ class Starring extends AbstractPackage
      *
      * @since   1.0
      */
-    public function star($owner, $repo)
+    public function star(string $owner, string $repo)
     {
         // Build the request path.
         $path = '/user/starred/' . $owner . '/' . $repo;
@@ -158,7 +158,7 @@ class Starring extends AbstractPackage
      *
      * @since   1.0
      */
-    public function unstar($owner, $repo)
+    public function unstar(string $owner, string $repo)
     {
         // Build the request path.
         $path = '/user/starred/' . $owner . '/' . $repo;

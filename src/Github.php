@@ -43,7 +43,7 @@ class Github
      * @var    Registry
      * @since  1.0
      */
-    protected $options;
+    protected Registry $options;
 
     /**
      * The HTTP client object to use in sending HTTP requests.
@@ -51,7 +51,7 @@ class Github
      * @var    Http
      * @since  1.0
      */
-    protected $client;
+    protected Http $client;
 
     /**
      * Constructor.
@@ -88,7 +88,7 @@ class Github
      * @since   1.0
      * @throws  \InvalidArgumentException If $name is not a valid sub class.
      */
-    public function __get($name)
+    public function __get(string $name): AbstractGithubObject
     {
         $class = 'Joomla\\Github\\Package\\' . ucfirst($name);
 
@@ -112,7 +112,7 @@ class Github
      *
      * @since   1.0
      */
-    public function getOption($key)
+    public function getOption(string $key): mixed
     {
         return isset($this->options[$key]) ? $this->options[$key] : null;
     }
@@ -123,11 +123,11 @@ class Github
      * @param   string  $key    The name of the option to set.
      * @param   mixed   $value  The option value to set.
      *
-     * @return  GitHub  This object for method chaining.
+     * @return  $this  This object for method chaining.
      *
      * @since   1.0
      */
-    public function setOption($key, $value)
+    public function setOption(string $key, mixed $value): static
     {
         $this->options[$key] = $value;
 

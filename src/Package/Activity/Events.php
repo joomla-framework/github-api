@@ -47,7 +47,7 @@ class Events extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getRepository($owner, $repo)
+    public function getRepository(string $owner, string $repo)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/events';
@@ -67,7 +67,7 @@ class Events extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getIssue($owner, $repo)
+    public function getIssue(string $owner, string $repo)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/issues/events';
@@ -87,7 +87,7 @@ class Events extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getNetwork($owner, $repo)
+    public function getNetwork(string $owner, string $repo)
     {
         // Build the request path.
         $path = '/networks/' . $owner . '/' . $repo . '/events';
@@ -106,7 +106,7 @@ class Events extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getOrg($org)
+    public function getOrg(string $org)
     {
         // Build the request path.
         $path = '/orgs/' . $org . '/events';
@@ -129,7 +129,7 @@ class Events extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getUser($user)
+    public function getUser(string $user)
     {
         // Build the request path.
         $path = '/users/' . $user . '/received_events';
@@ -148,7 +148,7 @@ class Events extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getUserPublic($user)
+    public function getUserPublic(string $user)
     {
         // Build the request path.
         $path = '/users/' . $user . '/received_events/public';
@@ -170,7 +170,7 @@ class Events extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getByUser($user)
+    public function getByUser(string $user)
     {
         // Build the request path.
         $path = '/users/' . $user . '/events';
@@ -189,7 +189,7 @@ class Events extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getByUserPublic($user)
+    public function getByUserPublic(string $user)
     {
         // Build the request path.
         $path = '/users/' . $user . '/events/public';
@@ -212,7 +212,7 @@ class Events extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getUserOrg($user, $org)
+    public function getUserOrg(string $user, string $org)
     {
         // Build the request path.
         $path = '/users/' . $user . '/events/orgs/' . $org;

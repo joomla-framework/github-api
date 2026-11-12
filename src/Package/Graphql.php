@@ -30,7 +30,7 @@ class Graphql extends AbstractPackage
      *
      * @since   1.6.0
      */
-    public function execute($query, array $variables = [])
+    public function execute(string $query, array $variables = [])
     {
         // Build the request path.
         $path = '/graphql';

@@ -30,7 +30,7 @@ class Watching extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getList($owner, $repo)
+    public function getList(string $owner, string $repo)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/subscribers';
@@ -51,7 +51,7 @@ class Watching extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getRepositories($user = '')
+    public function getRepositories(string $user = '')
     {
         // Build the request path.
         $path = ($user)
@@ -73,7 +73,7 @@ class Watching extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getSubscription($owner, $repo)
+    public function getSubscription(string $owner, string $repo)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/subscription';
@@ -95,7 +95,7 @@ class Watching extends AbstractPackage
      *
      * @since   1.0
      */
-    public function setSubscription($owner, $repo, $subscribed, $ignored)
+    public function setSubscription(string $owner, string $repo, bool $subscribed, bool $ignored)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/subscription';
@@ -120,89 +120,10 @@ class Watching extends AbstractPackage
      *
      * @since   1.0
      */
-    public function deleteSubscription($owner, $repo)
+    public function deleteSubscription(string $owner, string $repo)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/subscription';
-
-        return $this->processResponse(
-            $this->client->delete($this->fetchUrl($path)),
-            204
-        );
-    }
-
-    /**
-     * Check if you are watching a repository (LEGACY).
-     *
-     * Requires for the user to be authenticated.
-     *
-     * @param   string  $owner  Repository owner.
-     * @param   string  $repo   Repository name.
-     *
-     * @return  boolean
-     *
-     * @since   1.0
-     * @throws  \UnexpectedValueException
-     */
-    public function check($owner, $repo)
-    {
-        // Build the request path.
-        $path = '/user/subscriptions/' . $owner . '/' . $repo;
-
-        $response = $this->client->get($this->fetchUrl($path));
-
-        switch ($response->getStatusCode()) {
-            case '204':
-                // This repository is watched by you.
-                return true;
-
-            case '404':
-                // This repository is not watched by you.
-                return false;
-        }
-
-        throw new \UnexpectedValueException('Unexpected response code: ' . $response->getStatusCode());
-    }
-
-    /**
-     * Watch a repository (LEGACY).
-     *
-     * Requires for the user to be authenticated.
-     *
-     * @param   string  $owner  Repository owner.
-     * @param   string  $repo   Repository name.
-     *
-     * @return  object
-     *
-     * @since   1.0
-     */
-    public function watch($owner, $repo)
-    {
-        // Build the request path.
-        $path = '/user/subscriptions/' . $owner . '/' . $repo;
-
-        return $this->processResponse(
-            $this->client->put($this->fetchUrl($path), ''),
-            204
-        );
-    }
-
-    /**
-     * Stop watching a repository (LEGACY).
-     *
-     * Requires for the user to be authenticated.
-     *
-     * @param   string  $owner  Repository owner.
-     * @param   string  $repo   Repository name.
-     *
-     * @return  object
-     *
-     * @since   1.0
-     */
-    public function unwatch($owner, $repo)
-    {
-        // Build the request path.
-        $path = '/user/subscriptions/' . $owner . '/' . $repo;
 
         return $this->processResponse(
             $this->client->delete($this->fetchUrl($path)),

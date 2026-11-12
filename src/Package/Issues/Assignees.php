@@ -33,7 +33,7 @@ class Assignees extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getList($owner, $repo)
+    public function getList(string $owner, string $repo)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/assignees';
@@ -60,7 +60,7 @@ class Assignees extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function check($owner, $repo, $assignee)
+    public function check(string $owner, string $repo, string $assignee): bool
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/assignees/' . $assignee;
@@ -97,7 +97,7 @@ class Assignees extends AbstractPackage
      * @since   1.4.0
      * @throws  \DomainException
      */
-    public function add($owner, $repo, $number, array $assignees)
+    public function add(string $owner, string $repo, int $number, array $assignees)
     {
         // Build the request path.
         $path = "/repos/$owner/$repo/issues/$number/assignees";
@@ -126,7 +126,7 @@ class Assignees extends AbstractPackage
      * @since   1.4.0
      * @throws  \DomainException
      */
-    public function remove($owner, $repo, $number, array $assignees)
+    public function remove(string $owner, string $repo, int $number, array $assignees)
     {
         // Build the request path.
         $path = "/repos/$owner/$repo/issues/$number/assignees";

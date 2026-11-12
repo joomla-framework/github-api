@@ -35,7 +35,7 @@ class Merging extends AbstractPackage
      * @since   1.0
      * @throws  \UnexpectedValueException
      */
-    public function perform($owner, $repo, $base, $head, $commitMessage = '')
+    public function perform(string $owner, string $repo, string $base, string $head, string $commitMessage = '')
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/merges';

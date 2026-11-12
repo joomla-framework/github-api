@@ -45,7 +45,7 @@ abstract class AbstractPackage extends AbstractGithubObject
      *
      * @return  AbstractPackage  GitHub API package object.
      */
-    public function __get($name)
+    public function __get(string $name): AbstractPackage
     {
         $class = '\\Joomla\\Github\\Package\\' . $this->package . '\\' . ucfirst($name);
 

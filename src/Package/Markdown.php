@@ -34,7 +34,7 @@ class Markdown extends AbstractPackage
      * @throws  UnexpectedResponseException
      * @throws  \InvalidArgumentException
      */
-    public function render($text, $mode = 'gfm', $context = null)
+    public function render(string $text, string $mode = 'gfm', ?string $context = null): string
     {
         // The valid modes
         $validModes = ['gfm', 'markdown'];

@@ -113,7 +113,7 @@ class ReleasesTest extends GitHubTestCase
     {
         $releaseId = 123;
 
-        $data = '{"tag_name":"tagName","target_commitish":"targetCommitish","name":"name","body":"body","draft":"draft","prerelease":"preRelease"}';
+        $data = '{"tag_name":"tagName","target_commitish":"targetCommitish","name":"name","body":"body","draft":true,"prerelease":false}';
         $this->client->expects($this->once())
             ->method('patch')
             ->with('/repos/joomla/joomla-platform/releases/' . $releaseId, $data, [], 0)
@@ -124,7 +124,7 @@ class ReleasesTest extends GitHubTestCase
 
         $this->assertEquals(
             $response,
-            $this->object->edit('joomla', 'joomla-platform', $releaseId, 'tagName', 'targetCommitish', 'name', 'body', 'draft', 'preRelease')
+            $this->object->edit('joomla', 'joomla-platform', $releaseId, 'tagName', 'targetCommitish', 'name', 'body', true, false)
         );
     }
 

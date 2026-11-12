@@ -33,7 +33,7 @@ class Tags extends AbstractPackage
      *
      * @return object
      */
-    public function get($owner, $repo, $sha)
+    public function get(string $owner, string $repo, string $sha)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/git/tags/' . $sha;
@@ -65,7 +65,7 @@ class Tags extends AbstractPackage
      *
      * @since   1.0
      */
-    public function create($owner, $repo, $tag, $message, $object, $type, $taggerName, $taggerEmail, $taggerDate)
+    public function create(string $owner, string $repo, string $tag, string $message, string $object, string $type, string $taggerName, string $taggerEmail, string $taggerDate)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/git/tags';

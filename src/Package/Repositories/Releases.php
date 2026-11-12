@@ -37,7 +37,7 @@ class Releases extends AbstractPackage
      * @link    http://developer.github.com/v3/repos/releases/#create-a-release
      * @since   1.1.0
      */
-    public function create($user, $repo, $tagName, $targetCommitish = '', $name = '', $body = '', $draft = false, $preRelease = false)
+    public function create(string $user, string $repo, string $tagName, string $targetCommitish = '', string $name = '', string $body = '', bool $draft = false, bool $preRelease = false)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/releases';
@@ -69,7 +69,7 @@ class Releases extends AbstractPackage
      *
      * @since   1.4.0
      */
-    public function delete($owner, $repo, $releaseId)
+    public function delete(string $owner, string $repo, int $releaseId)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/releases/' . (int) $releaseId;
@@ -88,11 +88,10 @@ class Releases extends AbstractPackage
      * @param   integer  $releaseId        The release id.
      * @param   string   $tagName          The name of the tag.
      * @param   string   $targetCommitish  The commitish value that determines where the Git tag is created from.
-     * @param   string   $name             The branch (or git ref) you want your changes pulled into. This should be an existing branch on the current
-     *                                     repository. You cannot submit a pull request to one repo that requests a merge to a base of another repo.
-     * @param   boolean  $body             The body text for the new pull request.
-     * @param   boolean  $draft            The branch (or git ref) where your changes are implemented.
-     * @param   string   $preRelease       The branch (or git ref) where your changes are implemented.
+     * @param   string   $name             The name of the release.
+     * @param   string   $body             The description of the release.
+     * @param   boolean  $draft            True for a draft (unpublished) release.
+     * @param   boolean  $preRelease       True for a prerelease.
      *
      * @return  object
      *
@@ -100,7 +99,7 @@ class Releases extends AbstractPackage
      * @since   1.1.0
      * @throws  \DomainException
      */
-    public function edit($user, $repo, $releaseId, $tagName, $targetCommitish = null, $name = null, $body = null, $draft = null, $preRelease = null)
+    public function edit(string $user, string $repo, int $releaseId, string $tagName, ?string $targetCommitish = null, ?string $name = null, ?string $body = null, ?bool $draft = null, ?bool $preRelease = null)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/releases/' . (int) $releaseId;
@@ -149,7 +148,7 @@ class Releases extends AbstractPackage
      * @since   1.1.0
      * @throws  \DomainException
      */
-    public function get($user, $repo, $ref)
+    public function get(string $user, string $repo, string $ref)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/releases/' . $ref;
@@ -171,7 +170,7 @@ class Releases extends AbstractPackage
      *
      * @since   1.4.0
      */
-    public function getLatest($user, $repo)
+    public function getLatest(string $user, string $repo)
     {
         // Build the request path.
         $path = "/repos/$user/$repo/releases/latest";
@@ -191,7 +190,7 @@ class Releases extends AbstractPackage
      *
      * @since   1.4.0
      */
-    public function getByTag($user, $repo, $tag)
+    public function getByTag(string $user, string $repo, string $tag)
     {
         // Build the request path.
         $path = "/repos/$user/$repo/releases/tags/$tag";
@@ -213,7 +212,7 @@ class Releases extends AbstractPackage
      * @since   1.1.0
      * @throws  \DomainException
      */
-    public function getList($user, $repo, $page = 0, $limit = 0)
+    public function getList(string $user, string $repo, int $page = 0, int $limit = 0)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/releases';
@@ -245,7 +244,7 @@ class Releases extends AbstractPackage
      *
      * @since   1.4.0
      */
-    public function getListAssets($user, $repo, $releaseId, $page = 0, $limit = 0)
+    public function getListAssets(string $user, string $repo, int $releaseId, int $page = 0, int $limit = 0)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/releases/' . (int) $releaseId . '/assets';
@@ -265,7 +264,7 @@ class Releases extends AbstractPackage
      *
      * @since   1.4.0
      */
-    public function getAsset($user, $repo, $assetId)
+    public function getAsset(string $user, string $repo, int $assetId)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/releases/assets/' . (int) $assetId;
@@ -287,7 +286,7 @@ class Releases extends AbstractPackage
      *
      * @since   1.4.0
      */
-    public function editAsset($user, $repo, $assetId, $name, $label = '')
+    public function editAsset(string $user, string $repo, int $assetId, string $name, string $label = '')
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/releases/assets/' . (int) $assetId;
@@ -315,7 +314,7 @@ class Releases extends AbstractPackage
      *
      * @since   1.4.0
      */
-    public function deleteAsset($user, $repo, $assetId)
+    public function deleteAsset(string $user, string $repo, int $assetId)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/releases/assets/' . (int) $assetId;

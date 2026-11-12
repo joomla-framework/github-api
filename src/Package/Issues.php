@@ -34,7 +34,7 @@ class Issues extends AbstractPackage
      * @param   string    $title      The title of the new issue.
      * @param   string    $body       The body text for the new issue.
      * @param   string    $assignee   The login for the GitHub user that this issue should be assigned to.
-     * @param   integer   $milestone  The milestone to associate this issue with.
+     * @param   int|string  $milestone  The number of the milestone to associate this issue with.
      * @param   string[]  $labels     The labels to associate with this issue.
      * @param   string[]  $assignees  The logins for GitHub users to assign to this issue.
      *
@@ -43,7 +43,7 @@ class Issues extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function create($user, $repo, $title, $body = null, $assignee = null, $milestone = null, array $labels = [], array $assignees = [])
+    public function create(string $user, string $repo, string $title, ?string $body = null, ?string $assignee = null, int|string|null $milestone = null, array $labels = [], array $assignees = [])
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/issues';
@@ -88,7 +88,7 @@ class Issues extends AbstractPackage
      * @param   string   $title      The title of the new issue.
      * @param   string   $body       The body text for the new issue.
      * @param   string   $assignee   The login for the GitHub user that this issue should be assigned to.
-     * @param   integer  $milestone  The milestone to associate this issue with.
+     * @param   int|string  $milestone  The number of the milestone to associate this issue with.
      * @param   array    $labels     The labels to associate with this issue.
      *
      * @return  object
@@ -96,7 +96,7 @@ class Issues extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function edit($user, $repo, $issueId, $state = null, $title = null, $body = null, $assignee = null, $milestone = null, array $labels = [])
+    public function edit(string $user, string $repo, int $issueId, ?string $state = null, ?string $title = null, ?string $body = null, ?string $assignee = null, int|string|null $milestone = null, array $labels = [])
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/issues/' . (int) $issueId;
@@ -158,7 +158,7 @@ class Issues extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function get($user, $repo, $issueId)
+    public function get(string $user, string $repo, int $issueId)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/issues/' . (int) $issueId;
@@ -185,14 +185,14 @@ class Issues extends AbstractPackage
      * @throws  \DomainException
      */
     public function getList(
-        $filter = null,
-        $state = null,
-        $labels = null,
-        $sort = null,
-        $direction = null,
+        ?string $filter = null,
+        ?string $state = null,
+        ?string $labels = null,
+        ?string $sort = null,
+        ?string $direction = null,
         \DateTimeInterface $since = null,
-        $page = 0,
-        $limit = 0
+        int $page = 0,
+        int $limit = 0
     ) {
         // Build the request path.
         $uri = $this->fetchUrl('/issues', $page, $limit);
@@ -247,18 +247,18 @@ class Issues extends AbstractPackage
      * @throws  \DomainException
      */
     public function getListByRepository(
-        $user,
-        $repo,
-        $milestone = null,
-        $state = null,
-        $assignee = null,
-        $mentioned = null,
-        $labels = null,
-        $sort = null,
-        $direction = null,
+        string $user,
+        string $repo,
+        ?string $milestone = null,
+        ?string $state = null,
+        ?string $assignee = null,
+        ?string $mentioned = null,
+        ?string $labels = null,
+        ?string $sort = null,
+        ?string $direction = null,
         \DateTimeInterface $since = null,
-        $page = 0,
-        $limit = 0
+        int $page = 0,
+        int $limit = 0
     ) {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/issues';
@@ -313,7 +313,7 @@ class Issues extends AbstractPackage
      * @since   1.4.0
      * @throws  \DomainException
      */
-    public function lock($user, $repo, $issueId)
+    public function lock(string $user, string $repo, int $issueId)
     {
         // Build the request path.
         $path = "/repos/$user/$repo/issues/" . (int) $issueId . '/lock';
@@ -333,7 +333,7 @@ class Issues extends AbstractPackage
      * @since   1.4.0
      * @throws  \DomainException
      */
-    public function unlock($user, $repo, $issueId)
+    public function unlock(string $user, string $repo, int $issueId)
     {
         // Build the request path.
         $path = "/repos/$user/$repo/issues/" . (int) $issueId . '/lock';

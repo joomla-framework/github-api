@@ -34,7 +34,7 @@ class Users extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function get($user)
+    public function get(string $user)
     {
         // Build the request path.
         $path = '/users/' . $user;
@@ -67,20 +67,20 @@ class Users extends AbstractPackage
     /**
      * Update the authenticated user.
      *
-     * @param   string  $name      The full name
-     * @param   string  $email     The email
-     * @param   string  $blog      The blog
-     * @param   string  $company   The company
-     * @param   string  $location  The location
-     * @param   string  $hireable  If he is unemployed :P
-     * @param   string  $bio       The biometrical DNA fingerprint (or smthng...)
+     * @param   string          $name      The full name
+     * @param   string          $email     The email
+     * @param   string          $blog      The blog
+     * @param   string          $company   The company
+     * @param   string          $location  The location
+     * @param   boolean|string  $hireable  Whether the user is available for hire
+     * @param   string          $bio       The biography
      *
      * @return  mixed
      *
      * @since   1.0
      * @throws  \DomainException
      */
-    public function edit($name = '', $email = '', $blog = '', $company = '', $location = '', $hireable = '', $bio = '')
+    public function edit(string $name = '', string $email = '', string $blog = '', string $company = '', string $location = '', $hireable = '', string $bio = '')
     {
         $data = [
             'name'     => $name,
@@ -113,7 +113,7 @@ class Users extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function getList($since = 0)
+    public function getList(int $since = 0)
     {
         // Build the request path.
         $uri = $this->fetchUrl('/users');

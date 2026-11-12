@@ -29,7 +29,7 @@ class Commits extends AbstractPackage
      *
      * @return object
      */
-    public function get($owner, $repo, $sha)
+    public function get(string $owner, string $repo, string $sha)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/git/commits/' . $sha;
@@ -55,7 +55,7 @@ class Commits extends AbstractPackage
      *
      * @return  object
      */
-    public function create($owner, $repo, $message, $tree, array $parents = [])
+    public function create(string $owner, string $repo, string $message, string $tree, array $parents = [])
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/git/commits';

@@ -29,7 +29,7 @@ abstract class AbstractGithubObject
      * @var    Registry
      * @since  1.0
      */
-    protected $options;
+    protected Registry $options;
 
     /**
      * The HTTP client object to use in sending HTTP requests.
@@ -37,7 +37,7 @@ abstract class AbstractGithubObject
      * @var    BaseHttp
      * @since  1.0
      */
-    protected $client;
+    protected BaseHttp $client;
 
     /**
      * The package the object resides in
@@ -45,7 +45,7 @@ abstract class AbstractGithubObject
      * @var    string
      * @since  1.0
      */
-    protected $package = '';
+    protected string $package = '';
 
     /**
      * Array containing the allowed hook events
@@ -55,7 +55,7 @@ abstract class AbstractGithubObject
      * @link   https://developer.github.com/webhooks/#events
      * @note   From 1.4.0 to 1.5.1 this was named $events, it was renamed due to naming conflicts with package subclasses
      */
-    protected $hookEvents = [
+    protected array $hookEvents = [
         '*',
         'commit_comment',
         'create',
@@ -110,7 +110,7 @@ abstract class AbstractGithubObject
      *
      * @since   1.0
      */
-    protected function fetchUrl($path, $page = 0, $limit = 0)
+    protected function fetchUrl(string $path, int $page = 0, int $limit = 0): Uri
     {
         // Get a new Uri object focusing the api url and given path.
         $uri = new Uri($this->options->get('api.url') . $path);
@@ -158,7 +158,7 @@ abstract class AbstractGithubObject
      * @since   1.0
      * @throws  UnexpectedResponseException
      */
-    protected function processResponse(Response $response, $expectedCode = 200)
+    protected function processResponse(Response $response, $expectedCode = 200): mixed
     {
         // Validate the response code.
         if ($response->getStatusCode() != $expectedCode) {

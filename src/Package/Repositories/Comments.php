@@ -32,7 +32,7 @@ class Comments extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getListRepository($user, $repo, $page = 0, $limit = 0)
+    public function getListRepository(string $user, string $repo, int $page = 0, int $limit = 0)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/comments';
@@ -56,7 +56,7 @@ class Comments extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getList($user, $repo, $sha, $page = 0, $limit = 0)
+    public function getList(string $user, string $repo, string $sha, int $page = 0, int $limit = 0)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/commits/' . $sha . '/comments';
@@ -78,7 +78,7 @@ class Comments extends AbstractPackage
      *
      * @since   1.0
      */
-    public function get($user, $repo, $id)
+    public function get(string $user, string $repo, int $id)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/comments/' . (int) $id;
@@ -101,7 +101,7 @@ class Comments extends AbstractPackage
      *
      * @since   1.0
      */
-    public function edit($user, $repo, $id, $comment)
+    public function edit(string $user, string $repo, string $id, string $comment)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/comments/' . $id;
@@ -129,7 +129,7 @@ class Comments extends AbstractPackage
      *
      * @since   1.0
      */
-    public function delete($user, $repo, $id)
+    public function delete(string $user, string $repo, string $id)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/comments/' . $id;
@@ -156,7 +156,7 @@ class Comments extends AbstractPackage
      *
      * @since   1.0
      */
-    public function create($user, $repo, $sha, $comment, $line, $filepath, $position)
+    public function create(string $user, string $repo, string $sha, string $comment, int $line, string $filepath, int $position)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/commits/' . $sha . '/comments';

@@ -111,24 +111,6 @@ class KeysTest extends GitHubTestCase
     }
 
     /**
-     * Tests the edit method
-     *
-     * @return  void
-     */
-    public function testEdit()
-    {
-        $this->client->expects($this->once())
-            ->method('patch')
-            ->with('/users/keys/1')
-            ->willReturn($this->response);
-
-        $this->assertThat(
-            $this->object->edit(1, 'email@example.com', '12345'),
-            $this->equalTo(json_decode($this->sampleString))
-        );
-    }
-
-    /**
      * Tests the delete method
      *
      * @return  void

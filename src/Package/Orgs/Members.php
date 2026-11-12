@@ -37,7 +37,7 @@ class Members extends AbstractPackage
      *
      * @return boolean|mixed
      */
-    public function getList($org)
+    public function getList(string $org)
     {
         // Build the request path.
         $path = '/orgs/' . $org . '/members';
@@ -70,7 +70,7 @@ class Members extends AbstractPackage
      *
      * @return boolean
      */
-    public function check($org, $user)
+    public function check(string $org, string $user): bool
     {
         // Build the request path.
         $path = '/orgs/' . $org . '/members/' . $user;
@@ -115,7 +115,7 @@ class Members extends AbstractPackage
      *
      * @return object
      */
-    public function remove($org, $user)
+    public function remove(string $org, string $user)
     {
         // Build the request path.
         $path = '/orgs/' . $org . '/members/' . $user;
@@ -137,7 +137,7 @@ class Members extends AbstractPackage
      *
      * @return object
      */
-    public function getListPublic($org)
+    public function getListPublic(string $org)
     {
         // Build the request path.
         $path = '/orgs/' . $org . '/public_members';
@@ -158,7 +158,7 @@ class Members extends AbstractPackage
      *
      * @return boolean
      */
-    public function checkPublic($org, $user)
+    public function checkPublic(string $org, string $user): bool
     {
         // Build the request path.
         $path = '/orgs/' . $org . '/public_members/' . $user;
@@ -189,7 +189,7 @@ class Members extends AbstractPackage
      *
      * @return object
      */
-    public function publicize($org, $user)
+    public function publicize(string $org, string $user)
     {
         // Build the request path.
         $path = '/orgs/' . $org . '/public_members/' . $user;
@@ -210,7 +210,7 @@ class Members extends AbstractPackage
      *
      * @return object
      */
-    public function conceal($org, $user)
+    public function conceal(string $org, string $user)
     {
         // Build the request path.
         $path = '/orgs/' . $org . '/public_members/' . $user;
@@ -233,7 +233,7 @@ class Members extends AbstractPackage
      *
      * @since   1.4.0
      */
-    public function getMembership($org, $user)
+    public function getMembership(string $org, string $user)
     {
         // Build the request path.
         $path = '/orgs/' . $org . '/memberships/' . $user;
@@ -254,7 +254,7 @@ class Members extends AbstractPackage
      *
      * @since   1.4.0
      */
-    public function updateMembership($org, $user, $role = 'member')
+    public function updateMembership(string $org, string $user, string $role = 'member')
     {
         $allowedRoles = ['member', 'admin'];
 
@@ -284,7 +284,7 @@ class Members extends AbstractPackage
      *
      * @since   1.4.0
      */
-    public function removeMembership($org, $user)
+    public function removeMembership(string $org, string $user)
     {
         // Build the request path.
         $path = '/orgs/' . $org . '/memberships/' . $user;
@@ -319,7 +319,7 @@ class Members extends AbstractPackage
      *
      * @since   1.4.0
      */
-    public function listOrganizationMembership($org)
+    public function listOrganizationMembership(string $org)
     {
         // Build the request path.
         $path = '/user/memberships/orgs/' . $org;
@@ -337,7 +337,7 @@ class Members extends AbstractPackage
      *
      * @since   1.4.0
      */
-    public function editOrganizationMembership($org, $state)
+    public function editOrganizationMembership(string $org, string $state)
     {
         // The API only accepts $state == 'active' at present
         if ($state != 'active') {

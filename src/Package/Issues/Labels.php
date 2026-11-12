@@ -30,7 +30,7 @@ class Labels extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getList($owner, $repo)
+    public function getList(string $owner, string $repo)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/labels';
@@ -52,7 +52,7 @@ class Labels extends AbstractPackage
      *
      * @since   1.0
      */
-    public function get($user, $repo, $name)
+    public function get(string $user, string $repo, string $name)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/labels/' . rawurlencode($name);
@@ -76,7 +76,7 @@ class Labels extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function create($owner, $repo, $name, $color)
+    public function create(string $owner, string $repo, string $name, string $color)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/labels';
@@ -104,7 +104,7 @@ class Labels extends AbstractPackage
      *
      * @since   1.0
      */
-    public function delete($owner, $repo, $name)
+    public function delete(string $owner, string $repo, string $name)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/labels/' . rawurlencode($name);
@@ -129,7 +129,7 @@ class Labels extends AbstractPackage
      *
      * @since   1.0
      */
-    public function update($user, $repo, $label, $name, $color)
+    public function update(string $user, string $repo, string $label, string $name, string $color)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/labels/' . $label;
@@ -159,7 +159,7 @@ class Labels extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getListByIssue($owner, $repo, $number)
+    public function getListByIssue(string $owner, string $repo, int $number)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/issues/' . $number . '/labels';
@@ -182,7 +182,7 @@ class Labels extends AbstractPackage
      *
      * @since   1.0
      */
-    public function add($owner, $repo, $number, array $labels)
+    public function add(string $owner, string $repo, string $number, array $labels)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/issues/' . $number . '/labels';
@@ -205,7 +205,7 @@ class Labels extends AbstractPackage
      *
      * @since   1.0
      */
-    public function removeFromIssue($owner, $repo, $number, $name)
+    public function removeFromIssue(string $owner, string $repo, string $number, string $name)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/issues/' . $number . '/labels/' . rawurlencode($name);
@@ -230,7 +230,7 @@ class Labels extends AbstractPackage
      *
      * @since   1.0
      */
-    public function replace($owner, $repo, $number, array $labels)
+    public function replace(string $owner, string $repo, string $number, array $labels)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/issues/' . $number . '/labels';
@@ -252,7 +252,7 @@ class Labels extends AbstractPackage
      *
      * @since   1.0
      */
-    public function removeAllFromIssue($owner, $repo, $number)
+    public function removeAllFromIssue(string $owner, string $repo, string $number)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/issues/' . $number . '/labels';
@@ -275,7 +275,7 @@ class Labels extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getListByMilestone($owner, $repo, $number)
+    public function getListByMilestone(string $owner, string $repo, string $number)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/milestones/' . $number . '/labels';

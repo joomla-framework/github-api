@@ -29,13 +29,13 @@ class Comments extends AbstractPackage
      * @param   string   $body      The comment body text.
      * @param   string   $commitId  The SHA1 hash of the commit to comment on.
      * @param   string   $filePath  The Relative path of the file to comment on.
-     * @param   string   $position  The line index in the diff to comment on.
+     * @param   integer  $position  The line index in the diff to comment on.
      *
      * @since   1.0
      *
      * @return  object
      */
-    public function create($user, $repo, $pullId, $body, $commitId, $filePath, $position)
+    public function create(string $user, string $repo, int $pullId, string $body, string $commitId, string $filePath, int $position)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/pulls/' . (int) $pullId . '/comments';
@@ -70,7 +70,7 @@ class Comments extends AbstractPackage
      *
      * @return  object
      */
-    public function createReply($user, $repo, $pullId, $body, $inReplyTo)
+    public function createReply(string $user, string $repo, int $pullId, string $body, int $inReplyTo)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/pulls/' . (int) $pullId . '/comments';
@@ -101,7 +101,7 @@ class Comments extends AbstractPackage
      *
      * @return  void
      */
-    public function delete($user, $repo, $commentId)
+    public function delete(string $user, string $repo, int $commentId): void
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/pulls/comments/' . (int) $commentId;
@@ -125,7 +125,7 @@ class Comments extends AbstractPackage
      *
      * @return  object
      */
-    public function edit($user, $repo, $commentId, $body)
+    public function edit(string $user, string $repo, int $commentId, string $body)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/pulls/comments/' . (int) $commentId;
@@ -154,7 +154,7 @@ class Comments extends AbstractPackage
      *
      * @return  object
      */
-    public function get($user, $repo, $commentId)
+    public function get(string $user, string $repo, int $commentId)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/pulls/comments/' . (int) $commentId;
@@ -178,7 +178,7 @@ class Comments extends AbstractPackage
      *
      * @return  array
      */
-    public function getList($user, $repo, $pullId, $page = 0, $limit = 0)
+    public function getList(string $user, string $repo, int $pullId, int $page = 0, int $limit = 0)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/pulls/' . (int) $pullId . '/comments';
@@ -201,7 +201,7 @@ class Comments extends AbstractPackage
      *
      * @since   1.4.0
      */
-    public function getListForRepo($user, $repo, $page = 0, $limit = 0)
+    public function getListForRepo(string $user, string $repo, int $page = 0, int $limit = 0)
     {
         // Build the request path.
         $path = "/repos/$user/$repo/pulls/comments";

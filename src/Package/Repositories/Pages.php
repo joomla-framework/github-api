@@ -30,7 +30,7 @@ class Pages extends AbstractPackage
      *
      * @since   1.4.0
      */
-    public function getInfo($owner, $repo)
+    public function getInfo(string $owner, string $repo)
     {
         // Build the request path.
         $path = "/repos/$owner/$repo/pages";
@@ -52,7 +52,7 @@ class Pages extends AbstractPackage
      *
      * @since   1.4.0
      */
-    public function getList($owner, $repo, $page = 0, $limit = 0)
+    public function getList(string $owner, string $repo, int $page = 0, int $limit = 0)
     {
         // Build the request path.
         $path = "/repos/$owner/$repo/pages/builds";
@@ -72,7 +72,7 @@ class Pages extends AbstractPackage
      *
      * @since   1.4.0
      */
-    public function getLatest($owner, $repo)
+    public function getLatest(string $owner, string $repo)
     {
         // Build the request path.
         $path = "/repos/$owner/$repo/pages/builds/latest";

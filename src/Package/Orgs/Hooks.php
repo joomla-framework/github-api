@@ -32,7 +32,7 @@ class Hooks extends AbstractPackage
      *
      * @since   1.4.0
      */
-    public function getList($org)
+    public function getList(string $org)
     {
         // Build the request path.
         $path = "/orgs/$org/hooks";
@@ -52,7 +52,7 @@ class Hooks extends AbstractPackage
      *
      * @since   1.4.0
      */
-    public function get($org, $id)
+    public function get(string $org, int $id)
     {
         // Build the request path.
         $path = "/orgs/$org/hooks/" . (int) $id;
@@ -81,7 +81,7 @@ class Hooks extends AbstractPackage
      * @since   1.4.0
      * @throws  \UnexpectedValueException
      */
-    public function create($org, $url, $contentType = 'form', $secret = null, $insecureSsl = false, array $events = ['push'], $active = true)
+    public function create(string $org, string $url, string $contentType = 'form', ?string $secret = null, bool $insecureSsl = false, array $events = ['push'], bool $active = true)
     {
         // Build the request path.
         $path = "/orgs/$org/hooks";
@@ -124,75 +124,6 @@ class Hooks extends AbstractPackage
     }
 
     /**
-     * Edit a hook.
-     *
-     * @param   string   $org          The name of the organization.
-     * @param   string   $url          The URL to which the payloads will be delivered.
-     * @param   string   $contentType  The media type used to serialize the payloads. Supported values include "json" and "form".
-     * @param   string   $secret       If provided, payloads will be delivered with an X-Hub-Signature header.
-     *                                 The value of this header is computed as the
-     *                                 [HMAC hex digest of the body, using the secret as the key][hub-signature].
-     * @param   boolean  $insecureSsl  Determines whether the SSL certificate of the host for url will be verified when delivering payloads.
-     *                                 If false, verification is performed.  If true, verification is not performed.
-     * @param   array    $events       Determines what events the hook is triggered for.
-     * @param   boolean  $active       Determines whether the hook is actually triggered on pushes.
-     *
-     * @return  object
-     *
-     * @since   1.4.0
-     * @throws  \UnexpectedValueException
-     */
-    public function edit($org, $url, $contentType = null, $secret = null, $insecureSsl = null, array $events = [], $active = null)
-    {
-        // Build the request path.
-        $path = "/orgs/$org/hooks";
-
-        $config = [
-            'url' => $url,
-        ];
-
-        if ($contentType) {
-            if (\in_array($contentType, ['form', 'json']) == false) {
-                throw new \UnexpectedValueException('Content type must be either "form" or "json".');
-            }
-
-            $config['content_type'] = $contentType;
-        }
-
-        if ($insecureSsl !== null) {
-            $config['insecure_ssl'] = (int) $insecureSsl;
-        }
-
-        if ($secret) {
-            $config['secret'] = $secret;
-        }
-
-        $data = [
-            'config' => (object) $config,
-        ];
-
-        if ($active !== null) {
-            $data['active'] = (bool) $active;
-        }
-
-        if (!empty($events)) {
-            // Check to ensure all events are in the allowed list
-            foreach ($events as $event) {
-                if (!\in_array($event, $this->hookEvents)) {
-                    throw new \RuntimeException('Your events array contains an unauthorized event.');
-                }
-            }
-
-            $data['events'] = $events;
-        }
-
-        return $this->processResponse(
-            $this->client->post($this->fetchUrl($path), $data),
-            201
-        );
-    }
-
-    /**
      * Ping a hook.
      *
      * @param   string   $org  The name of the organization
@@ -203,7 +134,7 @@ class Hooks extends AbstractPackage
      * @since   1.4.0
      * @throws  \DomainException
      */
-    public function ping($org, $id)
+    public function ping(string $org, int $id)
     {
         // Build the request path.
         $path = "/orgs/$org/hooks/$id/pings";
@@ -224,7 +155,7 @@ class Hooks extends AbstractPackage
      *
      * @since   1.4.0
      */
-    public function delete($org, $id)
+    public function delete(string $org, int $id)
     {
         // Build the request path.
         $path = "/orgs/$org/hooks/$id";

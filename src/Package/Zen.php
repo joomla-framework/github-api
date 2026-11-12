@@ -27,7 +27,7 @@ class Zen extends AbstractPackage
      *
      * @return string
      */
-    public function get()
+    public function get(): string
     {
         $response = $this->client->get($this->fetchUrl('/zen'));
 

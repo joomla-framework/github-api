@@ -41,7 +41,7 @@ class Pulls extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function create($user, $repo, $title, $base, $head, $body = '')
+    public function create(string $user, string $repo, string $title, string $base, string $head, string $body = '')
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/pulls';
@@ -77,7 +77,7 @@ class Pulls extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function createFromIssue($user, $repo, $issueId, $base, $head)
+    public function createFromIssue(string $user, string $repo, int $issueId, string $base, string $head)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/pulls';
@@ -111,7 +111,7 @@ class Pulls extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function edit($user, $repo, $pullId, $title = null, $body = null, $state = null, $base = null)
+    public function edit(string $user, string $repo, int $pullId, ?string $title = null, ?string $body = null, ?string $state = null, ?string $base = null)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/pulls/' . (int) $pullId;
@@ -158,7 +158,7 @@ class Pulls extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function get($user, $repo, $pullId)
+    public function get(string $user, string $repo, int $pullId)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/pulls/' . (int) $pullId;
@@ -181,7 +181,7 @@ class Pulls extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function getCommits($user, $repo, $pullId, $page = 0, $limit = 0)
+    public function getCommits(string $user, string $repo, int $pullId, int $page = 0, int $limit = 0)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/pulls/' . (int) $pullId . '/commits';
@@ -204,7 +204,7 @@ class Pulls extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function getFiles($user, $repo, $pullId, $page = 0, $limit = 0)
+    public function getFiles(string $user, string $repo, int $pullId, int $page = 0, int $limit = 0)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/pulls/' . (int) $pullId . '/files';
@@ -227,7 +227,7 @@ class Pulls extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function getList($user, $repo, $state = 'open', $page = 0, $limit = 0)
+    public function getList(string $user, string $repo, string $state = 'open', int $page = 0, int $limit = 0)
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/pulls';
@@ -253,7 +253,7 @@ class Pulls extends AbstractPackage
      * @since   1.0
      * @throws  UnexpectedResponseException
      */
-    public function isMerged($user, $repo, $pullId)
+    public function isMerged(string $user, string $repo, int $pullId): bool
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/pulls/' . (int) $pullId . '/merge';
@@ -290,7 +290,7 @@ class Pulls extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function merge($user, $repo, $pullId, $message = '')
+    public function merge(string $user, string $repo, int $pullId, string $message = '')
     {
         // Build the request path.
         $path = '/repos/' . $user . '/' . $repo . '/pulls/' . (int) $pullId . '/merge';

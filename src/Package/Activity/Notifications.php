@@ -34,7 +34,7 @@ class Notifications extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getList($all = true, $participating = true, \DateTimeInterface $since = null, \DateTimeInterface $before = null)
+    public function getList(bool $all = true, bool $participating = true, \DateTimeInterface $since = null, \DateTimeInterface $before = null)
     {
         // Build the request path.
         $path = '/notifications';
@@ -77,10 +77,10 @@ class Notifications extends AbstractPackage
      * @since   1.0
      */
     public function getListRepository(
-        $owner,
-        $repo,
-        $all = true,
-        $participating = true,
+        string $owner,
+        string $repo,
+        bool $all = true,
+        bool $participating = true,
         \DateTimeInterface $since = null,
         \DateTimeInterface $before = null
     ) {
@@ -122,7 +122,7 @@ class Notifications extends AbstractPackage
      *
      * @since   1.0
      */
-    public function markRead($unread = true, $read = true, \DateTimeInterface $lastReadAt = null)
+    public function markRead(bool $unread = true, bool $read = true, \DateTimeInterface $lastReadAt = null)
     {
         // Build the request path.
         $path = '/notifications';
@@ -158,7 +158,7 @@ class Notifications extends AbstractPackage
      *
      * @since   1.0
      */
-    public function markReadRepository($owner, $repo, $unread, $read, \DateTimeInterface $lastReadAt = null)
+    public function markReadRepository(string $owner, string $repo, bool $unread, bool $read, \DateTimeInterface $lastReadAt = null)
     {
         // Build the request path.
         $path = '/repos/' . $owner . '/' . $repo . '/notifications';
@@ -187,7 +187,7 @@ class Notifications extends AbstractPackage
      *
      * @since   1.0
      */
-    public function viewThread($id)
+    public function viewThread(int $id)
     {
         // Build the request path.
         $path = '/notifications/threads/' . $id;
@@ -208,7 +208,7 @@ class Notifications extends AbstractPackage
      *
      * @since   1.0
      */
-    public function markReadThread($id, $unread = true, $read = true)
+    public function markReadThread(int $id, bool $unread = true, bool $read = true)
     {
         // Build the request path.
         $path = '/notifications/threads/' . $id;
@@ -236,7 +236,7 @@ class Notifications extends AbstractPackage
      *
      * @since   1.0
      */
-    public function getThreadSubscription($id)
+    public function getThreadSubscription(int $id)
     {
         // Build the request path.
         $path = '/notifications/threads/' . $id . '/subscription';
@@ -261,7 +261,7 @@ class Notifications extends AbstractPackage
      *
      * @since   1.0
      */
-    public function setThreadSubscription($id, $subscribed, $ignored)
+    public function setThreadSubscription(int $id, bool $subscribed, bool $ignored)
     {
         // Build the request path.
         $path = '/notifications/threads/' . $id . '/subscription';
@@ -285,7 +285,7 @@ class Notifications extends AbstractPackage
      *
      * @since   1.0
      */
-    public function deleteThreadSubscription($id)
+    public function deleteThreadSubscription(int $id)
     {
         // Build the request path.
         $path = '/notifications/threads/' . $id . '/subscription';

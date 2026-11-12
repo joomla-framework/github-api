@@ -89,14 +89,14 @@ class TreesTest extends GitHubTestCase
 
         $this->client->expects($this->once())
             ->method('post')
-            ->with('/repos/joomla/joomla-platform/git/trees', '{"tree":"12345","base_tree":"678"}', [], 0)
+            ->with('/repos/joomla/joomla-platform/git/trees', '{"tree":[{"path":"file.txt","mode":"100644","type":"blob","sha":"12345"}],"base_tree":"678"}', [], 0)
             ->willReturn($this->response);
 
         $response = json_decode((string) $this->response->getBody());
 
         $this->assertEquals(
             $response,
-            $this->object->create('joomla', 'joomla-platform', '12345', '678')
+            $this->object->create('joomla', 'joomla-platform', [['path' => 'file.txt', 'mode' => '100644', 'type' => 'blob', 'sha' => '12345']], '678')
         );
     }
 }
