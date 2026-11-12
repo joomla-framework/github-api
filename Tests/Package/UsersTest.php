@@ -298,6 +298,21 @@ class UsersTest extends GitHubTestCase
     }
 
     /**
+     * Tests that the edit method sends only the given values
+     *
+     * @return void
+     */
+    public function testEditSendsOnlyGivenValues()
+    {
+        $this->client->expects($this->once())
+            ->method('patch')
+            ->with('/user', '{"bio":"There once..."}')
+            ->willReturn($this->response);
+
+        $this->object->edit(bio: 'There once...');
+    }
+
+    /**
      * Tests the getUsers method
      *
      * @return void

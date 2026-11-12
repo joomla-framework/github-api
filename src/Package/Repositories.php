@@ -175,6 +175,7 @@ class Repositories extends AbstractPackage
      * Create.
      *
      * Create a new repository for the authenticated user or an organization. OAuth users must supply repo scope.
+     * Only the values that are given (not null) are sent; GitHub's defaults apply to the others.
      *
      * @param   string   $name               The repository name.
      * @param   string   $org                The organization name (if needed).
@@ -198,15 +199,15 @@ class Repositories extends AbstractPackage
     public function create(
         $name,
         $org = '',
-        $description = '',
-        $homepage = '',
-        $private = false,
-        $hasIssues = false,
-        $hasWiki = false,
-        $hasDownloads = false,
-        $teamId = 0,
-        $autoInit = false,
-        $gitignoreTemplate = ''
+        $description = null,
+        $homepage = null,
+        $private = null,
+        $hasIssues = null,
+        $hasWiki = null,
+        $hasDownloads = null,
+        $teamId = null,
+        $autoInit = null,
+        $gitignoreTemplate = null
     ) {
         $path = ($org)
             // Create a repository for an organization
@@ -226,6 +227,9 @@ class Repositories extends AbstractPackage
             'auto_init'          => $autoInit,
             'gitignore_template' => $gitignoreTemplate,
         ];
+
+        // Only send the values that are given, so GitHub's defaults apply to the others.
+        $data = array_filter($data, static fn ($value) => $value !== null);
 
         // Send the request.
         return $this->processResponse(
@@ -258,6 +262,8 @@ class Repositories extends AbstractPackage
     /**
      * Edit.
      *
+     * Only the values that are given (not null) are sent; the other settings of the repository are left unchanged.
+     *
      * @param   string   $owner          Repository owner.
      * @param   string   $repo           Repository name.
      * @param   string   $name           The repository name.
@@ -278,13 +284,13 @@ class Repositories extends AbstractPackage
         $owner,
         $repo,
         $name,
-        $description = '',
-        $homepage = '',
-        $private = false,
-        $hasIssues = false,
-        $hasWiki = false,
-        $hasDownloads = false,
-        $defaultBranch = ''
+        $description = null,
+        $homepage = null,
+        $private = null,
+        $hasIssues = null,
+        $hasWiki = null,
+        $hasDownloads = null,
+        $defaultBranch = null
     ) {
         $path = '/repos/' . $owner . '/' . $repo;
 
@@ -298,6 +304,9 @@ class Repositories extends AbstractPackage
             'has_downloads'  => $hasDownloads,
             'default_branch' => $defaultBranch,
         ];
+
+        // Only send the values that are given, so the other settings of the repository are left unchanged.
+        $data = array_filter($data, static fn ($value) => $value !== null);
 
         // Send the request.
         return $this->processResponse(

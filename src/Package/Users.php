@@ -67,6 +67,8 @@ class Users extends AbstractPackage
     /**
      * Update the authenticated user.
      *
+     * Only the values that are given (not null) are sent; the other profile fields are left unchanged.
+     *
      * @param   string  $name      The full name
      * @param   string  $email     The email
      * @param   string  $blog      The blog
@@ -80,7 +82,7 @@ class Users extends AbstractPackage
      * @since   1.0
      * @throws  \DomainException
      */
-    public function edit($name = '', $email = '', $blog = '', $company = '', $location = '', $hireable = '', $bio = '')
+    public function edit($name = null, $email = null, $blog = null, $company = null, $location = null, $hireable = null, $bio = null)
     {
         $data = [
             'name'     => $name,
@@ -91,6 +93,9 @@ class Users extends AbstractPackage
             'hireable' => $hireable,
             'bio'      => $bio,
         ];
+
+        // Only send the values that are given, so the other profile fields are left unchanged.
+        $data = array_filter($data, static fn ($value) => $value !== null);
 
         // Build the request path.
         $path = '/user';
