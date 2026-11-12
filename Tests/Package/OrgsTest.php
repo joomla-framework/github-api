@@ -82,7 +82,7 @@ class OrgsTest extends GitHubTestCase
     {
         $this->client->expects($this->once())
             ->method('patch')
-            ->with('/orgs/joomla')
+            ->with('/orgs/joomla', '{"billing_email":"email@example.com"}')
             ->willReturn($this->response);
 
         $this->assertThat(

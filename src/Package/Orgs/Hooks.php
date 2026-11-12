@@ -118,7 +118,7 @@ class Hooks extends AbstractPackage
         }
 
         return $this->processResponse(
-            $this->client->post($this->fetchUrl($path), $data),
+            $this->client->post($this->fetchUrl($path), json_encode($data)),
             201
         );
     }

@@ -92,7 +92,7 @@ class TeamsTest extends GitHubTestCase
 
         $this->client->expects($this->once())
             ->method('post')
-            ->with('/orgs/joomla/teams')
+            ->with('/orgs/joomla/teams', '{"name":"TheTeam","repo_names":["joomla-platform"],"permission":"admin"}')
             ->willReturn($this->response);
 
         $this->assertThat(
@@ -128,7 +128,7 @@ class TeamsTest extends GitHubTestCase
     {
         $this->client->expects($this->once())
             ->method('patch')
-            ->with('/teams/123')
+            ->with('/teams/123', '{"name":"TheTeam","permission":"admin"}')
             ->willReturn($this->response);
 
         $this->assertThat(
@@ -532,7 +532,7 @@ class TeamsTest extends GitHubTestCase
     {
         $this->client->expects($this->once())
             ->method('put')
-            ->with('/teams/123/memberships/{user}')
+            ->with('/teams/123/memberships/{user}', '{"role":"member"}')
             ->willReturn($this->response);
 
         $this->assertThat(

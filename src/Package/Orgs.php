@@ -101,7 +101,7 @@ class Orgs extends AbstractPackage
 
         // Send the request.
         return $this->processResponse(
-            $this->client->patch($this->fetchUrl($path), $data)
+            $this->client->patch($this->fetchUrl($path), json_encode($data))
         );
     }
 }

@@ -101,7 +101,7 @@ class Teams extends AbstractPackage
         }
 
         return $this->processResponse(
-            $this->client->post($this->fetchUrl($path), $data),
+            $this->client->post($this->fetchUrl($path), json_encode($data)),
             201
         );
     }
@@ -141,7 +141,7 @@ class Teams extends AbstractPackage
         }
 
         return $this->processResponse(
-            $this->client->patch($this->fetchUrl($path), $data)
+            $this->client->patch($this->fetchUrl($path), json_encode($data))
         );
     }
 
@@ -339,7 +339,7 @@ class Teams extends AbstractPackage
             'role' => $role,
         ];
 
-        return $this->processResponse($this->client->put($this->fetchUrl($path), $data));
+        return $this->processResponse($this->client->put($this->fetchUrl($path), json_encode($data)));
     }
 
     /**
