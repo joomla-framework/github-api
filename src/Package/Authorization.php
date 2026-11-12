@@ -11,7 +11,6 @@ namespace Joomla\Github\Package;
 
 use Joomla\Github\AbstractPackage;
 use Joomla\Http\Exception\UnexpectedResponseException;
-use Joomla\Uri\Uri;
 
 /**
  * GitHub API Authorization class for the Joomla Framework.
@@ -271,23 +270,22 @@ class Authorization extends AbstractPackage
      */
     public function getAuthorizationLink($clientId, $redirectUri = '', $scope = '', $state = '')
     {
-        $uri = new Uri('https://github.com/login/oauth/authorize');
-
-        $uri->setVar('client_id', $clientId);
+        $query = ['client_id' => $clientId];
 
         if ($redirectUri) {
-            $uri->setVar('redirect_uri', urlencode($redirectUri));
+            $query['redirect_uri'] = $redirectUri;
         }
 
         if ($scope) {
-            $uri->setVar('scope', $scope);
+            $query['scope'] = $scope;
         }
 
         if ($state) {
-            $uri->setVar('state', $state);
+            $query['state'] = $state;
         }
 
-        return (string) $uri;
+        // Build the query here: Joomla\Uri\Uri does not encode the values it renders.
+        return 'https://github.com/login/oauth/authorize?' . http_build_query($query, '', '&', \PHP_QUERY_RFC3986);
     }
 
     /**
@@ -297,9 +295,9 @@ class Authorization extends AbstractPackage
      * @param   string  $clientSecret  The client secret you received from GitHub when you registered.
      * @param   string  $code          The code you received as a response to Step 1.
      * @param   string  $redirectUri   URL in your app where users will be sent after authorization.
-     * @param   string  $format        The response format (json, xml, ).
+     * @param   string  $format        The response format (json, xml). Without a format, JSON is requested.
      *
-     * @return  string
+     * @return  object  The decoded response with the access_token, scope and token_type properties.
      *
      * @since   1.0
      * @throws  \UnexpectedValueException
@@ -335,6 +333,9 @@ class Authorization extends AbstractPackage
                 if ($format) {
                     throw new \UnexpectedValueException('Invalid format');
                 }
+
+                // Without an Accept header GitHub answers form-encoded, which cannot be decoded.
+                $headers['Accept'] = 'application/json';
 
                 break;
         }
